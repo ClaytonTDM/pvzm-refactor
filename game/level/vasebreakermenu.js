@@ -7,17 +7,17 @@ oS.Init({
 		a = "images/interface/";
 		return [
 			ShadowPNG,
-			a + "BackButton.png",
-			a + "vasebreaker1.png",
-			a + "vasebreaker2.png",
-			a + "vasebreaker3.png",
-			a + "vasebreaker4.png",
-			a + "vasebreaker5.png",
-			a + "vasebreaker6.png",
-			a + "vasebreaker7.png",
-			a + "vasebreaker8.png",
-			a + "vasebreaker9.png",
-			a + "vasebreaker10.png",
+			`${a}BackButton.png`,
+			`${a}vasebreaker1.png`,
+			`${a}vasebreaker2.png`,
+			`${a}vasebreaker3.png`,
+			`${a}vasebreaker4.png`,
+			`${a}vasebreaker5.png`,
+			`${a}vasebreaker6.png`,
+			`${a}vasebreaker7.png`,
+			`${a}vasebreaker8.png`,
+			`${a}vasebreaker9.png`,
+			`${a}vasebreaker10.png`,
 		];
 	})(),
 	LevelName: "I, Zombie Menu",
@@ -27,14 +27,14 @@ oS.Init({
 	StartGameMusic: "Cerebrawl",
 	AudioArr: ["Cerebrawl", "pvzs"],
 	backgroundImage: "images/interface/Vasebreaker_Background.png",
-	LoadAccess: function (a) {
+	LoadAccess(a) {
 		NewImg(
 			"imgSF",
 			"images/interface/BackButton.png",
 			"left:785px;top:530px",
 			EDAll,
 			{
-				onclick: function () {
+				onclick() {
 					SelectModal(0);
 					SetBlock($("dSurface"), $("iSurfaceBackground"));
 				},
@@ -46,7 +46,7 @@ oS.Init({
 			"left:50px;top:130px",
 			EDAll,
 			{
-				onclick: function () {
+				onclick() {
 					SelectModal("" + "vasebreaker1" + "");
 				},
 			}
@@ -57,7 +57,7 @@ oS.Init({
 			"left:200px;top:130px",
 			EDAll,
 			{
-				onclick: function () {
+				onclick() {
 					SelectModal("" + "vasebreaker2" + "");
 				},
 			}
@@ -68,7 +68,7 @@ oS.Init({
 			"left:350px;top:130px",
 			EDAll,
 			{
-				onclick: function () {
+				onclick() {
 					SelectModal("" + "vasebreaker3" + "");
 				},
 			}
@@ -79,7 +79,7 @@ oS.Init({
 			"left:500px;top:130px",
 			EDAll,
 			{
-				onclick: function () {
+				onclick() {
 					SelectModal("" + "vasebreaker4" + "");
 				},
 			}
@@ -90,7 +90,7 @@ oS.Init({
 			"left:650;top:130",
 			EDAll,
 			{
-				onclick: function () {
+				onclick() {
 					SelectModal("" + "vasebreaker5" + "");
 				},
 			}
@@ -101,7 +101,7 @@ oS.Init({
 			"left:50;top:270",
 			EDAll,
 			{
-				onclick: function () {
+				onclick() {
 					SelectModal("" + "vasebreaker6" + "");
 				},
 			}
@@ -112,7 +112,7 @@ oS.Init({
 			"left:200px;top:270px",
 			EDAll,
 			{
-				onclick: function () {
+				onclick() {
 					SelectModal("" + "vasebreaker7" + "");
 				},
 			}
@@ -123,7 +123,7 @@ oS.Init({
 			"left:350px;top:270px",
 			EDAll,
 			{
-				onclick: function () {
+				onclick() {
 					SelectModal("" + "vasebreaker8" + "");
 				},
 			}
@@ -134,7 +134,7 @@ oS.Init({
 			"left:500px;top:270px",
 			EDAll,
 			{
-				onclick: function () {
+				onclick() {
 					SelectModal("" + "vasebreaker9" + "");
 				},
 			}

@@ -33,7 +33,7 @@ oS.Init(
 		CanSelectCard: 0,
 		StartGameMusic: "Cerebrawl",
 		SunNum: 0,
-		RiddleAutoGrow: function () {
+		RiddleAutoGrow() {
 			var P = oS.VaseArP;
 			var L = P.Left;
 			var R = P.Right;
@@ -57,10 +57,10 @@ oS.Init(
 				for (var Q = 1; Q <= oS.R; ++Q) GroundList.push([Q, L]);
 
 			// 打乱两者
-			VaseList.sort(function () {
+			VaseList.sort(() => {
 				return Math.random() - 0.5;
 			});
-			GroundList.sort(function () {
+			GroundList.sort(() => {
 				return Math.random() - 0.5;
 			});
 
@@ -79,7 +79,7 @@ oS.Init(
 				--VaseList.length, --GroundList.length;
 			}
 		},
-		StartGame: function () {
+		StartGame() {
 			oP.Monitor(), SetVisible($("tdShovel"), $("dFlagMeter"), $("dTop"));
 			StopMusic(), PlayMusic((oS.LoadMusic = oS.StartGameMusic));
 			for (var i in ArCard) DoCoolTimer(i, 0);
@@ -103,7 +103,7 @@ oS.Init(
 	},
 	0,
 	{
-		AutoSelectCard: function () {
+		AutoSelectCard() {
 			// 只选择樱桃炸弹
 			SelectCard(oCherryBomb.prototype.EName);
 		},

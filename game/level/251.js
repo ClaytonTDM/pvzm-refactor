@@ -1,7 +1,7 @@
 oS.Init({
 	PicArr: (function () {
 		a = "images/interface/";
-		return [ShadowPNG, a + "TAWIN.png"];
+		return [ShadowPNG, `${a}TAWIN.png`];
 	})(),
 	LevelName: "胜利界面",
 	LevelEName: 251,
@@ -10,14 +10,14 @@ oS.Init({
 	StartGameMusic: "pvzs",
 	AudioArr: ["pvzs"],
 	backgroundImage: "images/interface/TAWIN.png",
-	LoadAccess: function (a) {
+	LoadAccess(a) {
 		NewImg(
 			"imgSF",
 			"images/interface/TAUI1.png",
 			"left:380px;top:360px",
 			EDAll,
 			{
-				onclick: function () {
+				onclick() {
 					SelectModal(150);
 				},
 			}

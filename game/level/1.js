@@ -21,18 +21,18 @@ oS.Init(
 		LevelName: "Level 1-1",
 		LvlEName: 1,
 		AudioArr: ["dirt_rise"],
-		InitLawnMower: function () {
+		InitLawnMower() {
 			CustomSpecial(oLawnCleaner, 3, -1);
 		},
 		LargeWaveFlag: { 5: $("imgFlag1") },
-		StartGame: function () {
+		StartGame() {
 			NewImg(
 				"imgSF",
 				"images/interface/tiaoguo.png",
 				"left:1px;top:75px",
 				EDAll,
 				{
-					onclick: function () {
+					onclick() {
 						SelectModal(3);
 					},
 				}
@@ -63,17 +63,17 @@ oS.Init(
 				e += 15;
 				h += 16;
 				d += 16;
-				$("sod3row").style.width = e + "px";
+				$("sod3row").style.width = `${e}px`;
 				SetStyle($("SodRoll_1"), {
-					left: h + "px",
-					width: --b + "px",
+					left: `${h}px`,
+					width: `${--b}px`,
 					height: "141px",
 				});
 				SetStyle($("SodRollCap_1"), {
-					left: d + "px",
-					width: --c + "px",
-					height: --g + "px",
-					top: ++a + "px",
+					left: `${d}px`,
+					width: `${--c}px`,
+					height: `${--g}px`,
+					top: `${++a}px`,
 				});
 				e < 990
 					? oSym.addTask(3, arguments.callee, [
@@ -92,7 +92,7 @@ oS.Init(
 							oS.InitLawnMower();
 							oP.Monitor({
 								ar: [0],
-								f: function (k) {
+								f(k) {
 									var l = oS.C + 1;
 									var i = oS.Chose;
 									switch (k) {
@@ -134,7 +134,7 @@ oS.Init(
 										case 2:
 											var h = oGd.$;
 											while (--l) {
-												if (h["3_" + l + "_1"]) {
+												if (h[`3_${l}_1`]) {
 													SetHidden($("PointerUD"));
 													innerText(
 														$("DivTeachBar"),
@@ -181,7 +181,7 @@ oS.Init(
 											var j = 0;
 											var h = oGd.$;
 											while (--l) {
-												h["3_" + l + "_1"] && ++j;
+												h[`3_${l}_1`] && ++j;
 											}
 											j > 0
 												? (SetHidden($("PointerUD")),
@@ -212,14 +212,14 @@ oS.Init(
 		FlagNum: 5,
 		FlagToSumNum: { a1: [3], a2: [1, 2] },
 		FlagToMonitor: { 4: [ShowFinalWave, 0] },
-		FlagToEnd: function () {
+		FlagToEnd() {
 			NewImg(
 				"imgSF",
 				"images/Card/Plants/SunFlower.png",
 				"left:667px;top:330px;clip:rect(auto,auto,60px,auto)",
 				EDAll,
 				{
-					onclick: function () {
+					onclick() {
 						GetNewCard(this, oSunFlower, 2);
 					},
 				}

@@ -67,7 +67,7 @@ oS.Init(
 			40: $("imgFlag2"),
 			60: $("imgFlag1"),
 		},
-		UserDefinedFlagFunc: function () {
+		UserDefinedFlagFunc() {
 			if (oP.FlagZombies >= 25 && oP.FlagZombies <= 27)
 				oP.SetTimeoutTomZombie([oZombie, oConeheadZombie]);
 			if (oP.FlagZombies >= 37 && oP.FlagZombies <= 40)
@@ -75,68 +75,58 @@ oS.Init(
 			if (oP.FlagZombies == oP.FlagNum)
 				oP.SetTimeoutTomZombie([oJackinTheBoxZombie, oFootballZombie]);
 			if (oP.FlagZombies == 21) {
-				oS.ChangeBG(
-					$("Black_box"),
-					$("BackGround_TF_night"),
-					1,
-					function () {
-						AppearTombstones(4, 9, 8);
-						oP.SetTimeoutTomZombie([oZombie, oConeheadZombie]);
-						(oS.DKind = 0), (oS.AddSunNum = 1);
-					}
-				);
+				oS.ChangeBG($("Black_box"), $("BackGround_TF_night"), 1, () => {
+					AppearTombstones(4, 9, 8);
+					oP.SetTimeoutTomZombie([oZombie, oConeheadZombie]);
+					(oS.DKind = 0), (oS.AddSunNum = 1);
+				});
 			}
 			if (oP.FlagZombies == 41) {
-				oS.ChangeBG(
-					$("White_box"),
-					$("BackGround_Unsodded"),
-					1,
-					function () {
-						($("BackGround_TF_night").style.opacity = 0),
-							(oS.AddSunNum = 5);
-						dag.clear();
-						oS.DKind = 1;
-						for (let i in oGd.$Crater) {
-							if (oGd.$Crater[i] == 100) {
-								oGd.$Crater[i] = false;
-							}
+				oS.ChangeBG($("White_box"), $("BackGround_Unsodded"), 1, () => {
+					($("BackGround_TF_night").style.opacity = 0),
+						(oS.AddSunNum = 5);
+					dag.clear();
+					oS.DKind = 1;
+					for (let i in oGd.$Crater) {
+						if (oGd.$Crater[i] == 100) {
+							oGd.$Crater[i] = false;
 						}
-						oGd.$LF = [0, 0, 1, 1, 1, 0];
-						oGd.$ZF = [0, 1, 1, 1, 1, 1];
-						for (let i = 1; i <= 9; i++) {
-							for (let j = 0; j < 4; j++) {
-								let p = oGd.$[1 + "_" + i + "_" + j];
-								p && p.Die();
-							}
-							for (let j = 0; j < 4; j++) {
-								let p = oGd.$[5 + "_" + i + "_" + j];
-								p && p.Die();
-							}
+					}
+					oGd.$LF = [0, 0, 1, 1, 1, 0];
+					oGd.$ZF = [0, 1, 1, 1, 1, 1];
+					for (let i = 1; i <= 9; i++) {
+						for (let j = 0; j < 4; j++) {
+							let p = oGd.$[`${1}_${i}_${j}`];
+							p && p.Die();
 						}
-						for (let i = 1; i <= 7; i++) {
-							CustomSpecial(oFlowerPot, 1, i);
-							CustomSpecial(oFlowerPot, 5, i);
+						for (let j = 0; j < 4; j++) {
+							let p = oGd.$[`${5}_${i}_${j}`];
+							p && p.Die();
 						}
-						for (let j = 11; j >= 1; j--) {
-							for (let i = 1; i <= 5; i++) {
-								dag.add_edge([i, j], [i, Math.max(0, j - 2)]);
-							}
+					}
+					for (let i = 1; i <= 7; i++) {
+						CustomSpecial(oFlowerPot, 1, i);
+						CustomSpecial(oFlowerPot, 5, i);
+					}
+					for (let j = 11; j >= 1; j--) {
+						for (let i = 1; i <= 5; i++) {
+							dag.add_edge([i, j], [i, Math.max(0, j - 2)]);
 						}
-						for (let i in oS.ZName) {
-							let s = oS.ZName[i];
-							let p = s.prototype;
-							p.ArR = [];
-							for (let j = 1; j <= 5; j++) {
-								if (p.CanPass(j, oGd.$ZF[j])) {
-									p.ArR.push(j);
-								}
+					}
+					for (let i in oS.ZName) {
+						let s = oS.ZName[i];
+						let p = s.prototype;
+						p.ArR = [];
+						for (let j = 1; j <= 5; j++) {
+							if (p.CanPass(j, oGd.$ZF[j])) {
+								p.ArR.push(j);
 							}
 						}
 					}
-				);
+				});
 			}
 		},
-		rewrite: function () {
+		rewrite() {
 			oP.MonPrgs = function () {
 				innerText(
 					ESSunNum,
@@ -170,11 +160,10 @@ oS.Init(
 										"script",
 										0,
 										{
-											src:
-												"asp/UserSave.asp?Lvl=" +
-												(s = oS.LvlEName) +
-												"&T=" +
-												(oSym.Now - oS.StartTime),
+											src: `asp/UserSave.asp?Lvl=${(s =
+												oS.LvlEName)}&T=${
+												oSym.Now - oS.StartTime
+											}`,
 											type: "text/javascript",
 										},
 										document.body
@@ -190,14 +179,14 @@ oS.Init(
 								((t = $("dAdventure")),
 								($User.Visitor.Progress = ++s),
 								(t.firstChild.innerHTML = Math.ceil(s / 10)),
-								(t.childNodes[1].innerHTML = (s =
-									s - Math.floor(s / 10) * 10)
+								(t.childNodes[1].innerHTML = (s -=
+									Math.floor(s / 10) * 10)
 									? s
 									: s + 1)),
 							PauseGame($("dMenu0"), 1)));
 			};
 		},
-		LoadAccess: function (start_game) {
+		LoadAccess(start_game) {
 			NewImg(
 				"BackGround_TF_night",
 				"https://s4.gifyu.com/images/background2_TF.jpg",
@@ -224,7 +213,7 @@ oS.Init(
 				0,
 				EDAll
 			);
-			delete oAudio["LevelSong"];
+			delete oAudio.LevelSong;
 			NewURLAudio({
 				url: "audio/Zombieboss.mp3",
 				audioname: "LevelSong",
@@ -232,9 +221,9 @@ oS.Init(
 			});
 			init_dag();
 			for (let i = 5; i >= 1; i--) {
-				oGd.$Crater[i + "_" + 2] =
-					oGd.$Crater[i + "_" + 8] =
-					oGd.$Crater[i + "_" + 5] =
+				oGd.$Crater[`${i}_${2}`] =
+					oGd.$Crater[`${i}_${8}`] =
+					oGd.$Crater[`${i}_${5}`] =
 						100;
 				if (i == 5) continue;
 				dag.add_edge([i + 1, 2], [i, 2]);
@@ -243,13 +232,13 @@ oS.Init(
 			}
 			for (let i = 0; i <= 10; i++) {
 				let j = 1 + 4 * !!Math.floor(((i + 1) / 3) % 2);
-				oGd.$Crater[j + "_" + i] = 100;
+				oGd.$Crater[`${j}_${i}`] = 100;
 				dag.add_edge([j, i + 1], [j, i]);
 			}
 			oS.rewrite();
 			start_game();
 		},
-		ChangeBG: function (box, bg, opa, deffuc) {
+		ChangeBG(box, bg, opa, deffuc) {
 			box.style["z-index"] = 250;
 			oSym.addTask(
 				1,
@@ -277,11 +266,11 @@ oS.Init(
 				[0, 0, opa == undefined ? 1 : opa]
 			);
 		},
-		StartGame: function () {
+		StartGame() {
 			StopMusic();
 			SetVisible($("tdShovel"), $("dFlagMeter"), $("dTop"));
 			oS.InitLawnMower();
-			PrepareGrowPlants(function () {
+			PrepareGrowPlants(() => {
 				PlayMusic((oS.LoadMusic = oS.StartGameMusic = "LevelSong"));
 				oP.Monitor(oS.Monitor, oS.UserDefinedFlagFunc);
 				oSym.addTask(
@@ -296,7 +285,7 @@ oS.Init(
 				oS.DKind && AutoProduceSun(25);
 				oSym.addTask(
 					1000,
-					function () {
+					() => {
 						oP.AddZombiesFlag();
 						try {
 							$("imgFlag2").style.left = "65px";
@@ -339,14 +328,14 @@ oS.Init(
 			39: [ShowLargeWave, 0],
 			59: [ShowFinalWave, 0],
 		},
-		FlagToEnd: function () {
+		FlagToEnd() {
 			NewImg(
 				"imgSF",
 				"images/interface/trophy.png",
 				"left:43.5%;top:220px",
 				EDAll,
 				{
-					onclick: function () {
+					onclick() {
 						SelectModal(0);
 						PlayAudio("winmusic");
 					},
@@ -361,7 +350,7 @@ oS.Init(
 		},
 	},
 	{
-		AutoProduceSun: function (a) {
+		AutoProduceSun(a) {
 			if (oS.DKind) {
 				AppearSun(
 					GetX(Math.floor(1 + Math.random() * oS.C)),
@@ -378,7 +367,7 @@ oS.Init(
 		},
 		dag: [],
 		redag: [],
-		init_dag: function () {
+		init_dag() {
 			dag.add_edge = (u, v) => {
 				(u = JSON.stringify(u) || u.toString()),
 					(v = JSON.stringify(v) || v.toString());
@@ -409,7 +398,7 @@ oS.Init(
 				}
 			};
 		},
-		dag_zombie_init: function (b) {
+		dag_zombie_init(b) {
 			isNaN(b.AttackedLX)
 				? (b.AttackedLX = b.AttackedLX2)
 				: (b.AttackedLX2 = b.AttackedLX);
@@ -422,7 +411,7 @@ oS.Init(
 			if (b.init) return;
 			b.init = true;
 		},
-		ctk_arrive_grid: function (b, task, reduce, tp, x) {
+		ctk_arrive_grid(b, task, reduce, tp, x) {
 			let point = (b.beAttackedPointR - b.beAttackedPointL) * 0.5;
 			let twotrue = 0;
 			let ty = GetY(task[0]);
@@ -434,24 +423,22 @@ oS.Init(
 			let finalx = (tx - x) * xS;
 			if (finaly > 0) {
 				(b.Reduce[0] = 0),
-					(b.Ele.style.top = ty - b.height + b.GetDY() + "px"),
+					(b.Ele.style.top = `${ty - b.height + b.GetDY()}px`),
 					(b.RSpeed = 0);
 			}
 			if (finalx > 0) {
-				(b.Reduce[1] = 0),
-					(b.AttackedLX = b.AttackedLX - b.X),
-					(b.AttackedRX = b.AttackedRX - b.X);
+				(b.Reduce[1] = 0), (b.AttackedLX -= b.X), (b.AttackedRX -= b.X);
 				(b.X = tx - point - b.beAttackedPointL),
-					(b.AttackedLX = b.AttackedLX + b.X),
-					(b.AttackedRX = b.AttackedRX + b.X);
-				(b.Ele.style.left = b.X + "px"), (b.Speed = 0);
+					(b.AttackedLX += b.X),
+					(b.AttackedRX += b.X);
+				(b.Ele.style.left = `${b.X}px`), (b.Speed = 0);
 			}
 			if (b.Reduce[0] == b.Reduce[1] && b.Reduce[0] == 0) {
 				delete b.Next_Edge;
 				delete b.Reduce;
 			}
 		},
-		ctk_change_r: function (b, tp) {
+		ctk_change_r(b, tp) {
 			let tp2 = tp + b.height - b.GetDY();
 			let l = GetR(tp2);
 			let r = !b.WalkDirection ? -5 : 5;
@@ -465,10 +452,10 @@ oS.Init(
 					(b.AttackedLX -= r),
 					(b.AttackedRX -= r),
 					(b.X -= r);
-				b.Ele.style.left = b.X + "px";
+				b.Ele.style.left = `${b.X}px`;
 			}
 		},
-		ctk_final_set: function (b) {
+		ctk_final_set(b) {
 			b.WalkDirection && b.Speed < 0 && (b.Speed = -b.Speed);
 			if (b.WalkDirection && b.Reduce && b.Reduce[1] > 0) {
 				b.Speed > 0 &&
@@ -483,7 +470,7 @@ oS.Init(
 			isNaN(b.X) ? (b.X = b.X2) : (b.X2 = b.X);
 			isNaN(b.ZX) ? (b.ZX = b.ZX2) : (b.ZX2 = b.ZX);
 		},
-		dag_traversal_of: function () {
+		dag_traversal_of() {
 			for (let _ in $Z) {
 				let Eletop;
 				let b = $Z[_];
@@ -491,7 +478,7 @@ oS.Init(
 				let point = (b.beAttackedPointR - b.beAttackedPointL) * 0.5;
 				let c = GetC(b.ZX + point);
 				let to = b.Next_Edge;
-				let now = "[" + r + "," + c + "]";
+				let now = `[${r},${c}]`;
 				let nowArr = [r, c];
 				dag_zombie_init(b);
 				if (b.EName == "oZomboni") continue;
@@ -528,13 +515,13 @@ oS.Init(
 					(!!b.FreeSlowTime * 0.5 || 1) *
 					!b.FreeFreezeTime;
 				(Eletop = Number(b.Ele.style.top.split("px")[0]) - b.RSpeed),
-					(b.Ele.style.top = Eletop + "px");
+					(b.Ele.style.top = `${Eletop}px`);
 				ctk_arrive_grid(b, toArr, Reduce, Eletop, b.ZX + point);
 				ctk_change_r(b, Eletop);
 				ctk_final_set(b);
 			}
 		},
-		dfs: function (x, up) {
+		dfs(x, up) {
 			console.log(x);
 			for (let i in dag[x]) {
 				let to = dag[x][i];
@@ -542,7 +529,7 @@ oS.Init(
 				dfs(to, x);
 			}
 		},
-		NewURLAudio: function (b) {
+		NewURLAudio(b) {
 			var a = b.url;
 			var names = b.audioname || a;
 			if (oAudio[names]) {
@@ -561,14 +548,14 @@ oS.Init(
 				(m = document.createElement("source")).type = j[e];
 				(m.src = a), f.appendChild(m);
 			}
-			(f.autoplay = c ? true : false),
+			(f.autoplay = !!c),
 				(f.preload =
 					k == undefined ? "auto" : ["auto", "meta", "none"][k]),
 				(f.muted = oS.Silence);
 			g &&
 				f.addEventListener(
 					"ended",
-					function () {
+					() => {
 						f.play();
 					},
 					false

@@ -56,11 +56,11 @@ oS.Init({
 			Arr2: [1, 1, 1],
 		},
 	},
-	RandomGrow: function (Point, Arr) {
-		Point.sort(function () {
+	RandomGrow(Point, Arr) {
+		Point.sort(() => {
 			return Math.random() - 0.5;
 		});
-		Arr.sort(function () {
+		Arr.sort(() => {
 			return Math.random() - 0.5;
 		});
 		while (Point.length && Arr.length) {
@@ -74,7 +74,7 @@ oS.Init({
 			Point.length--, Arr.length--;
 		}
 	},
-	RiddleAutoGrow: function () {
+	RiddleAutoGrow() {
 		var k = oS.ArP;
 		var f = k.ArC;
 		var j = k.ArR;
@@ -114,11 +114,11 @@ oS.Init({
 		NewImg(
 			"iStripe",
 			"images/interface/Stripe.png",
-			"left:" + (GetX1X2(6)[0] - 11) + "px;top:65px",
+			`left:${GetX1X2(6)[0] - 11}px;top:65px`,
 			EDAll
 		);
 	},
-	StartGame: function () {
+	StartGame() {
 		oP.Monitor(), BeginCool();
 		SetVisible($("dFlagMeter"), $("dFlagMeterContent"), $("dTop"));
 		oS.RiddleAutoGrow();

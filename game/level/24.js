@@ -57,7 +57,7 @@ oS.Init(
 			20: $("imgFlag2"),
 			30: $("imgFlag1"),
 		},
-		UserDefinedFlagFunc: function (a) {
+		UserDefinedFlagFunc(a) {
 			oP.FlagNum == oP.FlagZombies &&
 				oP.SetTimeoutWaterZombie(6, 9, 3, [oDuckyTubeZombie1]);
 		},
@@ -87,14 +87,14 @@ oS.Init(
 			19: [ShowLargeWave, 0],
 			29: [ShowFinalWave, 0],
 		},
-		FlagToEnd: function () {
+		FlagToEnd() {
 			NewImg(
 				"imgSF",
 				"images/interface/trophy.png",
 				"left:417px;top:233px;z-index:255",
 				EDAll,
 				{
-					onclick: function () {
+					onclick() {
 						SelectModal(25);
 					},
 				}

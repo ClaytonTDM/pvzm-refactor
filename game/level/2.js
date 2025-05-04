@@ -21,20 +21,20 @@ oS.Init(
 		LvlEName: 2,
 		AudioArr: ["dirt_rise"],
 		LargeWaveFlag: { 6: $("imgFlag1") },
-		InitLawnMower: function () {
+		InitLawnMower() {
 			var a = 5;
 			while (--a > 1) {
 				CustomSpecial(oLawnCleaner, a, -1);
 			}
 		},
-		StartGame: function () {
+		StartGame() {
 			NewImg(
 				"imgSF",
 				"images/interface/tiaoguo.png",
 				"left:1px;top:150px",
 				EDAll,
 				{
-					onclick: function () {
+					onclick() {
 						SelectModal(3);
 					},
 				}
@@ -75,28 +75,28 @@ oS.Init(
 				e += 15;
 				h += 16;
 				d += 16;
-				$("sod3row").style.width = e + "px";
+				$("sod3row").style.width = `${e}px`;
 				SetStyle($("SodRoll_1"), {
-					left: h + "px",
-					width: --b + "px",
+					left: `${h}px`,
+					width: `${--b}px`,
 					height: "141px",
 				});
 				SetStyle($("SodRoll_2"), {
-					left: h + "px",
-					width: b + "px",
+					left: `${h}px`,
+					width: `${b}px`,
 					height: "141px",
 				});
 				SetStyle($("SodRollCap_1"), {
-					left: d + "px",
-					width: --c + "px",
-					height: --g + "px",
-					top: ++a + "px",
+					left: `${d}px`,
+					width: `${--c}px`,
+					height: `${--g}px`,
+					top: `${++a}px`,
 				});
 				SetStyle($("SodRollCap_2"), {
-					left: d + "px",
-					width: c + "px",
-					height: g + "px",
-					top: ++f + "px",
+					left: `${d}px`,
+					width: `${c}px`,
+					height: `${g}px`,
+					top: `${++f}px`,
 				});
 				e < 990
 					? oSym.addTask(3, arguments.callee, [
@@ -120,11 +120,11 @@ oS.Init(
 							PlayMusic((oS.LoadMusic = oS.StartGameMusic));
 							oS.InitLawnMower();
 							SetVisible($("dFlagMeter"), $("dTop"));
-							PrepareGrowPlants(function () {
+							PrepareGrowPlants(() => {
 								NewEle("DivTeachBar", "div", 0, 0, EDAll);
 								oP.Monitor({
 									ar: [0],
-									f: function (l) {
+									f(l) {
 										var m = oS.C + 1;
 										switch (l) {
 											case 0:
@@ -162,7 +162,7 @@ oS.Init(
 															[++l]
 														).addTask(
 															2500,
-															function () {
+															() => {
 																oP.AddZombiesFlag();
 																SetVisible(
 																	$(
@@ -256,14 +256,14 @@ oS.Init(
 		FlagNum: 6,
 		FlagToSumNum: { a1: [3, 4], a2: [1, 2, 3] },
 		FlagToMonitor: { 5: [ShowFinalWave, 0] },
-		FlagToEnd: function () {
+		FlagToEnd() {
 			NewImg(
 				"imgSF",
 				"images/Card/Plants/CherryBomb.png",
 				"left:827px;top:220px;clip:rect(auto,auto,60px,auto)",
 				EDAll,
 				{
-					onclick: function () {
+					onclick() {
 						GetNewCard(this, oCherryBomb, 3);
 					},
 				}

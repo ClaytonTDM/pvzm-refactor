@@ -98,12 +98,9 @@ async function openAndLoadFileAsBytes() {
 }
 
 async function fileToLevelData() {
-	return (
-		"=" +
-		compressString(
-			decompressStringFromBytes(await openAndLoadFileAsBytes())
-		)
-	); // i hate this and want to fix it but its 4 am and i need to sleep. fuck text encoding
+	return `=${compressString(
+		decompressStringFromBytes(await openAndLoadFileAsBytes())
+	)}`; // i hate this and want to fix it but its 4 am and i need to sleep. fuck text encoding
 }
 
 function cloneFromPlants(name, sun, screenshot) {
@@ -127,7 +124,7 @@ function cloneFromPlants(name, sun, screenshot) {
 		let plantRow = $P[keyedDict[i]].R;
 		let plantCol = $P[keyedDict[i]].C;
 		let plantName = Object.getPrototypeOf($P[keyedDict[i]]).EName;
-		let zIndex = $P[keyedDict[i]].zIndex;
+		let { zIndex } = $P[keyedDict[i]];
 		plantDict[keyedDict[i]] = { zIndex, plantRow, plantCol, plantName };
 	}
 	// now turn it into an array of dictionaries
@@ -170,7 +167,7 @@ function tinyifyClone(clone) {
 					let innerArr = [];
 					for (const [innerKey, innerValue] of Object.entries(obj)) {
 						innerArr.push(
-							TINYIFIER_MAP[innerKey] + "\uE004" + innerValue
+							`${TINYIFIER_MAP[innerKey]}\uE004${innerValue}`
 						);
 					}
 					innerVal += innerArr.join("\uE002");
@@ -189,7 +186,7 @@ function tinyifyClone(clone) {
 	// merge into a string
 	let arr = [];
 	for (const [key, value] of Object.entries(tinyifiedClone)) {
-		arr.push(key + "\uE005" + value);
+		arr.push(`${key}\uE005${value}`);
 	}
 	return arr.join("\uE006");
 }
@@ -259,28 +256,26 @@ function stringifyClone(levelData) {
 			""
 		);
 		delete levelData.screenshot;
-		return compressString(JSON.stringify(levelData)) + ";" + screenshot;
-	} else {
-		return compressString(JSON.stringify(levelData));
+		return `${compressString(JSON.stringify(levelData))};${screenshot}`;
 	}
+	return compressString(JSON.stringify(levelData));
 }
 function stringifyCloneTiny(levelData) {
-	return "=" + compressString(tinyifyClone(levelData));
+	return `=${compressString(tinyifyClone(levelData))}`;
 }
 function parseClone(stringifiedData) {
 	let levelData = JSON.parse(decompressString(stringifiedData.split(";")[0]));
 	let screenshot = stringifiedData.split(";")[1];
 	if (screenshot) {
-		levelData.screenshot = "data:image/webp;base64," + screenshot;
+		levelData.screenshot = `data:image/webp;base64,${screenshot}`;
 	}
 	return levelData;
 }
 function parseCloneTiny(stringifiedData) {
 	if (stringifiedData[0] === "=") {
 		return untinyifyClone(decompressString(stringifiedData.slice(1)));
-	} else {
-		throw new Error("Invalid data format");
 	}
+	throw new Error("Invalid data format");
 }
 
 function restoreToPlants(levelData) {
@@ -289,9 +284,9 @@ function restoreToPlants(levelData) {
 
 	for (let i = 0; i < plantArray.length; i++) {
 		let plant = plantArray[i];
-		let plantName = plant.plantName;
-		let plantRow = plant.plantRow;
-		let plantCol = plant.plantCol;
+		let { plantName } = plant;
+		let { plantRow } = plant;
+		let { plantCol } = plant;
 		CustomSpecial(window[plantName], plantRow, plantCol, 1);
 	}
 }

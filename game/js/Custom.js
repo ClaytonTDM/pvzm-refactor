@@ -168,9 +168,9 @@ let checkInterval = setInterval(() => {
 						) {
 							$("dAdventure").onclick = function () {
 								console.log(
-									"Starting adventure with level: " +
-										localStorage.getItem("level") +
-										" (from localStorage)"
+									`Starting adventure with level: ${localStorage.getItem(
+										"level"
+									)} (from localStorage)`
 								);
 								StartAdventure(localStorage.getItem("level"));
 							};

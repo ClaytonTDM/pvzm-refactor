@@ -16,8 +16,8 @@ var CPlants = NewO({
 	Stature: 0,
 
 	Sleep: 0,
-	CanGrow: function (c, b, e) {
-		var a = b + "_" + e;
+	CanGrow(c, b, e) {
+		var a = `${b}_${e}`;
 		var d = oS.ArP;
 		return d
 			? oGd.$LF[b] == 1
@@ -35,27 +35,27 @@ var CPlants = NewO({
 					)
 				: c[0] && !c[1];
 	},
-	getHurt: function (e, c, b) {
+	getHurt(e, c, b) {
 		var d = this;
 		var a = d.id;
 		!(c % 3) ? (d.HP -= b) < 1 && d.Die() : d.Die();
 	},
-	GetDY: function (b, c, a) {
+	GetDY(b, c, a) {
 		return a[0] ? -21 : -15;
 	},
-	GetDX: function () {
+	GetDX() {
 		return -Math.floor(this.width * 0.5);
 	},
-	GetDBottom: function () {
+	GetDBottom() {
 		return this.height;
 	},
-	Birth: function (d, c, h, a, m, n) {
+	Birth(d, c, h, a, m, n) {
 		var e = this;
 		var k = d + e.GetDX();
 		var i = c + e.GetDY(h, a, m);
 		var l = e.prototype;
 		var g = i - e.height;
-		var b = (e.id = "P_" + Math.random());
+		var b = (e.id = `P_${Math.random()}`);
 		var j = (e.zIndex += 3 * h);
 		var f = NewEle(0, "div", "position:absolute");
 
@@ -84,21 +84,19 @@ var CPlants = NewO({
 			b,
 			f,
 			{
-				left: k + "px",
-				top: g + "px",
+				left: `${k}px`,
+				top: `${g}px`,
 				zIndex: j,
 			},
 			n
 		);
-		oGd.add(e, h + "_" + a + "_" + e.PKind);
+		oGd.add(e, `${h}_${a}_${e.PKind}`);
 		e.PrivateBirth(e, n);
 	},
-	getShadow: function (a) {
-		return (
-			"left:" + (a.width * 0.5 - 48) + "px;top:" + (a.height - 22) + "px"
-		);
+	getShadow(a) {
+		return `left:${a.width * 0.5 - 48}px;top:${a.height - 22}px`;
 	},
-	BirthStyle: function (c, d, b, a) {
+	BirthStyle(c, d, b, a) {
 		EditEle(
 			b,
 			{
@@ -108,14 +106,14 @@ var CPlants = NewO({
 			EDPZ
 		);
 	},
-	PrivateBirth: function (a) {},
-	getTriggerRange: function (a, b, c) {
+	PrivateBirth(a) {},
+	getTriggerRange(a, b, c) {
 		return [[b, oS.W, 0]];
 	},
-	getTriggerR: function (a) {
+	getTriggerR(a) {
 		return [a, a];
 	},
-	InitTrigger: function (c, b, f, a, h, g) {
+	InitTrigger(c, b, f, a, h, g) {
 		var j = {};
 		var i = c.getTriggerR(f);
 		var e = i[0];
@@ -125,23 +123,23 @@ var CPlants = NewO({
 		} while (e++ != d);
 		c.oTrigger = j;
 	},
-	TriggerCheck: function (b, a) {
+	TriggerCheck(b, a) {
 		this.AttackCheck2(b) &&
 			((this.canTrigger = 0), this.CheckLoop(b.id, a));
 	},
-	CheckLoop: function (b, c) {
+	CheckLoop(b, c) {
 		var a = this.id;
 		this.NormalAttack(b);
 		oSym.addTask(
 			140,
-			function (e, f, h) {
+			(e, f, h) => {
 				var g;
 				(g = $P[e]) && g.AttackCheck1(f, h);
 			},
 			[a, b, c]
 		);
 	},
-	AttackCheck1: function (g, f) {
+	AttackCheck1(g, f) {
 		var b = this;
 		var c = b.oTrigger;
 		var a = $Z[g];
@@ -162,28 +160,28 @@ var CPlants = NewO({
 		}
 		b.canTrigger = 1;
 	},
-	AttackCheck2: function (a) {
+	AttackCheck2(a) {
 		return a.Altitude > 0;
 	},
-	PrivateDie: function (a) {},
-	BoomDie: function () {
+	PrivateDie(a) {},
+	BoomDie() {
 		var a = this;
 		var b = a.id;
 		a.oTrigger && oT.delP(a);
 		a.HP = 0;
 		delete $P[b];
-		delete oGd.$[a.R + "_" + a.C + "_" + a.PKind];
+		delete oGd.$[`${a.R}_${a.C}_${a.PKind}`];
 		$P.length -= 1;
 		ClearChild($(b));
 		a.PrivateDie(a);
 	},
-	Die: function (a) {
+	Die(a) {
 		var b = this;
 		var c = b.id;
 		b.oTrigger && oT.delP(b);
 		b.HP = 0;
 		delete $P[c];
-		delete oGd.$[b.R + "_" + b.C + "_" + b.PKind];
+		delete oGd.$[`${b.R}_${b.C}_${b.PKind}`];
 		$P.length -= 1;
 		!a && ClearChild($(c));
 		b.PrivateDie(b);
@@ -201,19 +199,19 @@ var oGraveBuster = InheritO(CPlants, {
 	PicArr: [
 		"images/Card/Plants/GraveBuster.png",
 		"images/Plants/GraveBuster/0.gif",
-		"images/Plants/GraveBuster/GraveBuster.gif" + $Random + Math.random(),
+		`images/Plants/GraveBuster/GraveBuster.gif${$Random}${Math.random()}`,
 	],
 	AudioArr: ["gravebusterchomp"],
-	CanGrow: function (b, a, d) {
+	CanGrow(b, a, d) {
 		var c = oS.ArP;
 		return c
-			? d > 0 && d < c.ArC[1] && a + "_" + d in oGd.$Tombstones && !b[1]
-			: a + "_" + d in oGd.$Tombstones && !b[1];
+			? d > 0 && d < c.ArC[1] && `${a}_${d}` in oGd.$Tombstones && !b[1]
+			: `${a}_${d}` in oGd.$Tombstones && !b[1];
 	},
-	getShadow: function (a) {
-		return "left:" + (a.width * 0.5 - 48) + "px;top:" + a.height + "px";
+	getShadow(a) {
+		return `left:${a.width * 0.5 - 48}px;top:${a.height}px`;
 	},
-	BirthStyle: function (c, d, b, a) {
+	BirthStyle(c, d, b, a) {
 		EditEle(
 			b,
 			{
@@ -223,18 +221,18 @@ var oGraveBuster = InheritO(CPlants, {
 			EDPZ
 		);
 	},
-	GetDY: function (b, c, a) {
+	GetDY(b, c, a) {
 		return -30;
 	},
-	InitTrigger: function () {},
+	InitTrigger() {},
 	Tooltip: "Plant it on a grave to remove the grave",
 	Produce:
 		'<font color="#28325A">Plant Grave Busters on graves to remove the graves.</font><p>Usage: <font color="#CC241D">single use, must be planted on graves</font><br>Special: <font color="#CC241D">removes graves</font></p>Despite Grave Buster\'s fearsome appearance, he wants everyone to know that he loves kittens and spends his off hours volunteering at a local zombie rehabilitation center. "It\'s just the right thing to do," he says.',
-	PrivateBirth: function (a) {
+	PrivateBirth(a) {
 		PlayAudio("gravebusterchomp");
 		oSym.addTask(
 			420,
-			function (b) {
+			(b) => {
 				var e = $P[b];
 				var c;
 				var d;
@@ -242,9 +240,9 @@ var oGraveBuster = InheritO(CPlants, {
 				e &&
 					((d = e.R),
 					(f = e.C),
-					delete oGd.$Tombstones[(c = d + "_" + f)],
+					delete oGd.$Tombstones[(c = `${d}_${f}`)],
 					e.Die(),
-					ClearChild($("dTombstones" + c)),
+					ClearChild($(`dTombstones${c}`)),
 					oS.StaticCard &&
 						AppearSun(
 							Math.floor(GetX(f) + Math.random() * 41),
@@ -273,22 +271,20 @@ var oLawnCleaner = InheritO(CPlants, {
 	NormalGif: 0,
 	canEat: 0,
 	Stature: 1,
-	getShadow: function (a) {
-		return (
-			"left:" + (a.width * 0.5 - 38) + "px;top:" + (a.height - 22) + "px"
-		);
+	getShadow(a) {
+		return `left:${a.width * 0.5 - 38}px;top:${a.height - 22}px`;
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[b, c, 0]];
 	},
-	TriggerCheck: function (b, a) {
+	TriggerCheck(b, a) {
 		b.beAttacked &&
 			b.Altitude > 0 &&
 			((this.canTrigger = 0), this.NormalAttack(this));
 	},
-	BoomDie: function () {},
+	BoomDie() {},
 	Tooltip: "Most common lawn mower",
-	NormalAttack: function (a) {
+	NormalAttack(a) {
 		PlayAudio(a.AudioArr[0]);
 		(function (b, c, k, j, e, g) {
 			var d = oZ.getArZ(k, j, e);
@@ -303,7 +299,7 @@ var oLawnCleaner = InheritO(CPlants, {
 				: ((b.pixelRight += 10),
 					(b.AttackedLX = k += 10),
 					(b.AttackedRX = j += 10),
-					(g.style.left = (b.pixelLeft += 10) + "px"),
+					(g.style.left = `${(b.pixelLeft += 10)}px`),
 					oSym.addTask(1, arguments.callee, [b, c, k, j, e, g]),
 					[this]);
 		})(a, oS.W, a.AttackedLX, a.AttackedRX, a.R, $(a.id));
@@ -326,10 +322,10 @@ var oCleaner1 = InheritO(oLawnCleaner, {
 });
 var oCleaner = InheritO(oCleaner1, {
 	EName: "oCleaner",
-	NormalAttack: function (a) {
+	NormalAttack(a) {
 		oSym.addTask(
 			40,
-			function (j) {
+			(j) => {
 				var h = $P[j];
 				if (h) {
 					PlayAudio("jalapeno");
@@ -351,15 +347,15 @@ var oCleaner = InheritO(oCleaner1, {
 						{
 							width: "755px",
 							height: "131px",
-							left: 120 - h.pixelLeft + "px",
+							left: `${120 - h.pixelLeft}px`,
 							top: "-42px",
 						}
 					);
 					oSym.addTask(135, ClearChild, [b]);
-					ClearChild($("dIceCar" + f));
+					ClearChild($(`dIceCar${f}`));
 					if (g) {
 						for (e = g[1]; e < 11; e++) {
-							delete d[f + "_" + e];
+							delete d[`${f}_${e}`];
 						}
 					}
 				}
@@ -382,7 +378,7 @@ var oPoolCleaner = InheritO(oLawnCleaner, {
 	],
 	Tooltip: "Pond Sweeper",
 	AudioArr: ["pool_cleaner"],
-	NormalAttack: function (a) {
+	NormalAttack(a) {
 		PlayAudio(a.AudioArr[0]);
 		(function (b, c, k, j, e, g) {
 			var d = oZ.getArZ(k, j, e);
@@ -397,7 +393,7 @@ var oPoolCleaner = InheritO(oLawnCleaner, {
 				: ((b.pixelRight += 10),
 					(b.AttackedLX = k += 10),
 					(b.AttackedRX = j += 10),
-					(g.style.left = (b.pixelLeft += 10) + "px"),
+					(g.style.left = `${(b.pixelLeft += 10)}px`),
 					oSym.addTask(1, arguments.callee, [b, c, k, j, e, g]),
 					[this]);
 		})(a, oS.W, a.AttackedLX, a.AttackedRX, a.R, $(a.id));
@@ -415,8 +411,8 @@ var oBrains = InheritO(CPlants, {
 	PicArr: ["images/interface/brain.png"],
 	Tooltip: "Delicious brain",
 	NormalGif: 0,
-	InitTrigger: function () {},
-	PrivateBirth: function (a) {
+	InitTrigger() {},
+	PrivateBirth(a) {
 		a.PrivateDie = oS.BrainsNum
 			? ((a.DieStep = Math.floor(150 / oS.BrainsNum)),
 				function (d) {
@@ -430,9 +426,9 @@ var oBrains = InheritO(CPlants, {
 					);
 					(b = --oS.BrainsNum)
 						? ((c = b * d.DieStep),
-							($("imgFlagHead").style.left = c - 11 + "px"),
+							($("imgFlagHead").style.left = `${c - 11}px`),
 							($("imgFlagMeterFull").style.clip =
-								"rect(0,157px,21px," + c + "px)"))
+								`rect(0,157px,21px,${c}px)`))
 						: (($("imgFlagHead").style.left = "-1px"),
 							($("imgFlagMeterFull").style.clip =
 								"rect(0,157px,21px,0)"),
@@ -442,7 +438,7 @@ var oBrains = InheritO(CPlants, {
 					GameOver();
 				};
 	},
-	GetDX: function () {
+	GetDX() {
 		return -40;
 	},
 });
@@ -453,7 +449,7 @@ var oStarfruit = InheritO(CPlants, {
 	height: 70,
 	beAttackedPointR: 57,
 	SunNum: 125,
-	GetDY: function (b, c, a) {
+	GetDY(b, c, a) {
 		return a[0] ? -17 : -10;
 	},
 	PicArr: [
@@ -465,7 +461,7 @@ var oStarfruit = InheritO(CPlants, {
 	Tooltip: "Shoots stars in 5 directions",
 	Produce:
 		'<font color="#28325A">Starfruits shoot stars in 5 directions.</font><p>Damage: <font color="#CC241D">normal</font><br>Range: <font color="#CC241D">5 directions</font><p>"Aw, man," says Starfruit. "I went to the dentist the other day and he said I have four cavities. I\'ve got --count it-- ONE tooth! Four cavities in one tooth? How does this happen?"',
-	getTriggerRange: function (e, g, f) {
+	getTriggerRange(e, g, f) {
 		var a = this.R;
 		var b = GetY(a);
 		var c = oS.W;
@@ -487,7 +483,7 @@ var oStarfruit = InheritO(CPlants, {
 				return [[100, c, 0]];
 		}
 	},
-	AttackCheck2: function (l) {
+	AttackCheck2(l) {
 		var j = l.R;
 		if (j == this.R) {
 			return l.Altitude > 0;
@@ -522,28 +518,28 @@ var oStarfruit = InheritO(CPlants, {
 		}
 		return k && l.Altitude > 0;
 	},
-	getTriggerR: function (a) {
+	getTriggerR(a) {
 		return [1, oS.R];
 	},
-	PrivateBirth: function (d) {
+	PrivateBirth(d) {
 		var c = d.pixelLeft + 38;
 		var b = c - 15;
 		var a = d.pixelTop + 20;
 		d.BulletEle = NewImg(
 			0,
 			"images/Plants/Starfruit/Star.gif",
-			"left:" + b + "px;top:" + a + "px;z-index:" + (d.zIndex + 2)
+			`left:${b}px;top:${a}px;z-index:${d.zIndex + 2}`
 		);
 	},
-	PrivateDie: function (a) {
+	PrivateDie(a) {
 		a.BulletEle = null;
 	},
-	getHurt: function (d, b, a) {
+	getHurt(d, b, a) {
 		var c = this;
 		b != 3 && c.NormalAttack();
 		(c.HP -= a) < 1 && c.Die();
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		var g = this;
 		var f = g.pixelLeft + 38;
 		var d = f - 15;
@@ -558,7 +554,7 @@ var oStarfruit = InheritO(CPlants, {
 		(function (h) {
 			oSym.addTask(
 				15,
-				function (j) {
+				(j) => {
 					var i = $(j);
 					i && SetVisible(i);
 				},
@@ -570,7 +566,7 @@ var oStarfruit = InheritO(CPlants, {
 					j(oZ.getZ1(m, k), 4, i) &&
 						((m -= 5) < 100
 							? ClearChild(i)
-							: ((i.style.left = (l -= 5) + "px"),
+							: ((i.style.left = `${(l -= 5)}px`),
 								oSym.addTask(1, arguments.callee, [
 									m,
 									k,
@@ -594,11 +590,11 @@ var oStarfruit = InheritO(CPlants, {
 					a,
 				]
 			);
-		})("StarB" + Math.random());
+		})(`StarB${Math.random()}`);
 		(function (h) {
 			oSym.addTask(
 				15,
-				function (j) {
+				(j) => {
 					var i = $(j);
 					i && SetVisible(i);
 				},
@@ -610,7 +606,7 @@ var oStarfruit = InheritO(CPlants, {
 					j(oZ.getRangeLeftZ(m, n, l), 6, i) &&
 						((k -= 5) < -15
 							? ClearChild(i)
-							: ((i.style.top = k + "px"),
+							: ((i.style.top = `${k}px`),
 								oSym.addTask(1, arguments.callee, [
 									m,
 									n,
@@ -636,11 +632,11 @@ var oStarfruit = InheritO(CPlants, {
 					a,
 				]
 			);
-		})("StarB" + Math.random());
+		})(`StarB${Math.random()}`);
 		(function (h) {
 			oSym.addTask(
 				15,
-				function (j) {
+				(j) => {
 					var i = $(j);
 					i && SetVisible(i);
 				},
@@ -652,7 +648,7 @@ var oStarfruit = InheritO(CPlants, {
 					j(oZ.getRangeLeftZ(m, n, l), 2, i) &&
 						((k += 5) > 600
 							? ClearChild(i)
-							: ((i.style.top = k + "px"),
+							: ((i.style.top = `${k}px`),
 								oSym.addTask(1, arguments.callee, [
 									m,
 									n,
@@ -678,11 +674,11 @@ var oStarfruit = InheritO(CPlants, {
 					a,
 				]
 			);
-		})("StarB" + Math.random());
+		})(`StarB${Math.random()}`);
 		(function (h) {
 			oSym.addTask(
 				15,
-				function (j) {
+				(j) => {
 					var i = $(j);
 					i && SetVisible(i);
 				},
@@ -695,8 +691,8 @@ var oStarfruit = InheritO(CPlants, {
 						((n += 4) > 900 || (k -= 3) < -15
 							? ClearChild(i)
 							: (SetStyle(i, {
-									left: (m += 4) + "px",
-									top: k + "px",
+									left: `${(m += 4)}px`,
+									top: `${k}px`,
 								}),
 								oSym.addTask(1, arguments.callee, [
 									n,
@@ -723,11 +719,11 @@ var oStarfruit = InheritO(CPlants, {
 					a,
 				]
 			);
-		})("StarB" + Math.random());
+		})(`StarB${Math.random()}`);
 		(function (h) {
 			oSym.addTask(
 				15,
-				function (j) {
+				(j) => {
 					var i = $(j);
 					i && SetVisible(i);
 				},
@@ -740,8 +736,8 @@ var oStarfruit = InheritO(CPlants, {
 						((n += 4) > 900 || (k += 3) > 600
 							? ClearChild(i)
 							: (SetStyle(i, {
-									left: (m += 4) + "px",
-									top: k + "px",
+									left: `${(m += 4)}px`,
+									top: `${k}px`,
 								}),
 								oSym.addTask(1, arguments.callee, [
 									n,
@@ -768,7 +764,7 @@ var oStarfruit = InheritO(CPlants, {
 					a,
 				]
 			);
-		})("StarB" + Math.random());
+		})(`StarB${Math.random()}`);
 	},
 });
 var oSeedStarfruit = InheritO(CPlants, {
@@ -778,7 +774,7 @@ var oSeedStarfruit = InheritO(CPlants, {
 	height: 70,
 	beAttackedPointR: 57,
 	SunNum: 0,
-	GetDY: function (b, c, a) {
+	GetDY(b, c, a) {
 		return a[0] ? -17 : -10;
 	},
 	PicArr: [
@@ -790,7 +786,7 @@ var oSeedStarfruit = InheritO(CPlants, {
 	Tooltip: "Shoots stars in 5 directions",
 	Produce:
 		'Starfruit can fire small starfruits in five directions.<p>Harm:<font color="#CC241D">medium</font><br>Scope:<font color="#CC241D">five directions</font></p>Starfruit: "Hey man, I went to the dentist one day and he said</font><br>I have four cavities. When I count, I only have one tooth! one</font><br>Carambola: "Hey man, theres a tooth with four cavities? Why is that?" I went to the dentist and he said',
-	getTriggerRange: function (e, g, f) {
+	getTriggerRange(e, g, f) {
 		var a = this.R;
 		var b = GetY(a);
 		var c = oS.W;
@@ -812,7 +808,7 @@ var oSeedStarfruit = InheritO(CPlants, {
 				return [[100, c, 0]];
 		}
 	},
-	AttackCheck2: function (l) {
+	AttackCheck2(l) {
 		var j = l.R;
 		if (j == this.R) {
 			return l.Altitude > 0;
@@ -847,28 +843,28 @@ var oSeedStarfruit = InheritO(CPlants, {
 		}
 		return k && l.Altitude > 0;
 	},
-	getTriggerR: function (a) {
+	getTriggerR(a) {
 		return [1, oS.R];
 	},
-	PrivateBirth: function (d) {
+	PrivateBirth(d) {
 		var c = d.pixelLeft + 38;
 		var b = c - 15;
 		var a = d.pixelTop + 20;
 		d.BulletEle = NewImg(
 			0,
 			"images/Plants/Starfruit/Star.gif",
-			"left:" + b + "px;top:" + a + "px;z-index:" + (d.zIndex + 2)
+			`left:${b}px;top:${a}px;z-index:${d.zIndex + 2}`
 		);
 	},
-	PrivateDie: function (a) {
+	PrivateDie(a) {
 		a.BulletEle = null;
 	},
-	getHurt: function (d, b, a) {
+	getHurt(d, b, a) {
 		var c = this;
 		b != 3 && c.NormalAttack();
 		(c.HP -= a) < 1 && c.Die();
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		var g = this;
 		var f = g.pixelLeft + 38;
 		var d = f - 15;
@@ -883,7 +879,7 @@ var oSeedStarfruit = InheritO(CPlants, {
 		(function (h) {
 			oSym.addTask(
 				15,
-				function (j) {
+				(j) => {
 					var i = $(j);
 					i && SetVisible(i);
 				},
@@ -895,7 +891,7 @@ var oSeedStarfruit = InheritO(CPlants, {
 					j(oZ.getZ1(m, k), 4, i) &&
 						((m -= 5) < 100
 							? ClearChild(i)
-							: ((i.style.left = (l -= 5) + "px"),
+							: ((i.style.left = `${(l -= 5)}px`),
 								oSym.addTask(1, arguments.callee, [
 									m,
 									k,
@@ -919,11 +915,11 @@ var oSeedStarfruit = InheritO(CPlants, {
 					a,
 				]
 			);
-		})("StarB" + Math.random());
+		})(`StarB${Math.random()}`);
 		(function (h) {
 			oSym.addTask(
 				15,
-				function (j) {
+				(j) => {
 					var i = $(j);
 					i && SetVisible(i);
 				},
@@ -935,7 +931,7 @@ var oSeedStarfruit = InheritO(CPlants, {
 					j(oZ.getRangeLeftZ(m, n, l), 6, i) &&
 						((k -= 5) < -15
 							? ClearChild(i)
-							: ((i.style.top = k + "px"),
+							: ((i.style.top = `${k}px`),
 								oSym.addTask(1, arguments.callee, [
 									m,
 									n,
@@ -961,11 +957,11 @@ var oSeedStarfruit = InheritO(CPlants, {
 					a,
 				]
 			);
-		})("StarB" + Math.random());
+		})(`StarB${Math.random()}`);
 		(function (h) {
 			oSym.addTask(
 				15,
-				function (j) {
+				(j) => {
 					var i = $(j);
 					i && SetVisible(i);
 				},
@@ -977,7 +973,7 @@ var oSeedStarfruit = InheritO(CPlants, {
 					j(oZ.getRangeLeftZ(m, n, l), 2, i) &&
 						((k += 5) > 600
 							? ClearChild(i)
-							: ((i.style.top = k + "px"),
+							: ((i.style.top = `${k}px`),
 								oSym.addTask(1, arguments.callee, [
 									m,
 									n,
@@ -1003,11 +999,11 @@ var oSeedStarfruit = InheritO(CPlants, {
 					a,
 				]
 			);
-		})("StarB" + Math.random());
+		})(`StarB${Math.random()}`);
 		(function (h) {
 			oSym.addTask(
 				15,
-				function (j) {
+				(j) => {
 					var i = $(j);
 					i && SetVisible(i);
 				},
@@ -1020,8 +1016,8 @@ var oSeedStarfruit = InheritO(CPlants, {
 						((n += 4) > 900 || (k -= 3) < -15
 							? ClearChild(i)
 							: (SetStyle(i, {
-									left: (m += 4) + "px",
-									top: k + "px",
+									left: `${(m += 4)}px`,
+									top: `${k}px`,
 								}),
 								oSym.addTask(1, arguments.callee, [
 									n,
@@ -1048,11 +1044,11 @@ var oSeedStarfruit = InheritO(CPlants, {
 					a,
 				]
 			);
-		})("StarB" + Math.random());
+		})(`StarB${Math.random()}`);
 		(function (h) {
 			oSym.addTask(
 				15,
-				function (j) {
+				(j) => {
 					var i = $(j);
 					i && SetVisible(i);
 				},
@@ -1065,8 +1061,8 @@ var oSeedStarfruit = InheritO(CPlants, {
 						((n += 4) > 900 || (k += 3) > 600
 							? ClearChild(i)
 							: (SetStyle(i, {
-									left: (m += 4) + "px",
-									top: k + "px",
+									left: `${(m += 4)}px`,
+									top: `${k}px`,
 								}),
 								oSym.addTask(1, arguments.callee, [
 									n,
@@ -1093,7 +1089,7 @@ var oSeedStarfruit = InheritO(CPlants, {
 					a,
 				]
 			);
-		})("StarB" + Math.random());
+		})(`StarB${Math.random()}`);
 	},
 });
 var oPeashooter = InheritO(CPlants, {
@@ -1122,24 +1118,21 @@ var oPeashooter = InheritO(CPlants, {
 	Tooltip: "Shoots peas at the enemy",
 	Produce:
 		'<font color="#28325A">Pea shooters are your first line of defense. They shoot peas at attacking zombies.</font><p>Damage: <font color="#CC241D">normal</font></p>How can a single plant grow and shoot so many peas so quickly? Peashooter says, "Hard work, commitment, and a healthy, well-balanced breakfast of sunlight and high-fiber carbon dioxide make it all possible." ',
-	PrivateBirth: function (a) {
+	PrivateBirth(a) {
 		a.BulletEle = NewImg(
 			0,
 			a.PicArr[3],
-			"left:" +
-				(a.AttackedLX - 40) +
-				"px;top:" +
-				(a.pixelTop + 3) +
-				"px;visibility:hidden;z-index:" +
-				(a.zIndex + 2)
+			`left:${a.AttackedLX - 40}px;top:${
+				a.pixelTop + 3
+			}px;visibility:hidden;z-index:${a.zIndex + 2}`
 		);
 	},
-	PrivateDie: function (a) {
+	PrivateDie(a) {
 		a.BulletEle = null;
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		var a = this;
-		var b = "PB" + Math.random();
+		var b = `PB${Math.random()}`;
 		EditEle(
 			a.BulletEle.cloneNode(false),
 			{
@@ -1150,7 +1143,7 @@ var oPeashooter = InheritO(CPlants, {
 		);
 		oSym.addTask(
 			15,
-			function (d) {
+			(d) => {
 				var c = $(d);
 				c && SetVisible(c);
 			},
@@ -1161,15 +1154,15 @@ var oPeashooter = InheritO(CPlants, {
 			function (f, j, h, c, n, i, m, k, o, g) {
 				var l;
 				var e = GetC(n);
-				var d = oZ["getZ" + c](n, i);
+				var d = oZ[`getZ${c}`](n, i);
 				m == 0 &&
-					g[i + "_" + e] &&
+					g[`${i}_${e}`] &&
 					k != e &&
 					(PlayAudio("firepea"),
 					(m = 1),
 					(h = 40),
 					(k = e),
-					(j.src = "images/Plants/PB" + m + c + ".png"));
+					(j.src = `images/Plants/PB${m}${c}.png`));
 				d && d.Altitude == 1
 					? (d[
 							{
@@ -1179,14 +1172,14 @@ var oPeashooter = InheritO(CPlants, {
 							}[m]
 						](d, h, c),
 						(SetStyle(j, {
-							left: o + 28 + "px",
+							left: `${o + 28}px`,
 						}).src = [
 							"images/Plants/PeaBulletHit.gif",
 							"images/Plants/FireBulletHit.webp",
 						][m]),
 						oSym.addTask(10, ClearChild, [j]))
 					: (n += l = !c ? 5 : -5) < oS.W && n > 100
-						? ((j.style.left = (o += l) + "px"),
+						? ((j.style.left = `${(o += l)}px`),
 							oSym.addTask(1, arguments.callee, [
 								f,
 								j,
@@ -1242,24 +1235,21 @@ var oSeedPeashooter = InheritO(CPlants, {
 	Tooltip: "Shoots peas at the enemy",
 	Produce:
 		'Pea shooters are your first line of defense. They shoot peas at attacking zombies.<p>Damage: <font color="#CC241D">normal</font></p>How can a single plant grow and shoot so many peas so quickly? Peashooter says, "Hard work, commitment, and a healthy, well-balanced breakfast of sunlight and high-fiber carbon dioxide make it all possible." ',
-	PrivateBirth: function (a) {
+	PrivateBirth(a) {
 		a.BulletEle = NewImg(
 			0,
 			a.PicArr[3],
-			"left:" +
-				(a.AttackedLX - 40) +
-				"px;top:" +
-				(a.pixelTop + 3) +
-				"px;visibility:hidden;z-index:" +
-				(a.zIndex + 2)
+			`left:${a.AttackedLX - 40}px;top:${
+				a.pixelTop + 3
+			}px;visibility:hidden;z-index:${a.zIndex + 2}`
 		);
 	},
-	PrivateDie: function (a) {
+	PrivateDie(a) {
 		a.BulletEle = null;
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		var a = this;
-		var b = "PB" + Math.random();
+		var b = `PB${Math.random()}`;
 		EditEle(
 			a.BulletEle.cloneNode(false),
 			{
@@ -1270,7 +1260,7 @@ var oSeedPeashooter = InheritO(CPlants, {
 		);
 		oSym.addTask(
 			15,
-			function (d) {
+			(d) => {
 				var c = $(d);
 				c && SetVisible(c);
 			},
@@ -1281,15 +1271,15 @@ var oSeedPeashooter = InheritO(CPlants, {
 			function (f, j, h, c, n, i, m, k, o, g) {
 				var l;
 				var e = GetC(n);
-				var d = oZ["getZ" + c](n, i);
+				var d = oZ[`getZ${c}`](n, i);
 				m == 0 &&
-					g[i + "_" + e] &&
+					g[`${i}_${e}`] &&
 					k != e &&
 					(PlayAudio("firepea"),
 					(m = 1),
 					(h = 40),
 					(k = e),
-					(j.src = "images/Plants/PB" + m + c + ".png"));
+					(j.src = `images/Plants/PB${m}${c}.png`));
 				d && d.Altitude == 1
 					? (d[
 							{
@@ -1299,14 +1289,14 @@ var oSeedPeashooter = InheritO(CPlants, {
 							}[m]
 						](d, h, c),
 						(SetStyle(j, {
-							left: o + 28 + "px",
+							left: `${o + 28}px`,
 						}).src = [
 							"images/Plants/PeaBulletHit.gif",
 							"images/Plants/FireBulletHit.webp",
 						][m]),
 						oSym.addTask(10, ClearChild, [j]))
 					: (n += l = !c ? 5 : -5) < oS.W && n > 100
-						? ((j.style.left = (o += l) + "px"),
+						? ((j.style.left = `${(o += l)}px`),
 							oSym.addTask(1, arguments.callee, [
 								f,
 								j,
@@ -1345,7 +1335,7 @@ var oLotusRoot = InheritO(oPeashooter, {
 	SunNum: 250,
 	BookHandBack: 4.9,
 	coolTime: 25,
-	getShadow: function (a) {
+	getShadow(a) {
 		return "display:none";
 	},
 	PicArr: [
@@ -1358,8 +1348,8 @@ var oLotusRoot = InheritO(oPeashooter, {
 	Tooltip: "Fire high-powered rocket launchers, inflicting heavy damage",
 	Produce:
 		'The lotus root rocket launcher can launch high-fire rocket launchers, targeting warships and</font><br>The submarine inflicted heavy damage.<p>Harm:<font color="#CC241D">极高</font></p>What else can the lotus root rocket launcher do besides firing shells. Ok,</font><br>For this question, you should ask the intensive phobia patient</font><br>。”',
-	CanGrow: function (c, b, d) {
-		var a = b + "_" + d;
+	CanGrow(c, b, d) {
+		var a = `${b}_${d}`;
 		return !(
 			d < 1 ||
 			d > 9 ||
@@ -1370,24 +1360,21 @@ var oLotusRoot = InheritO(oPeashooter, {
 			oGd.$Tombstones[a]
 		);
 	},
-	PrivateBirth: function (a) {
+	PrivateBirth(a) {
 		a.BulletEle = NewImg(
 			0,
 			a.PicArr[3],
-			"left:" +
-				(a.AttackedLX - 40) +
-				"px;top:" +
-				(a.pixelTop + 3) +
-				"px;visibility:hidden;z-index:" +
-				(a.zIndex + 2)
+			`left:${a.AttackedLX - 40}px;top:${
+				a.pixelTop + 3
+			}px;visibility:hidden;z-index:${a.zIndex + 2}`
 		);
 	},
-	PrivateDie: function (a) {
+	PrivateDie(a) {
 		a.BulletEle = null;
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		var a = this;
-		var b = "PB" + Math.random();
+		var b = `PB${Math.random()}`;
 		EditEle(
 			a.BulletEle.cloneNode(false),
 			{
@@ -1398,7 +1385,7 @@ var oLotusRoot = InheritO(oPeashooter, {
 		);
 		oSym.addTask(
 			15,
-			function (o) {
+			(o) => {
 				$(a.id).childNodes[1].src =
 					"images/Plants/LotusRoot/Peashooter.gif";
 			},
@@ -1406,7 +1393,7 @@ var oLotusRoot = InheritO(oPeashooter, {
 		);
 		oSym.addTask(
 			15,
-			function (d) {
+			(d) => {
 				var c = $(d);
 				c && SetVisible(c);
 			},
@@ -1417,9 +1404,9 @@ var oLotusRoot = InheritO(oPeashooter, {
 			function (f, j, h, c, n, i, m, k, o, g) {
 				var l;
 				var e = GetC(n);
-				var d = oZ["getZ" + c](n, i);
+				var d = oZ[`getZ${c}`](n, i);
 				m == 0 &&
-					g[i + "_" + e] &&
+					g[`${i}_${e}`] &&
 					k != e &&
 					(PlayAudio("firepea"),
 					(m = 1),
@@ -1435,11 +1422,11 @@ var oLotusRoot = InheritO(oPeashooter, {
 							}[m]
 						](d, h, c),
 						(SetStyle(j, {
-							left: o + 28 + "px",
+							left: `${o + 28}px`,
 						}).src = "images/Plants/LotusRoot/BulletHit.png"),
 						oSym.addTask(10, ClearChild, [j]))
 					: (n += l = !c ? 5 : -5) < oS.W && n > 100
-						? ((j.style.left = (o += l) + "px"),
+						? ((j.style.left = `${(o += l)}px`),
 							oSym.addTask(1, arguments.callee, [
 								f,
 								j,
@@ -1493,9 +1480,9 @@ var oSnowPea = InheritO(oPeashooter, {
 	Tooltip: "Shoots frozen peas that damage and slow the enemy",
 	Produce:
 		'<font color="#28325A">Snow Peas shoot frozen peas that damage and slow the enemy.</font><p>Damage: <font color="#CC241D">normal, slows zombies</font></p>Folks often tell Snow Pea how "cool" he is, or exhort him to "chill out." They tell him to "stay frosty." Snow Pea just rolls his eyes. He\'s heard \'em al',
-	NormalAttack: function () {
+	NormalAttack() {
 		var a = this;
-		var b = "PB" + Math.random();
+		var b = `PB${Math.random()}`;
 		EditEle(
 			a.BulletEle.cloneNode(false),
 			{
@@ -1506,7 +1493,7 @@ var oSnowPea = InheritO(oPeashooter, {
 		);
 		oSym.addTask(
 			15,
-			function (d) {
+			(d) => {
 				var c = $(d);
 				c && SetVisible(c);
 			},
@@ -1517,14 +1504,14 @@ var oSnowPea = InheritO(oPeashooter, {
 			function (f, j, h, c, n, i, m, k, o, g) {
 				var l;
 				var e = GetC(n);
-				var d = oZ["getZ" + c](n, i);
+				var d = oZ[`getZ${c}`](n, i);
 				m < 1 &&
-					g[i + "_" + e] &&
+					g[`${i}_${e}`] &&
 					k != e &&
 					(PlayAudio("firepea"),
 					++m && (h = 40),
 					(k = e),
-					(j.src = "images/Plants/PB" + m + c + ".png"));
+					(j.src = `images/Plants/PB${m}${c}.png`));
 				d && d.Altitude == 1
 					? (d[
 							{
@@ -1534,11 +1521,11 @@ var oSnowPea = InheritO(oPeashooter, {
 							}[m]
 						](d, h, c),
 						(SetStyle(j, {
-							left: o + 28 + "px",
+							left: `${o + 28}px`,
 						}).src = "images/Plants/PeaBulletHit1.gif"),
 						oSym.addTask(10, ClearChild, [j]))
 					: (n += l = !c ? 5 : -5) < oS.W && n > 100
-						? ((j.style.left = (o += l) + "px"),
+						? ((j.style.left = `${(o += l)}px`),
 							oSym.addTask(1, arguments.callee, [
 								f,
 								j,
@@ -1592,9 +1579,9 @@ var oSeedSnowPea = InheritO(oPeashooter, {
 	Tooltip: "Shoots frozen peas that damage and slow the enemy",
 	Produce:
 		'The Frost Archer fires Frozen Peas to attack enemies and has</font><br>Slow down effect.<p>Harm:<font color="#CC241D">Medium, with a slowing effect</font></p>People often tell the ice shooter how cold he is, or</font><br>Admonish him to be calm. They told him to keep your composure. cold</font><br>The ice shooter just rolled his eyes. In fact, he heard it all.',
-	NormalAttack: function () {
+	NormalAttack() {
 		var a = this;
-		var b = "PB" + Math.random();
+		var b = `PB${Math.random()}`;
 		EditEle(
 			a.BulletEle.cloneNode(false),
 			{
@@ -1605,7 +1592,7 @@ var oSeedSnowPea = InheritO(oPeashooter, {
 		);
 		oSym.addTask(
 			15,
-			function (d) {
+			(d) => {
 				var c = $(d);
 				c && SetVisible(c);
 			},
@@ -1616,14 +1603,14 @@ var oSeedSnowPea = InheritO(oPeashooter, {
 			function (f, j, h, c, n, i, m, k, o, g) {
 				var l;
 				var e = GetC(n);
-				var d = oZ["getZ" + c](n, i);
+				var d = oZ[`getZ${c}`](n, i);
 				m < 1 &&
-					g[i + "_" + e] &&
+					g[`${i}_${e}`] &&
 					k != e &&
 					(PlayAudio("firepea"),
 					++m && (h = 40),
 					(k = e),
-					(j.src = "images/Plants/PB" + m + c + ".png"));
+					(j.src = `images/Plants/PB${m}${c}.png`));
 				d && d.Altitude == 1
 					? (d[
 							{
@@ -1633,11 +1620,11 @@ var oSeedSnowPea = InheritO(oPeashooter, {
 							}[m]
 						](d, h, c),
 						(SetStyle(j, {
-							left: o + 28 + "px",
+							left: `${o + 28}px`,
 						}).src = "images/Plants/PeaBulletHit1.gif"),
 						oSym.addTask(10, ClearChild, [j]))
 					: (n += l = !c ? 5 : -5) < oS.W && n > 100
-						? ((j.style.left = (o += l) + "px"),
+						? ((j.style.left = `${(o += l)}px`),
 							oSym.addTask(1, arguments.callee, [
 								f,
 								j,
@@ -1682,11 +1669,11 @@ var oSnowRepeater = InheritO(oSnowPea, {
 	Produce:
 		'<font color="#28325A">Snow Repeaters shoot 2 frozen peas that damage and slow the enemy.</font><p>Damage: <font color="#CC241D">normal, slows zombies</font><br>Firing Speed: <font color="#CC241D">2x</font></p>A Repeater that channels its inner Snow Pea. Fires two rapid, chilling peas that slow zombies to a crawl, because sometimes frostbite is better in bursts!',
 	NormalAttack1: oSnowPea.prototype.NormalAttack,
-	NormalAttack: function (a) {
+	NormalAttack(a) {
 		this.NormalAttack1();
 		oSym.addTask(
 			15,
-			function (c) {
+			(c) => {
 				var b = $P[c];
 				b && b.NormalAttack1();
 			},
@@ -1720,11 +1707,11 @@ var oSeedRepeater = InheritO(oPeashooter, {
 	Produce:
 		'Dual shooters can shoot two peas at once<p>Harm:<font color="#CC241D">Medium (per piece)</font><br>Launch speed:<font color="#CC241D">double</font></p>The dual shooter is fierce, and he grew up on the street. Hes not in now</font><br>Regardless of anyones opinion, whether its a plant or a zombie, he fights</font><br>Out of peas, is to keep others away from him. Actually, double</font><br>The launcher has been secretly longing for love.',
 	NormalAttack1: oPeashooter.prototype.NormalAttack,
-	NormalAttack: function (a) {
+	NormalAttack(a) {
 		this.NormalAttack1();
 		oSym.addTask(
 			15,
-			function (c) {
+			(c) => {
 				var b = $P[c];
 				b && b.NormalAttack1();
 			},
@@ -1758,11 +1745,11 @@ var oRepeater = InheritO(oPeashooter, {
 	Produce:
 		'<font color="#28325A">Repeaters fire two peas at a time.</font><p>Damage: <font color="#CC241D">normal (for each pea)</font><br>Firing speed: <font color="#CC241D">2x</font></p>Repeater is fierce. He\'s from the streets. He doesn\'t take attitude from anybody, plant or zombie, and he shoots peas to keep people at a distance. Secretly, though, Repeater yearns for love.',
 	NormalAttack1: oPeashooter.prototype.NormalAttack,
-	NormalAttack: function (a) {
+	NormalAttack(a) {
 		this.NormalAttack1();
 		oSym.addTask(
 			15,
-			function (c) {
+			(c) => {
 				var b = $P[c];
 				b && b.NormalAttack1();
 			},
@@ -1781,9 +1768,9 @@ var oSeedRepeater2 = InheritO(oRepeater, {
 		"images/Plants/PB00.gif",
 		"images/Plants/PeaBulletHit.gif",
 	],
-	NormalAttack1: function () {
+	NormalAttack1() {
 		var a = this;
-		var b = "PB" + Math.random();
+		var b = `PB${Math.random()}`;
 		EditEle(
 			a.BulletEle.cloneNode(false),
 			{
@@ -1794,7 +1781,7 @@ var oSeedRepeater2 = InheritO(oRepeater, {
 		);
 		oSym.addTask(
 			15,
-			function (d) {
+			(d) => {
 				var c = $(d);
 				c && SetVisible(c);
 			},
@@ -1805,15 +1792,15 @@ var oSeedRepeater2 = InheritO(oRepeater, {
 			function (f, j, h, c, n, i, m, k, o, g) {
 				var l;
 				var e = GetC(n);
-				var d = oZ["getZ" + c](n, i);
+				var d = oZ[`getZ${c}`](n, i);
 				m == 0 &&
-					g[i + "_" + e] &&
+					g[`${i}_${e}`] &&
 					k != e &&
 					(PlayAudio("firepea"),
 					(m = 1),
 					(h = 40),
 					(k = e),
-					(j.src = "images/Plants/PB" + m + c + ".png"));
+					(j.src = `images/Plants/PB${m}${c}.png`));
 				d && d.Altitude == 1
 					? (d[
 							{
@@ -1823,13 +1810,13 @@ var oSeedRepeater2 = InheritO(oRepeater, {
 							}[m]
 						](d, h, c),
 						(SetStyle(j, {
-							left: o + 28 + "px",
+							left: `${o + 28}px`,
 							width: "52px",
 							height: "46px",
 						}).src = "images/Plants/PeaBulletHit.gif"),
 						oSym.addTask(10, ClearChild, [j]))
 					: (n += l = !c ? 5 : -5) < oS.W && n > 100
-						? ((j.style.left = (o += l) + "px"),
+						? ((j.style.left = `${(o += l)}px`),
 							oSym.addTask(1, arguments.callee, [
 								f,
 								j,
@@ -1858,7 +1845,7 @@ var oSeedRepeater2 = InheritO(oRepeater, {
 			]
 		);
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[100, b + 25, 1]];
 	},
 });
@@ -1872,9 +1859,9 @@ var oRepeater2 = InheritO(oRepeater, {
 		"images/Plants/PB00.gif",
 		"images/Plants/PeaBulletHit.gif",
 	],
-	NormalAttack1: function () {
+	NormalAttack1() {
 		var a = this;
-		var b = "PB" + Math.random();
+		var b = `PB${Math.random()}`;
 		EditEle(
 			a.BulletEle.cloneNode(false),
 			{
@@ -1885,7 +1872,7 @@ var oRepeater2 = InheritO(oRepeater, {
 		);
 		oSym.addTask(
 			15,
-			function (d) {
+			(d) => {
 				var c = $(d);
 				c && SetVisible(c);
 			},
@@ -1896,15 +1883,15 @@ var oRepeater2 = InheritO(oRepeater, {
 			function (f, j, h, c, n, i, m, k, o, g) {
 				var l;
 				var e = GetC(n);
-				var d = oZ["getZ" + c](n, i);
+				var d = oZ[`getZ${c}`](n, i);
 				m == 0 &&
-					g[i + "_" + e] &&
+					g[`${i}_${e}`] &&
 					k != e &&
 					(PlayAudio("firepea"),
 					(m = 1),
 					(h = 40),
 					(k = e),
-					(j.src = "images/Plants/PB" + m + c + ".png"));
+					(j.src = `images/Plants/PB${m}${c}.png`));
 				d && d.Altitude == 1
 					? (d[
 							{
@@ -1914,13 +1901,13 @@ var oRepeater2 = InheritO(oRepeater, {
 							}[m]
 						](d, h, c),
 						(SetStyle(j, {
-							left: o + 28 + "px",
+							left: `${o + 28}px`,
 							width: "52px",
 							height: "46px",
 						}).src = "images/Plants/PeaBulletHit.gif"),
 						oSym.addTask(10, ClearChild, [j]))
 					: (n += l = !c ? 5 : -5) < oS.W && n > 100
-						? ((j.style.left = (o += l) + "px"),
+						? ((j.style.left = `${(o += l)}px`),
 							oSym.addTask(1, arguments.callee, [
 								f,
 								j,
@@ -1949,7 +1936,7 @@ var oRepeater2 = InheritO(oRepeater, {
 			]
 		);
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[100, b + 25, 1]];
 	},
 });
@@ -1979,10 +1966,10 @@ var oThreepeater = InheritO(oPeashooter, {
 	Tooltip: "Shoots peas in three lanes",
 	Produce:
 		'<font color="#28325A">Threepeaters shoot peas in three lanes.</font><p>Damage: <font color="#CC241D">normal (for each pea)</font><br>Range: <font color="#CC241D">three lanes</font></p>Threepeater likes reading, backgammon and long periods of immobility in the park. Threepeater enjoys going to shows, particularly modern jazz. "I\'m just looking for that special someone," he says. Threepeater\'s favorite number is 5.',
-	getTriggerR: function (a) {
+	getTriggerR(a) {
 		return [a > 2 ? a - 1 : 1, a < oS.R ? Number(a) + 1 : a];
 	},
-	PrivateBirth: function (f) {
+	PrivateBirth(f) {
 		var e = f.AttackedLX;
 		var d = e - 40;
 		var a;
@@ -2007,12 +1994,9 @@ var oThreepeater = InheritO(oPeashooter, {
 					NewImg(
 						0,
 						"images/Plants/PB00.gif",
-						"left:" +
-							d +
-							"px;top:" +
-							(GetY(f.R) - 65) +
-							"px;visibility:hidden;z-index:" +
-							(3 * b + 2)
+						`left:${d}px;top:${
+							GetY(f.R) - 65
+						}px;visibility:hidden;z-index:${3 * b + 2}`
 					)
 				);
 			} else {
@@ -2020,12 +2004,9 @@ var oThreepeater = InheritO(oPeashooter, {
 					NewImg(
 						0,
 						"images/Plants/PB00.gif",
-						"left:" +
-							d +
-							"px;top:" +
-							(GetY(b) - 50) +
-							"px;visibility:hidden;z-index:" +
-							(3 * b + 2)
+						`left:${d}px;top:${
+							GetY(b) - 50
+						}px;visibility:hidden;z-index:${3 * b + 2}`
 					)
 				);
 			}
@@ -2040,8 +2021,9 @@ var oThreepeater = InheritO(oPeashooter, {
 					"threepeaterUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards";
 			} catch (e) {
 				console.warn(
-					"Failed to animate threepeater bullets, retrying in 500ms\n" +
+					`Failed to animate threepeater bullets, retrying in 500ms\n${
 						e
+					}`
 				);
 				setTimeout(() => {
 					try {
@@ -2063,10 +2045,10 @@ var oThreepeater = InheritO(oPeashooter, {
 			);
 		}
 	},
-	PrivateDie: function (a) {
+	PrivateDie(a) {
 		a.BulletEle.length = 0;
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		var a;
 		var c = this;
 		var d;
@@ -2075,14 +2057,14 @@ var oThreepeater = InheritO(oPeashooter, {
 			EditEle(
 				c.BulletEle[b++].cloneNode(false),
 				{
-					id: (d = "PB" + Math.random()),
+					id: (d = `PB${Math.random()}`),
 				},
 				0,
 				EDPZ
 			);
 			oSym.addTask(
 				15,
-				function (f) {
+				(f) => {
 					var e = $(f);
 					e && SetVisible(e);
 				},
@@ -2093,15 +2075,15 @@ var oThreepeater = InheritO(oPeashooter, {
 				function (h, l, j, e, p, k, o, m, q, i) {
 					var n;
 					var g = GetC(p);
-					var f = oZ["getZ" + e](p, k);
+					var f = oZ[`getZ${e}`](p, k);
 					o == 0 &&
-						i[k + "_" + g] &&
+						i[`${k}_${g}`] &&
 						m != g &&
 						(PlayAudio("firepea"),
 						(o = 1),
 						(j = 40),
 						(m = g),
-						(l.src = "images/Plants/PB" + o + e + ".png"));
+						(l.src = `images/Plants/PB${o}${e}.png`));
 					f && f.Altitude == 1
 						? (f[
 								{
@@ -2111,14 +2093,14 @@ var oThreepeater = InheritO(oPeashooter, {
 								}[o]
 							](f, j, e),
 							(SetStyle(l, {
-								left: q + 28 + "px",
+								left: `${q + 28}px`,
 							}).src = [
 								"images/Plants/PeaBulletHit.gif",
 								"images/Plants/FireBulletHit.webp",
 							][o]),
 							oSym.addTask(10, ClearChild, [l]))
 						: (p += n = !e ? 5 : -5) < oS.W && p > 100
-							? ((l.style.left = (q += n) + "px"),
+							? ((l.style.left = `${(q += n)}px`),
 								oSym.addTask(1, arguments.callee, [
 									h,
 									l,
@@ -2175,10 +2157,10 @@ var oSeedThreepeater = InheritO(oPeashooter, {
 	Tooltip: "Shoots peas in three lanes",
 	Produce:
 		'A three-line shooter can shoot peas on three lines at the same time.<p>Harm:<font color="#CC241D">Ordinary (each)</font><br>Scope:<font color="#CC241D">three lines</font></p>The three-line shooter enjoys reading, playing chess and sitting in the park. he</font><br>Also enjoys performing, especially modern jazz. "Im looking for</font><br>The other half of my life," he said. The third-line shooters favorite number</font><br>The word is 5.',
-	getTriggerR: function (a) {
+	getTriggerR(a) {
 		return [a > 2 ? a - 1 : 1, a < oS.R ? Number(a) + 1 : a];
 	},
-	PrivateBirth: function (f) {
+	PrivateBirth(f) {
 		var e = f.AttackedLX;
 		var d = e - 40;
 		var a;
@@ -2203,20 +2185,17 @@ var oSeedThreepeater = InheritO(oPeashooter, {
 				NewImg(
 					0,
 					"images/Plants/PB00.gif",
-					"left:" +
-						d +
-						"px;top:" +
-						(GetY(b) - 50) +
-						"px;visibility:hidden;z-index:" +
-						(3 * b + 2)
+					`left:${d}px;top:${
+						GetY(b) - 50
+					}px;visibility:hidden;z-index:${3 * b + 2}`
 				)
 			);
 		}
 	},
-	PrivateDie: function (a) {
+	PrivateDie(a) {
 		a.BulletEle.length = 0;
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		var a;
 		var c = this;
 		var d;
@@ -2225,14 +2204,14 @@ var oSeedThreepeater = InheritO(oPeashooter, {
 			EditEle(
 				c.BulletEle[b++].cloneNode(false),
 				{
-					id: (d = "PB" + Math.random()),
+					id: (d = `PB${Math.random()}`),
 				},
 				0,
 				EDPZ
 			);
 			oSym.addTask(
 				15,
-				function (f) {
+				(f) => {
 					var e = $(f);
 					e && SetVisible(e);
 				},
@@ -2243,15 +2222,15 @@ var oSeedThreepeater = InheritO(oPeashooter, {
 				function (h, l, j, e, p, k, o, m, q, i) {
 					var n;
 					var g = GetC(p);
-					var f = oZ["getZ" + e](p, k);
+					var f = oZ[`getZ${e}`](p, k);
 					o == 0 &&
-						i[k + "_" + g] &&
+						i[`${k}_${g}`] &&
 						m != g &&
 						(PlayAudio("firepea"),
 						(o = 1),
 						(j = 40),
 						(m = g),
-						(l.src = "images/Plants/PB" + o + e + ".png"));
+						(l.src = `images/Plants/PB${o}${e}.png`));
 					f && f.Altitude == 1
 						? (f[
 								{
@@ -2261,14 +2240,14 @@ var oSeedThreepeater = InheritO(oPeashooter, {
 								}[o]
 							](f, j, e),
 							(SetStyle(l, {
-								left: q + 28 + "px",
+								left: `${q + 28}px`,
 							}).src = [
 								"images/Plants/PeaBulletHit.gif",
 								"images/Plants/FireBulletHit.webp",
 							][o]),
 							oSym.addTask(10, ClearChild, [l]))
 						: (p += n = !e ? 5 : -5) < oS.W && p > 100
-							? ((l.style.left = (q += n) + "px"),
+							? ((l.style.left = `${(q += n)}px`),
 								oSym.addTask(1, arguments.callee, [
 									h,
 									l,
@@ -2325,7 +2304,7 @@ var oGatlingPea = InheritO(oPeashooter, {
 		'shoots four peas at a time <p> <font color="red">(requires repeater)</font>',
 	Produce:
 		'<font color="#28325A">Gatling Peas shoot four peas at a time.</font><p>Damage: <font color="#CC241D">normal (for each pea)</font><br>Firing Speed: <font color="#CC241D">4x</font><br>Must be planted on repeaters<p>Gatling Pea\'s parents were concerned when he announced his intention to join the military. "But honey, it\'s so dangerous!" they said in unison. Gatling Pea refused to budge. "Life is dangerous," he replied, eyes glinting with steely conviction.',
-	PrivateBirth: function (c) {
+	PrivateBirth(c) {
 		var b = c.AttackedLX;
 		var a = b - 40;
 		c.BulletClass = NewO({
@@ -2341,20 +2320,17 @@ var oGatlingPea = InheritO(oPeashooter, {
 		c.BulletEle = NewImg(
 			0,
 			c.PicArr[3],
-			"left:" +
-				a +
-				"px;top:" +
-				(c.pixelTop + 8) +
-				"px;visibility:hidden;z-index:" +
-				(c.zIndex + 2)
+			`left:${a}px;top:${c.pixelTop + 8}px;visibility:hidden;z-index:${
+				c.zIndex + 2
+			}`
 		);
 	},
-	CanGrow: function (b, a, d) {
+	CanGrow(b, a, d) {
 		var c = b[1];
 		return c && c.EName == "oRepeater";
 	},
 	NormalAttack1: oPeashooter.prototype.NormalAttack,
-	NormalAttack: function (a) {
+	NormalAttack(a) {
 		this.NormalAttack1();
 		oSym.addTask(
 			15,
@@ -2393,35 +2369,33 @@ var oSplitPea = InheritO(oPeashooter, {
 	Tooltip: "Shoots peas forward and backwards",
 	Produce:
 		'<font color="#28325A">Split Peas shoot peas forward and backwards.</font><p>Damage: <font color="#CC241D">normal</font><br>Range: <font color="#CC241D">forward and backwards</font><br>Firing speed: <font color="#CC241D">1x forward, 2x backwards</font></p>"Yeah, I\'m a Gemini," says Split Pea. "I know, big surprise. But having two heads --or really, one head with a large head-like growth on the back-- pays off big in my line of work."',
-	GetDX: function () {
+	GetDX() {
 		return -55;
 	},
-	getShadow: function (a) {
-		return "left:5px;top:" + (a.height - 22) + "px";
+	getShadow(a) {
+		return `left:5px;top:${a.height - 22}px`;
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [
 			[100, b + 25, 1],
 			[b + 26, oS.W, 0],
 		];
 	},
-	PrivateBirth: function (c) {
+	PrivateBirth(c) {
 		var b = c.PicArr;
-		var a =
-			"px;top:" +
-			(c.pixelTop + 3) +
-			"px;visibility:hidden;z-index:" +
-			(c.zIndex + 2);
+		var a = `px;top:${c.pixelTop + 3}px;visibility:hidden;z-index:${
+			c.zIndex + 2
+		}`;
 		(c.BulletEle = [
-			NewImg(0, b[3], "left:" + (c.AttackedLX - 40) + a),
-			NewImg(0, b[4], "left:" + (c.AttackedRX - 16) + a),
+			NewImg(0, b[3], `left:${c.AttackedLX - 40}${a}`),
+			NewImg(0, b[4], `left:${c.AttackedRX - 16}${a}`),
 		]),
 			(c.aTri = [0, 0]);
 	},
-	PrivateDie: function (a) {
+	PrivateDie(a) {
 		a.BulletEle.length = 0;
 	},
-	TriggerCheck: function (b, a) {
+	TriggerCheck(b, a) {
 		if (this.aTri[a]) {
 			return;
 		}
@@ -2431,7 +2405,7 @@ var oSplitPea = InheritO(oPeashooter, {
 			this.CheckLoop(b.id, a);
 		}
 	},
-	AttackCheck1: function (b, f) {
+	AttackCheck1(b, f) {
 		var e = this;
 		var c = $Z[b];
 		var a;
@@ -2447,24 +2421,24 @@ var oSplitPea = InheritO(oPeashooter, {
 		}
 		e.canTrigger = e.aTri[0] && e.aTri[1] ? 0 : 1;
 	},
-	CheckLoop: function (a, b) {
+	CheckLoop(a, b) {
 		this.NormalAttack(b);
 		oSym.addTask(
 			140,
-			function (c, e, g) {
+			(c, e, g) => {
 				var f;
 				(f = $P[c]) && f.AttackCheck1(e, g);
 			},
 			[this.id, a, b]
 		);
 	},
-	NormalAttack: function (c) {
+	NormalAttack(c) {
 		var d = this;
 		var e;
 		var a = c
 			? (oSym.addTask(
 					15,
-					function (f) {
+					(f) => {
 						$P[f] && b(1);
 					},
 					[d.id]
@@ -2475,14 +2449,14 @@ var oSplitPea = InheritO(oPeashooter, {
 			EditEle(
 				d.BulletEle[c].cloneNode(false),
 				{
-					id: (e = "PB" + Math.random()),
+					id: (e = `PB${Math.random()}`),
 				},
 				0,
 				EDPZ
 			);
 			oSym.addTask(
 				15,
-				function (g) {
+				(g) => {
 					var f = $(g);
 					f && SetVisible(f);
 				},
@@ -2493,15 +2467,15 @@ var oSplitPea = InheritO(oPeashooter, {
 				function (i, m, k, f, q, l, p, n, r, j) {
 					var o;
 					var h = GetC(q);
-					var g = oZ["getZ" + f](q, l);
+					var g = oZ[`getZ${f}`](q, l);
 					p == 0 &&
-						j[l + "_" + h] &&
+						j[`${l}_${h}`] &&
 						n != h &&
 						(PlayAudio("firepea"),
 						(p = 1),
 						(k = 40),
 						(n = h),
-						(m.src = "images/Plants/PB" + p + f + ".png"));
+						(m.src = `images/Plants/PB${p}${f}.png`));
 					g && g.Altitude == 1
 						? (g[
 								{
@@ -2511,14 +2485,14 @@ var oSplitPea = InheritO(oPeashooter, {
 								}[p]
 							](g, k, f),
 							(SetStyle(m, {
-								left: r + 28 + "px",
+								left: `${r + 28}px`,
 							}).src = [
 								"images/Plants/PeaBulletHit.gif",
 								"images/Plants/FireBulletHit.webp",
 							][m]),
 							oSym.addTask(10, ClearChild, [m]))
 						: (q += o = !f ? 5 : -5) < oS.W && q > 100
-							? ((m.style.left = (r += o) + "px"),
+							? ((m.style.left = `${(r += o)}px`),
 								oSym.addTask(1, arguments.callee, [
 									i,
 									m,
@@ -2571,7 +2545,7 @@ var oSunFlower = InheritO(CPlants, {
         );
     },
     */ // unused stuff lol (why didnt they just remove this instead of making both of the gifs like that)
-	ChangePosition: function (c, a) {
+	ChangePosition(c, a) {
 		var b = c.childNodes[1];
 		a
 			? SetStyle(b, {
@@ -2583,7 +2557,7 @@ var oSunFlower = InheritO(CPlants, {
 					top: 0,
 				});
 	},
-	PrivateBirth: function (a) {
+	PrivateBirth(a) {
 		oS.ProduceSun
 			? oSym.addTask(
 					500,
@@ -2592,7 +2566,7 @@ var oSunFlower = InheritO(CPlants, {
 							(a.ChangePosition($(d), 0),
 							oSym.addTask(
 								100,
-								function (h, g, f, e) {
+								(h, g, f, e) => {
 									$P[h] &&
 										(AppearSun(
 											Math.floor(g + Math.random() * 41),
@@ -2602,7 +2576,7 @@ var oSunFlower = InheritO(CPlants, {
 										),
 										oSym.addTask(
 											100,
-											function (i) {
+											(i) => {
 												$P[i] &&
 													a.ChangePosition($(i), 0);
 											},
@@ -2631,7 +2605,7 @@ var oSunFlower = InheritO(CPlants, {
 								),
 								oSym.addTask(
 									50,
-									function (h, g) {
+									(h, g) => {
 										AppearSun(
 											Math.floor(
 												GetX(h) -
@@ -2649,7 +2623,7 @@ var oSunFlower = InheritO(CPlants, {
 									? e.Die()
 									: oSym.addTask(
 											50,
-											function (h, g) {
+											(h, g) => {
 												AppearSun(
 													Math.floor(
 														GetX(h) -
@@ -2672,7 +2646,7 @@ var oSunFlower = InheritO(CPlants, {
 					}
 				});
 	},
-	InitTrigger: function () {},
+	InitTrigger() {},
 });
 var oTwinSunflower = InheritO(oSunFlower, {
 	EName: "oTwinSunflower",
@@ -2691,7 +2665,7 @@ var oTwinSunflower = InheritO(oSunFlower, {
 		'Gives twice as much sun as a sunflower  <p> <font color="red">(requires sunflower)</font>',
 	Produce:
 		'<font color="#28325A">Twin Sunflowers give twice as much sun as a normal sunflower.</font><p>Sun production: <font color="#CC241D">double</font><br>Must be planted on sunflowers<p>It was a crazed night of forbidden science that brought Twin Sunflower into existence. Thunder crashed overhead, strange lights flickered, even the very roaring wind seemed to hiss its angry denial. But to no avail. Twin Sunflower was alive, ALIVE!',
-	CanGrow: function (b, a, d) {
+	CanGrow(b, a, d) {
 		var c = b[1];
 		return c && c.EName == "oSunFlower";
 	},
@@ -2711,7 +2685,7 @@ BirthStyle: function (c, e, b, a) {
     );
 },
 */ // same thing here
-	ChangePosition: function (c, a) {
+	ChangePosition(c, a) {
 		var b = c.childNodes[1];
 		a
 			? SetStyle(b, {
@@ -2723,7 +2697,7 @@ BirthStyle: function (c, e, b, a) {
 					top: 0,
 				});
 	},
-	PrivateBirth: function (a) {
+	PrivateBirth(a) {
 		var b = GetX(a.C);
 		oSym.addTask(
 			500,
@@ -2732,7 +2706,7 @@ BirthStyle: function (c, e, b, a) {
 					(a.ChangePosition($(f), 0),
 					oSym.addTask(
 						100,
-						function (k, h, g, j, i) {
+						(k, h, g, j, i) => {
 							AppearSun(
 								Math.floor(h + Math.random() * 21),
 								j,
@@ -2747,7 +2721,7 @@ BirthStyle: function (c, e, b, a) {
 								),
 								oSym.addTask(
 									100,
-									function (l) {
+									(l) => {
 										$P[l] && a.ChangePosition($(l), 0);
 									},
 									[k]
@@ -2786,19 +2760,19 @@ var oPumpkinHead = InheritO(CPlants, {
 	Tooltip: "Protects plants that are within its shell",
 	Produce:
 		'<font color="#28325A">Pumpkins protect plants that are within their shells.</font><p>Toughness: <font color="#CC241D">high</font><br>Special: <font color="#CC241D">can be planted over another plant</font></p>Pumpkin hasn\'t heard from his cousin Renfield lately. Apparently Renfield\'s a big star, some kind of... what was it... sports hero? Peggle Master? Pumpkin doesn\'t really get it. He just does his job.',
-	CanGrow: function (c, b, d) {
-		var a = b + "_" + d;
+	CanGrow(c, b, d) {
+		var a = `${b}_${d}`;
 		return c[2]
 			? 1
 			: oGd.$LF[b] == 1
 				? !(d < 1 || d > 9 || oGd.$Crater[a] || oGd.$Tombstones[a])
 				: c[0];
 	},
-	GetDY: function (b, c, a) {
+	GetDY(b, c, a) {
 		return a[0] ? -12 : -5;
 	},
 	HurtStatus: 0,
-	getHurt: function (e, c, b) {
+	getHurt(e, c, b) {
 		var d = this;
 		var f = d.id;
 		var a = $(f);
@@ -2820,12 +2794,12 @@ var oPumpkinHead = InheritO(CPlants, {
 					((d.HurtStatus = 1),
 					(a.childNodes[1].src =
 						"images/Plants/PumpkinHead/Pumpkin_damage1.gif"),
-					($(f + "_2").src =
+					($(`${f}_2`).src =
 						"images/Plants/PumpkinHead/Pumpkin_back.gif"));
 		}
 	},
-	InitTrigger: function () {},
-	BirthStyle: function (c, d, b, a) {
+	InitTrigger() {},
+	BirthStyle(c, d, b, a) {
 		b.childNodes[1].src = "images/Plants/PumpkinHead/PumpkinHead1.gif";
 		EditEle(
 			b,
@@ -2836,19 +2810,14 @@ var oPumpkinHead = InheritO(CPlants, {
 			EDPZ
 		);
 		NewImg(
-			d + "_2",
+			`${d}_2`,
 			"images/Plants/PumpkinHead/PumpkinHead2.gif",
-			"left:" +
-				c.pixelLeft +
-				"px;top:" +
-				c.pixelTop +
-				"px;z-index:" +
-				(c.zIndex - 2),
+			`left:${c.pixelLeft}px;top:${c.pixelTop}px;z-index:${c.zIndex - 2}`,
 			EDPZ
 		);
 	},
-	PrivateDie: function (a) {
-		ClearChild($(a.id + "_2"));
+	PrivateDie(a) {
+		ClearChild($(`${a.id}_2`));
 	},
 });
 var oSeedPumpkinHead = InheritO(CPlants, {
@@ -2876,19 +2845,19 @@ var oSeedPumpkinHead = InheritO(CPlants, {
 	Tooltip: "Protects plants that are within its shell",
 	Produce:
 		'Pumpkin head, can use his shell to protect other plants.<p>Toughness:<font color="#CC241D">high</font><br>Features:<font color="#CC241D">可以种在其他植物上</font></p>Pumpkin head hasnt been received recently, about his cousin Resfield</font><br>information. Clearly, Renfield is a big star, a kind of...</font><br>What is a sports star called...? Pegg jump ball big</font><br>division? Pumpkin Head doesnt understand what exercise is anyway, he just wants to do well</font><br>his own work.',
-	CanGrow: function (c, b, d) {
-		var a = b + "_" + d;
+	CanGrow(c, b, d) {
+		var a = `${b}_${d}`;
 		return c[2]
 			? 1
 			: oGd.$LF[b] == 1
 				? !(d < 1 || d > 9 || oGd.$Crater[a] || oGd.$Tombstones[a])
 				: c[0];
 	},
-	GetDY: function (b, c, a) {
+	GetDY(b, c, a) {
 		return a[0] ? -12 : -5;
 	},
 	HurtStatus: 0,
-	getHurt: function (e, c, b) {
+	getHurt(e, c, b) {
 		var d = this;
 		var f = d.id;
 		var a = $(f);
@@ -2910,12 +2879,12 @@ var oSeedPumpkinHead = InheritO(CPlants, {
 					((d.HurtStatus = 1),
 					(a.childNodes[1].src =
 						"images/Plants/PumpkinHead/Pumpkin_damage1.gif"),
-					($(f + "_2").src =
+					($(`${f}_2`).src =
 						"images/Plants/PumpkinHead/Pumpkin_back.gif"));
 		}
 	},
-	InitTrigger: function () {},
-	BirthStyle: function (c, d, b, a) {
+	InitTrigger() {},
+	BirthStyle(c, d, b, a) {
 		b.childNodes[1].src = "images/Plants/PumpkinHead/PumpkinHead1.gif";
 		EditEle(
 			b,
@@ -2926,19 +2895,14 @@ var oSeedPumpkinHead = InheritO(CPlants, {
 			EDPZ
 		);
 		NewImg(
-			d + "_2",
+			`${d}_2`,
 			"images/Plants/PumpkinHead/PumpkinHead2.gif",
-			"left:" +
-				c.pixelLeft +
-				"px;top:" +
-				c.pixelTop +
-				"px;z-index:" +
-				(c.zIndex - 2),
+			`left:${c.pixelLeft}px;top:${c.pixelTop}px;z-index:${c.zIndex - 2}`,
 			EDPZ
 		);
 	},
-	PrivateDie: function (a) {
-		ClearChild($(a.id + "_2"));
+	PrivateDie(a) {
+		ClearChild($(`${a.id}_2`));
 	},
 });
 var oFlowerPot = InheritO(CPlants, {
@@ -2957,11 +2921,11 @@ var oFlowerPot = InheritO(CPlants, {
 	],
 	PKind: 0,
 	Stature: -1,
-	GetDY: function (b, c, a) {
+	GetDY(b, c, a) {
 		return 6;
 	},
-	CanGrow: function (e, d, f) {
-		var c = d + "_" + f;
+	CanGrow(e, d, f) {
+		var c = `${d}_${f}`;
 		var b = oGd.$LF[d];
 		var a = f < 1 || f > 9;
 		return b % 2
@@ -2980,7 +2944,7 @@ var oFlowerPot = InheritO(CPlants, {
 	Tooltip: "Lets you plant on the roof",
 	Produce:
 		'<font color="#28325A">Flower Pots let you plant on the roof.</font><p>Special: <font color="#CC241D">allows you to plant on the roof</font></p>"I\'m a pot for planting. Yet I\'m also a plant. HAS YOUR MIND EXPLODED YET?"',
-	InitTrigger: function () {},
+	InitTrigger() {},
 });
 var oCFlowerPot = InheritO(oFlowerPot, {
 	EName: "oCFlowerPot",
@@ -3006,11 +2970,11 @@ var oLilyPad = InheritO(oFlowerPot, {
 		"images/Plants/LilyPad/0.gif",
 		"images/Plants/LilyPad/LilyPad.gif",
 	],
-	getShadow: function (a) {
+	getShadow(a) {
 		return "left:-8px;top:25px";
 	},
-	CanGrow: function (c, b, d) {
-		var a = b + "_" + d;
+	CanGrow(c, b, d) {
+		var a = `${b}_${d}`;
 		return !(
 			d < 1 ||
 			d > 9 ||
@@ -3039,11 +3003,11 @@ var oSeedLilyPad = InheritO(oFlowerPot, {
 		"images/Plants/LilyPad/0.gif",
 		"images/Plants/LilyPad/LilyPad.gif",
 	],
-	getShadow: function (a) {
+	getShadow(a) {
 		return "left:-8px;top:25px";
 	},
-	CanGrow: function (c, b, d) {
-		var a = b + "_" + d;
+	CanGrow(c, b, d) {
+		var a = `${b}_${d}`;
 		return !(
 			d < 1 ||
 			d > 9 ||
@@ -3072,11 +3036,11 @@ var oILilyPad = InheritO(oFlowerPot, {
 		"images/Plants/LilyPad/0.gif",
 		"images/Plants/LilyPad/LilyPad.gif",
 	],
-	getShadow: function (a) {
+	getShadow(a) {
 		return "left:-8px;top:25px";
 	},
-	CanGrow: function (c, b, d) {
-		var a = b + "_" + d;
+	CanGrow(c, b, d) {
+		var a = `${b}_${d}`;
 		return !(
 			d < 1 ||
 			d > 9 ||
@@ -3104,8 +3068,8 @@ var oPotatoMine = InheritO(CPlants, {
 	coolTime: 30,
 	Stature: -1,
 	HP: 1e3,
-	CanGrow: function (c, b, e) {
-		var a = b + "_" + e;
+	CanGrow(c, b, e) {
+		var a = `${b}_${e}`;
 		var d = oS.ArP;
 		return d
 			? oGd.$LF[b] == 1
@@ -3137,7 +3101,7 @@ var oPotatoMine = InheritO(CPlants, {
 	Status: 0,
 	AudioArr: ["potato_mine"],
 	canTrigger: 0,
-	BirthStyle: function (d, e, c, b, a) {
+	BirthStyle(d, e, c, b, a) {
 		c.childNodes[1].src = !a
 			? "images/Plants/PotatoMine/PotatoMineNotReady.gif"
 			: (~(function () {
@@ -3155,17 +3119,17 @@ var oPotatoMine = InheritO(CPlants, {
 			EDPZ
 		);
 	},
-	getHurt2: function (d, b, a) {
+	getHurt2(d, b, a) {
 		var c = this;
 		b > 2
 			? (c.HP -= a) < 1 && c.Die()
 			: c.NormalAttack(c.pixelLeft, c.pixelRight, c.R);
 	},
-	PrivateBirth: function (b, a) {
+	PrivateBirth(b, a) {
 		!a &&
 			oSym.addTask(
 				1500,
-				function (d) {
+				(d) => {
 					var c = $P[d];
 					c &&
 						(($(d).childNodes[1].src =
@@ -3177,18 +3141,18 @@ var oPotatoMine = InheritO(CPlants, {
 				[b.id]
 			);
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[b, c, 0]];
 	},
-	TriggerCheck: function (e, c) {
+	TriggerCheck(e, c) {
 		var a = this.R;
 		var b = this.C;
 		e.beAttacked &&
 			e.Altitude < 2 &&
-			!oGd.$[a + "_" + b + "_2"] &&
+			!oGd.$[`${a}_${b}_2`] &&
 			this.NormalAttack(this.pixelLeft, this.pixelRight, this.R);
 	},
-	NormalAttack: function (j, h, e) {
+	NormalAttack(j, h, e) {
 		var g = this;
 		var b = g.id;
 		var d = $(b);
@@ -3229,7 +3193,7 @@ var oPotatoMine = InheritO(CPlants, {
 		}
 		oSym.addTask(
 			200,
-			function (i) {
+			(i) => {
 				ClearChild(i.lastChild);
 				oSym.addTask(100, ClearChild, [i]);
 			},
@@ -3247,8 +3211,8 @@ var oSeedPotatoMine = InheritO(CPlants, {
 	coolTime: 30,
 	Stature: -1,
 	HP: 1e3,
-	CanGrow: function (c, b, e) {
-		var a = b + "_" + e;
+	CanGrow(c, b, e) {
+		var a = `${b}_${e}`;
 		var d = oS.ArP;
 		return d
 			? oGd.$LF[b] == 1
@@ -3280,7 +3244,7 @@ var oSeedPotatoMine = InheritO(CPlants, {
 	Status: 0,
 	AudioArr: ["potato_mine"],
 	canTrigger: 0,
-	BirthStyle: function (d, e, c, b, a) {
+	BirthStyle(d, e, c, b, a) {
 		c.childNodes[1].src = !a
 			? "images/Plants/PotatoMine/PotatoMineNotReady.gif"
 			: (~(function () {
@@ -3298,17 +3262,17 @@ var oSeedPotatoMine = InheritO(CPlants, {
 			EDPZ
 		);
 	},
-	getHurt2: function (d, b, a) {
+	getHurt2(d, b, a) {
 		var c = this;
 		b > 2
 			? (c.HP -= a) < 1 && c.Die()
 			: c.NormalAttack(c.pixelLeft, c.pixelRight, c.R);
 	},
-	PrivateBirth: function (b, a) {
+	PrivateBirth(b, a) {
 		!a &&
 			oSym.addTask(
 				1500,
-				function (d) {
+				(d) => {
 					var c = $P[d];
 					c &&
 						(($(d).childNodes[1].src =
@@ -3320,18 +3284,18 @@ var oSeedPotatoMine = InheritO(CPlants, {
 				[b.id]
 			);
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[b, c, 0]];
 	},
-	TriggerCheck: function (e, c) {
+	TriggerCheck(e, c) {
 		var a = this.R;
 		var b = this.C;
 		e.beAttacked &&
 			e.Altitude < 2 &&
-			!oGd.$[a + "_" + b + "_2"] &&
+			!oGd.$[`${a}_${b}_2`] &&
 			this.NormalAttack(this.pixelLeft, this.pixelRight, this.R);
 	},
-	NormalAttack: function (j, h, e) {
+	NormalAttack(j, h, e) {
 		var g = this;
 		var b = g.id;
 		var d = $(b);
@@ -3363,7 +3327,7 @@ var oSeedPotatoMine = InheritO(CPlants, {
 		);
 		oSym.addTask(
 			200,
-			function (i) {
+			(i) => {
 				ClearChild(i.lastChild);
 				oSym.addTask(100, ClearChild, [i]);
 			},
@@ -3381,8 +3345,8 @@ var oIPotatoMine = InheritO(CPlants, {
 	coolTime: 1,
 	Stature: -1,
 	HP: 13,
-	CanGrow: function (c, b, e) {
-		var a = b + "_" + e;
+	CanGrow(c, b, e) {
+		var a = `${b}_${e}`;
 		var d = oS.ArP;
 		return d
 			? oGd.$LF[b] == 1
@@ -3414,7 +3378,7 @@ var oIPotatoMine = InheritO(CPlants, {
 	Status: 0,
 	AudioArr: ["potato_mine"],
 	canTrigger: 0,
-	BirthStyle: function (d, e, c, b, a) {
+	BirthStyle(d, e, c, b, a) {
 		c.childNodes[1].src = !a
 			? "images/Plants/PotatoMine/PotatoMine.gif"
 			: (d.Status = 1);
@@ -3429,17 +3393,17 @@ var oIPotatoMine = InheritO(CPlants, {
 			EDPZ
 		);
 	},
-	getHurt2: function (d, b, a) {
+	getHurt2(d, b, a) {
 		var c = this;
 		b > 2
 			? (c.HP -= a) < 1 && c.Die()
 			: c.NormalAttack(c.pixelLeft, c.pixelRight, c.R);
 	},
-	PrivateBirth: function (b, a) {
+	PrivateBirth(b, a) {
 		!a &&
 			oSym.addTask(
 				1500,
-				function (d) {
+				(d) => {
 					var c = $P[d];
 					c &&
 						(($(d).childNodes[1].src =
@@ -3451,18 +3415,18 @@ var oIPotatoMine = InheritO(CPlants, {
 				[b.id]
 			);
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[b, c, 0]];
 	},
-	TriggerCheck: function (e, c) {
+	TriggerCheck(e, c) {
 		var a = this.R;
 		var b = this.C;
 		e.beAttacked &&
 			e.Altitude < 2 &&
-			!oGd.$[a + "_" + b + "_2"] &&
+			!oGd.$[`${a}_${b}_2`] &&
 			this.NormalAttack(this.pixelLeft, this.pixelRight, this.R);
 	},
-	NormalAttack: function (j, h, e) {
+	NormalAttack(j, h, e) {
 		var g = this;
 		var b = g.id;
 		var d = $(b);
@@ -3503,7 +3467,7 @@ var oIPotatoMine = InheritO(CPlants, {
 		}
 		oSym.addTask(
 			200,
-			function (i) {
+			(i) => {
 				ClearChild(i.lastChild);
 				oSym.addTask(100, ClearChild, [i]);
 			},
@@ -3532,22 +3496,22 @@ var oTorchwood = InheritO(CPlants, {
 	Tooltip: "Peas that pass through it turn into fireballs",
 	Produce:
 		'<font color="#28325A">Torchwoods turn peas that pass through them into fireballs that deal twice as much damage.</font><p>Special: <font color="#CC241D">doubles the damage of peas that pass through it.  Fireballs deal damage to nearby zombies on impact</font><p>Everybody likes and respects Torchwood. They like him for his integrity, for his steadfast friendship, for his ability to greatly maximize pea damage. But Torchwood has a secret: he can\'t read.',
-	PrivateBirth: function (c) {
+	PrivateBirth(c) {
 		var a = c.R;
 		var b = c.C;
-		oGd.$Torch[a + "_" + b] = c.id;
+		oGd.$Torch[`${a}_${b}`] = c.id;
 		oS.HaveFog && oGd.GatherFog(a, b, 1, 1, 0);
 	},
-	InitTrigger: function () {},
-	PrivateDie: function (c) {
+	InitTrigger() {},
+	PrivateDie(c) {
 		var a = c.R;
 		var b = c.C;
-		delete oGd.$Torch[a + "_" + b];
+		delete oGd.$Torch[`${a}_${b}`];
 		oS.HaveFog && oGd.GatherFog(a, b, 1, 1, 1);
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		var a = this;
-		var b = "PB" + Math.random();
+		var b = `PB${Math.random()}`;
 		EditEle(
 			a.BulletEle.cloneNode(false),
 			{
@@ -3558,7 +3522,7 @@ var oTorchwood = InheritO(CPlants, {
 		);
 		oSym.addTask(
 			15,
-			function (d) {
+			(d) => {
 				var c = $(d);
 				c && SetVisible(c);
 			},
@@ -3569,15 +3533,15 @@ var oTorchwood = InheritO(CPlants, {
 			function (f, j, h, c, n, i, m, k, o, g) {
 				var l;
 				var e = GetC(n);
-				var d = oZ["getZ" + c](n, i);
+				var d = oZ[`getZ${c}`](n, i);
 				m == 0 &&
-					g[i + "_" + e] &&
+					g[`${i}_${e}`] &&
 					k != e &&
 					(PlayAudio("firepea"),
 					(m = 1),
 					(h = 40),
 					(k = e),
-					(j.src = "images/Plants/PB" + m + c + ".png"));
+					(j.src = `images/Plants/PB${m}${c}.png`));
 				d && d.Altitude == 1
 					? (d[
 							{
@@ -3587,11 +3551,11 @@ var oTorchwood = InheritO(CPlants, {
 							}[m]
 						](d, h, c),
 						(SetStyle(j, {
-							left: o + 28 + "px",
+							left: `${o + 28}px`,
 						}).src = "images/Plants/FireBulletHit.webp"),
 						oSym.addTask(75, ClearChild, [j]))
 					: (n += l = !c ? 5 : -5) < oS.W && n > 100
-						? ((j.style.left = (o += l) + "px"),
+						? ((j.style.left = `${(o += l)}px`),
 							oSym.addTask(1, arguments.callee, [
 								f,
 								j,
@@ -3642,22 +3606,22 @@ var oSeedTorchwood = InheritO(CPlants, {
 	Tooltip: "Peas that pass through it turn into fireballs",
 	Produce:
 		'Torch Stump can turn peas that pass through him into fireballs, causing</font><br>Double damage.<p>Features:<font color="#CC241D">Causes fireballs that pass through him to deal double damage. fireball also</font><br>against nearby zombies</font><br>Deals splash damage</font></p>Everyone loves and respects torch stumps. they like his</font><br>Honest and steadfast friendship, and the ability to increase pea damage.</font><br>But he also has his own secret: he cant read!',
-	PrivateBirth: function (c) {
+	PrivateBirth(c) {
 		var a = c.R;
 		var b = c.C;
-		oGd.$Torch[a + "_" + b] = c.id;
+		oGd.$Torch[`${a}_${b}`] = c.id;
 		oS.HaveFog && oGd.GatherFog(a, b, 1, 1, 0);
 	},
-	InitTrigger: function () {},
-	PrivateDie: function (c) {
+	InitTrigger() {},
+	PrivateDie(c) {
 		var a = c.R;
 		var b = c.C;
-		delete oGd.$Torch[a + "_" + b];
+		delete oGd.$Torch[`${a}_${b}`];
 		oS.HaveFog && oGd.GatherFog(a, b, 1, 1, 1);
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		var a = this;
-		var b = "PB" + Math.random();
+		var b = `PB${Math.random()}`;
 		EditEle(
 			a.BulletEle.cloneNode(false),
 			{
@@ -3668,7 +3632,7 @@ var oSeedTorchwood = InheritO(CPlants, {
 		);
 		oSym.addTask(
 			15,
-			function (d) {
+			(d) => {
 				var c = $(d);
 				c && SetVisible(c);
 			},
@@ -3679,15 +3643,15 @@ var oSeedTorchwood = InheritO(CPlants, {
 			function (f, j, h, c, n, i, m, k, o, g) {
 				var l;
 				var e = GetC(n);
-				var d = oZ["getZ" + c](n, i);
+				var d = oZ[`getZ${c}`](n, i);
 				m == 0 &&
-					g[i + "_" + e] &&
+					g[`${i}_${e}`] &&
 					k != e &&
 					(PlayAudio("firepea"),
 					(m = 1),
 					(h = 40),
 					(k = e),
-					(j.src = "images/Plants/PB" + m + c + ".png"));
+					(j.src = `images/Plants/PB${m}${c}.png`));
 				d && d.Altitude == 1
 					? (d[
 							{
@@ -3697,11 +3661,11 @@ var oSeedTorchwood = InheritO(CPlants, {
 							}[m]
 						](d, h, c),
 						(SetStyle(j, {
-							left: o + 28 + "px",
+							left: `${o + 28}px`,
 						}).src = "images/Plants/FireBulletHit.webp"),
 						oSym.addTask(75, ClearChild, [j]))
 					: (n += l = !c ? 5 : -5) < oS.W && n > 100
-						? ((j.style.left = (o += l) + "px"),
+						? ((j.style.left = `${(o += l)}px`),
 							oSym.addTask(1, arguments.callee, [
 								f,
 								j,
@@ -3750,8 +3714,8 @@ var oWallNut = InheritO(CPlants, {
 	Tooltip: "Blocks off zombies and protects your other plants",
 	Produce:
 		'<font color="#28325A">Wall-nuts have hard shells which you can use to protect your other plants.</font><p>Toughness: <font color="CC241D">high</font></p>"People wonder how I feel about getting constantly chewed on by zombies," says Wall-nut. "What they don\'t realize is that with my limited senses all I can feel is a kind of tingling, like a relaxing back rub."',
-	CanGrow: function (c, b, f) {
-		var a = b + "_" + f;
+	CanGrow(c, b, f) {
+		var a = `${b}_${f}`;
 		var d = c[1];
 		var e = oS.ArP;
 		return e
@@ -3772,9 +3736,9 @@ var oWallNut = InheritO(CPlants, {
 						)
 					: c[0] && !d;
 	},
-	InitTrigger: function () {},
+	InitTrigger() {},
 	HurtStatus: 0,
-	getHurt: function (e, b, a) {
+	getHurt(e, b, a) {
 		var c = this;
 		var d = $(c.id).childNodes[1];
 		!(b % 3)
@@ -3810,8 +3774,8 @@ var oSeedWallNut = InheritO(CPlants, {
 	Tooltip: "Blocks off zombies and protects your other plants",
 	Produce:
 		'Nut Walls are tough enough for you to use to protect other plants</font><br>shell.<p>Toughness:<font color="CC241D">high</font></p>Wall of Nuts: People want to know what its like to be constantly gnawed by zombies</font><br>how? They dont know that my limited senses can only let me</font><br>Feel a tingling, like, relaxing back massage. "',
-	CanGrow: function (c, b, f) {
-		var a = b + "_" + f;
+	CanGrow(c, b, f) {
+		var a = `${b}_${f}`;
 		var d = c[1];
 		var e = oS.ArP;
 		return e
@@ -3832,9 +3796,9 @@ var oSeedWallNut = InheritO(CPlants, {
 						)
 					: c[0] && !d;
 	},
-	InitTrigger: function () {},
+	InitTrigger() {},
 	HurtStatus: 0,
-	getHurt: function (e, b, a) {
+	getHurt(e, b, a) {
 		var c = this;
 		var d = $(c.id).childNodes[1];
 		!(b % 3)
@@ -3868,8 +3832,8 @@ var oBalloon = InheritO(CPlants, {
 	Tooltip: "goober",
 	Produce:
 		'<font color="#28325A">Balloonatics have a chance to spawn every wave. Popping them produces 75 sun</font>.</font><br><p>Toughness: <font color="CC241D">low</font></p> ">:3" says the Balloonatic, ">:3" says the Balloonatic, again.',
-	CanGrow: function (c, b, f) {
-		var a = b + "_" + f;
+	CanGrow(c, b, f) {
+		var a = `${b}_${f}`;
 		var d = c[1];
 		var e = oS.ArP;
 		return e
@@ -3890,9 +3854,9 @@ var oBalloon = InheritO(CPlants, {
 						)
 					: c[0] && !d;
 	},
-	InitTrigger: function () {},
+	InitTrigger() {},
 	HurtStatus: 0,
-	getHurt: function (e, b, a) {
+	getHurt(e, b, a) {
 		var c = this;
 		var d = $(c.id).childNodes[1];
 		!(b % 3)
@@ -3920,13 +3884,13 @@ var oCattail = InheritO(oPeashooter, {
 	AttackGif: 5,
 	Attack: 20,
 	BookHandBack: 4.9,
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[0, oS.W, 0]];
 	},
-	getTriggerR: function (a) {
+	getTriggerR(a) {
 		return [1, oS.R];
 	},
-	InitTrigger: function (c, b, f, a, h, g) {
+	InitTrigger(c, b, f, a, h, g) {
 		var j = {};
 		var i = c.getTriggerR(f);
 		var e = i[0];
@@ -3936,7 +3900,7 @@ var oCattail = InheritO(oPeashooter, {
 		} while (e++ != d);
 		c.oTrigger = j;
 	},
-	getShadow: function (a) {
+	getShadow(a) {
 		return "display:none";
 	},
 	AudioArr: ["CabbageAttack1", "CabbageAttack2"],
@@ -3944,13 +3908,11 @@ var oCattail = InheritO(oPeashooter, {
 		var a = "images/Plants/Cattail/";
 		return [
 			"images/Card/Plants/Catttail.png",
-			a + "0.gif",
-			a + "cat.gif",
-			"images/Plants/Cactus/Projectile" +
-				($User.Browser.IE6 ? 8 : 32) +
-				".png",
+			`${a}0.gif`,
+			`${a}cat.gif`,
+			`images/Plants/Cactus/Projectile${$User.Browser.IE6 ? 8 : 32}.png`,
 			"images/interface/blank.png",
-			a + "Attack.gif",
+			`${a}Attack.gif`,
 		];
 	})(),
 	Tooltip:
@@ -3958,22 +3920,22 @@ var oCattail = InheritO(oPeashooter, {
 	// another cool comment
 	Produce:
 		'<font color="#28325A">Cattails can attack any lane and shoot down balloon zombies too.</font><p>Must be planted on lily pads</p>"Woof!" says Cattail. "Woof woof woof! Does this confuse you? Do you expect me to say \'Meow\' like a cat just because the word \'cat\' is in my name and I also look like a cat? That\'s not how things work around here. I refuse to be pigeonholed."',
-	TriggerCheck: function (b, a) {
+	TriggerCheck(b, a) {
 		this.AttackCheck2(b) &&
 			((this.canTrigger = 0), this.CheckLoop(b.id, a));
 	},
-	CanGrow: function (b, a, d) {
+	CanGrow(b, a, d) {
 		var c = b[0];
 		if (!b[1] && c && c.EName == "oLilyPad") {
 			return 1;
 		}
 		return 0;
 	},
-	AttackCheck2: function (c) {
+	AttackCheck2(c) {
 		var b = c.Altitude;
 		return b == 1;
 	},
-	AttackCheckZ: function () {
+	AttackCheckZ() {
 		//查找僵尸
 		var self = this;
 		var z;
@@ -4004,7 +3966,7 @@ var oCattail = InheritO(oPeashooter, {
 
 		return Target;
 	},
-	Plength1: function (pid, zid) {
+	Plength1(pid, zid) {
 		//计算僵尸和磁力菇之间的距离 blehhhh :P
 		var chang = Math.abs(zid.R - pid.R) * 100;
 		var kuan = Math.abs(zid.X - GetX(pid.C));
@@ -4016,12 +3978,9 @@ var oCattail = InheritO(oPeashooter, {
 		a.BulletEle = NewImg(
 			0,
 			a.PicArr[3],
-			"left:" +
-				(a.pixelLeft + 50) +
-				"px;top:" +
-				(a.pixelTop + 10) +
-				"px;visibility:hidden;z-index:" +
-				(a.zIndex + 2)
+			`left:${a.pixelLeft + 50}px;top:${
+				a.pixelTop + 10
+			}px;visibility:hidden;z-index:${a.zIndex + 2}`
 		);
 		var p;
 		var oBalloon;
@@ -4064,7 +4023,7 @@ var oCattail = InheritO(oPeashooter, {
 		}
 	},
 	AttackAnim(ele, self) {
-		ele.childNodes[1].src = self.PicArr[self.AttackGif] + "?" + this.id;
+		ele.childNodes[1].src = `${self.PicArr[self.AttackGif]}?${this.id}`;
 	},
 	getAngle(x, y, lastX, lastY) {
 		return (180 / Math.PI) * Math.atan2(y - lastY, x - lastX);
@@ -4085,7 +4044,7 @@ var oCattail = InheritO(oPeashooter, {
 		var bullet = EditEle(
 			self.BulletEle.cloneNode(false),
 			{
-				id: "CB" + Math.random(),
+				id: `CB${Math.random()}`,
 			},
 			0,
 			EDPZ
@@ -4097,16 +4056,14 @@ var oCattail = InheritO(oPeashooter, {
 				120,
 				(_) =>
 					$P[self.id] &&
-					(ele.childNodes[1].src =
-						self.PicArr[self.NormalGif] + "?" + this.id)
+					(ele.childNodes[1].src = `${self.PicArr[self.NormalGif]}?${this.id}`)
 			);
 		}
 		oSym.addTask(85, (_) => {
 			//PlayAudio(self.AudioArr.slice(0, 2).random());
 			if (!$P[self.id]) return;
 			if (!$Z[zombieTarget.id]) {
-				ele.childNodes[1].src =
-					self.PicArr[self.NormalGif] + "?" + this.id;
+				ele.childNodes[1].src = `${self.PicArr[self.NormalGif]}?${this.id}`;
 				return;
 			}
 			SetVisible(bullet);
@@ -4178,8 +4135,8 @@ var oCattail = InheritO(oPeashooter, {
 						);
 						ab = self.catlen(x, y, last);
 					}
-					bullet.style.left = x + "px";
-					bullet.style.top = y + "px";
+					bullet.style.left = `${x}px`;
+					bullet.style.top = `${y}px`;
 					bullet.style.transform = `rotate(${self.getAngle(x, y, last[0], last[1])}deg)`;
 					t++;
 
@@ -4196,8 +4153,7 @@ var oCattail = InheritO(oPeashooter, {
 
 					if (!$Z[zombieTarget.id]) {
 						fum = 1;
-						ele.childNodes[1].src =
-							self.PicArr[self.NormalGif] + "?" + this.id;
+						ele.childNodes[1].src = `${self.PicArr[self.NormalGif]}?${this.id}`;
 						oSym.addTask(1, drawFrame);
 					} else oSym.addTask(ab * 0.4, drawFrame);
 				} else {
@@ -4228,8 +4184,8 @@ var oCattail = InheritO(oPeashooter, {
 								);
 								ab = self.catlen(x, y, last);
 							}
-							bullet.style.left = x + "px";
-							bullet.style.top = y + "px";
+							bullet.style.left = `${x}px`;
+							bullet.style.top = `${y}px`;
 							bullet.style.transform = `rotate(${self.getAngle(x, y, last[0], last[1])}deg)`;
 							t++;
 
@@ -4246,13 +4202,12 @@ var oCattail = InheritO(oPeashooter, {
 
 							if (!$Z[zombieTarget.id]) {
 								fum = 1;
-								ele.childNodes[1].src =
-									self.PicArr[self.NormalGif] + "?" + this.id;
+								ele.childNodes[1].src = `${self.PicArr[self.NormalGif]}?${this.id}`;
 								oSym.addTask(1, drawFrame);
 							} else oSym.addTask(ab * 0.4, drawFrame);
 						} else {
-							bullet.style.left = (x -= 3) + "px";
-							bullet.style.top = (y -= 3) + "px";
+							bullet.style.left = `${(x -= 3)}px`;
+							bullet.style.top = `${(y -= 3)}px`;
 							bullet.style.transform = `rotate(${self.getAngle(x, y, last[0], last[1])}deg)`;
 							if (x <= 0 || y <= 0) {
 								bullet &&
@@ -4280,7 +4235,7 @@ var oLing = InheritO(oWallNut, {
 	beAttackedPointR: 80,
 	BookHandBack: 4.9,
 	HP: 1e4,
-	getShadow: function (a) {
+	getShadow(a) {
 		return "display:none";
 	},
 	PicArr: [
@@ -4291,8 +4246,8 @@ var oLing = InheritO(oWallNut, {
 	Tooltip: "Nanhu Ling is the first obstacle in the water",
 	Produce:
 		'Nanhu Ling is the first obstacle in the water<p>Toughness:<font color="CC241D">high</font></p>Look, how big is a cashew nut?</font><br>He said, but he didnt care. In Nanhulings head, every day only</font><br>think about one thing"If Qianlong didnt open the golden mouth, I wouldnt be able to use it</font><br>Horn to stab zombies? !"',
-	CanGrow: function (c, b, d) {
-		var a = b + "_" + d;
+	CanGrow(c, b, d) {
+		var a = `${b}_${d}`;
 		return !(
 			d < 1 ||
 			d > 9 ||
@@ -4303,7 +4258,7 @@ var oLing = InheritO(oWallNut, {
 			oGd.$Tombstones[a]
 		);
 	},
-	getHurt: function (e, b, a) {
+	getHurt(e, b, a) {
 		var c = this;
 		var d = $(c.id).childNodes[1];
 		!(b % 3)
@@ -4340,13 +4295,13 @@ var oNutBowling = InheritO(CPlants, {
 	AudioArr: ["bowling", "bowlingimpact", "bowlingimpact2"],
 	Produce: "",
 	CanAttack: 1,
-	InitTrigger: function () {},
-	getHurt: function () {},
-	CanGrow: function (d, e, f) {
+	InitTrigger() {},
+	getHurt() {},
+	CanGrow(d, e, f) {
 		return true;
 	},
 	NormalAttack: null,
-	PrivateBirth: function (c) {
+	PrivateBirth(c) {
 		var d = $(c.id);
 		PlayAudio("bowling");
 		EditEle(d.childNodes[1], {
@@ -4437,8 +4392,8 @@ var oNutBowling = InheritO(CPlants, {
 						(z.AttackedRX = r += 2),
 						(w = GetR((z.pixelBottom += e * 2))),
 						SetStyle(x, {
-							left: (z.pixelLeft = p += 2) + "px",
-							top: (z.pixelTop += e * 2) + "px",
+							left: `${(z.pixelLeft = p += 2)}px`,
+							top: `${(z.pixelTop += e * 2)}px`,
 						}),
 						w != a &&
 							((z.R = w),
@@ -4451,7 +4406,7 @@ var oNutBowling = InheritO(CPlants, {
 								C: l,
 								PKind: 1,
 							}),
-							oGd.add(z, w + "_" + i + "_1")),
+							oGd.add(z, `${w}_${i}_1`)),
 						oSym.addTask(1, arguments.callee, [
 							z,
 							y,
@@ -4491,7 +4446,7 @@ var oHugeNutBowling = InheritO(oNutBowling, {
 		"images/Plants/WallNut/2.webp",
 		"images/Plants/WallNut/2.webp",
 	],
-	PrivateBirth: function (a) {
+	PrivateBirth(a) {
 		PlayAudio("bowling");
 		EditEle($(a.id).childNodes[1], {
 			style: `animation: hugeWallnutSpin ${
@@ -4513,7 +4468,7 @@ var oHugeNutBowling = InheritO(oNutBowling, {
 				: ((j = GetC((b.pixelRight += 2))),
 					(b.AttackedLX = n += 2),
 					(b.AttackedRX = m += 2),
-					(g.style.left = (b.pixelLeft += 2) + "px"),
+					(g.style.left = `${(b.pixelLeft += 2)}px`),
 					j != h &&
 						((b.C = j),
 						oGd.del({
@@ -4521,7 +4476,7 @@ var oHugeNutBowling = InheritO(oNutBowling, {
 							C: h,
 							PKind: 1,
 						}),
-						oGd.add(b, l + "_" + j + "_1")),
+						oGd.add(b, `${l}_${j}_1`)),
 					oSym.addTask(1, arguments.callee, [b, c, n, m, e, g]));
 		})(a, oS.W, a.AttackedLX, a.AttackedRX, a.R, $(a.id));
 	},
@@ -4536,7 +4491,7 @@ var oBoomNutBowling = InheritO(oNutBowling, {
 		"images/Plants/CherryBomb/Boom.gif",
 	],
 	AudioArr: ["cherrybomb", "bowling"],
-	PrivateBirth: function (a) {
+	PrivateBirth(a) {
 		PlayAudio("bowling");
 		EditEle($(a.id).childNodes[1], {
 			style: `animation: wallnutSpin ${0.75 * ($User.Visitor.TimeStep / 10)}s linear infinite`,
@@ -4584,7 +4539,7 @@ var oBoomNutBowling = InheritO(oNutBowling, {
 						(s.AttackedLX = b += 2),
 						(s.AttackedRX = c += 2),
 						SetStyle(m, {
-							left: (s.pixelLeft += 2) + "px",
+							left: `${(s.pixelLeft += 2)}px`,
 						}),
 						l != p &&
 							((s.C = l),
@@ -4593,7 +4548,7 @@ var oBoomNutBowling = InheritO(oNutBowling, {
 								C: p,
 								PKind: 1,
 							}),
-							oGd.add(s, v + "_" + l + "_1")),
+							oGd.add(s, `${v}_${l}_1`)),
 						oSym.addTask(1, arguments.callee, [
 							s,
 							q,
@@ -4624,8 +4579,8 @@ var oTallNut = InheritO(oWallNut, {
 	Tooltip: "Heavy-duty wall that can't be vaulted over",
 	Produce:
 		'<font color="#28325A">Tall-nuts are heavy-duty wall plants that can\'t be vaulted over.</font><p>Toughness: <font color="#CC241D">very high</font><br>Special: <font color="#CC241D">can\'t be vaulted or jumped over</font><p>People wonder if there\'s a rivalry between Wall-nut and Tall-nut. Tall-nut laughs a rich, baritone laugh. "How could there be anything between us? We are brothers. If you knew what Wall-nut has done for me..." Tall-nut\'s voice trails off and he smiles knowingly.',
-	CanGrow: function (c, b, f) {
-		var a = b + "_" + f;
+	CanGrow(c, b, f) {
+		var a = `${b}_${f}`;
 		var d = c[1];
 		var e = oS.ArP;
 		return e
@@ -4647,7 +4602,7 @@ var oTallNut = InheritO(oWallNut, {
 					: c[0] && !d;
 	},
 	Stature: 1,
-	getHurt: function (e, b, a) {
+	getHurt(e, b, a) {
 		var c = this;
 		var d = $(c.id).childNodes[1];
 		!(b % 3)
@@ -4683,8 +4638,8 @@ var oSeedTallNut = InheritO(oWallNut, {
 	Tooltip: "Heavy-duty wall that can't be vaulted over",
 	Produce:
 		'高坚果是重型壁垒植物，而且不会被跳过。<p>Toughness:<font color="#CC241D">非常高</font><br>特殊：<font color="#CC241D">不会被跨过或越过</font></p>人们想知道，坚果墙和高坚果是否在竞争。高</font><br>坚果以男中音的声调大声笑了。“我们之间怎么</font><br>会存在竞争关系？我们是哥们儿。你知道坚果墙</font><br>为我做了什么吗……”高坚果的声音越来越小，</font><br>他狡黠地笑着。”',
-	CanGrow: function (c, b, f) {
-		var a = b + "_" + f;
+	CanGrow(c, b, f) {
+		var a = `${b}_${f}`;
 		var d = c[1];
 		var e = oS.ArP;
 		return e
@@ -4706,7 +4661,7 @@ var oSeedTallNut = InheritO(oWallNut, {
 					: c[0] && !d;
 	},
 	Stature: 1,
-	getHurt: function (e, b, a) {
+	getHurt(e, b, a) {
 		var c = this;
 		var d = $(c.id).childNodes[1];
 		!(b % 3)
@@ -4745,7 +4700,7 @@ var oTenManNut = InheritO(CPlants, {
 	// cool comment!
 	Produce:
 		'<font color="#28325A">Vine-nuts are heavy-duty wall plants that can\'t be vaulted over and also damage zombies.</font><p>Damage: <font color="#CC241D">normal</font><br>Toughness: <font color="#CC241D">very high</font><p>Vine-Nut started as a plain Tall-Nut but became entangled in some wild jungle vines. Now, when zombies bite, thorny vines lash out, slowing them down. It\'s not just a nut, it\'s a vengeful nut!',
-	getHurt: function (f, c, b) {
+	getHurt(f, c, b) {
 		var e = this;
 		var d;
 		var a = $(e.id).childNodes[1];
@@ -4767,14 +4722,14 @@ var oTenManNut = InheritO(CPlants, {
 				a.src = "images/Plants/TenManNut/Spikeweed.gif";
 		}
 	},
-	NormalAttack: function (b, a) {
+	NormalAttack(b, a) {
 		var c = $Z[b];
 		c.getHit2(c, this.Attack, 0);
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[this.pixelLeft - 80, this.pixelRight + 80, 0]];
 	},
-	TriggerCheck: function (i, h) {
+	TriggerCheck(i, h) {
 		var c = i.id;
 		var g = this.ArZ;
 		var a;
@@ -4793,14 +4748,14 @@ var oTenManNut = InheritO(CPlants, {
 			this.NormalAttack(c),
 			oSym.addTask(
 				100,
-				function (d, j) {
+				(d, j) => {
 					var k = $P[d];
 					k && delete k.ArZ[j];
 				},
 				[this.id, c]
 			));
 	},
-	AttackCheck2: function (a) {
+	AttackCheck2(a) {
 		return a.Altitude == 1 && a.beAttacked;
 	},
 });
@@ -4816,18 +4771,18 @@ var oCherryBomb = InheritO(CPlants, {
 		"images/Card/Plants/CherryBomb.png",
 		"images/Plants/CherryBomb/0.gif",
 		"images/Plants/CherryBomb/CherryBomb.gif",
-		"images/Plants/CherryBomb/Boom.gif" + $Random,
+		`images/Plants/CherryBomb/Boom.gif${$Random}`,
 	],
 	AudioArr: ["cherrybomb"],
 	Tooltip: "Blows up all zombies in an area",
 	Produce:
 		'<font color="#28325A">Cherry Bombs can blow up all zombies in an area. They have a short fuse so plant them near zombies.</font><p>Harm: <font color="#CC241D">massive</font><br>Range: <font color="#CC241D">all zombies in a medium area</font><br>Usage: <font color="#CC241D">single use, instant</font></p>"I wanna explode," says Cherry #1. "No, let\'s detonate instead!" says his brother, Cherry #2. After intense consultation they agree to explodonate.',
-	InitTrigger: function () {},
-	getHurt: function () {},
-	PrivateBirth: function (a) {
+	InitTrigger() {},
+	getHurt() {},
+	PrivateBirth(a) {
 		oSym.addTask(
 			40,
-			function (b) {
+			(b) => {
 				var c = $P[b];
 				if (c) {
 					PlayAudio("cherrybomb");
@@ -4877,18 +4832,18 @@ var oSeedCherryBomb = InheritO(CPlants, {
 		"images/Card/Plants/CherryBomb.png",
 		"images/Plants/CherryBomb/0.gif",
 		"images/Plants/CherryBomb/CherryBomb.gif",
-		"images/Plants/CherryBomb/Boom.gif" + $Random,
+		`images/Plants/CherryBomb/Boom.gif${$Random}`,
 	],
 	AudioArr: ["cherrybomb"],
 	Tooltip: "Blows up all zombies in an area",
 	Produce:
 		'Cherry bomb can blow up all zombies in a certain area.</font><br>One will detonate immediately. So please plant them on zombies</font><br>around them.<p>Harm:<font color="#CC241D">huge</font><br>Scope:<font color="#CC241D">All zombies in a medium area</font><br>Instructions:<font color="#CC241D">Instant use, it explodes immediately</font></p>“I am going to explode. "Cherry No. 1 said. "No, we are</font><br>‘炸’开了!”Said its brother Cherry No. 2. After intense discussion</font><br>After discussion, they finally agreed on the term "explosion."”',
-	InitTrigger: function () {},
-	getHurt: function () {},
-	PrivateBirth: function (a) {
+	InitTrigger() {},
+	getHurt() {},
+	PrivateBirth(a) {
 		oSym.addTask(
 			40,
-			function (b) {
+			(b) => {
 				var c = $P[b];
 				if (c) {
 					PlayAudio("cherrybomb");
@@ -4943,10 +4898,10 @@ var oJalapeno = InheritO(oCherryBomb, {
 	Tooltip: "Destroys an entire lane of zombies",
 	Produce:
 		'<font color="#28325A">Jalapenos destroy an entire lane of zombies.</font><p>Damage: <font color="#CC241D">massive</font><br>Range: <font color="#CC241D">all zombies in a lane</font><br>Usage: <font color="#CC241D">single use, instant</font></p>"NNNNNGGGGGG!!!!!!!!" Jalapeno says. He\'s not going to explode, not this time. But soon. Oh, so soon. It\'s close. He knows it, he can feel it, his whole life\'s been leading up to this moment.',
-	PrivateBirth: function (a) {
+	PrivateBirth(a) {
 		oSym.addTask(
 			40,
-			function (j) {
+			(j) => {
 				var h = $P[j];
 				if (h) {
 					PlayAudio("jalapeno");
@@ -4968,15 +4923,15 @@ var oJalapeno = InheritO(oCherryBomb, {
 						{
 							width: "755px",
 							height: "131px",
-							left: 120 - h.pixelLeft + "px",
+							left: `${120 - h.pixelLeft}px`,
 							top: "-42px",
 						}
 					);
 					oSym.addTask(135, ClearChild, [b]);
-					ClearChild($("dIceCar" + f));
+					ClearChild($(`dIceCar${f}`));
 					if (g) {
 						for (e = g[1]; e < 11; e++) {
-							delete d[f + "_" + e];
+							delete d[`${f}_${e}`];
 						}
 					}
 				}
@@ -5002,10 +4957,10 @@ var oSeedJalapeno = InheritO(oCherryBomb, {
 	Tooltip: "Destroys an entire lane of zombies",
 	Produce:
 		'火爆辣椒可以摧毁一整条线上的敌人。<p>Harm:<font color="#CC241D">极高</font><br>Scope:<font color="#CC241D">整条线上的僵尸</font><br>用法：<font color="#CC241D">单独使用，立即生效</font></p>“嘎嘎嘎嘎嘎嘎嘎!!!”火爆辣椒说。他现在</font><br>不会爆炸，还不到时候，不过快了，喔~，快了快</font><br>了，快来了。他知道，他感受到了，他一生都是</font><br>在等待这个时刻!',
-	PrivateBirth: function (a) {
+	PrivateBirth(a) {
 		oSym.addTask(
 			40,
-			function (j) {
+			(j) => {
 				var h = $P[j];
 				if (h) {
 					PlayAudio("jalapeno");
@@ -5027,15 +4982,15 @@ var oSeedJalapeno = InheritO(oCherryBomb, {
 						{
 							width: "755px",
 							height: "131px",
-							left: 120 - h.pixelLeft + "px",
+							left: `${120 - h.pixelLeft}px`,
 							top: "-42px",
 						}
 					);
 					oSym.addTask(135, ClearChild, [b]);
-					ClearChild($("dIceCar" + f));
+					ClearChild($(`dIceCar${f}`));
 					if (g) {
 						for (e = g[1]; e < 11; e++) {
-							delete d[f + "_" + e];
+							delete d[`${f}_${e}`];
 						}
 					}
 				}
@@ -5064,8 +5019,8 @@ var oSpikeweed = InheritO(CPlants, {
 	Tooltip: "Pops tires and hurts zombies that step on it",
 	Produce:
 		'<font color="#28325A">Spikeweeds pop tires and hurt any zombies that step on them.</font><p>Damage: <font color="#CC241D">normal</font><br>Range: <font color="#CC241D">all zombies that walk over it</font><br>Special: <font color="#CC241D">can\'t be eaten by zombies</font></p>Hockey is Spikeweed\'s obsession. He\'s got box seat season tickets. He keeps close track of his favorite players. And he consistently cleans up in the office hockey pool. Just one problem: he\'s terrified of pucks.',
-	CanGrow: function (c, b, e) {
-		var a = b + "_" + e;
+	CanGrow(c, b, e) {
+		var a = `${b}_${e}`;
 		var d = oS.ArP;
 		return d
 			? e > 0 && e < d.ArC[1] && oGd.$LF[b] == 1 && !(c[1] || c[0])
@@ -5079,7 +5034,7 @@ var oSpikeweed = InheritO(CPlants, {
 					oGd.$Tombstones[a]
 				);
 	},
-	getHurt: function (d, b, a) {
+	getHurt(d, b, a) {
 		var c = this;
 		switch (b) {
 			case 2:
@@ -5094,17 +5049,17 @@ var oSpikeweed = InheritO(CPlants, {
 				(c.HP -= a) < 1 && c.Die();
 		}
 	},
-	NormalAttack: function (b, a) {
+	NormalAttack(b, a) {
 		var c = $Z[b];
 		c.getHit2(c, this.Attack, 0);
 	},
-	GetDY: function (b, c, a) {
+	GetDY(b, c, a) {
 		return -2;
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[this.pixelLeft - 80, this.pixelRight + 80, 0]];
 	},
-	TriggerCheck: function (i, h) {
+	TriggerCheck(i, h) {
 		var c = i.id;
 		var g = this.ArZ;
 		var a;
@@ -5123,14 +5078,14 @@ var oSpikeweed = InheritO(CPlants, {
 			this.NormalAttack(c),
 			oSym.addTask(
 				100,
-				function (d, j) {
+				(d, j) => {
 					var k = $P[d];
 					k && delete k.ArZ[j];
 				},
 				[this.id, c]
 			));
 	},
-	AttackCheck2: function (a) {
+	AttackCheck2(a) {
 		return a.Altitude == 1 && a.beAttacked;
 	},
 });
@@ -5154,8 +5109,8 @@ var oSeedSpikeweed = InheritO(CPlants, {
 	Tooltip: "Pops tires and hurts zombies that step on it",
 	Produce:
 		'地刺可以扎破轮胎，并对踩到他的僵尸造成伤</font><br>害<p>Harm:<font color="#CC241D">普通</font><br>Scope:<font color="#CC241D">所有踩到他的僵尸</font><br>Features:<font color="#CC241D">不会被僵尸吃掉</font></p>地刺痴迷冰球，他买了包厢的季票。他一直关</font><br>注着他喜欢的球员，他也始终如一的在赛后清理</font><br>冰球场。但只有一个问题：他害怕冰球。',
-	CanGrow: function (c, b, e) {
-		var a = b + "_" + e;
+	CanGrow(c, b, e) {
+		var a = `${b}_${e}`;
 		var d = oS.ArP;
 		return d
 			? e > 0 && e < d.ArC[1] && oGd.$LF[b] == 1 && !(c[1] || c[0])
@@ -5169,7 +5124,7 @@ var oSeedSpikeweed = InheritO(CPlants, {
 					oGd.$Tombstones[a]
 				);
 	},
-	getHurt: function (d, b, a) {
+	getHurt(d, b, a) {
 		var c = this;
 		switch (b) {
 			case 2:
@@ -5184,17 +5139,17 @@ var oSeedSpikeweed = InheritO(CPlants, {
 				(c.HP -= a) < 1 && c.Die();
 		}
 	},
-	NormalAttack: function (b, a) {
+	NormalAttack(b, a) {
 		var c = $Z[b];
 		c.getHit2(c, this.Attack, 0);
 	},
-	GetDY: function (b, c, a) {
+	GetDY(b, c, a) {
 		return -2;
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[this.pixelLeft - 80, this.pixelRight + 80, 0]];
 	},
-	TriggerCheck: function (i, h) {
+	TriggerCheck(i, h) {
 		var c = i.id;
 		var g = this.ArZ;
 		var a;
@@ -5213,14 +5168,14 @@ var oSeedSpikeweed = InheritO(CPlants, {
 			this.NormalAttack(c),
 			oSym.addTask(
 				100,
-				function (d, j) {
+				(d, j) => {
 					var k = $P[d];
 					k && delete k.ArZ[j];
 				},
 				[this.id, c]
 			));
 	},
-	AttackCheck2: function (a) {
+	AttackCheck2(a) {
 		return a.Altitude == 1 && a.beAttacked;
 	},
 });
@@ -5244,14 +5199,14 @@ var oSpikerock = InheritO(oSpikeweed, {
 		'Pops multiple tires and damages zombies that walk over it  <p> <font color="red">(requires spikeweed)</font>',
 	Produce:
 		'<font color="#28325A">Spikerocks pop multiple tires and damage zombies that walk over it.</font><p>Must be planted on spikeweeds<p>Spikerock just got back from a trip to Europe. He had a great time, met some wonderful people, really broadened his horizons. He never knew they made museums so big, or put so many paintings in them. That was a big surprise for him.',
-	CanGrow: function (b, a, d) {
+	CanGrow(b, a, d) {
 		var c = b[1];
 		return c && c.EName == "oSpikeweed";
 	},
-	GetDY: function (b, c, a) {
+	GetDY(b, c, a) {
 		return 0;
 	},
-	getHurt: function (f, c, b) {
+	getHurt(f, c, b) {
 		var e = this;
 		var d;
 		var a = $(e.id).childNodes[1];
@@ -5292,8 +5247,8 @@ var oGarlic = InheritO(CPlants, {
 	Tooltip: "Diverts zombies into other lanes",
 	Produce:
 		'<font color="#28325A">Garlic diverts zombies into other lanes.</font><p>Usage: <font color="#CC241D">on contact</font><br>Special: <font color="#CC241D">diverts zombies into other lanes</font><p>Lane-diversion isn\'t just Garlic\'s profession. It\'s his passion. He carries an advanced Doctorate in Redirection from the Brussels University. He\'ll talk all day about lane vectors and repulse arrays. He even pushes things into alternate avenues at home. Somehow his wife puts up with it.',
-	CanGrow: function (c, b, f) {
-		var a = b + "_" + f;
+	CanGrow(c, b, f) {
+		var a = `${b}_${f}`;
 		var d = c[1];
 		var e = oS.ArP;
 		return e
@@ -5314,9 +5269,9 @@ var oGarlic = InheritO(CPlants, {
 						)
 					: c[0] && !d;
 	},
-	InitTrigger: function () {},
+	InitTrigger() {},
 	HurtStatus: 0,
-	getHurt: function (e, b, a) {
+	getHurt(e, b, a) {
 		let yuckrng = Math.floor(Math.random() * 2) + 1; // note the uppercase M in Math
 		if (yuckrng == 1) {
 			PlayAudio("yuck");
@@ -5360,8 +5315,8 @@ var oSeedGarlic = InheritO(CPlants, {
 	Tooltip: "Diverts zombies into other lanes",
 	Produce:
 		'大蒜可以让僵尸改变前进的路线。<p>Scope:<font color="#CC241D">近距离接触</font><br>Features:<font color="#CC241D">改变僵尸的前进路线</font></p>路线转向，这不仅仅是大蒜的专业，更是他</font><br>的热情所在。他在布鲁塞尔大学里，获得了转向</font><br>学的博士学位。他能把路线向量和反击阵列，讲</font><br>上一整天。他甚至会把家里的东西，推到街上去</font><br>。不知道为啥，他老婆还可以忍受这些。',
-	CanGrow: function (c, b, f) {
-		var a = b + "_" + f;
+	CanGrow(c, b, f) {
+		var a = `${b}_${f}`;
 		var d = c[1];
 		var e = oS.ArP;
 		return e
@@ -5382,9 +5337,9 @@ var oSeedGarlic = InheritO(CPlants, {
 						)
 					: c[0] && !d;
 	},
-	InitTrigger: function () {},
+	InitTrigger() {},
 	HurtStatus: 0,
-	getHurt: function (e, b, a) {
+	getHurt(e, b, a) {
 		let yuckrng = Math.floor(Math.random() * 2) + 1; // note the uppercase M in Math
 		if (yuckrng == 1) {
 			PlayAudio("yuck");
@@ -5429,10 +5384,10 @@ var oSquash = InheritO(CPlants, {
 	Tooltip: "Squashes zombies",
 	Produce:
 		'<font color="#28325A">Squashes will smash the first zombie that gets close to it.</font><p>Damage: <font color="#CC241D">massive</font><br>Range: <font color="#CC241D">short range, hits all zombies that it lands on</font><br>Usage: <font color="#CC241D">single use</font></p>"I\'m ready!" yells Squash. "Let\'s do it! Put me in! There\'s nobody better! I\'m your guy! C\'mon! Whaddya waiting for? I need this!"',
-	GetDY: function (b, c, a) {
+	GetDY(b, c, a) {
 		return a[0] ? -21 : -10;
 	},
-	getHurt: function (d, b, a) {
+	getHurt(d, b, a) {
 		var c = this;
 		b != 3
 			? c.NormalAttack(
@@ -5442,10 +5397,10 @@ var oSquash = InheritO(CPlants, {
 				)
 			: (c.HP -= a) < 1 && c.Die();
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[b - 50, c + 80, 0]];
 	},
-	TriggerCheck: function (h, g, e) {
+	TriggerCheck(h, g, e) {
 		var c = h.ZX;
 		var b = this.id;
 		var a = $(b).childNodes[1];
@@ -5462,26 +5417,25 @@ var oSquash = InheritO(CPlants, {
 					: "images/Plants/Squash/SquashL.png"),
 			oSym.addTask(
 				100,
-				function (d, j, i) {
+				(d, j, i) => {
 					var k = $P[d];
 					k && k.NormalAttack(k, h.id, i);
 				},
 				[b, h.id, h.ZX + h.Speed * 4 * (!h.WalkDirection ? -1 : 1) - 50]
 			));
 	},
-	NormalAttack: function (d, c, b) {
+	NormalAttack(d, c, b) {
 		var a = $(d.id);
 		var e = $Z[c];
 		e && (b = e.ZX + e.Speed * 4 * (!e.WalkDirection ? -1 : 1) - 50);
-		a.childNodes[1].src =
-			"images/Plants/Squash/SquashAttack.gif" + $Random + Math.random();
+		a.childNodes[1].src = `images/Plants/Squash/SquashAttack.gif${$Random}${Math.random()}`;
 		SetStyle(a, {
-			left: b + "px",
+			left: `${b}px`,
 		});
 		d.Die(1);
 		oSym.addTask(
 			45,
-			function (f, l, j) {
+			(f, l, j) => {
 				PlayAudio("gargantuar_thump");
 				var g = oZ.getArZ(l, l + 100, j);
 				var h = g.length;
@@ -5517,10 +5471,10 @@ var oSeedSquash = InheritO(CPlants, {
 	Tooltip: "Squashes zombies",
 	Produce:
 		'窝瓜会压扁第一个接近它的僵尸。<p>Harm:<font color="#CC241D">极高</font><br>Scope:<font color="#CC241D">短，覆盖所有它压到的僵尸。</font><br>用法：<font color="#CC241D">单独使用</font></p>“我准备好了!”窝瓜大吼道，“干吧!!算我</font><br>一份!没人比我厉害!我就是你要的人!来啊!</font><br>等啥啊？要的就是这个!”',
-	GetDY: function (b, c, a) {
+	GetDY(b, c, a) {
 		return a[0] ? -21 : -10;
 	},
-	getHurt: function (d, b, a) {
+	getHurt(d, b, a) {
 		var c = this;
 		b != 3
 			? c.NormalAttack(
@@ -5530,10 +5484,10 @@ var oSeedSquash = InheritO(CPlants, {
 				)
 			: (c.HP -= a) < 1 && c.Die();
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[b - 50, c + 80, 0]];
 	},
-	TriggerCheck: function (h, g, e) {
+	TriggerCheck(h, g, e) {
 		var c = h.ZX;
 		var b = this.id;
 		var a = $(b).childNodes[1];
@@ -5550,26 +5504,25 @@ var oSeedSquash = InheritO(CPlants, {
 					: "images/Plants/Squash/SquashL.png"),
 			oSym.addTask(
 				100,
-				function (d, j, i) {
+				(d, j, i) => {
 					var k = $P[d];
 					k && k.NormalAttack(k, h.id, i);
 				},
 				[b, h.id, h.ZX + h.Speed * 4 * (!h.WalkDirection ? -1 : 1) - 50]
 			));
 	},
-	NormalAttack: function (d, c, b) {
+	NormalAttack(d, c, b) {
 		var a = $(d.id);
 		var e = $Z[c];
 		e && (b = e.ZX + e.Speed * 4 * (!e.WalkDirection ? -1 : 1) - 50);
-		a.childNodes[1].src =
-			"images/Plants/Squash/SquashAttack.gif" + $Random + Math.random();
+		a.childNodes[1].src = `images/Plants/Squash/SquashAttack.gif${$Random}${Math.random()}`;
 		SetStyle(a, {
-			left: b + "px",
+			left: `${b}px`,
 		});
 		d.Die(1);
 		oSym.addTask(
 			45,
-			function (f, l, j) {
+			(f, l, j) => {
 				PlayAudio("gargantuar_thump");
 				var g = oZ.getArZ(l, l + 100, j);
 				var h = g.length;
@@ -5604,33 +5557,33 @@ var oChomper = InheritO(CPlants, {
 	Tooltip: "Devours a zombie whole, but is vulnerable while chewing",
 	Produce:
 		'<font color="#28325A">Chompers can devour a zombie whole, but they are vulnerable while chewing.</font><p>Damage: <font color="#CC241D">massive</font><br>Range: <font color="#CC241D">very short</font><br>Special: <font color="#CC241D">long delay between chomps</font></p>Chomper almost got a gig doing stunts for The Little Shop of Horrors but it fell through when his agent demanded too much on the front end. Chomper\'s not resentful, though. He says it\'s just part of the business.',
-	GetDX: function () {
+	GetDX() {
 		return -40;
 	},
-	getShadow: function (a) {
-		return "top:" + (a.height - 22) + "px";
+	getShadow(a) {
+		return `top:${a.height - 22}px`;
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[this.pixelLeft, c + 80, 0]];
 	},
-	TriggerCheck: function (a) {
+	TriggerCheck(a) {
 		this.AttackCheck2(a) &&
 			((this.canTrigger = 0), this.NormalAttack(this.id, a.id));
 	},
-	AttackCheck2: function (a) {
+	AttackCheck2(a) {
 		return a.Altitude == 1 && a.beAttacked;
 	},
-	NormalAttack: function (a, b) {
+	NormalAttack(a, b) {
 		$(a).childNodes[1].src =
-			"images/Plants/Chomper/ChomperAttack.gif" + $Random + Math.random();
+			`images/Plants/Chomper/ChomperAttack.gif${$Random}${Math.random()}`;
 		oSym.addTask(
 			70,
-			function (c, d) {
+			(c, d) => {
 				PlayAudio("bigchomp");
 				$P[c] &&
 					oSym.addTask(
 						18,
-						function (e, f) {
+						(e, f) => {
 							var g = $P[e];
 							var h;
 							g &&
@@ -5638,7 +5591,7 @@ var oChomper = InheritO(CPlants, {
 									? ($(e).childNodes[1].src = h.getRaven(e)
 											? (oSym.addTask(
 													4200,
-													function (i) {
+													(i) => {
 														var j = $P[i];
 														j &&
 															((j.canTrigger = 1),
@@ -5654,7 +5607,7 @@ var oChomper = InheritO(CPlants, {
 												"images/Plants/Chomper/Chomper.gif"))
 									: oSym.addTask(
 											18,
-											function (i) {
+											(i) => {
 												var j = $P[i];
 												j &&
 													((j.canTrigger = 1),
@@ -5689,33 +5642,33 @@ var oSeedChomper = InheritO(CPlants, {
 	Tooltip: "Devours a zombie whole, but is vulnerable while chewing",
 	Produce:
 		'Big-mouthed flowers can swallow a whole zombie in one bite, but they are very fragile when digesting zombies.<p>Harm:<font color="#CC241D">huge</font><br>Scope:<font color="#CC241D">very close</font><br>Features:<font color="#CC241D">Digestion takes a long time</font></p>Big Mouth Flower can almost go to "Little Shop of Horrors"”，to perform its absolute best</font><br>Skilled, but his agent squeezed him too much money.</font><br>Because he didnt go. Despite this, Dazuihua has no complaints, only</font><br>Said it was just part of the deal.',
-	GetDX: function () {
+	GetDX() {
 		return -40;
 	},
-	getShadow: function (a) {
-		return "top:" + (a.height - 22) + "px";
+	getShadow(a) {
+		return `top:${a.height - 22}px`;
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[this.pixelLeft, c + 80, 0]];
 	},
-	TriggerCheck: function (a) {
+	TriggerCheck(a) {
 		this.AttackCheck2(a) &&
 			((this.canTrigger = 0), this.NormalAttack(this.id, a.id));
 	},
-	AttackCheck2: function (a) {
+	AttackCheck2(a) {
 		return a.Altitude == 1 && a.beAttacked;
 	},
-	NormalAttack: function (a, b) {
+	NormalAttack(a, b) {
 		$(a).childNodes[1].src =
-			"images/Plants/Chomper/ChomperAttack.gif" + $Random + Math.random();
+			`images/Plants/Chomper/ChomperAttack.gif${$Random}${Math.random()}`;
 		oSym.addTask(
 			70,
-			function (c, d) {
+			(c, d) => {
 				PlayAudio("bigchomp");
 				$P[c] &&
 					oSym.addTask(
 						18,
-						function (e, f) {
+						(e, f) => {
 							var g = $P[e];
 							var h;
 							g &&
@@ -5723,7 +5676,7 @@ var oSeedChomper = InheritO(CPlants, {
 									? ($(e).childNodes[1].src = h.getRaven(e)
 											? (oSym.addTask(
 													4200,
-													function (i) {
+													(i) => {
 														var j = $P[i];
 														j &&
 															((j.canTrigger = 1),
@@ -5739,7 +5692,7 @@ var oSeedChomper = InheritO(CPlants, {
 												"images/Plants/Chomper/Chomper.gif"))
 									: oSym.addTask(
 											18,
-											function (i) {
+											(i) => {
 												var j = $P[i];
 												j &&
 													((j.canTrigger = 1),
@@ -5777,19 +5730,18 @@ var c = b[1];
 return c && c.EName == "oChomper"
 },
 */
-	NormalAttack: function (a, b) {
-		$(a).childNodes[1].src =
-			"images/Plants/BigChomper/ChomperAttack.gif" +
-			$Random +
-			Math.random();
+	NormalAttack(a, b) {
+		$(a).childNodes[1].src = `images/Plants/BigChomper/ChomperAttack.gif${
+			$Random
+		}${Math.random()}`;
 		oSym.addTask(
 			70,
-			function (c, d) {
+			(c, d) => {
 				PlayAudio("bigchomp");
 				$P[c] &&
 					oSym.addTask(
 						9,
-						function (e, f) {
+						(e, f) => {
 							var g = $P[e];
 							var h;
 							g &&
@@ -5797,7 +5749,7 @@ return c && c.EName == "oChomper"
 									? ($(e).childNodes[1].src = h.getRaven(e)
 											? (oSym.addTask(
 													2100,
-													function (i) {
+													(i) => {
 														var j = $P[i];
 														j &&
 															((j.canTrigger = 1),
@@ -5813,7 +5765,7 @@ return c && c.EName == "oChomper"
 												"images/Plants/BigChomper/Chomper.gif"))
 									: oSym.addTask(
 											9,
-											function (i) {
+											(i) => {
 												var j = $P[i];
 												j &&
 													((j.canTrigger = 1),
@@ -5852,13 +5804,13 @@ var oFumeShroom = InheritO(CPlants, {
 	Tooltip: "Shoots fumes that can pass through screen doors",
 	Produce:
 		'<font color="#28325A">Fume-shrooms shoot fumes that can pass through screen doors.</font><p>Damage: <font color="#CC241D">normal, penetrates screen doors</font><br>Range: <font color="#CC241D">all zombies in the fume cloud	</font><br><font color="#8832aa">Sleeps during the day</font></p>"I was in a dead-end job producing yeast spores for a bakery," says Fume-shroom. "Then Puff-shroom, bless \'im, told me about this great opportunity blasting zombies. Now I really feel like I\'m making a difference."',
-	GetDY: function (b, c, a) {
+	GetDY(b, c, a) {
 		return a[0] ? -18 : -10;
 	},
-	GetDX: function () {
+	GetDX() {
 		return -45;
 	},
-	BirthStyle: function (c, d, b, a) {
+	BirthStyle(c, d, b, a) {
 		oS.DKind &&
 			((c.canTrigger = 0),
 			(c.Sleep = 1),
@@ -5872,28 +5824,29 @@ var oFumeShroom = InheritO(CPlants, {
 			EDPZ
 		);
 	},
-	PrivateBirth: function (b) {
+	PrivateBirth(b) {
 		var a = b.id;
 		NewEle(
-			a + "_Bullet",
+			`${a}_Bullet`,
 			"div",
-			"position:absolute;visibility:hidden;width:343px;height:62px;left:" +
-				b.AttackedRX +
-				"px;top:" +
-				(b.pixelTop + 5) +
-				"px;background:url(images/Plants/FumeShroom/FumeShroomBullet.gif);z-index:" +
-				(b.zIndex + 1),
+			`position:absolute;visibility:hidden;width:343px;height:62px;left:${
+				b.AttackedRX
+			}px;top:${
+				b.pixelTop + 5
+			}px;background:url(images/Plants/FumeShroom/FumeShroomBullet.gif);z-index:${
+				b.zIndex + 1
+			}`,
 			0,
 			EDPZ
 		);
 	},
-	PrivateDie: function (a) {
-		ClearChild($(a.id + "_Bullet"));
+	PrivateDie(a) {
+		ClearChild($(`${a.id}_Bullet`));
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[b, Math.min(c + 330, oS.W), 0]];
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		PlayAudio("fume");
 		var f = this;
 		var d = oZ.getArZ(
@@ -5905,7 +5858,7 @@ var oFumeShroom = InheritO(CPlants, {
 		var g;
 		var c = f.id;
 		var b = $(c);
-		var a = c + "_Bullet";
+		var a = `${c}_Bullet`;
 		while (e--) {
 			(g = d[e]).Altitude < 2 && g.getHit1(g, 20);
 		}
@@ -5925,7 +5878,7 @@ var oFumeShroom = InheritO(CPlants, {
 				["0 -434px", 9, -1],
 			],
 			0,
-			function (i, j) {
+			(i, j) => {
 				var h = $(j);
 				$P[j] &&
 					((h.childNodes[1].src =
@@ -5957,13 +5910,13 @@ var oSeedFumeShroom = InheritO(CPlants, {
 	Tooltip: "Shoots fumes that can pass through screen doors",
 	Produce:
 		'大喷菇喷出的臭气可以穿透铁丝网门。<p>Harm:<font color="#CC241D">普通，可穿透铁丝网门</font><br>Scope:<font color="#CC241D">臭气中的所有僵尸<br>白天睡觉</font></p>“我以前那份没前途的工作，是为一个面包房</font><br>生产酵母孢，”大喷菇说。“然后小喷菇，上帝</font><br>保佑它，告诉了我这个喷杀僵尸的机会。现在</font><br>我真觉得自己完全不同了。”',
-	GetDY: function (b, c, a) {
+	GetDY(b, c, a) {
 		return a[0] ? -18 : -10;
 	},
-	GetDX: function () {
+	GetDX() {
 		return -45;
 	},
-	BirthStyle: function (c, d, b, a) {
+	BirthStyle(c, d, b, a) {
 		oS.DKind &&
 			((c.canTrigger = 0),
 			(c.Sleep = 1),
@@ -5977,28 +5930,29 @@ var oSeedFumeShroom = InheritO(CPlants, {
 			EDPZ
 		);
 	},
-	PrivateBirth: function (b) {
+	PrivateBirth(b) {
 		var a = b.id;
 		NewEle(
-			a + "_Bullet",
+			`${a}_Bullet`,
 			"div",
-			"position:absolute;visibility:hidden;width:343px;height:62px;left:" +
-				b.AttackedRX +
-				"px;top:" +
-				(b.pixelTop + 5) +
-				"px;background:url(images/Plants/FumeShroom/FumeShroomBullet.gif);z-index:" +
-				(b.zIndex + 1),
+			`position:absolute;visibility:hidden;width:343px;height:62px;left:${
+				b.AttackedRX
+			}px;top:${
+				b.pixelTop + 5
+			}px;background:url(images/Plants/FumeShroom/FumeShroomBullet.gif);z-index:${
+				b.zIndex + 1
+			}`,
 			0,
 			EDPZ
 		);
 	},
-	PrivateDie: function (a) {
-		ClearChild($(a.id + "_Bullet"));
+	PrivateDie(a) {
+		ClearChild($(`${a.id}_Bullet`));
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[b, Math.min(c + 330, oS.W), 0]];
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		PlayAudio("fume");
 		var f = this;
 		var d = oZ.getArZ(
@@ -6010,7 +5964,7 @@ var oSeedFumeShroom = InheritO(CPlants, {
 		var g;
 		var c = f.id;
 		var b = $(c);
-		var a = c + "_Bullet";
+		var a = `${c}_Bullet`;
 		while (e--) {
 			(g = d[e]).Altitude < 2 && g.getHit1(g, 20);
 		}
@@ -6030,7 +5984,7 @@ var oSeedFumeShroom = InheritO(CPlants, {
 				["0 -434px", 9, -1],
 			],
 			0,
-			function (i, j) {
+			(i, j) => {
 				var h = $(j);
 				$P[j] &&
 					((h.childNodes[1].src =
@@ -6056,22 +6010,23 @@ var oIceFumeShroom = InheritO(oFumeShroom, {
 		'Shoots icy fumes that can pass through screen doors  <p> <font color="red">(requires fume-shroom)</font>',
 	Produce:
 		'大喷菇喷出的臭气可以穿透铁丝网门。<p>Harm:<font color="#CC241D">普通，可穿透铁丝网门</font><br>Scope:<font color="#CC241D">臭气中的所有僵尸<br>白天睡觉</font></p>“我以前那份没前途的工作，是为一个面包房</font><br>生产酵母孢，”大喷菇说。“然后小喷菇，上帝</font><br>保佑它，告诉了我这个喷杀僵尸的机会。现在</font><br>我真觉得自己完全不同了。”',
-	PrivateBirth: function (b) {
+	PrivateBirth(b) {
 		var a = b.id;
 		NewEle(
-			a + "_Bullet",
+			`${a}_Bullet`,
 			"div",
-			"position:absolute;visibility:hidden;width:343px;height:62px;left:" +
-				b.AttackedRX +
-				"px;top:" +
-				(b.pixelTop + 5) +
-				"px;background:url(images/Plants/IcyFumeShroom/FumeShroomBullet.gif);z-index:" +
-				(b.zIndex + 1),
+			`position:absolute;visibility:hidden;width:343px;height:62px;left:${
+				b.AttackedRX
+			}px;top:${
+				b.pixelTop + 5
+			}px;background:url(images/Plants/IcyFumeShroom/FumeShroomBullet.gif);z-index:${
+				b.zIndex + 1
+			}`,
 			0,
 			EDPZ
 		);
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		PlayAudio("fume");
 		var f = this;
 		var d = oZ.getArZ(
@@ -6083,7 +6038,7 @@ var oIceFumeShroom = InheritO(oFumeShroom, {
 		var g;
 		var c = f.id;
 		var b = $(c);
-		var a = c + "_Bullet";
+		var a = `${c}_Bullet`;
 		while (e--) {
 			(g = d[e]).Altitude < 2 && g.getSnowPea(g, 20);
 		}
@@ -6104,7 +6059,7 @@ var oIceFumeShroom = InheritO(oFumeShroom, {
 				["0 -434px", 9, -1],
 			],
 			0,
-			function (i, j) {
+			(i, j) => {
 				var h = $(j);
 				$P[j] &&
 					((h.childNodes[1].src =
@@ -6128,23 +6083,23 @@ var oCoffeeBean = InheritO(CPlants, {
 		"images/Card/Plants/CoffeeBean.png",
 		"images/Plants/CoffeeBean/0.gif",
 		"images/Plants/CoffeeBean/CoffeeBean.gif",
-		"images/Plants/CoffeeBean/CoffeeBeanEat.gif" + $Random,
+		`images/Plants/CoffeeBean/CoffeeBeanEat.gif${$Random}`,
 	],
 	AudioArr: ["coffee", "wakeup"],
 	Tooltip: "Plant it on a mushroom to wake it up",
 	Produce:
 		'<font color="#28325A">Use Coffee Beans to wake up sleeping mushrooms.</font><p>Usage: <font color="#CC241D">single use, instant</font><br>Special: <font color="#CC241D">can be planted over another plant, wakes up mushrooms</font><p>"Hey, guys, hey!" says Coffee Bean. "Hey! What\'s up? Who\'s that? Hey! Didja see that thing? What thing? Whoa! Lions!" Yep, Coffee Bean sure does get excited.',
-	InitTrigger: function () {},
-	GetDBottom: function () {
+	InitTrigger() {},
+	GetDBottom() {
 		return 49;
 	},
-	GetDY: function () {
+	GetDY() {
 		return -30;
 	},
-	CanGrow: function (a, b) {
+	CanGrow(a, b) {
 		return (b = a[1]) && b.Sleep && !a[3];
 	},
-	BirthStyle: function (c, d, b, a) {
+	BirthStyle(c, d, b, a) {
 		b.childNodes[1].src = this.PicArr[3] + Math.random();
 		EditEle(
 			b,
@@ -6155,12 +6110,12 @@ var oCoffeeBean = InheritO(CPlants, {
 			EDPZ
 		);
 	},
-	PrivateBirth: function (a) {
+	PrivateBirth(a) {
 		SetHidden($(a.id).firstChild);
 		PlayAudio("coffee");
 		oSym.addTask(
 			240,
-			function (c) {
+			(c) => {
 				PlayAudio("wakeup");
 				var d = oGd.$[c];
 				var b;
@@ -6173,7 +6128,7 @@ var oCoffeeBean = InheritO(CPlants, {
 						: b(d));
 				a.Die();
 			},
-			[a.R + "_" + a.C + "_1"]
+			[`${a.R}_${a.C}_1`]
 		);
 	},
 });
@@ -6197,51 +6152,52 @@ var oGloomShroom = InheritO(oFumeShroom, {
 		'Releases heavy fumes in an area around itself  <p> <font color="red">(requires fume-shroom)</font>',
 	Produce:
 		'<font color="#28325A">Gloom-shrooms release heavy fumes in an area around themselves.</font><p>Must be planted on fume-shrooms<p>"I\'ve always enjoyed releasing heavy fumes," says Gloom Shroom. "I know a lot of people aren\'t cool with that. They say it\'s rude or that it smells bad. All I can say is, would you rather have your brain eaten by zombies?"',
-	CanGrow: function (b, a, d) {
+	CanGrow(b, a, d) {
 		var c = b[1];
 		return c && c.EName == "oFumeShroom";
 	},
-	BirthStyle: function (c, d, b, a) {
-		oGd.$[c.R + "_" + c.C + "_1"] &&
-			oGd.$[c.R + "_" + c.C + "_1"].Sleep &&
+	BirthStyle(c, d, b, a) {
+		oGd.$[`${c.R}_${c.C}_1`] &&
+			oGd.$[`${c.R}_${c.C}_1`].Sleep &&
 			((c.canTrigger = 0),
 			(c.Sleep = 1),
 			(b.childNodes[1].src = c.PicArr[3]));
 		EditEle(b, { id: d }, a, EDPZ);
 	},
-	GetDX: function () {
+	GetDX() {
 		return -58;
 	},
-	PrivateBirth: function (b) {
+	PrivateBirth(b) {
 		var a = b.id;
 		NewEle(
-			a + "_Bullet",
+			`${a}_Bullet`,
 			"div",
-			"position:absolute;visibility:hidden;width:210px;height:200px;left:" +
-				(b.pixelLeft - 60) +
-				"px;top:" +
-				(b.pixelTop - 65) +
-				"px;background:url(images/Plants/GloomShroom/GloomShroomBullet.gif);z-index:" +
-				(b.zIndex + 1),
+			`position:absolute;visibility:hidden;width:210px;height:200px;left:${
+				b.pixelLeft - 60
+			}px;top:${
+				b.pixelTop - 65
+			}px;background:url(images/Plants/GloomShroom/GloomShroomBullet.gif);z-index:${
+				b.zIndex + 1
+			}`,
 			0,
 			EDPZ
 		);
 	},
-	PrivateDie: function (a) {
-		ClearChild($(a.id + "_Bullet"));
+	PrivateDie(a) {
+		ClearChild($(`${a.id}_Bullet`));
 	},
-	getTriggerRange: function (c, d, e) {
+	getTriggerRange(c, d, e) {
 		var f = GetX(this.C);
 		var b = (this.MinX = f - 120);
 		var a = (this.MaxX = f + 120);
 		return [[b, a, 0]];
 	},
-	getTriggerR: function (c) {
+	getTriggerR(c) {
 		var b = (this.MinR = c > 2 ? c - 1 : 1);
 		var a = (this.MaxR = c < oS.R ? Number(c) + 1 : c);
 		return [b, a];
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		var k = this;
 		var g;
 		var f = k.MaxR;
@@ -6252,7 +6208,7 @@ var oGloomShroom = InheritO(oFumeShroom, {
 		var a;
 		var j = k.id;
 		var d = $(j);
-		var l = j + "_Bullet";
+		var l = `${j}_Bullet`;
 		for (g = k.MinR; g <= f; g++) {
 			e = oZ.getArZ(c, b, g);
 			for (
@@ -6291,7 +6247,7 @@ var oGloomShroom = InheritO(oFumeShroom, {
 				["0 -2200px", 9, -1],
 			],
 			0,
-			function (m, n) {
+			(m, n) => {
 				var i = $(n);
 				$P[n] &&
 					(i.childNodes[1].src =
@@ -6321,51 +6277,52 @@ var oSeedGloomShroom = InheritO(oSeedFumeShroom, {
 		'Releases heavy fumes in an area around itself  <p> <font color="red">(requires fume-shroom)</font>',
 	Produce:
 		'围绕自身释放大量孢子<p><font color="#CC241D">可以种植在大喷菇上</font></p>“我喜欢喷射大量烟雾。”忧郁蘑菇说，“我</font><br>知道许多人不喜欢这样，他们说这又粗鲁啦烟</font><br>雾又很臭啦之类的，我只想说，你们想不想自</font><br>己的脑袋被僵尸吃掉？”',
-	CanGrow: function (b, a, d) {
+	CanGrow(b, a, d) {
 		var c = b[1];
 		return c && c.EName == "oSeedFumeShroom";
 	},
-	BirthStyle: function (c, d, b, a) {
-		oGd.$[c.R + "_" + c.C + "_1"] &&
-			oGd.$[c.R + "_" + c.C + "_1"].Sleep &&
+	BirthStyle(c, d, b, a) {
+		oGd.$[`${c.R}_${c.C}_1`] &&
+			oGd.$[`${c.R}_${c.C}_1`].Sleep &&
 			((c.canTrigger = 0),
 			(c.Sleep = 1),
 			(b.childNodes[1].src = c.PicArr[3]));
 		EditEle(b, { id: d }, a, EDPZ);
 	},
-	GetDX: function () {
+	GetDX() {
 		return -58;
 	},
-	PrivateBirth: function (b) {
+	PrivateBirth(b) {
 		var a = b.id;
 		NewEle(
-			a + "_Bullet",
+			`${a}_Bullet`,
 			"div",
-			"position:absolute;visibility:hidden;width:210px;height:200px;left:" +
-				(b.pixelLeft - 60) +
-				"px;top:" +
-				(b.pixelTop - 65) +
-				"px;background:url(images/Plants/GloomShroom/GloomShroomBullet.gif);z-index:" +
-				(b.zIndex + 1),
+			`position:absolute;visibility:hidden;width:210px;height:200px;left:${
+				b.pixelLeft - 60
+			}px;top:${
+				b.pixelTop - 65
+			}px;background:url(images/Plants/GloomShroom/GloomShroomBullet.gif);z-index:${
+				b.zIndex + 1
+			}`,
 			0,
 			EDPZ
 		);
 	},
-	PrivateDie: function (a) {
-		ClearChild($(a.id + "_Bullet"));
+	PrivateDie(a) {
+		ClearChild($(`${a.id}_Bullet`));
 	},
-	getTriggerRange: function (c, d, e) {
+	getTriggerRange(c, d, e) {
 		var f = GetX(this.C);
 		var b = (this.MinX = f - 120);
 		var a = (this.MaxX = f + 120);
 		return [[b, a, 0]];
 	},
-	getTriggerR: function (c) {
+	getTriggerR(c) {
 		var b = (this.MinR = c > 2 ? c - 1 : 1);
 		var a = (this.MaxR = c < oS.R ? Number(c) + 1 : c);
 		return [b, a];
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		var k = this;
 		var g;
 		var f = k.MaxR;
@@ -6376,7 +6333,7 @@ var oSeedGloomShroom = InheritO(oSeedFumeShroom, {
 		var a;
 		var j = k.id;
 		var d = $(j);
-		var l = j + "_Bullet";
+		var l = `${j}_Bullet`;
 		for (g = k.MinR; g <= f; g++) {
 			e = oZ.getArZ(c, b, g);
 			for (
@@ -6415,7 +6372,7 @@ var oSeedGloomShroom = InheritO(oSeedFumeShroom, {
 				["0 -2200px", 9, -1],
 			],
 			0,
-			function (m, n) {
+			(m, n) => {
 				var i = $(n);
 				$P[n] &&
 					(i.childNodes[1].src =
@@ -6447,28 +6404,25 @@ var oPuffShroom = InheritO(oFumeShroom, {
 	Produce:
 		'<font color="#28325A">Puff-shrooms are cheap, but can only fire a short distance.</font><p>Damage: <font color="#CC241D">normal</font><br>Range: <font color="#CC241D">short</font><br><font color="#8832aa">Sleeps during the day</font></p>"I only recently became aware of the existence of zombies," says Puff-shroom. "Like many fungi, I\'d just assumed they were fairy tales or movie monsters. This whole experience has been a huge eye-opener for me."',
 	GetDX: CPlants.prototype.GetDX,
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[b, Math.min(c + 250, oS.W), 0]];
 	},
-	PrivateBirth: function (a) {
+	PrivateBirth(a) {
 		a.BulletEle = NewImg(
 			0,
 			"images/Plants/ShroomBullet.gif",
-			"left:" +
-				(a.AttackedLX - 46) +
-				"px;top:" +
-				(a.pixelTop + 40) +
-				"px;visibility:hidden;z-index:" +
-				(a.zIndex + 2)
+			`left:${a.AttackedLX - 46}px;top:${
+				a.pixelTop + 40
+			}px;visibility:hidden;z-index:${a.zIndex + 2}`
 		);
 	},
-	PrivateDie: function (a) {
+	PrivateDie(a) {
 		a.BulletEle = null;
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		PlayAudio("puff");
 		var b = this;
-		var c = "PSB" + Math.random();
+		var c = `PSB${Math.random()}`;
 		var a = b.AttackedLX;
 		EditEle(
 			b.BulletEle.cloneNode(false),
@@ -6480,7 +6434,7 @@ var oPuffShroom = InheritO(oFumeShroom, {
 		);
 		oSym.addTask(
 			15,
-			function (e) {
+			(e) => {
 				var d = $(e);
 				d && SetVisible(d);
 			},
@@ -6494,11 +6448,11 @@ var oPuffShroom = InheritO(oFumeShroom, {
 				h && h.Altitude == 1
 					? (h.getPea(h, 20, 0),
 						(SetStyle(d, {
-							left: g + 38 + "px",
+							left: `${g + 38}px`,
 						}).src = "images/Plants/ShroomBulletHit.gif"),
 						oSym.addTask(10, ClearChild, [d]))
 					: (e += 5) < oS.W
-						? ((d.style.left = (g += 5) + "px"),
+						? ((d.style.left = `${(g += 5)}px`),
 							oSym.addTask(1, arguments.callee, [j, d, e, f, g]))
 						: ClearChild(d);
 			},
@@ -6528,28 +6482,25 @@ var oSeedPuffShroom = InheritO(oFumeShroom, {
 	Produce:
 		'小喷菇是免费的，不过射程很近。<p>Harm: <font color="#CC241D">中等</font><br>Scope:<font color="#CC241D">近<br>白天要睡觉</font></p>小喷菇：“我也是最近才知道僵尸的存在，和</font><br>很多蘑菇一样，我只是把他们想象成童话和电</font><br>影里的怪物。不过这次的经历已经让我大开眼</font><br>界了。',
 	GetDX: CPlants.prototype.GetDX,
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[b, Math.min(c + 250, oS.W), 0]];
 	},
-	PrivateBirth: function (a) {
+	PrivateBirth(a) {
 		a.BulletEle = NewImg(
 			0,
 			"images/Plants/ShroomBullet.gif",
-			"left:" +
-				(a.AttackedLX - 46) +
-				"px;top:" +
-				(a.pixelTop + 40) +
-				"px;visibility:hidden;z-index:" +
-				(a.zIndex + 2)
+			`left:${a.AttackedLX - 46}px;top:${
+				a.pixelTop + 40
+			}px;visibility:hidden;z-index:${a.zIndex + 2}`
 		);
 	},
-	PrivateDie: function (a) {
+	PrivateDie(a) {
 		a.BulletEle = null;
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		PlayAudio("puff");
 		var b = this;
-		var c = "PSB" + Math.random();
+		var c = `PSB${Math.random()}`;
 		var a = b.AttackedLX;
 		EditEle(
 			b.BulletEle.cloneNode(false),
@@ -6561,7 +6512,7 @@ var oSeedPuffShroom = InheritO(oFumeShroom, {
 		);
 		oSym.addTask(
 			15,
-			function (e) {
+			(e) => {
 				var d = $(e);
 				d && SetVisible(d);
 			},
@@ -6575,11 +6526,11 @@ var oSeedPuffShroom = InheritO(oFumeShroom, {
 				h && h.Altitude == 1
 					? (h.getPea(h, 20, 0),
 						(SetStyle(d, {
-							left: g + 38 + "px",
+							left: `${g + 38}px`,
 						}).src = "images/Plants/ShroomBulletHit.gif"),
 						oSym.addTask(10, ClearChild, [d]))
 					: (e += 5) < oS.W
-						? ((d.style.left = (g += 5) + "px"),
+						? ((d.style.left = `${(g += 5)}px`),
 							oSym.addTask(1, arguments.callee, [j, d, e, f, g]))
 						: ClearChild(d);
 			},
@@ -6611,12 +6562,12 @@ var oScaredyShroom = InheritO(oFumeShroom, {
 		'<font color="#28325A">Scaredy-shrooms are long-ranged shooters that hide when enemies get near them.</font><p>Damage: <font color="#CC241D">normal, penetrates screen doors</font><br>Special: <font color="#CC241D">stops shooting when enemy is close</font><br><font color="#8832aa">Sleeps during the day</font></p>"Who\'s there?" whispers Scaredy-shroom, voice barely audible. "Go away. I don\'<|t want to see anybody. Unless it\'s the man from the circus."',
 	GetDX: CPlants.prototype.GetDX,
 	getTriggerRange: CPlants.prototype.getTriggerRange,
-	getTriggerR: function (c) {
+	getTriggerR(c) {
 		var b = (this.MinR = c > 2 ? c - 1 : 1);
 		var a = (this.MaxR = c < oS.R ? Number(c) + 1 : c);
 		return [b, a];
 	},
-	TriggerCheck: function (e, c) {
+	TriggerCheck(e, c) {
 		var b = this;
 		var a = b.id;
 		e.PZ && Math.abs(e.ZX - b.MX) < 121 && e.beAttacked
@@ -6633,7 +6584,7 @@ var oScaredyShroom = InheritO(oFumeShroom, {
 				e.Altitude < 3 &&
 				b.NormalAttack();
 	},
-	PrivateBirth: function (c) {
+	PrivateBirth(c) {
 		var b = c.AttackedLX;
 		var a = b - 46;
 		c.BulletClass = NewO({
@@ -6645,22 +6596,19 @@ var oScaredyShroom = InheritO(oFumeShroom, {
 		c.BulletEle = NewImg(
 			0,
 			"images/Plants/ShroomBullet.gif",
-			"left:" +
-				a +
-				"px;top:" +
-				(c.pixelTop + 35) +
-				"px;visibility:hidden;z-index:" +
-				(c.zIndex + 2)
+			`left:${a}px;top:${c.pixelTop + 35}px;visibility:hidden;z-index:${
+				c.zIndex + 2
+			}`
 		);
 		c.MX = b + 9;
 	},
-	PrivateDie: function (a) {
+	PrivateDie(a) {
 		a.BulletEle = null;
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		var c = this;
 		var a = c.id;
-		var d = "SSB" + Math.random();
+		var d = `SSB${Math.random()}`;
 		var b = c.AttackedLX;
 		EditEle(
 			c.BulletEle.cloneNode(false),
@@ -6678,11 +6626,11 @@ var oScaredyShroom = InheritO(oFumeShroom, {
 				i && i.Altitude == 1
 					? (i.getPea(i, 20, 0),
 						(SetStyle(e, {
-							left: h + 38 + "px",
+							left: `${h + 38}px`,
 						}).src = "images/Plants/ShroomBulletHit.gif"),
 						oSym.addTask(10, ClearChild, [e]))
 					: (f += 5) < oS.W
-						? ((e.style.left = (h += 5) + "px"),
+						? ((e.style.left = `${(h += 5)}px`),
 							oSym.addTask(1, arguments.callee, [k, e, f, g, h]))
 						: ClearChild(e);
 			},
@@ -6691,12 +6639,12 @@ var oScaredyShroom = InheritO(oFumeShroom, {
 		c.Attacking = 1;
 		oSym.addTask(
 			10,
-			function (g, e) {
+			(g, e) => {
 				var f = $(g);
 				f && SetVisible(f);
 				oSym.addTask(
 					130,
-					function (h) {
+					(h) => {
 						var i = $P[h];
 						i && (i.Attacking = 0);
 					},
@@ -6706,10 +6654,10 @@ var oScaredyShroom = InheritO(oFumeShroom, {
 			[d, a]
 		);
 	},
-	CryCheck: function (a) {
+	CryCheck(a) {
 		oSym.addTask(
 			140,
-			function (b) {
+			(b) => {
 				var d = $P[b];
 				var c;
 				var f;
@@ -6757,12 +6705,12 @@ var oSeedScaredyShroom = InheritO(oFumeShroom, {
 		'胆小菇是一种远程射手，敌人接近后会躲起来。<p>Harm:<font color="#CC241D">普通</font><br>Features:<font color="#CC241D">敌人接近后就停止攻击<br>白天睡觉</font></p>“谁在那？”胆小菇低声说，声音细微难辨。“</font><br>走开!我不想见任何人。除非……除非你是马</font><br>戏团的人。”',
 	GetDX: CPlants.prototype.GetDX,
 	getTriggerRange: CPlants.prototype.getTriggerRange,
-	getTriggerR: function (c) {
+	getTriggerR(c) {
 		var b = (this.MinR = c > 2 ? c - 1 : 1);
 		var a = (this.MaxR = c < oS.R ? Number(c) + 1 : c);
 		return [b, a];
 	},
-	TriggerCheck: function (e, c) {
+	TriggerCheck(e, c) {
 		var b = this;
 		var a = b.id;
 		e.PZ && Math.abs(e.ZX - b.MX) < 121 && e.beAttacked
@@ -6779,7 +6727,7 @@ var oSeedScaredyShroom = InheritO(oFumeShroom, {
 				e.Altitude < 3 &&
 				b.NormalAttack();
 	},
-	PrivateBirth: function (c) {
+	PrivateBirth(c) {
 		var b = c.AttackedLX;
 		var a = b - 46;
 		c.BulletClass = NewO({
@@ -6791,22 +6739,19 @@ var oSeedScaredyShroom = InheritO(oFumeShroom, {
 		c.BulletEle = NewImg(
 			0,
 			"images/Plants/ShroomBullet.gif",
-			"left:" +
-				a +
-				"px;top:" +
-				(c.pixelTop + 35) +
-				"px;visibility:hidden;z-index:" +
-				(c.zIndex + 2)
+			`left:${a}px;top:${c.pixelTop + 35}px;visibility:hidden;z-index:${
+				c.zIndex + 2
+			}`
 		);
 		c.MX = b + 9;
 	},
-	PrivateDie: function (a) {
+	PrivateDie(a) {
 		a.BulletEle = null;
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		var c = this;
 		var a = c.id;
-		var d = "SSB" + Math.random();
+		var d = `SSB${Math.random()}`;
 		var b = c.AttackedLX;
 		EditEle(
 			c.BulletEle.cloneNode(false),
@@ -6824,11 +6769,11 @@ var oSeedScaredyShroom = InheritO(oFumeShroom, {
 				i && i.Altitude == 1
 					? (i.getPea(i, 20, 0),
 						(SetStyle(e, {
-							left: h + 38 + "px",
+							left: `${h + 38}px`,
 						}).src = "images/Plants/ShroomBulletHit.gif"),
 						oSym.addTask(10, ClearChild, [e]))
 					: (f += 5) < oS.W
-						? ((e.style.left = (h += 5) + "px"),
+						? ((e.style.left = `${(h += 5)}px`),
 							oSym.addTask(1, arguments.callee, [k, e, f, g, h]))
 						: ClearChild(e);
 			},
@@ -6837,12 +6782,12 @@ var oSeedScaredyShroom = InheritO(oFumeShroom, {
 		c.Attacking = 1;
 		oSym.addTask(
 			10,
-			function (g, e) {
+			(g, e) => {
 				var f = $(g);
 				f && SetVisible(f);
 				oSym.addTask(
 					130,
-					function (h) {
+					(h) => {
 						var i = $P[h];
 						i && (i.Attacking = 0);
 					},
@@ -6852,10 +6797,10 @@ var oSeedScaredyShroom = InheritO(oFumeShroom, {
 			[d, a]
 		);
 	},
-	CryCheck: function (a) {
+	CryCheck(a) {
 		oSym.addTask(
 			140,
-			function (b) {
+			(b) => {
 				var d = $P[b];
 				var c;
 				var f;
@@ -6898,8 +6843,8 @@ var oHypnoShroom = InheritO(oFumeShroom, {
 	Tooltip: "Makes a zombie fight for you",
 	Produce:
 		'<font color="#28325A">When eaten, Hypno-shrooms will make a zombie turn around and fight for you.</font><p>Usage: <font color="#CC241D">single use, on contact</font><br>Special: <font color="#CC241D">makes a zombie fight for you</font><br><font color="#8832aa">Sleeps during the day</font></p>"Zombies are our friends," asserts Hypno-shroom. "They\'re badly misunderstood creatures who play a valuable role in our ecology. We can and should do more to bring them round to our way of thinking."',
-	InitTrigger: function () {},
-	getHurt: function (d, b, a) {
+	InitTrigger() {},
+	getHurt(d, b, a) {
 		var c = this;
 		switch (b) {
 			case 3:
@@ -6935,8 +6880,8 @@ var oSeedHypnoShroom = InheritO(oFumeShroom, {
 	Tooltip: "Makes a zombie fight for you",
 	Produce:
 		'当僵尸吃下魅惑菇后，他将会掉转方向为你作</font><br>战。<p>Instructions:<font color="#CC241D">单独使用，接触生效</font><br>Features:<font color="#CC241D">让一只僵尸为你作战<br>白天睡觉</font></p>魅惑菇声称：“僵尸们是我们的朋友，他们被</font><br>严重误解了，僵尸们在我们的生态环境里扮演着</font><br>重要角色。我们可以也应当更努力地让他们学</font><br>会用我们的方式来思考。”',
-	InitTrigger: function () {},
-	getHurt: function (d, b, a) {
+	InitTrigger() {},
+	getHurt(d, b, a) {
 		var c = this;
 		switch (b) {
 			case 3:
@@ -6975,46 +6920,44 @@ var oIceShroom = InheritO(oFumeShroom, {
 		'<font color="#28325A">Ice-shrooms temporarily immobilize all zombies on the screen.</font><p>Damage: <font color="#CC241D">very light, immobilizes zombies</font><br>Range: <font color="#CC241D">all zombies on the screen</font><br>Usage: <font color="#CC241D">single use, instant</font><br><font color="#8832aa">Sleeps during the day</font></p>Ice-shroom frowns, not because he\'s unhappy or because he disapproves, but because of a childhood injury that left his facial nerves paralyzed.',
 	GetDX: CPlants.prototype.GetDX,
 	GetDY: CPlants.prototype.GetDY,
-	InitTrigger: function () {},
-	PrivateDie: function (a) {},
-	PrivateBirth: function (a) {
+	InitTrigger() {},
+	PrivateDie(a) {},
+	PrivateBirth(a) {
 		!oS.DKind
 			? (a.NormalAttack(a.id), (a.getHurt = function (d, c, b) {}))
 			: (a.getHurt = CPlants.prototype.getHurt);
 	},
-	WakeUP: function (a) {
+	WakeUP(a) {
 		var b = a.id;
 		a.Sleep = 0;
 		$(b).childNodes[1].src = "images/Plants/IceShroom/IceShroom.gif";
 		a.NormalAttack(b);
 	},
-	NormalAttack: function (a) {
+	NormalAttack(a) {
 		oSym.addTask(
 			100,
-			function (c) {
+			(c) => {
 				var f = $P[c];
 				if (f) {
 					PlayAudio("frozen");
 					var e;
 					var d;
-					var b = "Snow_" + Math.random();
+					var b = `Snow_${Math.random()}`;
 					for (d in $Z) {
 						(e = $Z[d]).ZX < 901 && e.getFreeze(e, d);
 					}
 					oSym.addTask(
 						40,
-						function (g) {
+						(g) => {
 							ClearChild(g);
 						},
 						[
 							NewEle(
 								b,
 								"div",
-								"position:absolute;left:0;top:0;width:900px;height:600px;z-index:10;filter:alpha(opacity=50);opacity:.5;background:#9CF url(images/Plants/IceShroom/Snow.gif) no-repeat scroll " +
-									(f.pixelLeft - 197) +
-									"px " +
-									(f.pixelTop - 80) +
-									"px",
+								`position:absolute;left:0;top:0;width:900px;height:600px;z-index:10;filter:alpha(opacity=50);opacity:.5;background:#9CF url(images/Plants/IceShroom/Snow.gif) no-repeat scroll ${
+									f.pixelLeft - 197
+								}px ${f.pixelTop - 80}px`,
 								0,
 								EDPZ
 							),
@@ -7049,46 +6992,44 @@ var oSeedIceShroom = InheritO(oSeedFumeShroom, {
 		'寒冰菇，能短暂的冻结屏幕上所有僵尸。<p>Harm:<font color="#CC241D">非常低，冻结僵尸</font><br>Scope:<font color="#CC241D">屏幕上的所有僵尸</font><br>用法：<font color="#CC241D">单独使用，立即生效<br>白天睡觉</font></p>寒冰菇皱着眉头，倒不是因为它不高兴或不满</font><br>意，只是因为，它儿时因受创伤而</font><br>遗留下了面瘫。',
 	GetDX: CPlants.prototype.GetDX,
 	GetDY: CPlants.prototype.GetDY,
-	InitTrigger: function () {},
-	PrivateDie: function (a) {},
-	PrivateBirth: function (a) {
+	InitTrigger() {},
+	PrivateDie(a) {},
+	PrivateBirth(a) {
 		!oS.DKind
 			? (a.NormalAttack(a.id), (a.getHurt = function (d, c, b) {}))
 			: (a.getHurt = CPlants.prototype.getHurt);
 	},
-	WakeUP: function (a) {
+	WakeUP(a) {
 		var b = a.id;
 		a.Sleep = 0;
 		$(b).childNodes[1].src = "images/Plants/IceShroom/IceShroom.gif";
 		a.NormalAttack(b);
 	},
-	NormalAttack: function (a) {
+	NormalAttack(a) {
 		oSym.addTask(
 			100,
-			function (c) {
+			(c) => {
 				var f = $P[c];
 				if (f) {
 					PlayAudio("frozen");
 					var e;
 					var d;
-					var b = "Snow_" + Math.random();
+					var b = `Snow_${Math.random()}`;
 					for (d in $Z) {
 						(e = $Z[d]).ZX < 901 && e.getFreeze(e, d);
 					}
 					oSym.addTask(
 						40,
-						function (g) {
+						(g) => {
 							ClearChild(g);
 						},
 						[
 							NewEle(
 								b,
 								"div",
-								"position:absolute;left:0;top:0;width:900px;height:600px;z-index:10;filter:alpha(opacity=50);opacity:.5;background:#9CF url(images/Plants/IceShroom/Snow.gif) no-repeat scroll " +
-									(f.pixelLeft - 197) +
-									"px " +
-									(f.pixelTop - 80) +
-									"px",
+								`position:absolute;left:0;top:0;width:900px;height:600px;z-index:10;filter:alpha(opacity=50);opacity:.5;background:#9CF url(images/Plants/IceShroom/Snow.gif) no-repeat scroll ${
+									f.pixelLeft - 197
+								}px ${f.pixelTop - 80}px`,
 								0,
 								EDPZ
 							),
@@ -7123,10 +7064,10 @@ var oSunShroom = InheritO(oFumeShroom, {
 		'<font color="#28325A">Sun-shrooms give small sun at first and normal sun later.</font><p>Sun production: <font color="#CC241D">low</font><br><font color="#8832aa">Sleeps during the day</font></p>Sun-shroom hates sun. He hates it so much that when it builds up in his system, he spits it out as fast as he can. He just won\'t abide it. To him, sun is crass.',
 	GetDX: CPlants.prototype.GetDX,
 	GetDY: CPlants.prototype.GetDY,
-	InitTrigger: function () {},
-	PrivateDie: function (a) {},
-	PrivateBirth: function () {},
-	BirthStyle: function (c, d, b, a) {
+	InitTrigger() {},
+	PrivateDie(a) {},
+	PrivateBirth() {},
+	BirthStyle(c, d, b, a) {
 		oS.DKind
 			? ((c.canTrigger = 0),
 				(c.Sleep = 1),
@@ -7134,7 +7075,7 @@ var oSunShroom = InheritO(oFumeShroom, {
 					"images/Plants/SunShroom/SunShroomSleep.gif"))
 			: (oSym.addTask(
 					600,
-					function (h, g, f) {
+					(h, g, f) => {
 						var e = $P[h];
 						e && e.ProduceSun(e, g, f);
 					},
@@ -7142,7 +7083,7 @@ var oSunShroom = InheritO(oFumeShroom, {
 				),
 				oSym.addTask(
 					12e3,
-					function (f) {
+					(f) => {
 						var e = $P[f];
 						e &&
 							((e.Sleep = 0),
@@ -7161,7 +7102,7 @@ var oSunShroom = InheritO(oFumeShroom, {
 			EDPZ
 		);
 	},
-	ProduceSun: function (a, c, b) {
+	ProduceSun(a, c, b) {
 		AppearSun(
 			Math.floor(c + Math.random() * 41),
 			b,
@@ -7170,21 +7111,21 @@ var oSunShroom = InheritO(oFumeShroom, {
 		),
 			oSym.addTask(
 				2400,
-				function (g, f, e) {
+				(g, f, e) => {
 					var d = $P[g];
 					d && d.ProduceSun(d, f, e);
 				},
 				[a.id, c, b]
 			);
 	},
-	WakeUP: function (a) {
+	WakeUP(a) {
 		var b = a.id;
 		a.ProduceSun(a, GetX(a.C) - 40, GetY(a.R));
 		$(b).childNodes[1].src = "images/Plants/SunShroom/SunShroom2.gif";
 		a.Sleep = 0;
 		oSym.addTask(
 			12e3,
-			function (d) {
+			(d) => {
 				var c = $P[d];
 				c &&
 					(($(d).childNodes[1].src =
@@ -7221,8 +7162,8 @@ var oDoomShroom = InheritO(oFumeShroom, {
 	Tooltip: "Destroys a large area, leaving a crater in its wake",
 	Produce:
 		'<font color="#28325A">Doom-shrooms destroy everything in a large area and leave a crater that can\'t be planted on.</font><p>Damage: <font color="#CC241D">massive</font><br>Range: <font color="#CC241D">all zombies in a huge area</font><br>Usage: <font color="#CC241D">single use, instant</font><br>Special: <font color="#CC241D">leaves a crater</font><br><font color="#8832aa">Sleeps during the day</font></p>"You\'re lucky I\'m on your side," says Doom-shroom. "I could destroy everything you hold dear. It wouldn\'t be hard."',
-	InitTrigger: function () {},
-	BirthStyle: function (c, d, b, a) {
+	InitTrigger() {},
+	BirthStyle(c, d, b, a) {
 		oS.DKind
 			? ((c.Sleep = 1), (b.childNodes[1].src = c.PicArr[c.SleepGif]))
 			: ((c.Sleep = 0),
@@ -7239,20 +7180,20 @@ var oDoomShroom = InheritO(oFumeShroom, {
 			EDPZ
 		);
 	},
-	WakeUP: function (a) {
+	WakeUP(a) {
 		var b = a.id;
 		a.Sleep = 0;
 		a.getHurt = function () {};
 		$(b).childNodes[1].src = "images/Plants/DoomShroom/BeginBoom.gif";
 		a.NormalAttack(b);
 	},
-	NormalAttack: function (a) {
+	NormalAttack(a) {
 		oSym.addTask(
 			50,
-			function (c) {
+			(c) => {
 				PlayAudio("doomshroom");
 				var d = $P[c];
-				var q = c + "_Boom";
+				var q = `${c}_Boom`;
 				if (d) {
 					var g = $(c);
 					var l = d.R;
@@ -7264,7 +7205,7 @@ var oDoomShroom = InheritO(oFumeShroom, {
 					var k;
 					var b = GetC(d.AttackedLX);
 					var o;
-					var r = l + "_" + b;
+					var r = `${l}_${b}`;
 					var j = oGd.$;
 					do {
 						k = (e = oZ.getArZ(n, m, h)).length;
@@ -7273,25 +7214,25 @@ var oDoomShroom = InheritO(oFumeShroom, {
 						}
 					} while (h++ < f);
 					d.Die();
-					(o = j[r + "_" + 0]) && o.Die();
-					(o = j[r + "_" + 2]) && o.Die();
+					(o = j[`${r}_${0}`]) && o.Die();
+					(o = j[`${r}_${2}`]) && o.Die();
 					oGd.$Crater[r] = 2;
 					NewEle(
 						q,
 						"div",
-						"position:absolute;overflow:hidden;z-index:" +
-							(d.zIndex + 2) +
-							";width:283px;height:324px;left:" +
-							(d.pixelLeft - 80) +
-							"px;top:" +
-							(d.pixelTop - 220) +
-							"px;background:url(images/Plants/DoomShroom/Boom.png) no-repeat",
+						`position:absolute;overflow:hidden;z-index:${
+							d.zIndex + 2
+						};width:283px;height:324px;left:${
+							d.pixelLeft - 80
+						}px;top:${
+							d.pixelTop - 220
+						}px;background:url(images/Plants/DoomShroom/Boom.png) no-repeat`,
 						0,
 						EDPZ
 					);
 					oSym.addTask(
 						20,
-						function (i) {
+						(i) => {
 							ClearChild(i);
 						},
 						[
@@ -7320,10 +7261,10 @@ var oDoomShroom = InheritO(oFumeShroom, {
 							["-2547px 0", 10, -1],
 						],
 						0,
-						function (i, p) {
+						(i, p) => {
 							ClearChild($(i));
 							d.setCrater(
-								c + "_crater",
+								`${c}_crater`,
 								l,
 								b,
 								d.pixelLeft + 3,
@@ -7336,22 +7277,20 @@ var oDoomShroom = InheritO(oFumeShroom, {
 			[a]
 		);
 	},
-	setCrater: function (f, b, d, e, c) {
+	setCrater(f, b, d, e, c) {
 		var a;
 		switch (oGd.$LF[b]) {
 			case 1:
 				a = NewEle(
 					f,
 					"div",
-					"position:absolute;z-index:" +
-						(3 * b - 1) +
-						";overflow:hidden;background:url(images/Plants/DoomShroom/crater1" +
-						oS.DKind +
-						".png) no-repeat;width:90px;height:61px;left:" +
-						(e || GetX(d) - 45) +
-						"px;top:" +
-						(c || GetY(b) - 30) +
-						"px",
+					`position:absolute;z-index:${
+						3 * b - 1
+					};overflow:hidden;background:url(images/Plants/DoomShroom/crater1${
+						oS.DKind
+					}.png) no-repeat;width:90px;height:61px;left:${
+						e || GetX(d) - 45
+					}px;top:${c || GetY(b) - 30}px`,
 					0,
 					EDPZ
 				);
@@ -7360,15 +7299,13 @@ var oDoomShroom = InheritO(oFumeShroom, {
 				a = NewEle(
 					f,
 					"div",
-					"position:absolute;z-index:" +
-						(3 * b - 1) +
-						";overflow:hidden;background:url(images/Plants/DoomShroom/crater2" +
-						oS.DKind +
-						".png) no-repeat;width:85px;height:53px;left:" +
-						(e || GetX(d) - 42) +
-						"px;top:" +
-						(c || GetY(b) - 26) +
-						"px",
+					`position:absolute;z-index:${
+						3 * b - 1
+					};overflow:hidden;background:url(images/Plants/DoomShroom/crater2${
+						oS.DKind
+					}.png) no-repeat;width:85px;height:53px;left:${
+						e || GetX(d) - 42
+					}px;top:${c || GetY(b) - 26}px`,
 					0,
 					EDPZ
 				);
@@ -7377,13 +7314,11 @@ var oDoomShroom = InheritO(oFumeShroom, {
 				a = NewEle(
 					f,
 					"div",
-					"position:absolute;z-index:" +
-						(3 * b - 1) +
-						";overflow:hidden;background:url(images/Plants/DoomShroom/crater31.png) no-repeat;width:75px;height:77px;left:" +
-						(e || GetX(d) - 37) +
-						"px;top:" +
-						(c || GetY(b) - 19) +
-						"px",
+					`position:absolute;z-index:${
+						3 * b - 1
+					};overflow:hidden;background:url(images/Plants/DoomShroom/crater31.png) no-repeat;width:75px;height:77px;left:${
+						e || GetX(d) - 37
+					}px;top:${c || GetY(b) - 19}px`,
 					0,
 					EDPZ
 				);
@@ -7392,13 +7327,13 @@ var oDoomShroom = InheritO(oFumeShroom, {
 		}
 		oSym.addTask(
 			9e3,
-			function (g) {
-				var h = b + "_" + d;
+			(g) => {
+				var h = `${b}_${d}`;
 				g.style.backgroundPosition = "100% 0";
 				oGd.$Crater[h] = 1;
 				oSym.addTask(
 					9e3,
-					function (i, j) {
+					(i, j) => {
 						ClearChild(i);
 						delete oGd.$Crater[j];
 					},
@@ -7435,8 +7370,8 @@ var oSeedDoomShroom = InheritO(oFumeShroom, {
 	Tooltip: "Destroys a large area, leaving a crater in its wake",
 	Produce:
 		'毁灭菇可以摧毁大范围的僵尸，并留下一个不</font><br>能种植物的大弹坑。<p>Harm:<font color="#CC241D">极高</font><br>Scope:<font color="#CC241D">大范围内的所有僵尸</font><br>用法：<font color="#CC241D">单独使用，立即生效</font><br>Features:<font color="#CC241D">留下一个弹坑<br>白天睡觉</font></p>“你很幸运，我是和你一伙的，”毁灭菇说，“</font><br>我能摧毁任何你所珍视的东西，小菜一碟。”',
-	InitTrigger: function () {},
-	BirthStyle: function (c, d, b, a) {
+	InitTrigger() {},
+	BirthStyle(c, d, b, a) {
 		oS.DKind
 			? ((c.Sleep = 1), (b.childNodes[1].src = c.PicArr[c.SleepGif]))
 			: ((c.Sleep = 0),
@@ -7453,20 +7388,20 @@ var oSeedDoomShroom = InheritO(oFumeShroom, {
 			EDPZ
 		);
 	},
-	WakeUP: function (a) {
+	WakeUP(a) {
 		var b = a.id;
 		a.Sleep = 0;
 		a.getHurt = function () {};
 		$(b).childNodes[1].src = "images/Plants/DoomShroom/BeginBoom.gif";
 		a.NormalAttack(b);
 	},
-	NormalAttack: function (a) {
+	NormalAttack(a) {
 		oSym.addTask(
 			50,
-			function (c) {
+			(c) => {
 				PlayAudio("doomshroom");
 				var d = $P[c];
-				var q = c + "_Boom";
+				var q = `${c}_Boom`;
 				if (d) {
 					var g = $(c);
 					var l = d.R;
@@ -7478,7 +7413,7 @@ var oSeedDoomShroom = InheritO(oFumeShroom, {
 					var k;
 					var b = GetC(d.AttackedLX);
 					var o;
-					var r = l + "_" + b;
+					var r = `${l}_${b}`;
 					var j = oGd.$;
 					do {
 						k = (e = oZ.getArZ(n, m, h)).length;
@@ -7487,25 +7422,25 @@ var oSeedDoomShroom = InheritO(oFumeShroom, {
 						}
 					} while (h++ < f);
 					d.Die();
-					(o = j[r + "_" + 0]) && o.Die();
-					(o = j[r + "_" + 2]) && o.Die();
+					(o = j[`${r}_${0}`]) && o.Die();
+					(o = j[`${r}_${2}`]) && o.Die();
 					oGd.$Crater[r] = 2;
 					NewEle(
 						q,
 						"div",
-						"position:absolute;overflow:hidden;z-index:" +
-							(d.zIndex + 2) +
-							";width:283px;height:324px;left:" +
-							(d.pixelLeft - 80) +
-							"px;top:" +
-							(d.pixelTop - 220) +
-							"px;background:url(images/Plants/DoomShroom/Boom.png) no-repeat",
+						`position:absolute;overflow:hidden;z-index:${
+							d.zIndex + 2
+						};width:283px;height:324px;left:${
+							d.pixelLeft - 80
+						}px;top:${
+							d.pixelTop - 220
+						}px;background:url(images/Plants/DoomShroom/Boom.png) no-repeat`,
 						0,
 						EDPZ
 					);
 					oSym.addTask(
 						20,
-						function (i) {
+						(i) => {
 							ClearChild(i);
 						},
 						[
@@ -7534,10 +7469,10 @@ var oSeedDoomShroom = InheritO(oFumeShroom, {
 							["-2547px 0", 10, -1],
 						],
 						0,
-						function (i, p) {
+						(i, p) => {
 							ClearChild($(i));
 							d.setCrater(
-								c + "_crater",
+								`${c}_crater`,
 								l,
 								b,
 								d.pixelLeft + 3,
@@ -7550,22 +7485,20 @@ var oSeedDoomShroom = InheritO(oFumeShroom, {
 			[a]
 		);
 	},
-	setCrater: function (f, b, d, e, c) {
+	setCrater(f, b, d, e, c) {
 		var a;
 		switch (oGd.$LF[b]) {
 			case 1:
 				a = NewEle(
 					f,
 					"div",
-					"position:absolute;z-index:" +
-						(3 * b - 1) +
-						";overflow:hidden;background:url(images/Plants/DoomShroom/crater1" +
-						oS.DKind +
-						".png) no-repeat;width:90px;height:61px;left:" +
-						(e || GetX(d) - 45) +
-						"px;top:" +
-						(c || GetY(b) - 30) +
-						"px",
+					`position:absolute;z-index:${
+						3 * b - 1
+					};overflow:hidden;background:url(images/Plants/DoomShroom/crater1${
+						oS.DKind
+					}.png) no-repeat;width:90px;height:61px;left:${
+						e || GetX(d) - 45
+					}px;top:${c || GetY(b) - 30}px`,
 					0,
 					EDPZ
 				);
@@ -7574,15 +7507,13 @@ var oSeedDoomShroom = InheritO(oFumeShroom, {
 				a = NewEle(
 					f,
 					"div",
-					"position:absolute;z-index:" +
-						(3 * b - 1) +
-						";overflow:hidden;background:url(images/Plants/DoomShroom/crater2" +
-						oS.DKind +
-						".png) no-repeat;width:85px;height:53px;left:" +
-						(e || GetX(d) - 42) +
-						"px;top:" +
-						(c || GetY(b) - 26) +
-						"px",
+					`position:absolute;z-index:${
+						3 * b - 1
+					};overflow:hidden;background:url(images/Plants/DoomShroom/crater2${
+						oS.DKind
+					}.png) no-repeat;width:85px;height:53px;left:${
+						e || GetX(d) - 42
+					}px;top:${c || GetY(b) - 26}px`,
 					0,
 					EDPZ
 				);
@@ -7591,13 +7522,11 @@ var oSeedDoomShroom = InheritO(oFumeShroom, {
 				a = NewEle(
 					f,
 					"div",
-					"position:absolute;z-index:" +
-						(3 * b - 1) +
-						";overflow:hidden;background:url(images/Plants/DoomShroom/crater31.png) no-repeat;width:75px;height:77px;left:" +
-						(e || GetX(d) - 37) +
-						"px;top:" +
-						(c || GetY(b) - 19) +
-						"px",
+					`position:absolute;z-index:${
+						3 * b - 1
+					};overflow:hidden;background:url(images/Plants/DoomShroom/crater31.png) no-repeat;width:75px;height:77px;left:${
+						e || GetX(d) - 37
+					}px;top:${c || GetY(b) - 19}px`,
 					0,
 					EDPZ
 				);
@@ -7606,13 +7535,13 @@ var oSeedDoomShroom = InheritO(oFumeShroom, {
 		}
 		oSym.addTask(
 			9e3,
-			function (g) {
-				var h = b + "_" + d;
+			(g) => {
+				var h = `${b}_${d}`;
 				g.style.backgroundPosition = "100% 0";
 				oGd.$Crater[h] = 1;
 				oSym.addTask(
 					9e3,
-					function (i, j) {
+					(i, j) => {
 						ClearChild(i);
 						delete oGd.$Crater[j];
 					},
@@ -7633,7 +7562,7 @@ var oTangleKlep = InheritO(CPlants, {
 	coolTime: 30,
 	SunNum: 25,
 	BookHandBack: 4.9,
-	GetDY: function (b, c, a) {
+	GetDY(b, c, a) {
 		return 5;
 	},
 	NormalGif: 1,
@@ -7648,8 +7577,8 @@ var oTangleKlep = InheritO(CPlants, {
 	Tooltip: "Aquatic plant that pulls a zombie underwater",
 	Produce:
 		'<font color="#28325A">Tangle Kelp are aquatic plants that pull the first zombie that nears them underwater.</font><p>Damage: <font color="#CC241D">massive</font><br>Usage: <font color="#CC241D">single use, on contact</font><br><font color="#0ca1db">Must be planted in water</font></p>"I\'m totally invisible," Tangle Kelp thinks to himself. "I\'ll hide here just below the surface and nobody will see me." His friends tell him they can see him perfectly well, but he\'ll never change.',
-	CanGrow: function (c, b, d) {
-		var a = b + "_" + d;
+	CanGrow(c, b, d) {
+		var a = `${b}_${d}`;
 		return !(
 			oGd.$LF[b] != 2 ||
 			d < 1 ||
@@ -7660,13 +7589,13 @@ var oTangleKlep = InheritO(CPlants, {
 			oGd.$Tombstones[a]
 		);
 	},
-	getShadow: function (a) {
+	getShadow(a) {
 		return "display:none";
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[b, c, 0]];
 	},
-	BirthStyle: function (c, d, b, a) {
+	BirthStyle(c, d, b, a) {
 		b.childNodes[1].src = "images/Plants/TangleKlep/Float.gif";
 		EditEle(
 			b,
@@ -7677,18 +7606,18 @@ var oTangleKlep = InheritO(CPlants, {
 			EDPZ
 		);
 	},
-	getHurt: function (d, b, a) {
+	getHurt(d, b, a) {
 		var c = this;
 		b == 3
 			? (c.HP -= a) < 1 && c.Die()
 			: ((c.canTrigger = 0), c.NormalAttack(c, d));
 	},
-	TriggerCheck: function (b, a) {
+	TriggerCheck(b, a) {
 		b.AttackedLX < GetX(9) &&
 			b.beAttacked &&
 			((this.canTrigger = 0), this.NormalAttack(this, b));
 	},
-	NormalAttack: function (a, b) {
+	NormalAttack(a, b) {
 		a.getHurt = function () {};
 		b.getHurt = function () {};
 		b.beAttacked = 0;
@@ -7696,36 +7625,36 @@ var oTangleKlep = InheritO(CPlants, {
 		NewImg(
 			0,
 			"images/Plants/TangleKlep/Grab.png",
-			"left:" + b.beAttackedPointL + "px;top:" + (b.height - 67) + "px",
+			`left:${b.beAttackedPointL}px;top:${b.height - 67}px`,
 			b.Ele
 		);
 		oSym.addTask(
 			50,
-			function (g, h) {
+			(g, h) => {
 				PlayAudio("TangleKlep");
 				var e = g.id;
 				var f = h.id;
-				var d = e + "_splash";
-				var c = f + "_splash";
+				var d = `${e}_splash`;
+				var c = `${f}_splash`;
 				NewEle(
 					d,
 					"div",
-					"position:absolute;background:url(images/interface/splash.png);left:" +
-						(g.pixelLeft - 4) +
-						"px;top:" +
-						(g.pixelTop - 16) +
-						"px;width:97px;height:88px;over-flow:hidden",
+					`position:absolute;background:url(images/interface/splash.png);left:${
+						g.pixelLeft - 4
+					}px;top:${
+						g.pixelTop - 16
+					}px;width:97px;height:88px;over-flow:hidden`,
 					0,
 					EDPZ
 				);
 				NewEle(
 					c,
 					"div",
-					"position:absolute;background:url(images/interface/splash.png);left:" +
-						(h.AttackedLX - 10) +
-						"px;top:" +
-						(h.pixelTop + h.height - 88) +
-						"px;width:97px;height:88px;over-flow:hidden",
+					`position:absolute;background:url(images/interface/splash.png);left:${
+						h.AttackedLX - 10
+					}px;top:${
+						h.pixelTop + h.height - 88
+					}px;width:97px;height:88px;over-flow:hidden`,
 					0,
 					EDPZ
 				);
@@ -7743,7 +7672,7 @@ var oTangleKlep = InheritO(CPlants, {
 						["-679px 0", 9, -1],
 					],
 					0,
-					function (i, j) {
+					(i, j) => {
 						ClearChild($(i));
 					}
 				);
@@ -7761,7 +7690,7 @@ var oTangleKlep = InheritO(CPlants, {
 						["-679px 0", 9, -1],
 					],
 					0,
-					function (i, j) {
+					(i, j) => {
 						ClearChild($(i));
 					}
 				);
@@ -7782,7 +7711,7 @@ var oSeedTangleKelp = InheritO(CPlants, {
 	coolTime: 30,
 	SunNum: 0,
 	BookHandBack: 4.9,
-	GetDY: function (b, c, a) {
+	GetDY(b, c, a) {
 		return 5;
 	},
 	NormalGif: 1,
@@ -7797,8 +7726,8 @@ var oSeedTangleKelp = InheritO(CPlants, {
 	Tooltip: "Aquatic plant that pulls a zombie underwater",
 	Produce:
 		'缠绕水草是一种可以把接近他的僵尸拉进水中</font><br>的水生植物。<p>Harm:<font color="#CC241D">极高</font><br>用法：<font color="#CC241D">单独使用，接触后生效</font><br>Features:<font color="#CC241D">必须种在水中</font></p>“我是完全隐形的，”缠绕水草自己想，“我就</font><br>藏在水面下，没人会看到我。”他的朋友告诉他</font><br>，他们可以清楚地看到他。不过，缠绕水草似</font><br>乎不想改变自己的看法。',
-	CanGrow: function (c, b, d) {
-		var a = b + "_" + d;
+	CanGrow(c, b, d) {
+		var a = `${b}_${d}`;
 		return !(
 			oGd.$LF[b] != 2 ||
 			d < 1 ||
@@ -7809,13 +7738,13 @@ var oSeedTangleKelp = InheritO(CPlants, {
 			oGd.$Tombstones[a]
 		);
 	},
-	getShadow: function (a) {
+	getShadow(a) {
 		return "display:none";
 	},
-	getTriggerRange: function (a, b, c) {
+	getTriggerRange(a, b, c) {
 		return [[b, c, 0]];
 	},
-	BirthStyle: function (c, d, b, a) {
+	BirthStyle(c, d, b, a) {
 		b.childNodes[1].src = "images/Plants/TangleKlep/Float.gif";
 		EditEle(
 			b,
@@ -7826,18 +7755,18 @@ var oSeedTangleKelp = InheritO(CPlants, {
 			EDPZ
 		);
 	},
-	getHurt: function (d, b, a) {
+	getHurt(d, b, a) {
 		var c = this;
 		b == 3
 			? (c.HP -= a) < 1 && c.Die()
 			: ((c.canTrigger = 0), c.NormalAttack(c, d));
 	},
-	TriggerCheck: function (b, a) {
+	TriggerCheck(b, a) {
 		b.AttackedLX < GetX(9) &&
 			b.beAttacked &&
 			((this.canTrigger = 0), this.NormalAttack(this, b));
 	},
-	NormalAttack: function (a, b) {
+	NormalAttack(a, b) {
 		a.getHurt = function () {};
 		b.getHurt = function () {};
 		b.beAttacked = 0;
@@ -7845,36 +7774,36 @@ var oSeedTangleKelp = InheritO(CPlants, {
 		NewImg(
 			0,
 			"images/Plants/TangleKlep/Grab.png",
-			"left:" + b.beAttackedPointL + "px;top:" + (b.height - 67) + "px",
+			`left:${b.beAttackedPointL}px;top:${b.height - 67}px`,
 			b.Ele
 		);
 		oSym.addTask(
 			50,
-			function (g, h) {
+			(g, h) => {
 				PlayAudio("TangleKlep");
 				var e = g.id;
 				var f = h.id;
-				var d = e + "_splash";
-				var c = f + "_splash";
+				var d = `${e}_splash`;
+				var c = `${f}_splash`;
 				NewEle(
 					d,
 					"div",
-					"position:absolute;background:url(images/interface/splash.png);left:" +
-						(g.pixelLeft - 4) +
-						"px;top:" +
-						(g.pixelTop - 16) +
-						"px;width:97px;height:88px;over-flow:hidden",
+					`position:absolute;background:url(images/interface/splash.png);left:${
+						g.pixelLeft - 4
+					}px;top:${
+						g.pixelTop - 16
+					}px;width:97px;height:88px;over-flow:hidden`,
 					0,
 					EDPZ
 				);
 				NewEle(
 					c,
 					"div",
-					"position:absolute;background:url(images/interface/splash.png);left:" +
-						(h.AttackedLX - 10) +
-						"px;top:" +
-						(h.pixelTop + h.height - 88) +
-						"px;width:97px;height:88px;over-flow:hidden",
+					`position:absolute;background:url(images/interface/splash.png);left:${
+						h.AttackedLX - 10
+					}px;top:${
+						h.pixelTop + h.height - 88
+					}px;width:97px;height:88px;over-flow:hidden`,
 					0,
 					EDPZ
 				);
@@ -7892,7 +7821,7 @@ var oSeedTangleKelp = InheritO(CPlants, {
 						["-679px 0", 9, -1],
 					],
 					0,
-					function (i, j) {
+					(i, j) => {
 						ClearChild($(i));
 					}
 				);
@@ -7910,7 +7839,7 @@ var oSeedTangleKelp = InheritO(CPlants, {
 						["-679px 0", 9, -1],
 					],
 					0,
-					function (i, j) {
+					(i, j) => {
 						ClearChild($(i));
 					}
 				);
@@ -7931,7 +7860,7 @@ var oSeaShroom = InheritO(oPuffShroom, {
 	coolTime: 30,
 	BookHandBack: 4.9,
 	Sleep: 0,
-	getShadow: function (a) {
+	getShadow(a) {
 		return "display:none";
 	},
 	PicArr: [
@@ -7942,8 +7871,8 @@ var oSeaShroom = InheritO(oPuffShroom, {
 		"images/Plants/ShroomBullet.gif",
 		"images/Plants/ShroomBulletHit.gif",
 	],
-	CanGrow: function (c, b, d) {
-		var a = b + "_" + d;
+	CanGrow(c, b, d) {
+		var a = `${b}_${d}`;
 		return !(
 			d < 1 ||
 			d > 9 ||
@@ -7954,7 +7883,7 @@ var oSeaShroom = InheritO(oPuffShroom, {
 			oGd.$Tombstones[a]
 		);
 	},
-	BirthStyle: function (c, d, b, a) {
+	BirthStyle(c, d, b, a) {
 		EditEle(
 			b,
 			{
@@ -7978,7 +7907,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 	coolTime: 30,
 	BookHandBack: 4.9,
 	Sleep: 0,
-	getShadow: function (a) {
+	getShadow(a) {
 		return "display:none";
 	},
 	PicArr: [
@@ -7989,8 +7918,8 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		"images/Plants/ShroomBullet.gif",
 		"images/Plants/ShroomBulletHit.gif",
 	],
-	CanGrow: function (c, b, d) {
-		var a = b + "_" + d;
+	CanGrow(c, b, d) {
+		var a = `${b}_${d}`;
 		return !(
 			d < 1 ||
 			d > 9 ||
@@ -8001,7 +7930,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 			oGd.$Tombstones[a]
 		);
 	},
-	BirthStyle: function (c, d, b, a) {
+	BirthStyle(c, d, b, a) {
 		EditEle(
 			b,
 			{
@@ -8041,44 +7970,44 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 	Tooltip: "Shoots spikes that can pop balloons",
 	Produce:
 		'<font color="#28325A">Cactuses shoot spikes that can hit both ground and air targets.</font><p>Damage: <font color="#CC241D">normal</font><br>Range: <font color="#CC241D">ground and air</font><p>She\'s prickly, sure, but Cactus\'s spikes belie a spongy heart filled with love and goodwill. She just wants to hug and be hugged. Most folks can\'t hang with that, but Cactus doesn\'t mind. She\'s been seeing an armadillo for a while and it really seems to be working out.',
-	getShadow: function (a) {
+	getShadow(a) {
 		return "left:3px;top:132px";
 	},
-	PrivateBirth: function (a) {
+	PrivateBirth(a) {
 		a.ES = a.Elongation;
 	},
-	TriggerCheck: function (b, a) {
+	TriggerCheck(b, a) {
 		this.ES() && ((this.canTrigger = 0), this.CheckLoop(b.id, a));
 	},
-	CheckLoop: function (b, c) {
+	CheckLoop(b, c) {
 		var a = this.id;
 		this.NormalAttack(b);
 		this.ES();
 		this.Status == 0 &&
 			oSym.addTask(
 				140,
-				function (e, f, h) {
+				(e, f, h) => {
 					var g;
 					(g = $P[e]) && g.ES() && g.AttackCheck1(f, h);
 				},
 				[a, b, c]
 			);
 	},
-	CheckLoop2: function (b, c) {
+	CheckLoop2(b, c) {
 		var a = this.id;
 		this.NormalAttack(b);
 		this.ES();
 		this.Status &&
 			oSym.addTask(
 				150,
-				function (e, f, h) {
+				(e, f, h) => {
 					var g;
 					(g = $P[e]) && g.ES() && g.AttackCheck12(f, h);
 				},
 				[a, b, c]
 			);
 	},
-	AttackCheck1: function (g, f) {
+	AttackCheck1(g, f) {
 		var b = this;
 		var c = b.oTrigger;
 		var a = $Z[g];
@@ -8099,85 +8028,81 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		}
 		b.canTrigger = 1;
 	},
-	AttackCheck12: function (a, c) {
+	AttackCheck12(a, c) {
 		var b = this;
 		b.CheckLoop(a, c);
 	},
-	Elongation: function () {
+	Elongation() {
 		var a = this;
 		var b = a.id;
 		if (!oGd.$Balloon[a.R] > 0) {
 			return true;
-		} else {
-			PlayAudio("plantgrow");
-			a.canTrigger = 0;
-			a.Status = 1;
-			$(b).childNodes[1].src = "images/Plants/Cactus/Elongation.gif";
-			oSym.addTask(
-				1,
-				function (e) {
-					var d = $P[e];
-					var c;
-					if (d) {
-						d.NormalGif = 3;
-						$(e).childNodes[1].src =
-							"images/Plants/Cactus/Cactus2.gif";
-						c = d.CheckLoop;
-						d.CheckLoop = d.CheckLoop2;
-						d.CheckLoop2 = c;
-						c = d.NormalAttack;
-						d.NormalAttack = d.NormalAttack2;
-						d.NormalAttack2 = c;
-						d.ES = d.Shorten;
-						d.canTrigger = 1;
-					}
-				},
-				[b]
-			);
-			return false;
 		}
+		PlayAudio("plantgrow");
+		a.canTrigger = 0;
+		a.Status = 1;
+		$(b).childNodes[1].src = "images/Plants/Cactus/Elongation.gif";
+		oSym.addTask(
+			1,
+			(e) => {
+				var d = $P[e];
+				var c;
+				if (d) {
+					d.NormalGif = 3;
+					$(e).childNodes[1].src = "images/Plants/Cactus/Cactus2.gif";
+					c = d.CheckLoop;
+					d.CheckLoop = d.CheckLoop2;
+					d.CheckLoop2 = c;
+					c = d.NormalAttack;
+					d.NormalAttack = d.NormalAttack2;
+					d.NormalAttack2 = c;
+					d.ES = d.Shorten;
+					d.canTrigger = 1;
+				}
+			},
+			[b]
+		);
+		return false;
 	},
-	Shorten: function () {
+	Shorten() {
 		var a = this;
 		var b = a.id;
 		if (oGd.$Balloon[a.R] > 0) {
 			return true;
-		} else {
-			a.canTrigger = 0;
-			a.Status = 0;
-			$(b).childNodes[1].src = "images/Plants/Cactus/Shorten.gif";
-			oSym.addTask(
-				1,
-				function (e) {
-					var d = $P[e];
-					var c;
-					if (d) {
-						d.NormalGif = 2;
-						$(e).childNodes[1].src =
-							"images/Plants/Cactus/Cactus.gif";
-						c = d.CheckLoop;
-						d.CheckLoop = d.CheckLoop2;
-						d.CheckLoop2 = c;
-						c = d.NormalAttack;
-						d.NormalAttack = d.NormalAttack2;
-						d.NormalAttack2 = c;
-						d.ES = d.Elongation;
-						d.canTrigger = 1;
-					}
-				},
-				[b]
-			);
-			return false;
 		}
+		a.canTrigger = 0;
+		a.Status = 0;
+		$(b).childNodes[1].src = "images/Plants/Cactus/Shorten.gif";
+		oSym.addTask(
+			1,
+			(e) => {
+				var d = $P[e];
+				var c;
+				if (d) {
+					d.NormalGif = 2;
+					$(e).childNodes[1].src = "images/Plants/Cactus/Cactus.gif";
+					c = d.CheckLoop;
+					d.CheckLoop = d.CheckLoop2;
+					d.CheckLoop2 = c;
+					c = d.NormalAttack;
+					d.NormalAttack = d.NormalAttack2;
+					d.NormalAttack2 = c;
+					d.ES = d.Elongation;
+					d.canTrigger = 1;
+				}
+			},
+			[b]
+		);
+		return false;
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		var b = this;
-		var c = "CB" + Math.random();
+		var c = `CB${Math.random()}`;
 		var a = b.id;
 		$(a).childNodes[1].src = "images/Plants/Cactus/Attack.gif";
 		oSym.addTask(
 			40,
-			function (e) {
+			(e) => {
 				var d = $(e);
 				d && (d.childNodes[1].src = "images/Plants/Cactus/Cactus.gif");
 			},
@@ -8186,17 +8111,14 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		NewImg(
 			c,
 			b.PicArr[8],
-			"left:" +
-				(b.AttackedRX + 25) +
-				"px;top:" +
-				(b.pixelTop + 103) +
-				"px;visibility:hidden;z-index:" +
-				(b.zIndex + 2),
+			`left:${b.AttackedRX + 25}px;top:${
+				b.pixelTop + 103
+			}px;visibility:hidden;z-index:${b.zIndex + 2}`,
 			EDPZ
 		);
 		oSym.addTask(
 			30,
-			function (e) {
+			(e) => {
 				var d = $(e);
 				d && SetVisible(d);
 			},
@@ -8207,11 +8129,11 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 			function (g, i, d, k, h, l) {
 				var j;
 				var f = GetC(k);
-				var e = oZ["getZ" + d](k, h);
+				var e = oZ[`getZ${d}`](k, h);
 				e && e.Altitude == 1
 					? (e.getPea(e, 30, d), ClearChild(i))
 					: (k += j = !d ? 5 : -5) < oS.W && k > 100
-						? ((i.style.left = (l += j) + "px"),
+						? ((i.style.left = `${(l += j)}px`),
 							oSym.addTask(1, arguments.callee, [
 								g,
 								i,
@@ -8225,14 +8147,14 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 			[c, $(c), 0, b.AttackedLX, b.R, b.AttackedLX - 40]
 		);
 	},
-	NormalAttack2: function () {
+	NormalAttack2() {
 		var b = this;
-		var c = "CB" + Math.random();
+		var c = `CB${Math.random()}`;
 		var a = b.id;
 		$(a).childNodes[1].src = "images/Plants/Cactus/Attack2.gif";
 		oSym.addTask(
 			50,
-			function (e) {
+			(e) => {
 				var d = $(e);
 				d && (d.childNodes[1].src = "images/Plants/Cactus/Cactus2.gif");
 			},
@@ -8241,17 +8163,14 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		NewImg(
 			c,
 			b.PicArr[8],
-			"left:" +
-				(b.AttackedRX + 125) +
-				"px;top:" +
-				(b.pixelTop + 33) +
-				"px;visibility:hidden;z-index:" +
-				(b.zIndex + 2),
+			`left:${b.AttackedRX + 125}px;top:${
+				b.pixelTop + 33
+			}px;visibility:hidden;z-index:${b.zIndex + 2}`,
 			EDPZ
 		);
 		oSym.addTask(
 			20,
-			function (e) {
+			(e) => {
 				var d = $(e);
 				d && SetVisible(d);
 			},
@@ -8262,11 +8181,11 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 			function (g, i, d, k, h, l) {
 				var j;
 				var f = GetC(k);
-				var e = oZ["getZ" + d](k, h);
+				var e = oZ[`getZ${d}`](k, h);
 				e && e.Altitude == 3
 					? (e.getHit0(e, 20, d), e.Drop(), ClearChild(i))
 					: (k += j = !d ? 5 : -5) < oS.W && k > 100
-						? ((i.style.left = (l += j) + "px"),
+						? ((i.style.left = `${(l += j)}px`),
 							oSym.addTask(1, arguments.callee, [
 								g,
 								i,
@@ -8307,44 +8226,44 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		Tooltip: "Shoots spikes that can pop balloons",
 		Produce:
 			'仙人掌发射的穿刺弹可以用来打击地面和空中</font><br>目标<p>Harm:<font color="#CC241D">中等</font><br>Scope:<font color="#CC241D">地面和空中</font></p>确实，仙人掌非常“刺儿”，但是她的刺下，隐</font><br>藏着颗温柔的心，充满着爱和善良。她只是想拥</font><br>抱别人，和被别人拥抱。大多数人都做不到这点</font><br>，但是仙人掌她并不介意。她盯着一只铠甲鼠好</font><br>一阵子了，这次好像真的可以抱抱了。',
-		getShadow: function (a) {
+		getShadow(a) {
 			return "left:3px;top:132px";
 		},
-		PrivateBirth: function (a) {
+		PrivateBirth(a) {
 			a.ES = a.Elongation;
 		},
-		TriggerCheck: function (b, a) {
+		TriggerCheck(b, a) {
 			this.ES() && ((this.canTrigger = 0), this.CheckLoop(b.id, a));
 		},
-		CheckLoop: function (b, c) {
+		CheckLoop(b, c) {
 			var a = this.id;
 			this.NormalAttack(b);
 			this.ES();
 			this.Status == 0 &&
 				oSym.addTask(
 					140,
-					function (e, f, h) {
+					(e, f, h) => {
 						var g;
 						(g = $P[e]) && g.ES() && g.AttackCheck1(f, h);
 					},
 					[a, b, c]
 				);
 		},
-		CheckLoop2: function (b, c) {
+		CheckLoop2(b, c) {
 			var a = this.id;
 			this.NormalAttack(b);
 			this.ES();
 			this.Status &&
 				oSym.addTask(
 					150,
-					function (e, f, h) {
+					(e, f, h) => {
 						var g;
 						(g = $P[e]) && g.ES() && g.AttackCheck12(f, h);
 					},
 					[a, b, c]
 				);
 		},
-		AttackCheck1: function (g, f) {
+		AttackCheck1(g, f) {
 			var b = this;
 			var c = b.oTrigger;
 			var a = $Z[g];
@@ -8365,85 +8284,83 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 			}
 			b.canTrigger = 1;
 		},
-		AttackCheck12: function (a, c) {
+		AttackCheck12(a, c) {
 			var b = this;
 			b.CheckLoop(a, c);
 		},
-		Elongation: function () {
+		Elongation() {
 			var a = this;
 			var b = a.id;
 			if (!oGd.$Balloon[a.R] > 0) {
 				return true;
-			} else {
-				PlayAudio("plantgrow");
-				a.canTrigger = 0;
-				a.Status = 1;
-				$(b).childNodes[1].src = "images/Plants/Cactus/Elongation.gif";
-				oSym.addTask(
-					1,
-					function (e) {
-						var d = $P[e];
-						var c;
-						if (d) {
-							d.NormalGif = 3;
-							$(e).childNodes[1].src =
-								"images/Plants/Cactus/Cactus2.gif";
-							c = d.CheckLoop;
-							d.CheckLoop = d.CheckLoop2;
-							d.CheckLoop2 = c;
-							c = d.NormalAttack;
-							d.NormalAttack = d.NormalAttack2;
-							d.NormalAttack2 = c;
-							d.ES = d.Shorten;
-							d.canTrigger = 1;
-						}
-					},
-					[b]
-				);
-				return false;
 			}
+			PlayAudio("plantgrow");
+			a.canTrigger = 0;
+			a.Status = 1;
+			$(b).childNodes[1].src = "images/Plants/Cactus/Elongation.gif";
+			oSym.addTask(
+				1,
+				(e) => {
+					var d = $P[e];
+					var c;
+					if (d) {
+						d.NormalGif = 3;
+						$(e).childNodes[1].src =
+							"images/Plants/Cactus/Cactus2.gif";
+						c = d.CheckLoop;
+						d.CheckLoop = d.CheckLoop2;
+						d.CheckLoop2 = c;
+						c = d.NormalAttack;
+						d.NormalAttack = d.NormalAttack2;
+						d.NormalAttack2 = c;
+						d.ES = d.Shorten;
+						d.canTrigger = 1;
+					}
+				},
+				[b]
+			);
+			return false;
 		},
-		Shorten: function () {
+		Shorten() {
 			var a = this;
 			var b = a.id;
 			if (oGd.$Balloon[a.R] > 0) {
 				return true;
-			} else {
-				a.canTrigger = 0;
-				a.Status = 0;
-				$(b).childNodes[1].src = "images/Plants/Cactus/Shorten.gif";
-				oSym.addTask(
-					1,
-					function (e) {
-						var d = $P[e];
-						var c;
-						if (d) {
-							d.NormalGif = 2;
-							$(e).childNodes[1].src =
-								"images/Plants/Cactus/Cactus.gif";
-							c = d.CheckLoop;
-							d.CheckLoop = d.CheckLoop2;
-							d.CheckLoop2 = c;
-							c = d.NormalAttack;
-							d.NormalAttack = d.NormalAttack2;
-							d.NormalAttack2 = c;
-							d.ES = d.Elongation;
-							d.canTrigger = 1;
-						}
-					},
-					[b]
-				);
-				return false;
 			}
+			a.canTrigger = 0;
+			a.Status = 0;
+			$(b).childNodes[1].src = "images/Plants/Cactus/Shorten.gif";
+			oSym.addTask(
+				1,
+				(e) => {
+					var d = $P[e];
+					var c;
+					if (d) {
+						d.NormalGif = 2;
+						$(e).childNodes[1].src =
+							"images/Plants/Cactus/Cactus.gif";
+						c = d.CheckLoop;
+						d.CheckLoop = d.CheckLoop2;
+						d.CheckLoop2 = c;
+						c = d.NormalAttack;
+						d.NormalAttack = d.NormalAttack2;
+						d.NormalAttack2 = c;
+						d.ES = d.Elongation;
+						d.canTrigger = 1;
+					}
+				},
+				[b]
+			);
+			return false;
 		},
-		NormalAttack: function () {
+		NormalAttack() {
 			var b = this;
-			var c = "CB" + Math.random();
+			var c = `CB${Math.random()}`;
 			var a = b.id;
 			$(a).childNodes[1].src = "images/Plants/Cactus/Attack.gif";
 			oSym.addTask(
 				40,
-				function (e) {
+				(e) => {
 					var d = $(e);
 					d &&
 						(d.childNodes[1].src =
@@ -8454,17 +8371,14 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 			NewImg(
 				c,
 				b.PicArr[8],
-				"left:" +
-					(b.AttackedRX + 25) +
-					"px;top:" +
-					(b.pixelTop + 103) +
-					"px;visibility:hidden;z-index:" +
-					(b.zIndex + 2),
+				`left:${b.AttackedRX + 25}px;top:${
+					b.pixelTop + 103
+				}px;visibility:hidden;z-index:${b.zIndex + 2}`,
 				EDPZ
 			);
 			oSym.addTask(
 				30,
-				function (e) {
+				(e) => {
 					var d = $(e);
 					d && SetVisible(d);
 				},
@@ -8475,11 +8389,11 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 				function (g, i, d, k, h, l) {
 					var j;
 					var f = GetC(k);
-					var e = oZ["getZ" + d](k, h);
+					var e = oZ[`getZ${d}`](k, h);
 					e && e.Altitude == 1
 						? (e.getPea(e, 30, d), ClearChild(i))
 						: (k += j = !d ? 5 : -5) < oS.W && k > 100
-							? ((i.style.left = (l += j) + "px"),
+							? ((i.style.left = `${(l += j)}px`),
 								oSym.addTask(1, arguments.callee, [
 									g,
 									i,
@@ -8493,14 +8407,14 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 				[c, $(c), 0, b.AttackedLX, b.R, b.AttackedLX - 40]
 			);
 		},
-		NormalAttack2: function () {
+		NormalAttack2() {
 			var b = this;
-			var c = "CB" + Math.random();
+			var c = `CB${Math.random()}`;
 			var a = b.id;
 			$(a).childNodes[1].src = "images/Plants/Cactus/Attack2.gif";
 			oSym.addTask(
 				50,
-				function (e) {
+				(e) => {
 					var d = $(e);
 					d &&
 						(d.childNodes[1].src =
@@ -8511,17 +8425,14 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 			NewImg(
 				c,
 				b.PicArr[8],
-				"left:" +
-					(b.AttackedRX + 125) +
-					"px;top:" +
-					(b.pixelTop + 33) +
-					"px;visibility:hidden;z-index:" +
-					(b.zIndex + 2),
+				`left:${b.AttackedRX + 125}px;top:${
+					b.pixelTop + 33
+				}px;visibility:hidden;z-index:${b.zIndex + 2}`,
 				EDPZ
 			);
 			oSym.addTask(
 				20,
-				function (e) {
+				(e) => {
 					var d = $(e);
 					d && SetVisible(d);
 				},
@@ -8532,11 +8443,11 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 				function (g, i, d, k, h, l) {
 					var j;
 					var f = GetC(k);
-					var e = oZ["getZ" + d](k, h);
+					var e = oZ[`getZ${d}`](k, h);
 					e && e.Altitude == 3
 						? (e.getHit0(e, 20, d), e.Drop(), ClearChild(i))
 						: (k += j = !d ? 5 : -5) < oS.W && k > 100
-							? ((i.style.left = (l += j) + "px"),
+							? ((i.style.left = `${(l += j)}px`),
 								oSym.addTask(1, arguments.callee, [
 									g,
 									i,
@@ -8567,12 +8478,12 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		Produce:
 			'三叶草，能吹走所有的气球僵尸，也可以把雾吹散。<p>使用方法：<font color="#CC241D">单独使用，立即生效</font><br>特点：<font color="#CC241D">吹走屏幕上所有的气球僵尸</font></p>当三叶草五岁生日的时候，他得到了一个闪亮的生日蛋糕。他许好愿，然后深吸一口气却只吹灭了60%的蜡烛。然而他没有放弃，小时候的那次失败促使他更加努力直到现在。',
 		AudioArr: ["blover"],
-		InitTrigger: function () {},
-		PrivateBirth: function (o) {
+		InitTrigger() {},
+		PrivateBirth(o) {
 			// 种植后0.5秒开始吹风
 			oSym.addTask(
 				50,
-				function (id) {
+				(id) => {
 					PlayAudio("blover"),
 						($(id).childNodes[1].src =
 							"images/Plants/Blover/BloverBlow.gif"),
@@ -8581,9 +8492,9 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 				[o.id]
 			);
 		},
-		Dispel: function () {
+		Dispel() {
 			// 吹风
-			var id = this.id;
+			var { id } = this;
 			var z;
 			var oBalloon;
 
@@ -8600,7 +8511,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 
 			oSym.addTask(
 				150,
-				function (id) {
+				(id) => {
 					var p = $P[id];
 					p && p.Die();
 				},
@@ -8624,12 +8535,12 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		Produce:
 			'三叶草，能吹走所有的气球僵尸，也可以把雾吹散。<p>使用方法：<font color="#CC241D">单独使用，立即生效</font><br>特点：<font color="#CC241D">吹走屏幕上所有的气球僵尸</font></p>当三叶草五岁生日的时候，他得到了一个闪亮的生日蛋糕。他许好愿，然后深吸一口气却只吹灭了60%的蜡烛。然而他没有放弃，小时候的那次失败促使他更加努力直到现在。',
 		AudioArr: ["blover"],
-		InitTrigger: function () {},
-		PrivateBirth: function (o) {
+		InitTrigger() {},
+		PrivateBirth(o) {
 			// 种植后0.5秒开始吹风
 			oSym.addTask(
 				50,
-				function (id) {
+				(id) => {
 					PlayAudio("blover"),
 						($(id).childNodes[1].src =
 							"images/Plants/Blover/BloverBlow.gif"),
@@ -8638,9 +8549,9 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 				[o.id]
 			);
 		},
-		Dispel: function () {
+		Dispel() {
 			// 吹风
-			var id = this.id;
+			var { id } = this;
 			var z;
 			var oBalloon;
 
@@ -8657,7 +8568,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 
 			oSym.addTask(
 				150,
-				function (id) {
+				(id) => {
 					var p = $P[id];
 					p && p.Die();
 				},
@@ -8683,8 +8594,8 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		Tooltip: "Oxygen provides algae to plants on the ground",
 		Produce:
 			'<font color="#28325A">Oxygen Algae can provide oxygen bubbles to plants on land</font><p>Range: <font color="#CC241D">all tiles in a medium area</font><br></p>"Puff...puff..." puffs Oxygen Algae, it wasn\'t that he was willing to keep spitting bubbles, only to blame him for drinking too much soda last night. However, there are rumors that all he knows is spitting bubbles.',
-		CanGrow: function (e, d, f) {
-			var c = d + "_" + f;
+		CanGrow(e, d, f) {
+			var c = `${d}_${f}`;
 			var b = oGd.$LF[d];
 			var a = f < 1 || f > 9;
 			return b % 2
@@ -8700,10 +8611,10 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 					: !(a || e[0] || oGd.$Crater[c])
 				: 0;
 		},
-		NormalAttack: function () {},
-		PrivateBirth: function (a) {
-			var R = a.R;
-			var C = a.C;
+		NormalAttack() {},
+		PrivateBirth(a) {
+			var { R } = a;
+			var { C } = a;
 			var R1;
 			var C1;
 			var MaxR = oS.R;
@@ -8718,7 +8629,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 					LFR = LF[R];
 					for (C1 = C - 1; C1 <= C + 1; C1++) {
 						if (C1 > 0 && C1 <= MaxC && (LFR == 1 || LFR == 3)) {
-							rc = R1 + "_" + C1 + "_";
+							rc = `${R1}_${C1}_`;
 							!(_$[rc + 0] || _$[rc + 1] || _$[rc + 2]) &&
 								CustomSpecial(oOG, R1, C1);
 						}
@@ -8747,7 +8658,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		Tooltip: "烈焰菇可以召唤多个毁灭菇，嗨翻全场僵尸",
 		Produce:
 			'烈焰菇可以召唤多个毁灭菇，嗨翻全场僵尸<p>Toughness:<font color="CC241D">高</font><p><font color="#000000">技能：<font color="#1F470B">在自身3x3范围内召唤8只毁灭菇</font></p>烈焰菇总是为自己的火焰感到反感，因为它们</font><br>总是伤害到自己的朋友。所以为了朋友，烈焰</font><br>菇到花园里找到了自己的归宿。',
-		getHurt: function (e, b, a) {
+		getHurt(e, b, a) {
 			var c = this;
 			var d = $(c.id).childNodes[1];
 			!(b % 3)
@@ -8765,10 +8676,10 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 								"images/Plants/FlamesMushroom/FlamesMushroom1.gif"))
 				: c.Die(1);
 		},
-		NormalAttack: function () {},
-		PrivateBirth: function (a) {
-			var R = a.R;
-			var C = a.C;
+		NormalAttack() {},
+		PrivateBirth(a) {
+			var { R } = a;
+			var { C } = a;
 			var R1;
 			var C1;
 			var MaxR = oS.R;
@@ -8782,7 +8693,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 					LFR = LF[R];
 					for (C1 = C - 1; C1 <= C + 1; C1++) {
 						if (C1 > 0 && C1 <= MaxC && (LFR == 1 || LFR == 3)) {
-							rc = R1 + "_" + C1 + "_";
+							rc = `${R1}_${C1}_`;
 							!(_$[rc + 0] || _$[rc + 1] || _$[rc + 2]) &&
 								CustomSpecial(oDoomShroom, R1, C1);
 						}
@@ -8807,21 +8718,15 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		],
 		PKind: 0,
 		Stature: -1,
-		GetDY: function (b, c, a) {
+		GetDY(b, c, a) {
 			return -15;
 		},
-		getShadow: function (a) {
+		getShadow(a) {
 			return "display:none";
-			return (
-				"left:" +
-				(a.width * 0.5 - 20) +
-				"px;top:" +
-				(a.height - 22) +
-				"px"
-			);
+			return `left:${a.width * 0.5 - 20}px;top:${a.height - 22}px`;
 		},
-		CanGrow: function (e, d, f) {
-			var c = d + "_" + f;
+		CanGrow(e, d, f) {
+			var c = `${d}_${f}`;
 			var b = oGd.$LF[d];
 			var a = f < 1 || f > 9;
 			return b % 2
@@ -8839,7 +8744,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		},
 		Tooltip: "",
 		Produce: "",
-		InitTrigger: function () {},
+		InitTrigger() {},
 	})),
 	(oPlantern = InheritO(CPlants, {
 		EName: "oPlantern",
@@ -8859,39 +8764,34 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		Tooltip: "Lights up an area, letting you see through fog",
 		Produce:
 			"<font color=\"#28325A\">Planterns light up an area, letting you see through fog.</font><p>Range: <font color=\"#CC241D\">one lane</font><br>Special: <font color=\"#CC241D\">lets you see through fog</font><p>Plantern defies science. He just does. Other plants eat light and excrete oxygen; Plantern eats darkness and excretes light. Plantern's cagey about how he does it. \"I'm not gonna say 'sorcery,' I wouldn't use the term 'dark forces,' I just... I think I've said enough.\"",
-		PrivateBirth: function (c) {
+		PrivateBirth(c) {
 			var a = c.R;
 			var b = c.C;
-			oGd.$Plantern[a + "_" + b] = c.id;
+			oGd.$Plantern[`${a}_${b}`] = c.id;
 			NewImg(
 				"",
 				"images/Plants/Plantern/light.gif",
-				"filter:alpha(opacity=30);opacity:.3;left:0;top:0;z-index:" +
-					c.zIndex,
+				`filter:alpha(opacity=30);opacity:.3;left:0;top:0;z-index:${
+					c.zIndex
+				}`,
 				$(c.id)
 			);
 			oS.HaveFog && oGd.GatherFog(a, b, 2, 3, 0),
 				oFlowerVase.prototype.FreshXRay(); // 刷新场地上花瓶 XRAY
 		},
-		InitTrigger: function () {},
-		PrivateDie: function (c) {
+		InitTrigger() {},
+		PrivateDie(c) {
 			var a = c.R;
 			var b = c.C;
-			delete oGd.$Plantern[a + "_" + b];
+			delete oGd.$Plantern[`${a}_${b}`];
 			oS.HaveFog && oGd.GatherFog(a, b, 2, 3, 1),
 				oFlowerVase.prototype.FreshXRay(); // 刷新场地上花瓶 XRAY
 		},
-		GetDY: function (b, c, a) {
+		GetDY(b, c, a) {
 			return a[0] ? 70 : 74;
 		},
-		getShadow: function (a) {
-			return (
-				"left:" +
-				(a.width * 0.5 - 43) +
-				"px;top:" +
-				(a.height - 100) +
-				"px"
-			);
+		getShadow(a) {
+			return `left:${a.width * 0.5 - 43}px;top:${a.height - 100}px`;
 		},
 	})),
 	(oSeedPlantern = InheritO(CPlants, {
@@ -8913,39 +8813,34 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		Tooltip: "照亮一片区域, 让玩家可以看穿战场迷雾",
 		Produce:
 			'灯笼草，能照亮一片区域，让你看清战场迷雾<p>范围：<font color="#CC241D">一片圆形区域</font><br>特点：<font color="#CC241D">使你看清战场迷雾</font></p>灯笼草拒绝科学，他只会埋头苦干。其他植物吃的是光，挤出的是氧气。灯笼草吃的是黑暗，挤出的却是光。对于他如何能产生光这件事，灯笼草持谨慎态度。“我不会说这是‘巫术’，我也不会使用‘黑暗力量’，我只是……我想我说得够多的了。”',
-		PrivateBirth: function (c) {
+		PrivateBirth(c) {
 			var a = c.R;
 			var b = c.C;
-			oGd.$Plantern[a + "_" + b] = c.id;
+			oGd.$Plantern[`${a}_${b}`] = c.id;
 			NewImg(
 				"",
 				"images/Plants/Plantern/light.gif",
-				"filter:alpha(opacity=30);opacity:.3;left:0;top:0;z-index:" +
-					c.zIndex,
+				`filter:alpha(opacity=30);opacity:.3;left:0;top:0;z-index:${
+					c.zIndex
+				}`,
 				$(c.id)
 			);
 			oS.HaveFog && oGd.GatherFog(a, b, 2, 3, 0),
 				oFlowerVase.prototype.FreshXRay(); // 刷新场地上花瓶 XRAY
 		},
-		InitTrigger: function () {},
-		PrivateDie: function (c) {
+		InitTrigger() {},
+		PrivateDie(c) {
 			var a = c.R;
 			var b = c.C;
-			delete oGd.$Plantern[a + "_" + b];
+			delete oGd.$Plantern[`${a}_${b}`];
 			oS.HaveFog && oGd.GatherFog(a, b, 2, 3, 1),
 				oFlowerVase.prototype.FreshXRay(); // 刷新场地上花瓶 XRAY
 		},
-		GetDY: function (b, c, a) {
+		GetDY(b, c, a) {
 			return a[0] ? 70 : 74;
 		},
-		getShadow: function (a) {
-			return (
-				"left:" +
-				(a.width * 0.5 - 43) +
-				"px;top:" +
-				(a.height - 100) +
-				"px"
-			);
+		getShadow(a) {
+			return `left:${a.width * 0.5 - 43}px;top:${a.height - 100}px`;
 		},
 	})),
 	(ostar = InheritO(CPlants, {
@@ -8969,10 +8864,10 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		],
 		AudioArr: ["bowling", "bowlingimpact", "bowlingimpact2"],
 		CanAttack: 1,
-		InitTrigger: function () {},
-		getHurt: function () {},
-		CanGrow: function (e, d, f) {
-			var c = d + "_" + f;
+		InitTrigger() {},
+		getHurt() {},
+		CanGrow(e, d, f) {
+			var c = `${d}_${f}`;
 			var b = oGd.$LF[d];
 			var a = f < 1 || f > 9;
 			return b % 2
@@ -8989,7 +8884,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 				: 0;
 		},
 		NormalAttack: null,
-		PrivateBirth: function (c) {
+		PrivateBirth(c) {
 			var d = $(c.id);
 			PlayAudio("seastar_roll");
 			(function (z, y, q, r, p, x, e, g, b) {
@@ -9073,8 +8968,8 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 							(z.AttackedRX = r += 2),
 							(w = GetR((z.pixelBottom += e * 2))),
 							SetStyle(x, {
-								left: (z.pixelLeft = p += 2) + "px",
-								top: (z.pixelTop += e * 2) + "px",
+								left: `${(z.pixelLeft = p += 2)}px`,
+								top: `${(z.pixelTop += e * 2)}px`,
 							}),
 							w != a &&
 								((z.R = w),
@@ -9087,7 +8982,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 									C: l,
 									PKind: 1,
 								}),
-								oGd.add(z, w + "_" + i + "_1")),
+								oGd.add(z, `${w}_${i}_1`)),
 							oSym.addTask(1, arguments.callee, [
 								z,
 								y,
@@ -9133,7 +9028,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		],
 		Tooltip: "",
 		Produce: "",
-		PrivateBirth: function (a) {
+		PrivateBirth(a) {
 			PlayAudio("bowling");
 			(function (b, c, n, m, e, g) {
 				var d = oZ.getArZ(n, m, e);
@@ -9150,7 +9045,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 					: ((j = GetC((b.pixelRight += 2))),
 						(b.AttackedLX = n += 2),
 						(b.AttackedRX = m += 2),
-						(g.style.left = (b.pixelLeft += 2) + "px"),
+						(g.style.left = `${(b.pixelLeft += 2)}px`),
 						j != h &&
 							((b.C = j),
 							oGd.del({
@@ -9158,7 +9053,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 								C: h,
 								PKind: 1,
 							}),
-							oGd.add(b, l + "_" + j + "_1")),
+							oGd.add(b, `${l}_${j}_1`)),
 						oSym.addTask(1, arguments.callee, [b, c, n, m, e, g]));
 			})(a, oS.W, a.AttackedLX, a.AttackedRX, a.R, $(a.id));
 		},
@@ -9181,8 +9076,8 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 			"images/Plants/gun/ShroomBullet.gif",
 			"images/Plants/gun/ShroomBulletHit.gif",
 		],
-		CanGrow: function (e, d, f) {
-			var c = d + "_" + f;
+		CanGrow(e, d, f) {
+			var c = `${d}_${f}`;
 			var b = oGd.$LF[d];
 			var a = f < 1 || f > 9;
 			return b % 2
@@ -9201,19 +9096,16 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		Tooltip: "轻型海底作战植物",
 		Produce:
 			'<font color="#28325A">Soak-shrooms are pretty cheap, but have a short range.</font><p>Damage: <font color="#CC241D">low</font><br>Range: <font color="#CC241D">short</font></p>Inhale, exhale; this anemone\'s unlocked zen breathing from ancient scrolls, training nonstop to blast its watergun past three tiles. Still a long shot, but its focus? Undeniable.',
-		PrivateBirth: function (a) {
+		PrivateBirth(a) {
 			a.BulletEle = NewImg(
 				0,
 				"images/Plants/gun/ShroomBullet.gif",
-				"left:" +
-					(a.AttackedLX - 46) +
-					"px;top:" +
-					(a.pixelTop + 40) +
-					"px;visibility:hidden;z-index:" +
-					(a.zIndex + 2)
+				`left:${a.AttackedLX - 46}px;top:${
+					a.pixelTop + 40
+				}px;visibility:hidden;z-index:${a.zIndex + 2}`
 			);
 		},
-		BirthStyle: function (c, d, b, a) {
+		BirthStyle(c, d, b, a) {
 			EditEle(
 				b,
 				{
@@ -9223,14 +9115,14 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 				EDPZ
 			);
 		},
-		PrivateDie: function (a) {
+		PrivateDie(a) {
 			a.BulletEle = null;
 		},
-		NormalAttack: function () {
+		NormalAttack() {
 			PlayAudio("puff");
 			var k = this;
 			var b = this;
-			var c = "PSB" + Math.random();
+			var c = `PSB${Math.random()}`;
 			var a = b.AttackedLX;
 			(j = k.id),
 				(d = $(j)),
@@ -9244,7 +9136,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 				);
 			oSym.addTask(
 				15,
-				function (e) {
+				(e) => {
 					var d = $(e);
 					d && SetVisible(d);
 				},
@@ -9258,11 +9150,11 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 					h && h.Altitude == 1
 						? (h.getPea(h, 20, 0),
 							(SetStyle(d, {
-								left: g + 38 + "px",
+								left: `${g + 38}px`,
 							}).src = "images/Plants/gun/ShroomBulletHit.gif"),
 							oSym.addTask(10, ClearChild, [d]))
 						: (e += 5) < oS.W
-							? ((d.style.left = (g += 5) + "px"),
+							? ((d.style.left = `${(g += 5)}px`),
 								oSym.addTask(1, arguments.callee, [
 									j,
 									d,
@@ -9293,7 +9185,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 					["0 -2200px", 9, -1],
 				],
 				0,
-				function (m, n) {
+				(m, n) => {
 					var i = $(n);
 					$P[n] &&
 						(i.childNodes[1].src =
@@ -9324,7 +9216,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		Tooltip: "Hurts zombies around it",
 		Produce:
 			"电海葵花可以对在他周围的僵尸造成巨大伤害</font></p>自信的电海葵花毫不畏惧任何困难，一头杀马</font><br>特式的发型是他引以为傲的事情，可他说这是上</font><br>次在村口找王师傅给剃的。",
-		BirthStyle: function (c, d, b, a) {
+		BirthStyle(c, d, b, a) {
 			EditEle(
 				b,
 				{
@@ -9334,8 +9226,8 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 				EDPZ
 			);
 		},
-		CanGrow: function (e, d, f) {
-			var c = d + "_" + f;
+		CanGrow(e, d, f) {
+			var c = `${d}_${f}`;
 			var b = oGd.$LF[d];
 			var a = f < 1 || f > 9;
 			return b % 2
@@ -9351,22 +9243,23 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 					: !(a || e[0] || oGd.$Crater[c])
 				: 0;
 		},
-		PrivateBirth: function (b) {
+		PrivateBirth(b) {
 			var a = b.id;
 			NewEle(
-				a + "_Bullet",
+				`${a}_Bullet`,
 				"div",
-				"position:absolute;visibility:hidden;width:210px;height:200px;left:" +
-					(b.pixelLeft - 60) +
-					"px;top:" +
-					(b.pixelTop - 65) +
-					"px;background:url(images/Plants/SeaAnemone/GloomShroomBullet.gif);z-index:" +
-					(b.zIndex + 1),
+				`position:absolute;visibility:hidden;width:210px;height:200px;left:${
+					b.pixelLeft - 60
+				}px;top:${
+					b.pixelTop - 65
+				}px;background:url(images/Plants/SeaAnemone/GloomShroomBullet.gif);z-index:${
+					b.zIndex + 1
+				}`,
 				0,
 				EDPZ
 			);
 		},
-		NormalAttack: function () {
+		NormalAttack() {
 			PlayAudio("SeaAnemone");
 			var k = this;
 			var g;
@@ -9378,7 +9271,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 			var a;
 			var j = k.id;
 			var d = $(j);
-			var l = j + "_Bullet";
+			var l = `${j}_Bullet`;
 			for (g = k.MinR; g <= f; g++) {
 				e = oZ.getArZ(c, b, g);
 				for (
@@ -9420,7 +9313,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 					["0 -2200px", 9, -1],
 				],
 				0,
-				function (m, n) {
+				(m, n) => {
 					var i = $(n);
 					$P[n] &&
 						(i.childNodes[1].src =
@@ -9439,7 +9332,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		beAttackedPointR: 80,
 		SunNum: 50,
 		BookHandBack: 3.5,
-		GetDY: function (b, c, a) {
+		GetDY(b, c, a) {
 			return 5;
 		},
 		NormalGif: 1,
@@ -9454,8 +9347,8 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		Tooltip: "Grabs zombies in front of it",
 		Produce:
 			'<font color="#28325A">Thorn Seaweeds grab anything in front of them.</font><p>Damage: <font color="#CC241D">huge</font><br>Range: <font color="#CC241D">very short</font></p>Thorn Seaweed is Tangle Kelp’s overenthusiastic cousin. While Tangle Kelp claims to be "great at relationships," Thorn Seaweed’s idea of bonding involves spines, panic, and a barnacle who still owes him 10 sun. Gardeners appreciate his dedication, though submarines and confused starfish do not.',
-		CanGrow: function (e, d, f) {
-			var c = d + "_" + f;
+		CanGrow(e, d, f) {
+			var c = `${d}_${f}`;
 			var b = oGd.$LF[d];
 			var a = f < 1 || f > 9;
 			return b % 2
@@ -9471,10 +9364,10 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 					: !(a || e[0] || oGd.$Crater[c])
 				: 0;
 		},
-		getTriggerRange: function (a, b, c) {
+		getTriggerRange(a, b, c) {
 			return [[b, c, 0]];
 		},
-		BirthStyle: function (c, d, b, a) {
+		BirthStyle(c, d, b, a) {
 			b.childNodes[1].src = "images/Plants/TTS/Float.gif";
 			EditEle(
 				b,
@@ -9485,18 +9378,18 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 				EDPZ
 			);
 		},
-		getHurt: function (d, b, a) {
+		getHurt(d, b, a) {
 			var c = this;
 			b == 3
 				? (c.HP -= a) < 1 && c.Die()
 				: ((c.canTrigger = 0), c.NormalAttack(c, d));
 		},
-		TriggerCheck: function (b, a) {
+		TriggerCheck(b, a) {
 			b.AttackedLX < GetX(9) &&
 				b.beAttacked &&
 				((this.canTrigger = 0), this.NormalAttack(this, b));
 		},
-		NormalAttack: function (a, b) {
+		NormalAttack(a, b) {
 			PlayAudio("TTS");
 			a.getHurt = function () {};
 			b.getHurt = function () {};
@@ -9505,28 +9398,24 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 			NewImg(
 				0,
 				"images/Plants/TTS/Grab.png",
-				"left:" +
-					b.beAttackedPointL +
-					"px;top:" +
-					(b.height - 67) +
-					"px",
+				`left:${b.beAttackedPointL}px;top:${b.height - 67}px`,
 				b.Ele
 			);
 			oSym.addTask(
 				50,
-				function (g, h) {
+				(g, h) => {
 					var e = g.id;
 					var f = h.id;
-					var d = e + "_splash";
-					var c = f + "_splash";
+					var d = `${e}_splash`;
+					var c = `${f}_splash`;
 					NewEle(
 						c,
 						"div",
-						"position:absolute;background:url(images/Plants/TTS/splash.png);left:" +
-							(h.AttackedLX - 10) +
-							"px;top:" +
-							(h.pixelTop + h.height - 88) +
-							"px;width:97px;height:88px;over-flow:hidden",
+						`position:absolute;background:url(images/Plants/TTS/splash.png);left:${
+							h.AttackedLX - 10
+						}px;top:${
+							h.pixelTop + h.height - 88
+						}px;width:97px;height:88px;over-flow:hidden`,
 						0,
 						EDPZ
 					);
@@ -9544,7 +9433,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 							["-679px 0", 9, -1],
 						],
 						0,
-						function (i, j) {
+						(i, j) => {
 							ClearChild($(i));
 						}
 					);
@@ -9562,7 +9451,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 							["-679px 0", 9, -1],
 						],
 						0,
-						function (i, j) {
+						(i, j) => {
 							ClearChild($(i));
 						}
 					);
@@ -9586,17 +9475,17 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 			"images/Card/Plants/MagneticmuShroom.png",
 			"images/Plants/MagneticmuShroom/0.gif",
 			"images/Plants/MagneticmuShroom/Shrubbery.gif",
-			"images/Plants/MagneticmuShroom/ShrubberyBoom.gif" + $Random,
+			`images/Plants/MagneticmuShroom/ShrubberyBoom.gif${$Random}`,
 		],
 		Tooltip: "Removes helmets and other metal objects from zombies。",
 		Produce:
 			'磁力菇可以吸走周围僵尸的护具<p>Scope:<font color="#CC241D">约一行</font><br>Instructions:<font color="#CC241D">安放即可使用（一次性）</font></p>磁力是一种强大的力量，非常强大，强大到有</font><br>时都吓到磁力菇自己了。能力越大，责任越大</font><br>，他不知道自己能否肩负得起这责任',
-		InitTrigger: function () {},
-		getHurt: function () {},
-		PrivateBirth: function (a) {
+		InitTrigger() {},
+		getHurt() {},
+		PrivateBirth(a) {
 			oSym.addTask(
 				10,
-				function (j) {
+				(j) => {
 					var h = $P[j];
 					if (h) {
 						PlayAudio("Magneticmu");
@@ -9673,55 +9562,50 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 		Tooltip: "Fires a high-powered laser at an entire row of zombies",
 		Produce:
 			'<font color="#28325A">Laser Beans fire down a lane, hitting all zombies ahead of it.</font><p>Range: <font color="#CC241D">all zombies in a lane</font><p>After a laser eye surgery had gone horribly right, Laser Bean gained a sense of purpose and a new-found affinity for competitive staring contests.',
-		CheckLoop: function (b, c) {
+		CheckLoop(b, c) {
 			var a = this.id;
 			this.NormalAttack(b);
 			oSym.addTask(
 				292,
-				function (e, f, h) {
+				(e, f, h) => {
 					var g;
 					(g = $P[e]) && g.AttackCheck1(f, h);
 				},
 				[a, b, c]
 			);
 		},
-		getShadow: function (a) {
-			return (
-				"left:" +
-				(a.width * 0.5 - +20) +
-				"px;top:" +
-				(a.height - 22) +
-				"px"
-			);
+		getShadow(a) {
+			return `left:${a.width * 0.5 - +20}px;top:${a.height - 22}px`;
 		},
-		GetDY: function (b, c, a) {
+		GetDY(b, c, a) {
 			return a[0] ? -18 : -10;
 		},
-		GetDX: function () {
+		GetDX() {
 			return -68;
 		},
-		PrivateBirth: function (b) {
+		PrivateBirth(b) {
 			var a = b.id;
 			NewEle(
-				a + "_Bullet",
+				`${a}_Bullet`,
 				"div",
-				"position:absolute;visibility:hidden;width:343px;height:62px;left:" +
-					b.AttackedRX +
-					"px;top:" +
-					(b.pixelTop + 5) +
-					"px;background:url(images/Plants/LaserPea/LaserPeaBullet.gif);z-index:" +
-					(b.zIndex + 1),
+				`position:absolute;visibility:hidden;width:343px;height:62px;left:${
+					b.AttackedRX
+				}px;top:${
+					b.pixelTop + 5
+				}px;background:url(images/Plants/LaserPea/LaserPeaBullet.gif);z-index:${
+					b.zIndex + 1
+				}`,
 				0,
 				EDPZ
 			);
 		},
-		PrivateDie: function (a) {
-			ClearChild($(a.id + "_Bullet"));
+		PrivateDie(a) {
+			ClearChild($(`${a.id}_Bullet`));
 		},
-		getTriggerRange: function (a, b, c) {
+		getTriggerRange(a, b, c) {
 			return [[b, Math.min(c + 686, oS.W), 0]];
 		},
-		NormalAttack: function () {
+		NormalAttack() {
 			PlayAudio("LaserBean");
 			var f = this;
 			var d = oZ.getArZ(
@@ -9733,7 +9617,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 			var g;
 			var c = f.id;
 			var b = $(c);
-			var a = c + "_Bullet";
+			var a = `${c}_Bullet`;
 			while (e--) {
 				(g = d[e]).Altitude < 2 && g.getHit1(g, 850);
 			}
@@ -9753,7 +9637,7 @@ oSeedSeaShroom = InheritO(oPuffShroom, {
 					["0 -434px", 7, -1],
 				],
 				0,
-				function (i, j) {
+				(i, j) => {
 					var h = $(j);
 					$P[j] &&
 						((h.childNodes[1].src =
@@ -9822,31 +9706,31 @@ oFlowerVase = InheritO(CPlants, {
 	Tooltip: "Break me!",
 	Produce: "Beat me, hate me, you can never break me!",
 
-	SetStyle: function (Kind) {
+	SetStyle(Kind) {
 		// 设置花瓶皮肤
 		var self = this;
-		var XRay = self.XRay; // 获取基本信息
+		var { XRay } = self; // 获取基本信息
 		var PLeft = Kind * 80;
 		var PRight = PLeft + 80; // 计算裁剪
 
 		self.PotSize = Kind; // 设置花盆类型
 		SetStyle(self.ImgEle, {
 			// 花盆本体的图片
-			clip: "rect(101px, " + PRight + "px, 202px, " + PLeft + "px)",
+			clip: `rect(101px, ${PRight}px, 202px, ${PLeft}px)`,
 			top: "-101px",
-			left: -80 * Kind + "px",
+			left: `${-80 * Kind}px`,
 		});
 		SetStyle(self.EleBG, {
 			// 花盆透视时的图层
-			clip: "rect(0px, " + PRight + "px, 101px, " + PLeft + "px)",
+			clip: `rect(0px, ${PRight}px, 101px, ${PLeft}px)`,
 			top: "0px",
-			left: -80 * Kind + "px",
+			left: `${-80 * Kind}px`,
 		});
 
 		self.SetXRay(XRay); // 设置透视功能
 	},
 
-	SetXRay: function (TurnOn) {
+	SetXRay(TurnOn) {
 		// 设置花瓶透视
 		var self = this;
 		var XRay = !!TurnOn; // 获取基本信息
@@ -9856,14 +9740,14 @@ oFlowerVase = InheritO(CPlants, {
 		SetAlpha(self.EleCard, XRay * 100, XRay * 1); // 显示预览图层
 	},
 
-	InitImage: function (Kind, XRay) {
+	InitImage(Kind, XRay) {
 		// 初始化图片
 		var self = this;
 		var ID = self.id;
-		var Ele = self.Ele;
-		var ImgEle = self.ImgEle;
-		var EleBG = self.EleBG;
-		var EleCard = self.EleCard;
+		var { Ele } = self;
+		var { ImgEle } = self;
+		var { EleBG } = self;
+		var { EleCard } = self;
 
 		if (!Ele) self.Ele = Ele = $(ID); // 初始化 Ele
 		if (!ImgEle) self.ImgEle = ImgEle = Ele.childNodes[1]; // 初始化 ImgEle
@@ -9918,16 +9802,9 @@ oFlowerVase = InheritO(CPlants, {
 					(ELeft = 20 / 2 + -LPoint / EK + (MaxW - ZWidth) / 2),
 						(ETop = 15 / 2 + (MaxH - ZHeight) / 2);
 
-					EleCard.style =
-						"top:" +
-						ETop +
-						"px;left:" +
-						ELeft +
-						"px;width:" +
-						PT.width / EK +
-						"px;height:" +
-						PT.height / EK +
-						"px;"; // 确定位置
+					EleCard.style = `top:${ETop}px;left:${ELeft}px;width:${
+						PT.width / EK
+					}px;height:${PT.height / EK}px;`; // 确定位置
 					EleCard.src =
 						VValue.prototype.PicArr[VValue.prototype.StaticGif]; // 显示僵尸站立图片
 				}
@@ -9942,7 +9819,7 @@ oFlowerVase = InheritO(CPlants, {
 		self.SetStyle(Kind), self.SetXRay(XRay); // 初始化显示
 	},
 
-	BirthStyle: function (self, Id, Ele, Style) {
+	BirthStyle(self, Id, Ele, Style) {
 		var Dom = Ele.childNodes[1]; // 获取植物实际图片
 		(Dom.src = self.PicArr[self.NormalGif]), (Dom.style.height = "202px"); // 设置实际宽高
 		(self.Ele = Ele), EditEle(Ele, { id: Id }, Style, EDPZ); // 修改
@@ -9950,28 +9827,26 @@ oFlowerVase = InheritO(CPlants, {
 		self.InitImage(self.PotSize, self.XRay), self.FreshXRay(true); // 初始化图片等信息
 	},
 
-	PrivateBirth: function (self) {
+	PrivateBirth(self) {
 		var Id = self.id;
-		var Ele = self.Ele; // 获取
+		var { Ele } = self; // 获取
 
 		// 定义鼠标事件相关
 		var ClickEle = (self.EleClick = NewEle(
-			"dCheck_" + Id,
+			`dCheck_${Id}`,
 			"div",
-			"left:" +
-				Ele.style.left +
-				";top:" +
-				Ele.style.top +
-				";position:absolute;width:80px;height:101px;background:#FFF;filter:alpha(opacity=0);opacity:0;z-index:150;cursor:url(images/interface/Pointer.cur),pointer",
+			`left:${Ele.style.left};top:${
+				Ele.style.top
+			};position:absolute;width:80px;height:101px;background:#FFF;filter:alpha(opacity=0);opacity:0;z-index:150;cursor:url(images/interface/Pointer.cur),pointer`,
 			{
-				onclick: function () {
+				onclick() {
 					self.Die();
 				},
-				onmouseover: function () {
+				onmouseover() {
 					Ele.style.filter = "brightness(150%)";
 					self.EleCard.style.filter = "brightness(70%)";
 				},
-				onmouseout: function () {
+				onmouseout() {
 					Ele.style.filter = "brightness(100%)";
 					self.EleCard.style.filter = "brightness(100%)";
 				},
@@ -9982,21 +9857,21 @@ oFlowerVase = InheritO(CPlants, {
 		self.ControlBase("Summon", "Auto"); // 生成底座
 		self.VaseValue = self.VaseValue || { Type: "SunNum", Value: 50 }; // 如果没有信息，默认创建一个 50 阳光的罐子
 	},
-	getHurt: function (a, b, c) {
+	getHurt(a, b, c) {
 		b != 2 && this.Die();
 	}, // 受伤判定，目前是冰车不会破坏罐子，以后如果有巨人这里是需要修改的
-	BoomDie: function () {
+	BoomDie() {
 		this.Die(null, false);
 	}, // 爆炸后，直接生成，不播放音效
-	PrivateDie: function () {},
-	InitTrigger: function () {}, // 特殊死亡
-	Die: function (ImgSave, OnAudio) {
+	PrivateDie() {},
+	InitTrigger() {}, // 特殊死亡
+	Die(ImgSave, OnAudio) {
 		// 是否保留图片 是否播放音效
 		var self = this;
 		var ID = self.id; // 定义需要用到的变量
 
 		self.oTrigger && oT.delP(self), (self.HP = 0); // 删除触发器 清空血量
-		delete $P[ID], delete oGd.$[self.R + "_" + self.C + "_" + self.PKind]; // 删除本格数据
+		delete $P[ID], delete oGd.$[`${self.R}_${self.C}_${self.PKind}`]; // 删除本格数据
 		$P.length -= 1;
 		!ImgSave && ClearChild(self.Ele); // 清除图片
 
@@ -10008,12 +9883,12 @@ oFlowerVase = InheritO(CPlants, {
 		self.ControlBase("Delete", "Auto"); // 删除底座
 		ClearChild(self.EleClick), self.PlaceItem(); // 放置物品
 	},
-	PlaceItem: function () {
+	PlaceItem() {
 		var self = this;
 		var ID = self.id;
 		var Val = self.VaseValue;
-		var Type = Val.Type;
-		var Value = Val.Value; // 解包
+		var { Type } = Val;
+		var { Value } = Val; // 解包
 
 		switch (
 			Type // 根据内容生成
@@ -10034,7 +9909,7 @@ oFlowerVase = InheritO(CPlants, {
 				// 生成僵尸
 				asyncInnerHTML(
 					Value.CustomBirth(self.R, self.C, 0, "auto"),
-					function (n, m) {
+					(n, m) => {
 						EDPZ.appendChild(n), m.Birth();
 						if (m.EName == "oJackinTheBoxZombie" && self.AutoJoker)
 							m.OpenBox(m.id); // 如果是小丑僵尸，直接引爆爆炸
@@ -10070,7 +9945,7 @@ oFlowerVase = InheritO(CPlants, {
 				break;
 		}
 	},
-	ControlBase: function (Type, Ticket) {
+	ControlBase(Type, Ticket) {
 		// 生成底座
 		var BaseList = [oFlowerPot, oLilyPad];
 		var LastBase = null;
@@ -10096,7 +9971,7 @@ oFlowerVase = InheritO(CPlants, {
 					// 如果可以生成
 					CustomSpecial(LastBase, self.R, self.C); // 生成种类
 					self.BasePlant = LastBase =
-						oGd.$[self.R + "_" + self.C + "_" + 0]; // 获取底座
+						oGd.$[`${self.R}_${self.C}_${0}`]; // 获取底座
 					LastBase.canEat = false; // 默认底座是不能被吃的
 				}
 				break;
@@ -10109,7 +9984,7 @@ oFlowerVase = InheritO(CPlants, {
 				break;
 		}
 	},
-	FreshXRay: function (OnlySelf) {
+	FreshXRay(OnlySelf) {
 		// 全局属性，为场上所有花瓶设置 XRAY
 		var self = this;
 		var Ground = oGd.$;
@@ -10125,8 +10000,7 @@ oFlowerVase = InheritO(CPlants, {
 			self.SetXRay(false); // 默认关闭，查找周围是否有再开启
 			for (var RQ in Arr)
 				for (var CQ in Arr)
-					if (Pla[1 * RQ + R + "_" + (1 * CQ + C)])
-						self.SetXRay(true); // 设置透视
+					if (Pla[`${1 * RQ + R}_${1 * CQ + C}`]) self.SetXRay(true); // 设置透视
 		} else {
 			for (var Q in Ground) {
 				// 遍历每一个花瓶，如果是花瓶则自我检查
@@ -10145,7 +10019,7 @@ oFlowerVase = InheritO(CPlants, {
         SpecialFunc: 生成前调用的函数（可选）	
     执行成功后会返回该花瓶的信息。
 */
-	SpecialBirth: function (SetR, SetC, VaseColor, VaseValue, SpecialFunc) {
+	SpecialBirth(SetR, SetC, VaseColor, VaseValue, SpecialFunc) {
 		var Obj = new oFlowerVase();
 
 		(Obj.PotSize = VaseColor), (Obj.VaseValue = VaseValue); // 基本信息
@@ -10161,7 +10035,7 @@ oFlowerVase = InheritO(CPlants, {
     函数介绍: 判断场上是否满足普通砸罐子关卡通关条件
     通关条件: 场地上没有罐子、且场地上没有僵尸
 */
-	GetLevelStatus: function () {
+	GetLevelStatus() {
 		for (var O in $P) if ($P[O].EName == "oFlowerVase") return false; // 如果有花瓶，直接返回
 		for (var O in $Z) if ($Z[O].PZ != 0) return false; // 如果有非魅惑的僵尸，直接返回
 		return true;
@@ -10183,7 +10057,7 @@ oMagnetShroom = InheritO(CPlants, {
 	Tooltip: "可以用磁力吸取僵尸的头盔",
 	Produce:
 		'磁力菇可以用磁力吸取僵尸的头盔等其它金属物品。<p>范围：<font color="#CC241D">靠近的僵尸</font><br>特点：<font color="#CC241D">移除僵尸们所有的金属物品<br>白天睡觉</font></p>磁力是一种强大的力量，非常强大，强大到有时都吓到磁力菇自己了。能力越大，责任越大，他不知道自己能否肩负得起这责任。',
-	InitTrigger: function () {},
+	InitTrigger() {},
 	PicArr: [
 		"images/Card/Plants/MagnetShroom.png",
 		"images/Plants/Ms/Ms.gif",
@@ -10192,7 +10066,7 @@ oMagnetShroom = InheritO(CPlants, {
 	],
 	getTriggerRange: (R, LX, RX) => [[0, oS.W, 0]],
 	AudioArr: ["blover"],
-	BirthStyle: function (c, d, b, a) {
+	BirthStyle(c, d, b, a) {
 		oS.DKind &&
 			((c.canTrigger = 0),
 			(c.Sleep = 1),
@@ -10214,7 +10088,7 @@ oMagnetShroom = InheritO(CPlants, {
 			EDPZ
 		);
 	},
-	Die: function (a) {
+	Die(a) {
 		var b = this;
 		var c = b.id;
 		b.cd = 0;
@@ -10223,7 +10097,7 @@ oMagnetShroom = InheritO(CPlants, {
 		b.oTrigger && oT.delP(b);
 		b.HP = 0;
 		delete $P[c];
-		delete oGd.$[b.R + "_" + b.C + "_" + b.PKind];
+		delete oGd.$[`${b.R}_${b.C}_${b.PKind}`];
 		$P.length -= 1;
 		!a && ClearChild($(c));
 		b.PrivateDie(b);
@@ -10232,8 +10106,8 @@ oMagnetShroom = InheritO(CPlants, {
 		selfR - 2 < 1 ? 1 : selfR - 2,
 		selfR + 2 > oS.R ? oS.R : selfR + 2,
 	],
-	PrivateBirth: function () {},
-	Plength: function (pid, zid) {
+	PrivateBirth() {},
+	Plength(pid, zid) {
 		//判断僵尸是否在磁力菇的攻击范围内
 		if (zid.Ifgc != 0 || zid.OrnHP == 0) return 0;
 		//alert(123);
@@ -10260,13 +10134,13 @@ oMagnetShroom = InheritO(CPlants, {
 		if (Math.abs(zid.X - pid.pixelLeft) > 200) return 0;
 		return 1;
 	},
-	Plength1: function (pid, zid) {
+	Plength1(pid, zid) {
 		//计算僵尸和磁力菇之间的距离
 		var chang = Math.abs(zid.R - pid.R) * 100;
 		var kuan = Math.abs(zid.X - GetX(pid.C));
 		return Math.sqrt(chang * chang + kuan * kuan);
 	},
-	AttackCheckZ: function () {
+	AttackCheckZ() {
 		//查找僵尸
 		var self = this;
 		var z;
@@ -10290,7 +10164,7 @@ oMagnetShroom = InheritO(CPlants, {
 		if (self.target == -1) return 0;
 		return 1;
 	},
-	Yesgif: function () {
+	Yesgif() {
 		try {
 			if (
 				this.cd &&
@@ -10299,7 +10173,7 @@ oMagnetShroom = InheritO(CPlants, {
 				$(this.id).childNodes[1].src = "images/Plants/Ms/Ms.gif";
 		} catch (arr) {}
 	},
-	attackzombiest: function (zid) {
+	attackzombiest(zid) {
 		if (zid.CName == "矿工僵尸") {
 			//alert(1);
 			zid.Stone_of_Sinan_Up();
@@ -10308,23 +10182,21 @@ oMagnetShroom = InheritO(CPlants, {
 			zid.getHit0(zid, 0, 0);
 		}
 	},
-	NormalAttack: function () {
+	NormalAttack() {
 		//alert(this.canTrigger);
 		//alert(1);
 		if (this.AttackCheckZ() && this.cd) {
 			var self = this;
-			var id = self.id;
+			var { id } = self;
 			var zid = self.target;
 			if (zid.Ifgc == 1) return;
 			zid.Ifgc = 1;
 			$(id).childNodes[1].src =
-				"images/Plants/Ms/attack.gif" +
-				"?" +
-				Date.now() +
-				Math.random();
+				`images/Plants/Ms/attack.gif` +
+				`?${Date.now()}${Math.random()}`;
 			oSym.addTask(
 				80,
-				function (zid, self) {
+				(zid, self) => {
 					self.attackzombiest(zid);
 				},
 				[zid, self]
@@ -10332,7 +10204,7 @@ oMagnetShroom = InheritO(CPlants, {
 			self.cd = 0;
 			oSym.addTask(
 				self.cotcd,
-				function (id) {
+				(id) => {
 					self.target = -1;
 					self.cd = 1;
 					self.Yesgif();

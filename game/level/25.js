@@ -48,11 +48,11 @@ oS.Init(
 		CanSelectCard: 1,
 		LevelName: "3-5 Special Level: Zombie Run",
 		LvlEName: 25,
-		LvlClearFunc: function () {
+		LvlClearFunc() {
 			oSym.Clear();
 		},
 		LargeWaveFlag: { 10: $("imgFlag3"), 20: $("imgFlag1") },
-		LoadAccess: function (a) {
+		LoadAccess(a) {
 			NewImg(
 				"dDave",
 				"images/interface/Dave.gif",
@@ -69,7 +69,7 @@ oS.Init(
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							1,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [1]);
@@ -84,13 +84,13 @@ oS.Init(
 						break;
 					case 1:
 						PlayAudio(
-							"crazydavelong" + Math.floor(1 + Math.random() * 3)
+							`crazydavelong${Math.floor(1 + Math.random() * 3)}`
 						);
 						c.onclick = null;
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							2,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [2]);
@@ -102,13 +102,13 @@ oS.Init(
 						break;
 					case 2:
 						PlayAudio(
-							"crazydavelong" + Math.floor(1 + Math.random() * 3)
+							`crazydavelong${Math.floor(1 + Math.random() * 3)}`
 						);
 						c.onclick = null;
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							2,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [3]);
@@ -123,7 +123,7 @@ oS.Init(
 						ClearChild($("DivTeach"));
 						oSym.addTask(
 							5,
-							function () {
+							() => {
 								ClearChild($("dDave"));
 								a(0);
 							},
@@ -133,15 +133,15 @@ oS.Init(
 			})(0);
 		},
 		StartGameMusic: "LoonSkirmish",
-		StartGame: function () {
+		StartGame() {
 			StopMusic();
 			PlayMusic((oS.LoadMusic = oS.StartGameMusic));
 			SetVisible($("tdShovel"), $("dFlagMeter"), $("dTop"));
 			oS.InitLawnMower();
-			PrepareGrowPlants(function () {
+			PrepareGrowPlants(() => {
 				oP.Monitor({
 					ar: [],
-					f: function () {
+					f() {
 						oSym.TimeStep = 4;
 					},
 				});
@@ -149,7 +149,7 @@ oS.Init(
 				AutoProduceSun(25);
 				oSym.addTask(
 					1500,
-					function () {
+					() => {
 						oP.AddZombiesFlag();
 						SetVisible($("dFlagMeterContent"));
 					},
@@ -175,14 +175,14 @@ oS.Init(
 			a2: [1, 3, 5, 20, 10, 15, 20],
 		},
 		FlagToMonitor: { 9: [ShowLargeWave, 0], 19: [ShowFinalWave, 0] },
-		FlagToEnd: function () {
+		FlagToEnd() {
 			NewImg(
 				"imgSF",
 				"images/interface/trophy.png",
 				"left:260px;top:233px",
 				EDAll,
 				{
-					onclick: function () {
+					onclick() {
 						SelectModal(26);
 					},
 				}

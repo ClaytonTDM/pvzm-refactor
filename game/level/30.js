@@ -39,20 +39,20 @@ oS.Init(
 			15: $("imgFlag1"),
 		},
 		StaticCard: 0,
-		UserDefinedFlagFunc: function (a) {
+		UserDefinedFlagFunc(a) {
 			oP.FlagNum == oP.FlagZombies &&
 				oP.SetTimeoutWaterZombie(6, 9, 3, [oDuckyTubeZombie1]);
 		},
 		StartGameMusic: "Zombieboss",
-		StartGame: function () {
+		StartGame() {
 			StopMusic();
 			PlayMusic((oS.LoadMusic = oS.StartGameMusic));
 			SetVisible($("tdShovel"), $("dFlagMeter"), $("dTop"));
 			SetHidden($("dSunNum"));
 			oS.InitLawnMower();
-			PrepareGrowPlants(function () {
+			PrepareGrowPlants(() => {
 				oP.Monitor({
-					f: function () {
+					f() {
 						(function () {
 							var a = ArCard.length;
 							if (a < 10) {
@@ -71,7 +71,7 @@ oS.Init(
 												);
 								var e = c[b];
 								var d = e.prototype;
-								var f = "dCard" + Math.random();
+								var f = `dCard${Math.random()}`;
 								ArCard[a] = { DID: f, PName: e, PixelTop: 600 };
 								NewImg(
 									f,
@@ -79,13 +79,13 @@ oS.Init(
 									"top:600px;width:100px;height:120px;cursor:url(images/interface/Pointer.cur),pointer;clip:rect(auto,auto,60px,auto)",
 									$("dCardList"),
 									{
-										onmouseover: function (g) {
+										onmouseover(g) {
 											ViewPlantTitle(GetChoseCard(f), g);
 										},
-										onmouseout: function () {
+										onmouseout() {
 											SetHidden($("dTitle"));
 										},
-										onclick: function (g) {
+										onclick(g) {
 											ChosePlant(g, oS.ChoseCard, f);
 										},
 									}
@@ -100,7 +100,7 @@ oS.Init(
 							while (b--) {
 								(c = (a = ArCard[b]).PixelTop) > 60 * b &&
 									($(a.DID).style.top =
-										(a.PixelTop = c - 1) + "px");
+										`${(a.PixelTop = c - 1)}px`);
 							}
 							oSym.addTask(5, arguments.callee, []);
 						})();
@@ -136,14 +136,14 @@ oS.Init(
 			9: [ShowLargeWave, 0],
 			14: [ShowFinalWave, 0],
 		},
-		FlagToEnd: function () {
+		FlagToEnd() {
 			NewImg(
 				"imgSF",
 				"images/Card/Plants/Oxygen.png",
 				"left:667px;top:330px;clip:rect(auto,auto,60px,auto)",
 				EDAll,
 				{
-					onclick: function () {
+					onclick() {
 						GetNewCard(this, oOxygen, 31);
 					},
 				}
@@ -151,14 +151,14 @@ oS.Init(
 		},
 	},
 	{
-		GetChoseCard: function (b) {
+		GetChoseCard(b) {
 			var a = ArCard.length;
 			while (a--) {
 				ArCard[a].DID == b && ((oS.ChoseCard = a), (a = 0));
 			}
 			return oS.ChoseCard;
 		},
-		ChosePlant: function (a, b) {
+		ChosePlant(a, b) {
 			PlayAudio("seedlift");
 			a = window.event || a;
 			var f = ArCard[oS.ChoseCard];
@@ -172,14 +172,12 @@ oS.Init(
 				NewImg(
 					"MovePlant",
 					c.PicArr[c.StaticGif],
-					"left:" +
-						e -
-						0.5 * (c.beAttackedPointL + c.beAttackedPointR) +
-						"px;top:" +
-						d +
-						20 -
-						c.height +
-						"px;z-index:254",
+					`${
+						`${
+							`left:${e}` -
+							0.5 * (c.beAttackedPointL + c.beAttackedPointR)
+						}px;top:${d}${20}` - c.height
+					}px;z-index:254`,
 					EDAll
 				).cloneNode(false),
 				"MovePlantAlpha",
@@ -196,14 +194,14 @@ oS.Init(
 			SetHidden($("dTitle"));
 			GroundOnmousemove = GroundOnmousemove1;
 		},
-		CancelPlant: function () {
+		CancelPlant() {
 			ClearChild($("MovePlant"), $("MovePlantAlpha"));
 			oS.Chose = 0;
 			SetAlpha($(ArCard[oS.ChoseCard].DID), 100, 1);
 			oS.ChoseCard = "";
 			GroundOnmousemove = function () {};
 		},
-		GrowPlant: function (l, c, b, f, a) {
+		GrowPlant(l, c, b, f, a) {
 			var j = oS.ChoseCard;
 			var g = ArCard[j];
 			var i = g.PName;
@@ -215,14 +213,14 @@ oS.Init(
 				(function () {
 					PlayAudio(
 						h != 2
-							? "plant" + Math.floor(1 + Math.random() * 2)
+							? `plant${Math.floor(1 + Math.random() * 2)}`
 							: "plant_water"
 					);
 					new i().Birth(c, b, f, a, l);
 					oSym.addTask(20, SetNone, [
 						SetStyle($("imgGrowSoil"), {
-							left: c - 30 + "px",
-							top: b - 40 + "px",
+							left: `${c - 30}px`,
+							top: `${b - 40}px`,
 							zIndex: 3 * f,
 							visibility: "visible",
 						}),
@@ -236,6 +234,6 @@ oS.Init(
 					GroundOnmousemove = function () {};
 				})();
 		},
-		ViewPlantTitle: function (a) {},
+		ViewPlantTitle(a) {},
 	}
 );

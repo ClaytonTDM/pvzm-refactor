@@ -15,7 +15,7 @@ oS.Init({
 	CardKind: 1,
 	LevelName: "Totally Nuts",
 	StartGameMusic: "Cerebrawl",
-	InitLawnMower: function () {
+	InitLawnMower() {
 		var a = 6;
 		while (--a) {
 			CustomSpecial(oBrains, a, -1);
@@ -27,7 +27,7 @@ oS.Init({
 		Auto: 1,
 		P: [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 4, 4],
 	},
-	RiddleAutoGrow: function () {
+	RiddleAutoGrow() {
 		var k = oS.ArP;
 		var f = k.ArC;
 		var j = k.ArR;
@@ -59,11 +59,11 @@ oS.Init({
 		NewImg(
 			"iStripe",
 			"images/interface/Stripe.png",
-			"left:" + (GetX1X2(5)[0] - 11) + "px;top:65px",
+			`left:${GetX1X2(5)[0] - 11}px;top:65px`,
 			EDAll
 		);
 	},
-	StartGame: function () {
+	StartGame() {
 		oP.Monitor();
 		BeginCool();
 		SetVisible($("dFlagMeter"), $("dTop"));

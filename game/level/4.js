@@ -11,7 +11,7 @@ oS.Init(
 		LevelName: "Level 1-4",
 		LvlEName: 4,
 		LargeWaveFlag: { 9: $("imgFlag1") },
-		StartGame: function () {
+		StartGame() {
 			NewEle(
 				"sod3row",
 				"div",
@@ -48,28 +48,28 @@ oS.Init(
 				e += 15;
 				h += 16;
 				d += 16;
-				$("sod3row").style.width = e + "px";
+				$("sod3row").style.width = `${e}px`;
 				SetStyle($("SodRoll_1"), {
-					left: h + "px",
-					width: --b + "px",
+					left: `${h}px`,
+					width: `${--b}px`,
 					height: "141px",
 				});
 				SetStyle($("SodRoll_2"), {
-					left: h + "px",
-					width: b + "px",
+					left: `${h}px`,
+					width: `${b}px`,
 					height: "141px",
 				});
 				SetStyle($("SodRollCap_1"), {
-					left: d + "px",
-					width: --c + "px",
-					height: --g + "px",
-					top: ++a + "px",
+					left: `${d}px`,
+					width: `${--c}px`,
+					height: `${--g}px`,
+					top: `${++a}px`,
 				});
 				SetStyle($("SodRollCap_2"), {
-					left: d + "px",
-					width: c + "px",
-					height: g + "px",
-					top: ++f + "px",
+					left: `${d}px`,
+					width: `${c}px`,
+					height: `${g}px`,
+					top: `${++f}px`,
 				});
 				e < 990
 					? oSym.addTask(3, arguments.callee, [
@@ -92,14 +92,14 @@ oS.Init(
 							StopMusic();
 							PlayMusic((oS.LoadMusic = oS.StartGameMusic));
 							oS.InitLawnMower();
-							PrepareGrowPlants(function () {
+							PrepareGrowPlants(() => {
 								oP.Monitor();
 								BeginCool();
 								SetVisible($("dFlagMeter"), $("dTop"));
 								AutoProduceSun(25);
 								oSym.addTask(
 									1500,
-									function () {
+									() => {
 										oP.AddZombiesFlag();
 										SetVisible($("dFlagMeterContent"));
 									},
@@ -120,14 +120,14 @@ oS.Init(
 		FlagNum: 9,
 		FlagToSumNum: { a1: [3, 5, 8], a2: [1, 2, 3, 10] },
 		FlagToMonitor: { 8: [ShowFinalWave, 0] },
-		FlagToEnd: function () {
+		FlagToEnd() {
 			NewImg(
 				"imgSF",
 				"images/interface/Shovel/ShovelCard.png",
 				"left:827px;top:330px;clip:rect(auto,auto,60px,auto)",
 				EDAll,
 				{
-					onclick: function () {
+					onclick() {
 						GetNewCard(this, oShovel, 5);
 					},
 				}

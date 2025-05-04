@@ -15,13 +15,13 @@ oS.Init(
 		backgroundImage: "images/interface/background1.jpg",
 		CanSelectCard: 0,
 		LevelName: "1-5 Special Off: Meteor Crater",
-		LvlClearFunc: function () {
+		LvlClearFunc() {
 			oSym.TimeStep = 10;
 		},
 		LvlEName: 5,
 		LargeWaveFlag: { 10: $("imgFlag1") },
 		StartGameMusic: "LoonSkirmish",
-		LoadAccess: function (a) {
+		LoadAccess(a) {
 			NewImg(
 				"dDave",
 				"images/interface/Dave.gif",
@@ -38,7 +38,7 @@ oS.Init(
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							1,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [1]);
@@ -53,13 +53,13 @@ oS.Init(
 						break;
 					case 1:
 						PlayAudio(
-							"crazydavelong" + Math.floor(1 + Math.random() * 3)
+							`crazydavelong${Math.floor(1 + Math.random() * 3)}`
 						);
 						c.onclick = null;
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							2,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [2]);
@@ -71,13 +71,13 @@ oS.Init(
 						break;
 					case 2:
 						PlayAudio(
-							"crazydavelong" + Math.floor(1 + Math.random() * 3)
+							`crazydavelong${Math.floor(1 + Math.random() * 3)}`
 						);
 						c.onclick = null;
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							2,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [3]);
@@ -89,13 +89,13 @@ oS.Init(
 						break;
 					case 3:
 						PlayAudio(
-							"crazydavelong" + Math.floor(1 + Math.random() * 3)
+							`crazydavelong${Math.floor(1 + Math.random() * 3)}`
 						);
 						c.onclick = null;
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							2,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [4]);
@@ -107,13 +107,13 @@ oS.Init(
 						break;
 					case 4:
 						PlayAudio(
-							"crazydavelong" + Math.floor(1 + Math.random() * 3)
+							`crazydavelong${Math.floor(1 + Math.random() * 3)}`
 						);
 						c.onclick = null;
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							2,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [5]);
@@ -128,7 +128,7 @@ oS.Init(
 						ClearChild($("DivTeach"));
 						oSym.addTask(
 							5,
-							function () {
+							() => {
 								ClearChild($("dDave"));
 								a(0);
 							},
@@ -137,14 +137,14 @@ oS.Init(
 				}
 			})(0);
 		},
-		StartGame: function () {
+		StartGame() {
 			SetHidden($("dSunNum"));
 			SetVisible($("tdShovel"), $("dTop"));
 			NewEle("DivTeachBar", "div", 0, 0, EDAll);
 			oP.Monitor(
 				{
 					ar: [0],
-					f: function (c) {
+					f(c) {
 						var d;
 						var a = oGd.$;
 						var b = oS.Chose;
@@ -204,12 +204,12 @@ oS.Init(
 													oS.StartGameMusic)
 											);
 											oS.InitLawnMower();
-											PrepareGrowPlants(function () {
+											PrepareGrowPlants(() => {
 												BeginCool();
 												AutoProduceSun(25);
 												oSym.addTask(
 													2e3,
-													function () {
+													() => {
 														oP.AddZombiesFlag();
 														SetVisible(
 															$(
@@ -225,39 +225,34 @@ oS.Init(
 						}
 					},
 				},
-				function () {
+				() => {
 					var c = Math.floor(1 + Math.random() * 5);
 					var f = Math.floor(1 + Math.random() * 9);
 					var g = GetX(f) - 55;
 					var e = GetY(c) - 60;
-					var b = c + "_" + f;
+					var b = `${c}_${f}`;
 					var a = oP.FlagZombies;
 					var d;
 					switch (true) {
 						case a > 3:
 							SetStyle((d = $("imgCrater")), {
-								left: g + "px",
-								top: e + "px",
+								left: `${g}px`,
+								top: `${e}px`,
 								zIndex: 3 * c,
 							});
 							delete oGd.$Crater[d.getAttribute("S")];
 							oGd.$Crater[b] = 2;
 							d.setAttribute("S", b);
-							(d = oGd.$[b + "_1"]) && d.Die();
+							(d = oGd.$[`${b}_1`]) && d.Die();
 							break;
 						case a > 2:
 							NewImg(
 								"imgCrater",
 								"images/interface/crater1.png",
-								"left:" +
-									g +
-									"px;top:" +
-									e +
-									"px;z-index:" +
-									3 * c,
+								`left:${g}px;top:${e}px;z-index:${3 * c}`,
 								EDAll
 							).setAttribute("S", b);
-							(d = oGd.$[b + "_1"]) && d.Die();
+							(d = oGd.$[`${b}_1`]) && d.Die();
 							oGd.$Crater[b] = 2;
 					}
 				}
@@ -278,14 +273,14 @@ oS.Init(
 		FlagNum: 10,
 		FlagToSumNum: { a1: [3, 5, 9], a2: [1, 2, 3, 10] },
 		FlagToMonitor: { 9: [ShowFinalWave, 0] },
-		FlagToEnd: function () {
+		FlagToEnd() {
 			NewImg(
 				"imgSF",
 				"images/Card/Plants/PotatoMine.png",
 				"left:587px;top:270px;clip:rect(auto,auto,60px,auto)",
 				EDAll,
 				{
-					onclick: function () {
+					onclick() {
 						GetNewCard(this, oPotatoMine, 6);
 					},
 				}

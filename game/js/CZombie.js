@@ -85,7 +85,7 @@ var CZombies = (function (b, a) {
 				var ctx;
 				if (!self.FreeSetbodyTime) {
 					canvas = NewEle(
-						"Buttered_Zombie_" + Math.random(),
+						`Buttered_Zombie_${Math.random()}`,
 						"canvas",
 						bodyStyle.cssText,
 						{
@@ -155,8 +155,8 @@ var CZombies = (function (b, a) {
 										Number.parseInt(i.style.left) ||
 									position.y != Number.parseInt(i.style.top)
 								) {
-									i.style.left = position.x + delta[0] + "px";
-									i.style.top = position.y + delta[1] + "px";
+									i.style.left = `${position.x + delta[0]}px`;
+									i.style.top = `${position.y + delta[1]}px`;
 								}
 							}
 							oSym.addTask(1, CheckSPC, [last]);
@@ -200,7 +200,7 @@ var CZombies = (function (b, a) {
 					canvas = self.EleBody;
 					ctx = canvas.getContext("2d");
 				}
-				if (!$("butter" + self.id + img)) {
+				if (!$(`butter${self.id}${img}`)) {
 					!self._Butter_Img_ && (self._Butter_Img_ = []);
 					var position =
 						self.HeadPosition.length > self.isAttacking
@@ -208,16 +208,17 @@ var CZombies = (function (b, a) {
 							: self.HeadPosition[0];
 					self._Butter_Img_.push(
 						NewImg(
-							"butter_" + self.id + img,
+							`butter_${self.id}${img}`,
 							img,
-							(self.FangXiang == "GoRight"
-								? "transform:rotateY(180deg);"
-								: "") +
-								`position:absolute;left:${
-									position.x + delta[0]
-								}px;top:${position.y + delta[1]}px;width:${
-									position.width * wh[0]
-								}px;height:${position.height * wh[1]}px;`,
+							`${
+								self.FangXiang == "GoRight"
+									? "transform:rotateY(180deg);"
+									: ""
+							}position:absolute;left:${
+								position.x + delta[0]
+							}px;top:${position.y + delta[1]}px;width:${
+								position.width * wh[0]
+							}px;height:${position.height * wh[1]}px;`,
 							self.Ele
 						)
 					);
@@ -236,13 +237,13 @@ var CZombies = (function (b, a) {
 					[(self.FreeSetbodyTime = oSym.Now + time)]
 				);
 			},
-			CanPass: function (d, c) {
+			CanPass(d, c) {
 				return c && c != 2;
 			},
-			CanGrow: function (d, c, e) {
+			CanGrow(d, c, e) {
 				return this.CanPass(c, oGd.$LF[c]) && e > oS.ArP.ArC[1];
 			},
-			ChkActs: function (h, f, j, e) {
+			ChkActs(h, f, j, e) {
 				var d;
 				var c;
 				var g;
@@ -264,14 +265,13 @@ var CZombies = (function (b, a) {
 												400 - h.height + h.GetDY(),
 										})),
 									(h.ZX = h.AttackedLX -= d),
-									(h.Ele.style.left =
-										Math.floor((h.X -= d)) + "px"),
+									(h.Ele.style.left = `${Math.floor((h.X -= d))}px`),
 									(g = 1))
 							: (g = 1))
 					: (g = 1);
 				return g;
 			},
-			ChkActs1: function (g, e, h, d) {
+			ChkActs1(g, e, h, d) {
 				var c;
 				var f;
 				!(g.FreeFreezeTime || g.FreeSetbodyTime)
@@ -280,21 +280,20 @@ var CZombies = (function (b, a) {
 							? (g.AttackedLX += c = g.Speed) > oS.W
 								? (h.splice(d, 1), g.DisappearDie(), (f = 0))
 								: ((g.ZX = g.AttackedRX += c),
-									(g.Ele.style.left =
-										Math.ceil((g.X += c)) + "px"),
+									(g.Ele.style.left = `${Math.ceil((g.X += c))}px`),
 									(f = 1))
 							: (f = 1))
 					: (f = 1);
 				return f;
 			},
-			GetDX: function () {
+			GetDX() {
 				return -110;
 			},
-			GetDY: function () {
+			GetDY() {
 				return -10;
 			},
 			GetDTop: 0,
-			ChangeR: function (e) {
+			ChangeR(e) {
 				var h = e.R;
 				var g = e.ar || [];
 				var j = e.CustomTop;
@@ -318,12 +317,11 @@ var CZombies = (function (b, a) {
 						(d.X += l),
 						(q = g[Math.floor(Math.random() * g.length)]),
 						SetStyle(f, {
-							left: d.X + "px",
-							top:
-								(d.pixelTop =
-									j == undefined
-										? GetY(q) - d.height + d.GetDY()
-										: j) + "px",
+							left: `${d.X}px`,
+							top: `${(d.pixelTop =
+								j == undefined
+									? GetY(q) - d.height + d.GetDY()
+									: j)}px`,
 							zIndex: (d.zIndex = 3 * q + 1),
 						}),
 						d.isAttacking && (n.src = d.PicArr[d.NormalGif]),
@@ -331,16 +329,12 @@ var CZombies = (function (b, a) {
 					: (n.src = d.PicArr[d.NormalGif]);
 				d.isAttacking = 0;
 			},
-			getShadow: function (c) {
-				return (
-					"left:" +
-					(c.beAttackedPointL - 10) +
-					"px;top:" +
-					(c.height - 22) +
-					"px"
-				);
+			getShadow(c) {
+				return `left:${c.beAttackedPointL - 10}px;top:${
+					c.height - 22
+				}px`;
 			},
-			Init: function (g, i, e, d) {
+			Init(g, i, e, d) {
 				var c = 0;
 				var h = this;
 				var f = [];
@@ -357,17 +351,15 @@ var CZombies = (function (b, a) {
 					";left:",
 					"px;top:",
 					"px;z-index:",
-					'"><img src="' +
-						ShadowPNG +
-						'" style="' +
-						i.getShadow(i) +
-						'"><img style="position:absolute;clip:rect(0,auto,',
+					`"><img src="${ShadowPNG}" style="${i.getShadow(
+						i
+					)}"><img style="position:absolute;clip:rect(0,auto,`,
 					",0);top:",
 					'px" src="',
 					'"></div>',
 				];
 			},
-			getHTML: function (d, g, i, h, f, k, j, c) {
+			getHTML(d, g, i, h, f, k, j, c) {
 				var e = this.ArHTML;
 				return (
 					e[0] +
@@ -389,14 +381,14 @@ var CZombies = (function (b, a) {
 					e[8]
 				);
 			},
-			prepareBirth: function (f) {
+			prepareBirth(f) {
 				var h = this;
 				var e = h.ArR;
 				var d = e[Math.floor(Math.random() * e.length)];
 				var g = GetY(d) + h.GetDY();
 				var c = g - h.height;
 				var j = 3 * d + 1;
-				var i = (h.id = "Z_" + Math.random());
+				var i = (h.id = `Z_${Math.random()}`);
 				h.R = d;
 				h.pixelTop = c;
 				h.zIndex = j;
@@ -412,12 +404,12 @@ var CZombies = (function (b, a) {
 					h.PicArr[h.NormalGif]
 				);
 			},
-			CustomBirth: function (i, c, d, m) {
+			CustomBirth(i, c, d, m) {
 				var g = this;
 				var f = GetY(i) + g.GetDY();
 				var h = f - g.height;
 				var k = 3 * i + 1;
-				var e = (g.id = "Z_" + Math.random());
+				var e = (g.id = `Z_${Math.random()}`);
 				var l = g.beAttackedPointL;
 				var j = g.beAttackedPointR;
 				g.AttackedRX =
@@ -439,7 +431,7 @@ var CZombies = (function (b, a) {
 					g.PicArr[g.NormalGif]
 				);
 			},
-			BirthCallBack: function (f) {
+			BirthCallBack(f) {
 				var e = f.delayT;
 				var d = f.id;
 				var c = (f.Ele = $(d));
@@ -448,7 +440,7 @@ var CZombies = (function (b, a) {
 				e
 					? oSym.addTask(
 							e,
-							function (h, g) {
+							(h, g) => {
 								var i = $Z[h];
 								i && ((i.FreeSetbodyTime = 0), SetBlock(g));
 							},
@@ -456,34 +448,34 @@ var CZombies = (function (b, a) {
 						)
 					: SetBlock(c);
 			},
-			Birth: function () {
+			Birth() {
 				var c = this;
 				$Z[c.id] = c;
 				oZ.add(c);
 				c.BirthCallBack(c);
 			},
-			getCrushed: function (c) {
+			getCrushed(c) {
 				return true;
 			},
-			getRaven: function () {
+			getRaven() {
 				return this.DisappearDie(), 1;
 			},
-			getExplosion: function () {
+			getExplosion() {
 				this.ExplosionDie();
 			},
-			getThump: function () {
+			getThump() {
 				this.DisappearDie();
 			},
-			PlayNormalballAudio: function () {
-				PlayAudio("splat" + Math.floor(1 + Math.random() * 3));
+			PlayNormalballAudio() {
+				PlayAudio(`splat${Math.floor(1 + Math.random() * 3)}`);
 			},
-			PlayFireballAudio: function () {
+			PlayFireballAudio() {
 				PlayAudio(["ignite", "ignite2"][Math.floor(Math.random() * 2)]);
 			},
-			PlaySlowballAudio: function () {
+			PlaySlowballAudio() {
 				PlayAudio("frozen");
 			},
-			getFireball: function (h, e, g) {
+			getFireball(h, e, g) {
 				h.FreeSlowTime = 0;
 				h.Attack = 100;
 				h.FreeFreezeTime || h.FreeSetbodyTime
@@ -499,10 +491,10 @@ var CZombies = (function (b, a) {
 					c[d].getSputtering();
 				}
 			},
-			getSputtering: function (c) {
+			getSputtering(c) {
 				this.getHit2(this, c || 13, 0);
 			},
-			getSlow: function (h, f, g) {
+			getSlow(h, f, g) {
 				var d = oSym.Now + g;
 				var e = h.FreeSlowTime;
 				var c = 0;
@@ -523,7 +515,7 @@ var CZombies = (function (b, a) {
 				c &&
 					oSym.addTask(
 						g,
-						function (j, i) {
+						(j, i) => {
 							var k = $Z[j];
 							k &&
 								k.FreeSlowTime == i &&
@@ -534,12 +526,12 @@ var CZombies = (function (b, a) {
 						[f, d]
 					);
 			},
-			getFreeze: function (d, c) {
+			getFreeze(d, c) {
 				d.beAttacked && d.getHit0(d, 20, 0);
 				d.Speed = 0;
 				oSym.addTask(
 					400,
-					function (g, f, e) {
+					(g, f, e) => {
 						ClearChild(e);
 						var h = $Z[g];
 						h &&
@@ -551,7 +543,7 @@ var CZombies = (function (b, a) {
 								h.isAttacking && h.JudgeAttack()),
 							oSym.addTask(
 								1500,
-								function (j, i) {
+								(j, i) => {
 									var k = $Z[j];
 									k &&
 										k.FreeSlowTime == i &&
@@ -567,7 +559,7 @@ var CZombies = (function (b, a) {
 						c,
 						(d.FreeFreezeTime = oSym.Now + 400),
 						NewImg(
-							"icetrap_" + Math.random(),
+							`icetrap_${Math.random()}`,
 							"images/Plants/IceShroom/icetrap.gif",
 							d.getShadow(d),
 							d.Ele
@@ -575,7 +567,7 @@ var CZombies = (function (b, a) {
 					]
 				);
 			},
-			NormalDie: function () {
+			NormalDie() {
 				var c = this;
 				PlayAudio("zombie_falling_1");
 				c.EleBody.src = c.PicArr[c.DieGif];
@@ -584,7 +576,7 @@ var CZombies = (function (b, a) {
 				delete $Z[c.id];
 				c.PZ && oP.MonPrgs();
 			},
-			ExplosionDie: function () {
+			ExplosionDie() {
 				var c = this;
 				c.EleBody.src = c.PicArr[c.BoomDieGif];
 				oSym.addTask(300, ClearChild, [c.Ele]);
@@ -592,13 +584,13 @@ var CZombies = (function (b, a) {
 				delete $Z[c.id];
 				c.PZ && oP.MonPrgs();
 			},
-			DisappearDie: function () {
+			DisappearDie() {
 				ClearChild(this.Ele);
 				this.HP = 0;
 				delete $Z[this.id];
 				this.PZ && oP.MonPrgs();
 			},
-			CrushDie: function () {
+			CrushDie() {
 				var c = this;
 				c.GoingDieHead(c.id, c.PicArr, c);
 				ClearChild(c.Ele);
@@ -606,22 +598,19 @@ var CZombies = (function (b, a) {
 				delete $Z[c.id];
 				c.PZ && oP.MonPrgs();
 			},
-			GoingDieHead: function (e, c, d) {
+			GoingDieHead(e, c, d) {
 				oSym.addTask(200, ClearChild, [
 					NewImg(
 						0,
 						c[d.HeadGif],
-						"left:" +
-							d.AttackedLX +
-							"px;top:" +
-							(d.pixelTop - 20) +
-							"px;z-index:" +
-							d.zIndex,
+						`left:${d.AttackedLX}px;top:${
+							d.pixelTop - 20
+						}px;z-index:${d.zIndex}`,
 						EDPZ
 					),
 				]);
 			},
-			GoingDie: function (d) {
+			GoingDie(d) {
 				var c = this;
 				var e = c.id;
 				c.EleBody.src = d;
@@ -630,10 +619,10 @@ var CZombies = (function (b, a) {
 				c.FreeFreezeTime = c.FreeSetbodyTime = c.FreeSlowTime = 0;
 				c.AutoReduceHP(e);
 			},
-			AutoReduceHP: function (c) {
+			AutoReduceHP(c) {
 				oSym.addTask(
 					100,
-					function (e) {
+					(e) => {
 						var d = $Z[e];
 						d &&
 							((d.HP -= 60) < 1
@@ -643,10 +632,10 @@ var CZombies = (function (b, a) {
 					[c]
 				);
 			},
-			JudgeAttack: function () {
+			JudgeAttack() {
 				var g = this;
 				var d = g.ZX;
-				var e = g.R + "_";
+				var e = `${g.R}_`;
 				var f = GetC(d);
 				var h = oGd.$;
 				var c;
@@ -659,11 +648,11 @@ var CZombies = (function (b, a) {
 						((g.isAttacking = 0),
 						(g.EleBody.src = g.PicArr[g.NormalGif]));
 			},
-			JudgeLR: function (f, d, e, c, g) {
+			JudgeLR(f, d, e, c, g) {
 				return e > 10 || e < 1
 					? false
 					: (function () {
-							d += --e + "_";
+							d += `${--e}_`;
 							var h = 3;
 							var i;
 							while (h--) {
@@ -676,11 +665,11 @@ var CZombies = (function (b, a) {
 							}
 						})();
 			},
-			JudgeSR: function (f, d, e, c, g) {
+			JudgeSR(f, d, e, c, g) {
 				return e > 9
 					? false
 					: (function () {
-							d += e + "_";
+							d += `${e}_`;
 							var h = 3;
 							var i;
 							while (h--) {
@@ -693,7 +682,7 @@ var CZombies = (function (b, a) {
 							}
 						})();
 			},
-			JudgeAttackH1: function () {
+			JudgeAttackH1() {
 				var e = this;
 				var d = oZ.getZ0(e.ZX, e.R);
 				var c = e.id;
@@ -703,7 +692,7 @@ var CZombies = (function (b, a) {
 					d.Altitude == 1 &&
 					(e.AttackZombie(d.id), !d.isAttacking && d.AttackZombie(c));
 			},
-			JudgeAttackH: function () {
+			JudgeAttackH() {
 				var e = this;
 				var d = oZ.getZ0(e.ZX, e.R);
 				var f = e.id;
@@ -719,10 +708,10 @@ var CZombies = (function (b, a) {
 						((e.isAttacking = 0),
 						(e.EleBody.src = e.PicArr[e.NormalGif]));
 			},
-			AttackZombie: function (d, c) {
+			AttackZombie(d, c) {
 				oSym.addTask(
 					10,
-					function (f, e) {
+					(f, e) => {
 						var h = $Z[f];
 						var g;
 						h &&
@@ -735,7 +724,7 @@ var CZombies = (function (b, a) {
 					[d, c]
 				);
 			},
-			AttackZombie2: function (e, d, c) {
+			AttackZombie2(e, d, c) {
 				e.isAttacking = 1;
 				e.EleBody.src = e.PicArr[e.AttackGif];
 				oSym.addTask(
@@ -756,7 +745,7 @@ var CZombies = (function (b, a) {
 					[d, c]
 				);
 			},
-			NormalAttack: function (d, c) {
+			NormalAttack(d, c) {
 				PlayAudio(
 					["chomp", "chomp2", "chompsoft"][
 						Math.floor(Math.random() * 2)
@@ -765,7 +754,7 @@ var CZombies = (function (b, a) {
 				console.log("chomp");
 				oSym.addTask(
 					100,
-					function (f, e) {
+					(f, e) => {
 						var h = $Z[f];
 						var g;
 						h &&
@@ -779,13 +768,12 @@ var CZombies = (function (b, a) {
 				);
 			},
 			PZ: 1,
-			ExchangeLR: function (f, d) {
+			ExchangeLR(f, d) {
 				var e = f.width;
 				var h = f.beAttackedPointL;
 				var c = f.beAttackedPointR;
 				var g = f.Ele;
-				g.style.left =
-					(f.X = f.AttackedLX - (f.beAttackedPointL = e - c)) + "px";
+				g.style.left = `${(f.X = f.AttackedLX - (f.beAttackedPointL = e - c))}px`;
 				f.beAttackedPointR = e - h;
 				f.EleShadow.style.cssText = f.getShadow(f);
 				f.ExchangeLR2(f, f.EleBody, d);
@@ -798,7 +786,7 @@ var CZombies = (function (b, a) {
 				: function (e, c, d) {
 						c.className = d ? "fliph" : "";
 					},
-			bedevil: function (c) {
+			bedevil(c) {
 				c.ExchangeLR(c, 1);
 				c.JudgeAttack = c.JudgeAttackH;
 				c.PZ = 0;
@@ -810,15 +798,13 @@ var CZombies = (function (b, a) {
 			SetAlpha: $User.Browser.IE
 				? function (f, d, e, c) {
 						d.style.filter =
-							(f.CSS_alpha = "alpha(opacity=" + e + ")") +
-							f.CSS_fliph;
+							(f.CSS_alpha = `alpha(opacity=${e})`) + f.CSS_fliph;
 					}
 				: function (f, d, e, c) {
 						if (c == 1) {
 							d.style.filter = "brightness(1)";
 						} else {
-							d.style.filter =
-								"brightness(" + (c / 0.75 + 0.65) + ")";
+							d.style.filter = `brightness(${c / 0.75 + 0.65})`;
 						}
 					},
 		}),
@@ -837,7 +823,7 @@ var OrnNoneZombies = (function () {
 		c.SetAlpha(c, c.EleBody, 50, 0.5);
 		oSym.addTask(
 			10,
-			function (e, d) {
+			(e, d) => {
 				(d = $Z[e]) && d.SetAlpha(d, d.EleBody, 100, 1);
 			},
 			[c.id]
@@ -850,11 +836,11 @@ var OrnNoneZombies = (function () {
 		getHit1: a,
 		getHit2: a,
 		getHit3: a,
-		getPea: function (e, b, c) {
+		getPea(e, b, c) {
 			e.PlayNormalballAudio();
 			e.getHit0(e, b, c);
 		},
-		getFirePea: function (g, c, j) {
+		getFirePea(g, c, j) {
 			g.PlayFireballAudio();
 			(g.FreeSlowTime || g.FreeFreezeTime) &&
 				((g.Speed = g.OSpeed),
@@ -870,10 +856,10 @@ var OrnNoneZombies = (function () {
 			}
 			g.getHit0(g, c, j);
 		},
-		getFirePeaSputtering: function () {
+		getFirePeaSputtering() {
 			this.getHit0(this, 13);
 		},
-		getSnowPea: function (f, c, g) {
+		getSnowPea(f, c, g) {
 			var e = f.FreeSlowTime;
 			var b = oSym.Now + 1e3;
 			e == 0
@@ -885,7 +871,7 @@ var OrnNoneZombies = (function () {
 				((f.FreeSlowTime = b),
 				oSym.addTask(
 					1e3,
-					function (h, d) {
+					(h, d) => {
 						var i = $Z[h];
 						i &&
 							i.FreeSlowTime == d &&
@@ -917,20 +903,20 @@ var oBackupDancer = InheritO(OrnNoneZombies, {
 		var a = "images/Zombies/BackupDancer/";
 		return [
 			"images/Card/Zombies/BackupDancer.png",
-			a + "0.gif",
-			a + "BackupDancer.gif",
-			a + "Attack.gif",
-			a + "LostHead.gif",
-			a + "LostHeadAttack.gif",
-			a + "Head.gif" + $Random,
-			a + "Die.gif" + $Random,
-			a + "BoomDie.gif" + $Random,
-			a + "Dancing.gif" + $Random,
-			a + "LostHeadDancing.gif" + $Random,
-			a + "Mound.gif" + $Random,
+			`${a}0.gif`,
+			`${a}BackupDancer.gif`,
+			`${a}Attack.gif`,
+			`${a}LostHead.gif`,
+			`${a}LostHeadAttack.gif`,
+			`${a}Head.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`${a}BoomDie.gif${$Random}`,
+			`${a}Dancing.gif${$Random}`,
+			`${a}LostHeadDancing.gif${$Random}`,
+			`${a}Mound.gif${$Random}`,
 		];
 	})(),
-	bedevil: function (a) {
+	bedevil(a) {
 		a.ExchangeLR(a, 1);
 		a.JudgeAttack = a.JudgeAttackH;
 		a.PZ = 0;
@@ -941,7 +927,7 @@ var oBackupDancer = InheritO(OrnNoneZombies, {
 		a.ChangeChkActsTo1(a, a.id, a.EleBody);
 		oP.MonPrgs();
 	},
-	getSlow: function (f, d, e) {
+	getSlow(f, d, e) {
 		var b = oSym.Now + e;
 		var c = f.FreeSlowTime;
 		var a = 0;
@@ -960,7 +946,7 @@ var oBackupDancer = InheritO(OrnNoneZombies, {
 		a &&
 			oSym.addTask(
 				e,
-				function (h, g) {
+				(h, g) => {
 					var i = $Z[h];
 					i &&
 						i.FreeSlowTime == g &&
@@ -969,11 +955,11 @@ var oBackupDancer = InheritO(OrnNoneZombies, {
 				[d, b]
 			);
 	},
-	getFreeze: function (b, a) {
+	getFreeze(b, a) {
 		b.beAttacked && b.getHit0(b, 20, 0);
 		oSym.addTask(
 			400,
-			function (e, d, c) {
+			(e, d, c) => {
 				ClearChild(c);
 				var f = $Z[e];
 				f &&
@@ -983,7 +969,7 @@ var oBackupDancer = InheritO(OrnNoneZombies, {
 					!f.FreeSetbodyTime && f.isAttacking && f.JudgeAttack(),
 					oSym.addTask(
 						1500,
-						function (h, g) {
+						(h, g) => {
 							var i = $Z[h];
 							i &&
 								i.FreeSlowTime == g &&
@@ -996,7 +982,7 @@ var oBackupDancer = InheritO(OrnNoneZombies, {
 				a,
 				(b.FreeFreezeTime = oSym.Now + 400),
 				NewImg(
-					"icetrap_" + Math.random(),
+					`icetrap_${Math.random()}`,
 					"images/Plants/IceShroom/icetrap.gif",
 					b.getShadow(b),
 					b.Ele
@@ -1004,7 +990,7 @@ var oBackupDancer = InheritO(OrnNoneZombies, {
 			]
 		);
 	},
-	CustomBirth: function (g, d, a, b, j) {
+	CustomBirth(g, d, a, b, j) {
 		var e = this;
 		var c = GetY(g) + e.GetDY();
 		var f = c - e.height;
@@ -1021,13 +1007,13 @@ var oBackupDancer = InheritO(OrnNoneZombies, {
 			(e.zIndex = 3 * g + 1),
 			"none",
 			j || 0,
-			e.height + "px",
+			`${e.height}px`,
 			e.PicArr[e.StandGif]
 		);
 	},
 	Produce:
 		'当舞王僵尸摇摆时，这种僵尸四个结伙出现。</p><p>韧性：<font color="#CC241D">低</font><br>伴舞僵尸曾在位于僵尸纽约城的“咀利牙”表演艺术学院钻研过六年的舞技。',
-	BirthCallBack: function (e) {
+	BirthCallBack(e) {
 		var d = e.delayT;
 		var c = e.id;
 		var b = (e.Ele = $(c));
@@ -1035,14 +1021,14 @@ var oBackupDancer = InheritO(OrnNoneZombies, {
 		e.EleShadow = b.firstChild;
 		oSym.addTask(
 			d,
-			function (g, f) {
+			(g, f) => {
 				var h = $Z[g];
 				h && ((h.FreeSetbodyTime = 0), SetBlock(f));
 			},
 			[c, b]
 		);
 	},
-	ChangeChkActsTo0: function (c, b, a) {
+	ChangeChkActsTo0(c, b, a) {
 		if (!c.PZ) {
 			c.ChangeChkActsTo1(c, b, a);
 			return;
@@ -1053,14 +1039,14 @@ var oBackupDancer = InheritO(OrnNoneZombies, {
 		c.Speed = c.DZStep = 0;
 		oSym.addTask(
 			200,
-			function (e, d) {
+			(e, d) => {
 				var f = $Z[e];
 				f && f.beAttacked && f.ChangeChkActsTo1(f, e, d);
 			},
 			[b, a]
 		);
 	},
-	ChangeChkActsTo1: function (c, b, a) {
+	ChangeChkActsTo1(c, b, a) {
 		c.LostHeadGif = 4;
 		c.NormalGif = 2;
 		c.DZStep = 1;
@@ -1068,14 +1054,14 @@ var oBackupDancer = InheritO(OrnNoneZombies, {
 		c.PZ &&
 			oSym.addTask(
 				220,
-				function (e, d) {
+				(e, d) => {
 					var f = $Z[e];
 					f && f.beAttacked && f.ChangeChkActsTo0(f, e, d);
 				},
 				[b, a]
 			);
 	},
-	ChkActs: function (g, d, h, c) {
+	ChkActs(g, d, h, c) {
 		var e;
 		var b;
 		var a;
@@ -1098,14 +1084,14 @@ var oBackupDancer = InheritO(OrnNoneZombies, {
 									CustomTop: 400 - g.height + g.GetDY(),
 								})),
 							(g.ZX = g.AttackedLX -= b),
-							(g.Ele.style.left = Math.floor((g.X -= b)) + "px"),
+							(g.Ele.style.left = `${Math.floor((g.X -= b))}px`),
 							(f = 1))
 					: (f = 1))
 			: (f = 1);
 		g.ChkSpeed(g);
 		return f;
 	},
-	ChkSpeed: function (b) {
+	ChkSpeed(b) {
 		if (!b.DZStep) {
 			return;
 		}
@@ -1140,13 +1126,13 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 	Speed: 7.2,
 	NormalGif: 9,
 	GetDTop: 5,
-	getShadow: function (a) {
+	getShadow(a) {
 		return "left:30px;top:146px";
 	},
-	GetDX: function () {
+	GetDX() {
 		return -50;
 	},
-	GetDY: function () {
+	GetDY() {
 		return -5;
 	},
 	LostHeadGif: 14,
@@ -1160,20 +1146,20 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 			var g = $Z[d];
 			var e;
 			NewEle(
-				d + "_spotlightCon",
+				`${d}_spotlightCon`,
 				"div",
 				"position:absolute;left:-30px;top:-400px;width:184px;height:600px;overflow:hidden",
 				0,
 				c
 			).appendChild(
 				(g.spotlight = NewImg(
-					d + "_spotlight",
-					"images/Zombies/DancingZombie/spotlight" + a + ".png",
-					"left:0;top:0;width:920px;height:600px;" + b
+					`${d}_spotlight`,
+					`images/Zombies/DancingZombie/spotlight${a}.png`,
+					`left:0;top:0;width:920px;height:600px;${b}`
 				))
 			);
 			e = NewEle(
-				d + "_spotlight2Con",
+				`${d}_spotlight2Con`,
 				"div",
 				"position:absolute;left:-25px;top:135px;width:184px;height:60px;overflow:hidden",
 				0
@@ -1181,9 +1167,9 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 			c.insertBefore(e, f.EleShadow);
 			e.appendChild(
 				(g.spotlight2 = NewImg(
-					d + "_spotlight2",
-					"images/Zombies/DancingZombie/spotlight2" + a + ".png",
-					"left:0;top:0;width:920px;height:60px;" + b
+					`${d}_spotlight2`,
+					`images/Zombies/DancingZombie/spotlight2${a}.png`,
+					`left:0;top:0;width:920px;height:60px;${b}`
 				))
 			);
 		};
@@ -1191,36 +1177,36 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 	PicArr: (function () {
 		var d = "images/Zombies/DancingZombie/";
 		var c = $User.Browser.IE6 ? "_8" : "";
-		var a = d + "spotlight" + c + ".png" + $Random;
-		var b = d + "spotlight2" + c + ".png" + $Random;
+		var a = `${d}spotlight${c}.png${$Random}`;
+		var b = `${d}spotlight2${c}.png${$Random}`;
 		return [
 			"images/Card/Zombies/DancingZombie.png",
-			d + "0.gif",
-			d + "DancingZombie.gif",
-			d + "Attack.gif",
-			d + "LostHead.gif",
-			d + "LostHeadAttack.gif",
-			d + "Head.gif" + $Random,
-			d + "Die.gif" + $Random,
-			d + "BoomDie.gif" + $Random,
-			d + "SlidingStep.gif" + $Random,
-			d + "Dancing.gif" + $Random,
-			d + "Summon1.gif",
-			d + "Summon2.gif",
-			d + "Summon3.gif",
-			d + "LostHeadSlidingStep.gif" + $Random,
-			d + "LostHeadDancing.gif" + $Random,
-			d + "LostHeadSummon.gif" + $Random,
+			`${d}0.gif`,
+			`${d}DancingZombie.gif`,
+			`${d}Attack.gif`,
+			`${d}LostHead.gif`,
+			`${d}LostHeadAttack.gif`,
+			`${d}Head.gif${$Random}`,
+			`${d}Die.gif${$Random}`,
+			`${d}BoomDie.gif${$Random}`,
+			`${d}SlidingStep.gif${$Random}`,
+			`${d}Dancing.gif${$Random}`,
+			`${d}Summon1.gif`,
+			`${d}Summon2.gif`,
+			`${d}Summon3.gif`,
+			`${d}LostHeadSlidingStep.gif${$Random}`,
+			`${d}LostHeadDancing.gif${$Random}`,
+			`${d}LostHeadSummon.gif${$Random}`,
 			a,
 			b,
 		];
 	})(),
 	Produce:
 		'舞王僵尸和人类(在世或者死去的)如有雷同，纯属巧合。</p><p>韧性：<font color="#CC241D">中</font><br>特点：<font color="#CC241D">召唤伴舞僵尸</font></p>舞王僵尸的最新唱片“抓住脑子啃啊啃”在僵尸界的人气正急速飙升。',
-	getSnowPea: function () {
+	getSnowPea() {
 		this.PlaySlowballAudio();
 	},
-	NormalDie: function () {
+	NormalDie() {
 		var a = this;
 		a.ResetBackupDancer(a);
 		a.EleBody.src = a.PicArr[a.DieGif];
@@ -1229,7 +1215,7 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 		delete $Z[a.id];
 		a.PZ && oP.MonPrgs();
 	},
-	ExplosionDie: function () {
+	ExplosionDie() {
 		var a = this;
 		a.ResetBackupDancer(a);
 		a.EleBody.src = a.PicArr[a.BoomDieGif];
@@ -1238,14 +1224,14 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 		delete $Z[a.id];
 		a.PZ && oP.MonPrgs();
 	},
-	DisappearDie: function () {
+	DisappearDie() {
 		this.ResetBackupDancer(this);
 		ClearChild(this.Ele);
 		this.HP = 0;
 		delete $Z[this.id];
 		this.PZ && oP.MonPrgs();
 	},
-	CrushDie: function () {
+	CrushDie() {
 		var a = this;
 		a.ResetBackupDancer(a);
 		a.GoingDieHead(a.id, a.PicArr, a);
@@ -1254,7 +1240,7 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 		delete $Z[a.id];
 		a.PZ && oP.MonPrgs();
 	},
-	bedevil: function (b) {
+	bedevil(b) {
 		var a = b.id;
 		b.ExchangeLR(b, 1);
 		b.JudgeAttack = b.JudgeAttackH;
@@ -1264,11 +1250,11 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 		b.ChkActs = b.ChkActs1;
 		b.ChangeChkActsTo1(b, a, b.EleBody);
 		b.ResetBackupDancer(b);
-		($(a + "_spotlightCon").style.left = "20px"),
-			($(a + "_spotlight2Con").style.left = "25px");
+		($(`${a}_spotlightCon`).style.left = "20px"),
+			($(`${a}_spotlight2Con`).style.left = "25px");
 		oP.MonPrgs();
 	},
-	ResetBackupDancer: function (f) {
+	ResetBackupDancer(f) {
 		var g = f.ArDZ;
 		var d = g.length;
 		var c;
@@ -1294,12 +1280,12 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 		a > -1 &&
 			oSym.addTask(
 				f.DZStepT - oSym.Now,
-				function (o, j) {
+				(o, j) => {
 					var m = 4;
 					var l;
 					var k;
 					var n;
-					var h = "ChangeChkActsTo" + j;
+					var h = `ChangeChkActsTo${j}`;
 					while (m--) {
 						(l = o[m]) &&
 							(k = l[0]) &&
@@ -1311,7 +1297,7 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 				[g, [1, 0][a]]
 			);
 	},
-	BirthCallBack: function (d) {
+	BirthCallBack(d) {
 		var b = d.delayT;
 		var l = d.id;
 		var a = (d.Ele = $(l));
@@ -1399,14 +1385,14 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 		b ? (oSym.addTask(b, func, [l, a]), (c += b)) : func(l, a);
 		oSym.addTask(
 			c,
-			function (o) {
+			(o) => {
 				var t = $Z[o];
 				t && t.beAttacked && !t.isAttacking && t.NormalAttack(o);
 			},
 			[d.id]
 		);
 	},
-	ChkActs1: function (e, b, f, a) {
+	ChkActs1(e, b, f, a) {
 		var c;
 		var d;
 		!(e.FreeFreezeTime || e.FreeSetbodyTime)
@@ -1416,17 +1402,17 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 					? (e.AttackedLX += 3.5) > oS.W
 						? (f.splice(a, 1), e.DisappearDie(), (d = 0))
 						: ((e.ZX = e.AttackedRX += 3.5),
-							(e.Ele.style.left = Math.ceil((e.X += 3.5)) + "px"),
+							(e.Ele.style.left = `${Math.ceil((e.X += 3.5))}px`),
 							(d = 1))
 					: (d = 1))
 			: (d = 1);
 		return d;
 	},
-	ChkTmp: function (c, b, d, a) {
+	ChkTmp(c, b, d, a) {
 		c.ChkSpeed(c);
 		return 0;
 	},
-	ChkActs: function (g, d, h, c) {
+	ChkActs(g, d, h, c) {
 		var e;
 		var b;
 		var a;
@@ -1449,14 +1435,14 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 									CustomTop: 400 - g.height + g.GetDY(),
 								})),
 							(g.ZX = g.AttackedLX -= b),
-							(g.Ele.style.left = Math.floor((g.X -= b)) + "px"),
+							(g.Ele.style.left = `${Math.floor((g.X -= b))}px`),
 							(f = 1))
 					: (f = 1))
 			: (f = 1);
 		g.ChkSpeed(g);
 		return f;
 	},
-	ChkSpeed: function (g) {
+	ChkSpeed(g) {
 		if (!g.DZStep) {
 			return;
 		}
@@ -1497,7 +1483,7 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 			g.Speed != a && (g.Speed = a);
 		}
 	},
-	AttackZombie: function (a) {
+	AttackZombie(a) {
 		this.ExchangeLR(this, 0);
 		var b = this.id;
 		this.isAttacking = 1;
@@ -1521,7 +1507,7 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 			[b, a]
 		);
 	},
-	ChkBackupDancer: function (h, g, f) {
+	ChkBackupDancer(h, g, f) {
 		if (!h.PZ) {
 			h.ChangeChkActsTo1(h, g, f);
 			return;
@@ -1542,7 +1528,7 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 		!h.isAttacking && j ? (f.src = h.PicArr[10]) : h.Summon(h, g);
 		h.ChangeChkActsTo0(h, g, f);
 	},
-	ChangeChkActsTo0: function (g, e, a) {
+	ChangeChkActsTo0(g, e, a) {
 		if (!g.PZ) {
 			g.ChangeChkActsTo1(g, e, a);
 			return;
@@ -1568,14 +1554,14 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 		g.DZStepT = oSym.Now + 200;
 		oSym.addTask(
 			200,
-			function (j, i) {
+			(j, i) => {
 				var k = $Z[j];
 				k && k.beAttacked && k.ChangeChkActsTo1(k, j, i);
 			},
 			[e, a]
 		);
 	},
-	ChangeChkActsTo1: function (g, e, a) {
+	ChangeChkActsTo1(g, e, a) {
 		var d = 4;
 		var h = g.ArDZ;
 		var c;
@@ -1598,14 +1584,14 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 		g.PZ &&
 			oSym.addTask(
 				220,
-				function (j, i) {
+				(j, i) => {
 					var k = $Z[j];
 					k && k.beAttacked && k.ChkBackupDancer(k, j, i);
 				},
 				[e, a]
 			);
 	},
-	TurnLeft: function (c) {
+	TurnLeft(c) {
 		var a = CZombies.prototype;
 		var b = c.id;
 		c.AttackZombie = a.AttackZombie;
@@ -1617,7 +1603,7 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 		c.getFreeze = CZombies.prototype.getFreeze;
 		oSym.addTask(
 			20,
-			function (d, e) {
+			(d, e) => {
 				$Z[d] &&
 					e.beAttacked &&
 					(e.addSpotlight(d, e, e.Ele),
@@ -1627,9 +1613,9 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 							var j = $Z[g];
 							j &&
 								(h > -736 ? (h -= 184) : (h = 0),
-								(f.style.left = h + "px"),
+								(f.style.left = `${h}px`),
 								k > -736 ? (k -= 184) : (k = 0),
-								(i.style.left = k + "px"),
+								(i.style.left = `${k}px`),
 								oSym.addTask(100, arguments.callee, [
 									g,
 									f,
@@ -1642,7 +1628,7 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 					),
 					oSym.addTask(
 						200,
-						function (h, g) {
+						(h, g) => {
 							var f;
 							$Z[g] &&
 								h.beAttacked &&
@@ -1659,12 +1645,12 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 		);
 		c.Summon(c, b);
 	},
-	NormalAttack: function (a) {
+	NormalAttack(a) {
 		var b = $Z[a];
 		b.ExchangeLR(b, 0);
 		b.TurnLeft(b);
 	},
-	Summon: function (d, c) {
+	Summon(d, c) {
 		d.LostHeadGif = 16;
 		var a = d.EleBody;
 		var b = d.ChkActs;
@@ -1674,22 +1660,21 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 		PlayAudio("dancer");
 		oSym.addTask(
 			10,
-			function (f, e) {
+			(f, e) => {
 				var g = $Z[f];
 				g &&
 					g.beAttacked &&
 					((e.src = "images/Zombies/DancingZombie/Summon2.gif"),
 					oSym.addTask(
 						10,
-						function (t, s, x) {
+						(t, s, x) => {
 							var h = $Z[t];
 							var v = h.ZX;
 							var m = h.ArDZ;
 							var n = [];
-							var k =
-								"images/Zombies/BackupDancer/Mound.gif" +
-								$Random +
-								Math.random();
+							var k = `images/Zombies/BackupDancer/Mound.gif${
+								$Random
+							}${Math.random()}`;
 							var r = 4;
 							var w = [];
 							var u = [];
@@ -1707,19 +1692,15 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 											q[1],
 											q[2](v),
 											100,
-											(q[0] = "Z_" + Math.random())
+											(q[0] = `Z_${Math.random()}`)
 										)),
 										n.push(
 											NewImg(
 												"",
 												k,
-												"z-index:" +
-													q[3] +
-													";left:" +
-													q[4](v) +
-													"px;top:" +
-													q[5] +
-													"px",
+												`z-index:${q[3]};left:${q[4](
+													v
+												)}px;top:${q[5]}px`,
 												EDPZ
 											)
 										),
@@ -1737,14 +1718,14 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 								);
 								oSym.addTask(
 									110,
-									function (A, y, z, i) {
+									(A, y, z, i) => {
 										var B = $Z[A];
 										B &&
 											B.beAttacked &&
 											(oP.AppearUP(y, z, i),
 											oSym.addTask(
 												100,
-												function (D, C) {
+												(D, C) => {
 													var E = $Z[D];
 													if (E && E.beAttacked) {
 														return;
@@ -1769,7 +1750,7 @@ var oDancingZombie = InheritO(OrnNoneZombies, {
 								);
 								oSym.addTask(
 									200,
-									function (y, i) {
+									(y, i) => {
 										var z = $Z[y];
 										var j;
 										z &&
@@ -1807,13 +1788,13 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 	Speed: 7.2,
 	NormalGif: 9,
 	GetDTop: 5,
-	getShadow: function (a) {
+	getShadow(a) {
 		return "left:30px;top:146px";
 	},
-	GetDX: function () {
+	GetDX() {
 		return -50;
 	},
-	GetDY: function () {
+	GetDY() {
 		return -5;
 	},
 	LostHeadGif: 14,
@@ -1827,20 +1808,20 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 			var g = $Z[d];
 			var e;
 			NewEle(
-				d + "_spotlightCon",
+				`${d}_spotlightCon`,
 				"div",
 				"position:absolute;left:-30px;top:-400px;width:184px;height:600px;overflow:hidden",
 				0,
 				c
 			).appendChild(
 				(g.spotlight = NewImg(
-					d + "_spotlight",
-					"images/Zombies/DancingZombie/spotlight" + a + ".png",
-					"left:0;top:0;width:920px;height:600px;" + b
+					`${d}_spotlight`,
+					`images/Zombies/DancingZombie/spotlight${a}.png`,
+					`left:0;top:0;width:920px;height:600px;${b}`
 				))
 			);
 			e = NewEle(
-				d + "_spotlight2Con",
+				`${d}_spotlight2Con`,
 				"div",
 				"position:absolute;left:-25px;top:135px;width:184px;height:60px;overflow:hidden",
 				0
@@ -1848,9 +1829,9 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 			c.insertBefore(e, f.EleShadow);
 			e.appendChild(
 				(g.spotlight2 = NewImg(
-					d + "_spotlight2",
-					"images/Zombies/DancingZombie/spotlight2" + a + ".png",
-					"left:0;top:0;width:920px;height:60px;" + b
+					`${d}_spotlight2`,
+					`images/Zombies/DancingZombie/spotlight2${a}.png`,
+					`left:0;top:0;width:920px;height:60px;${b}`
 				))
 			);
 		};
@@ -1858,36 +1839,36 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 	PicArr: (function () {
 		var d = "images/Zombies/DancingZombie/";
 		var c = $User.Browser.IE6 ? "_8" : "";
-		var a = d + "spotlight" + c + ".png" + $Random;
-		var b = d + "spotlight2" + c + ".png" + $Random;
+		var a = `${d}spotlight${c}.png${$Random}`;
+		var b = `${d}spotlight2${c}.png${$Random}`;
 		return [
 			"images/Card/Zombies/IDancingZombie.png",
-			d + "0.gif",
-			d + "DancingZombie.gif",
-			d + "Attack.gif",
-			d + "LostHead.gif",
-			d + "LostHeadAttack.gif",
-			d + "Head.gif" + $Random,
-			d + "Die.gif" + $Random,
-			d + "BoomDie.gif" + $Random,
-			d + "SlidingStep.gif" + $Random,
-			d + "Dancing.gif" + $Random,
-			d + "Summon1.gif",
-			d + "Summon2.gif",
-			d + "Summon3.gif",
-			d + "LostHeadSlidingStep.gif" + $Random,
-			d + "LostHeadDancing.gif" + $Random,
-			d + "LostHeadSummon.gif" + $Random,
+			`${d}0.gif`,
+			`${d}DancingZombie.gif`,
+			`${d}Attack.gif`,
+			`${d}LostHead.gif`,
+			`${d}LostHeadAttack.gif`,
+			`${d}Head.gif${$Random}`,
+			`${d}Die.gif${$Random}`,
+			`${d}BoomDie.gif${$Random}`,
+			`${d}SlidingStep.gif${$Random}`,
+			`${d}Dancing.gif${$Random}`,
+			`${d}Summon1.gif`,
+			`${d}Summon2.gif`,
+			`${d}Summon3.gif`,
+			`${d}LostHeadSlidingStep.gif${$Random}`,
+			`${d}LostHeadDancing.gif${$Random}`,
+			`${d}LostHeadSummon.gif${$Random}`,
 			a,
 			b,
 		];
 	})(),
 	Produce:
 		'舞王僵尸和人类(在世或者死去的)如有雷同，纯属巧合。</p><p>韧性：<font color="#CC241D">中</font><br>特点：<font color="#CC241D">召唤伴舞僵尸</font></p>舞王僵尸的最新唱片“抓住脑子啃啊啃”在僵尸界的人气正急速飙升。',
-	getSnowPea: function () {
+	getSnowPea() {
 		this.PlaySlowballAudio();
 	},
-	NormalDie: function () {
+	NormalDie() {
 		var a = this;
 		a.ResetBackupDancer(a);
 		a.EleBody.src = a.PicArr[a.DieGif];
@@ -1896,7 +1877,7 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 		delete $Z[a.id];
 		a.PZ && oP.MonPrgs();
 	},
-	ExplosionDie: function () {
+	ExplosionDie() {
 		var a = this;
 		a.ResetBackupDancer(a);
 		a.EleBody.src = a.PicArr[a.BoomDieGif];
@@ -1905,14 +1886,14 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 		delete $Z[a.id];
 		a.PZ && oP.MonPrgs();
 	},
-	DisappearDie: function () {
+	DisappearDie() {
 		this.ResetBackupDancer(this);
 		ClearChild(this.Ele);
 		this.HP = 0;
 		delete $Z[this.id];
 		this.PZ && oP.MonPrgs();
 	},
-	CrushDie: function () {
+	CrushDie() {
 		var a = this;
 		a.ResetBackupDancer(a);
 		a.GoingDieHead(a.id, a.PicArr, a);
@@ -1921,7 +1902,7 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 		delete $Z[a.id];
 		a.PZ && oP.MonPrgs();
 	},
-	bedevil: function (b) {
+	bedevil(b) {
 		var a = b.id;
 		b.ExchangeLR(b, 1);
 		b.JudgeAttack = b.JudgeAttackH;
@@ -1931,11 +1912,11 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 		b.ChkActs = b.ChkActs1;
 		b.ChangeChkActsTo1(b, a, b.EleBody);
 		b.ResetBackupDancer(b);
-		($(a + "_spotlightCon").style.left = "20px"),
-			($(a + "_spotlight2Con").style.left = "25px");
+		($(`${a}_spotlightCon`).style.left = "20px"),
+			($(`${a}_spotlight2Con`).style.left = "25px");
 		oP.MonPrgs();
 	},
-	ResetBackupDancer: function (f) {
+	ResetBackupDancer(f) {
 		var g = f.ArDZ;
 		var d = g.length;
 		var c;
@@ -1961,12 +1942,12 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 		a > -1 &&
 			oSym.addTask(
 				f.DZStepT - oSym.Now,
-				function (o, j) {
+				(o, j) => {
 					var m = 4;
 					var l;
 					var k;
 					var n;
-					var h = "ChangeChkActsTo" + j;
+					var h = `ChangeChkActsTo${j}`;
 					while (m--) {
 						(l = o[m]) &&
 							(k = l[0]) &&
@@ -1978,7 +1959,7 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 				[g, [1, 0][a]]
 			);
 	},
-	BirthCallBack: function (d) {
+	BirthCallBack(d) {
 		var b = d.delayT;
 		var l = d.id;
 		var a = (d.Ele = $(l));
@@ -2066,14 +2047,14 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 		b ? (oSym.addTask(b, func, [l, a]), (c += b)) : func(l, a);
 		oSym.addTask(
 			c,
-			function (o) {
+			(o) => {
 				var t = $Z[o];
 				t && t.beAttacked && !t.isAttacking && t.NormalAttack(o);
 			},
 			[d.id]
 		);
 	},
-	ChkActs1: function (e, b, f, a) {
+	ChkActs1(e, b, f, a) {
 		var c;
 		var d;
 		!(e.FreeFreezeTime || e.FreeSetbodyTime)
@@ -2083,17 +2064,17 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 					? (e.AttackedLX += 3.5) > oS.W
 						? (f.splice(a, 1), e.DisappearDie(), (d = 0))
 						: ((e.ZX = e.AttackedRX += 3.5),
-							(e.Ele.style.left = Math.ceil((e.X += 3.5)) + "px"),
+							(e.Ele.style.left = `${Math.ceil((e.X += 3.5))}px`),
 							(d = 1))
 					: (d = 1))
 			: (d = 1);
 		return d;
 	},
-	ChkTmp: function (c, b, d, a) {
+	ChkTmp(c, b, d, a) {
 		c.ChkSpeed(c);
 		return 0;
 	},
-	ChkActs: function (g, d, h, c) {
+	ChkActs(g, d, h, c) {
 		var e;
 		var b;
 		var a;
@@ -2116,14 +2097,14 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 									CustomTop: 400 - g.height + g.GetDY(),
 								})),
 							(g.ZX = g.AttackedLX -= b),
-							(g.Ele.style.left = Math.floor((g.X -= b)) + "px"),
+							(g.Ele.style.left = `${Math.floor((g.X -= b))}px`),
 							(f = 1))
 					: (f = 1))
 			: (f = 1);
 		g.ChkSpeed(g);
 		return f;
 	},
-	ChkSpeed: function (g) {
+	ChkSpeed(g) {
 		if (!g.DZStep) {
 			return;
 		}
@@ -2164,7 +2145,7 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 			g.Speed != a && (g.Speed = a);
 		}
 	},
-	AttackZombie: function (a) {
+	AttackZombie(a) {
 		this.ExchangeLR(this, 0);
 		var b = this.id;
 		this.isAttacking = 1;
@@ -2188,7 +2169,7 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 			[b, a]
 		);
 	},
-	ChkBackupDancer: function (h, g, f) {
+	ChkBackupDancer(h, g, f) {
 		if (!h.PZ) {
 			h.ChangeChkActsTo1(h, g, f);
 			return;
@@ -2209,7 +2190,7 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 		!h.isAttacking && j ? (f.src = h.PicArr[10]) : h.Summon(h, g);
 		h.ChangeChkActsTo0(h, g, f);
 	},
-	ChangeChkActsTo0: function (g, e, a) {
+	ChangeChkActsTo0(g, e, a) {
 		if (!g.PZ) {
 			g.ChangeChkActsTo1(g, e, a);
 			return;
@@ -2235,14 +2216,14 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 		g.DZStepT = oSym.Now + 200;
 		oSym.addTask(
 			200,
-			function (j, i) {
+			(j, i) => {
 				var k = $Z[j];
 				k && k.beAttacked && k.ChangeChkActsTo1(k, j, i);
 			},
 			[e, a]
 		);
 	},
-	ChangeChkActsTo1: function (g, e, a) {
+	ChangeChkActsTo1(g, e, a) {
 		var d = 4;
 		var h = g.ArDZ;
 		var c;
@@ -2265,14 +2246,14 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 		g.PZ &&
 			oSym.addTask(
 				220,
-				function (j, i) {
+				(j, i) => {
 					var k = $Z[j];
 					k && k.beAttacked && k.ChkBackupDancer(k, j, i);
 				},
 				[e, a]
 			);
 	},
-	TurnLeft: function (c) {
+	TurnLeft(c) {
 		var a = CZombies.prototype;
 		var b = c.id;
 		c.AttackZombie = a.AttackZombie;
@@ -2284,7 +2265,7 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 		c.getFreeze = CZombies.prototype.getFreeze;
 		oSym.addTask(
 			20,
-			function (d, e) {
+			(d, e) => {
 				$Z[d] &&
 					e.beAttacked &&
 					(e.addSpotlight(d, e, e.Ele),
@@ -2294,9 +2275,9 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 							var j = $Z[g];
 							j &&
 								(h > -736 ? (h -= 184) : (h = 0),
-								(f.style.left = h + "px"),
+								(f.style.left = `${h}px`),
 								k > -736 ? (k -= 184) : (k = 0),
-								(i.style.left = k + "px"),
+								(i.style.left = `${k}px`),
 								oSym.addTask(100, arguments.callee, [
 									g,
 									f,
@@ -2309,7 +2290,7 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 					),
 					oSym.addTask(
 						200,
-						function (h, g) {
+						(h, g) => {
 							var f;
 							$Z[g] &&
 								h.beAttacked &&
@@ -2326,12 +2307,12 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 		);
 		c.Summon(c, b);
 	},
-	NormalAttack: function (a) {
+	NormalAttack(a) {
 		var b = $Z[a];
 		b.ExchangeLR(b, 0);
 		b.TurnLeft(b);
 	},
-	Summon: function (d, c) {
+	Summon(d, c) {
 		d.LostHeadGif = 16;
 		var a = d.EleBody;
 		var b = d.ChkActs;
@@ -2341,22 +2322,21 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 		PlayAudio("dancer");
 		oSym.addTask(
 			10,
-			function (f, e) {
+			(f, e) => {
 				var g = $Z[f];
 				g &&
 					g.beAttacked &&
 					((e.src = "images/Zombies/DancingZombie/Summon2.gif"),
 					oSym.addTask(
 						10,
-						function (t, s, x) {
+						(t, s, x) => {
 							var h = $Z[t];
 							var v = h.ZX;
 							var m = h.ArDZ;
 							var n = [];
-							var k =
-								"images/Zombies/BackupDancer/Mound.gif" +
-								$Random +
-								Math.random();
+							var k = `images/Zombies/BackupDancer/Mound.gif${
+								$Random
+							}${Math.random()}`;
 							var r = 4;
 							var w = [];
 							var u = [];
@@ -2374,19 +2354,15 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 											q[1],
 											q[2](v),
 											100,
-											(q[0] = "Z_" + Math.random())
+											(q[0] = `Z_${Math.random()}`)
 										)),
 										n.push(
 											NewImg(
 												"",
 												k,
-												"z-index:" +
-													q[3] +
-													";left:" +
-													q[4](v) +
-													"px;top:" +
-													q[5] +
-													"px",
+												`z-index:${q[3]};left:${q[4](
+													v
+												)}px;top:${q[5]}px`,
 												EDPZ
 											)
 										),
@@ -2404,14 +2380,14 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 								);
 								oSym.addTask(
 									110,
-									function (A, y, z, i) {
+									(A, y, z, i) => {
 										var B = $Z[A];
 										B &&
 											B.beAttacked &&
 											(oP.AppearUP(y, z, i),
 											oSym.addTask(
 												100,
-												function (D, C) {
+												(D, C) => {
 													var E = $Z[D];
 													if (E && E.beAttacked) {
 														return;
@@ -2436,7 +2412,7 @@ var oIDancingZombie = InheritO(OrnNoneZombies, {
 								);
 								oSym.addTask(
 									200,
-									function (y, i) {
+									(y, i) => {
 										var z = $Z[y];
 										var j;
 										z &&
@@ -2478,15 +2454,15 @@ var oZombie = InheritO(OrnNoneZombies, {
 		var a = "images/Zombies/Zombie/";
 		return [
 			"images/Card/Zombies/Zombie.png",
-			a + "0.gif",
-			a + "Zombie.gif",
-			a + "ZombieAttack.gif",
-			a + "ZombieLostHead.gif",
-			a + "ZombieLostHeadAttack.gif",
-			a + "ZombieHead.gif",
-			a + "ZombieDie.gif",
+			`${a}0.gif`,
+			`${a}Zombie.gif`,
+			`${a}ZombieAttack.gif`,
+			`${a}ZombieLostHead.gif`,
+			`${a}ZombieLostHeadAttack.gif`,
+			`${a}ZombieHead.gif`,
+			`${a}ZombieDie.gif`,
 			"images/Zombies/BoomDie.gif",
-			a + "1.gif",
+			`${a}1.gif`,
 		];
 	})(),
 	Produce:
@@ -2500,15 +2476,15 @@ var oIZombie = InheritO(OrnNoneZombies, {
 		var a = "images/Zombies/Zombie/";
 		return [
 			"images/Card/Zombies/IZombie.png",
-			a + "0.gif",
-			a + "Zombie.gif",
-			a + "ZombieAttack.gif",
-			a + "ZombieLostHead.gif",
-			a + "ZombieLostHeadAttack.gif",
-			a + "ZombieHead.gif" + $Random,
-			a + "ZombieDie.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}Zombie.gif`,
+			`${a}ZombieAttack.gif`,
+			`${a}ZombieLostHead.gif`,
+			`${a}ZombieLostHeadAttack.gif`,
+			`${a}ZombieHead.gif${$Random}`,
+			`${a}ZombieDie.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${a}1.gif`,
 		];
 	})(),
 	Produce:
@@ -2527,15 +2503,15 @@ var oMustacheZombie = InheritO(oZombie, {
 		var b = "images/Zombies/MustacheZombie/";
 		return [
 			"images/Card/Zombies/MustacheZombie.png",
-			b + "0.gif",
-			b + "Zombie.gif",
-			b + "ZombieAttack.gif",
-			a + "ZombieLostHead.gif",
-			a + "ZombieLostHeadAttack.gif",
-			a + "ZombieHead.gif" + $Random,
-			a + "ZombieDie.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			b + "1.gif",
+			`${b}0.gif`,
+			`${b}Zombie.gif`,
+			`${b}ZombieAttack.gif`,
+			`${a}ZombieLostHead.gif`,
+			`${a}ZombieLostHeadAttack.gif`,
+			`${a}ZombieHead.gif${$Random}`,
+			`${a}ZombieDie.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${b}1.gif`,
 		];
 	})(),
 });
@@ -2544,15 +2520,15 @@ var oFlagZombie = InheritO(oZombie, {
 		var a = "images/Zombies/FlagZombie/";
 		return [
 			"images/Card/Zombies/FlagZombie.png",
-			a + "0.gif",
-			a + "FlagZombie.gif",
-			a + "FlagZombieAttack.gif",
-			a + "FlagZombieLostHead.gif",
-			a + "FlagZombieLostHeadAttack.gif",
-			"images/Zombies/Zombie/ZombieHead.gif" + $Random,
-			"images/Zombies/Zombie/ZombieDie.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}FlagZombie.gif`,
+			`${a}FlagZombieAttack.gif`,
+			`${a}FlagZombieLostHead.gif`,
+			`${a}FlagZombieLostHeadAttack.gif`,
+			`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
+			`images/Zombies/Zombie/ZombieDie.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${a}1.gif`,
 		];
 	})(),
 	EName: "oFlagZombie",
@@ -2590,7 +2566,7 @@ var OrnIZombies = (function () {
 		f.SetAlpha(f, f.EleBody, 50, 0.5);
 		oSym.addTask(
 			10,
-			function (h, g) {
+			(h, g) => {
 				(g = $Z[h]) && g.SetAlpha(g, g.EleBody, 100, 1);
 			},
 			[f.id]
@@ -2633,21 +2609,21 @@ var oConeheadZombie = InheritO(OrnIZombies, {
 		var a = "images/Zombies/Zombie/";
 		return [
 			"images/Card/Zombies/ConeheadZombie.png",
-			b + "0.gif",
-			b + "ConeheadZombie.gif",
-			b + "ConeheadZombieAttack.gif",
-			a + "ZombieLostHead.gif",
-			a + "ZombieLostHeadAttack.gif",
-			a + "ZombieHead.gif" + $Random,
-			a + "ZombieDie.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			a + "Zombie.gif",
-			a + "ZombieAttack.gif",
-			b + "1.gif",
+			`${b}0.gif`,
+			`${b}ConeheadZombie.gif`,
+			`${b}ConeheadZombieAttack.gif`,
+			`${a}ZombieLostHead.gif`,
+			`${a}ZombieLostHeadAttack.gif`,
+			`${a}ZombieHead.gif${$Random}`,
+			`${a}ZombieDie.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${a}Zombie.gif`,
+			`${a}ZombieAttack.gif`,
+			`${b}1.gif`,
 		];
 	})(),
 	AudioArr: ["plastichit"],
-	PlayNormalballAudio: function () {
+	PlayNormalballAudio() {
 		PlayAudio("plastichit");
 	},
 	Produce:
@@ -2679,21 +2655,21 @@ var oIConeheadZombie = InheritO(OrnIZombies, {
 		var a = "images/Zombies/Zombie/";
 		return [
 			"images/Card/Zombies/IConeheadZombie.png",
-			b + "0.gif",
-			b + "ConeheadZombie.gif",
-			b + "ConeheadZombieAttack.gif",
-			a + "ZombieLostHead.gif",
-			a + "ZombieLostHeadAttack.gif",
-			a + "ZombieHead.gif" + $Random,
-			a + "ZombieDie.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			a + "Zombie.gif",
-			a + "ZombieAttack.gif",
-			b + "1.gif",
+			`${b}0.gif`,
+			`${b}ConeheadZombie.gif`,
+			`${b}ConeheadZombieAttack.gif`,
+			`${a}ZombieLostHead.gif`,
+			`${a}ZombieLostHeadAttack.gif`,
+			`${a}ZombieHead.gif${$Random}`,
+			`${a}ZombieDie.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${a}Zombie.gif`,
+			`${a}ZombieAttack.gif`,
+			`${b}1.gif`,
 		];
 	})(),
 	AudioArr: ["plastichit"],
-	PlayNormalballAudio: function () {
+	PlayNormalballAudio() {
 		PlayAudio("plastichit");
 	},
 	Produce:
@@ -2729,17 +2705,17 @@ var oLionDanceZombie = InheritO(oConeheadZombie, {
 		var a = "images/Zombies/LionDanceZombie/";
 		return [
 			"images/Card/Zombies/LionDanceZombie.png",
-			b + "0.gif",
-			b + "ConeheadZombie.gif",
-			b + "ConeheadZombieAttack.gif",
-			a + "ZombieLostHead.gif",
-			a + "ZombieLostHeadAttack.gif",
-			a + "ZombieHead.gif" + $Random,
-			a + "ZombieDie.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			a + "Zombie.gif",
-			a + "ZombieAttack.gif",
-			b + "1.gif",
+			`${b}0.gif`,
+			`${b}ConeheadZombie.gif`,
+			`${b}ConeheadZombieAttack.gif`,
+			`${a}ZombieLostHead.gif`,
+			`${a}ZombieLostHeadAttack.gif`,
+			`${a}ZombieHead.gif${$Random}`,
+			`${a}ZombieDie.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${a}Zombie.gif`,
+			`${a}ZombieAttack.gif`,
+			`${b}1.gif`,
 		];
 	})(),
 	Produce:
@@ -2767,7 +2743,7 @@ var oBucketheadZombie = InheritO(
 				height: 40,
 			},
 		],
-		PlayNormalballAudio: function () {
+		PlayNormalballAudio() {
 			PlayAudio(
 				["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]
 			);
@@ -2794,7 +2770,7 @@ var oIBucketheadZombie = InheritO(
 		OrnHP: 1100,
 		Lvl: 3,
 		SunNum: 125,
-		PlayNormalballAudio: function () {
+		PlayNormalballAudio() {
 			PlayAudio(
 				["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]
 			);
@@ -2826,34 +2802,28 @@ var oFootballZombie = InheritO(oConeheadZombie, {
 	Speed: 3.2,
 	beAttackedPointL: 40,
 	beAttackedPointR: 134,
-	PlayNormalballAudio: function () {
+	PlayNormalballAudio() {
 		PlayAudio("plastichit");
 	},
 	PicArr: (function () {
 		var a = "images/Zombies/FootballZombie/";
 		return [
 			"images/Card/Zombies/FootballZombie.png",
-			a + "0.gif",
-			a + "FootballZombie.gif",
-			a + "Attack.gif",
-			a + "LostHead.gif",
-			a + "LostHeadAttack.gif",
-			"images/Zombies/Zombie/ZombieHead.gif" + $Random,
-			a + "Die.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			a + "OrnLost.gif",
-			a + "OrnLostAttack.gif",
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}FootballZombie.gif`,
+			`${a}Attack.gif`,
+			`${a}LostHead.gif`,
+			`${a}LostHeadAttack.gif`,
+			`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${a}OrnLost.gif`,
+			`${a}OrnLostAttack.gif`,
+			`${a}1.gif`,
 		];
 	})(),
-	getShadow: function (a) {
-		return (
-			"left:" +
-			(a.beAttackedPointL + 15) +
-			"px;top:" +
-			(a.height - 22) +
-			"px"
-		);
+	getShadow(a) {
+		return `left:${a.beAttackedPointL + 15}px;top:${a.height - 22}px`;
 	},
 	Produce:
 		'橄榄球僵尸的表演秀。<p>韧性：<font color="#CC241D">极高</font><br>速度：<font color="#CC241D">快</font></p>在球场上，橄榄球僵尸表现出110%的激情，他进攻防守样样在行。虽然他完全不知道橄榄球是什么。',
@@ -2871,34 +2841,28 @@ var oIFootballZombie = InheritO(oConeheadZombie, {
 	Speed: 3.2,
 	beAttackedPointL: 40,
 	beAttackedPointR: 134,
-	PlayNormalballAudio: function () {
+	PlayNormalballAudio() {
 		PlayAudio("plastichit");
 	},
 	PicArr: (function () {
 		var a = "images/Zombies/FootballZombie/";
 		return [
 			"images/Card/Zombies/IFootballZombie.png",
-			a + "0.gif",
-			a + "FootballZombie.gif",
-			a + "Attack.gif",
-			a + "LostHead.gif",
-			a + "LostHeadAttack.gif",
-			"images/Zombies/Zombie/ZombieHead.gif" + $Random,
-			a + "Die.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			a + "OrnLost.gif",
-			a + "OrnLostAttack.gif",
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}FootballZombie.gif`,
+			`${a}Attack.gif`,
+			`${a}LostHead.gif`,
+			`${a}LostHeadAttack.gif`,
+			`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${a}OrnLost.gif`,
+			`${a}OrnLostAttack.gif`,
+			`${a}1.gif`,
 		];
 	})(),
-	getShadow: function (a) {
-		return (
-			"left:" +
-			(a.beAttackedPointL + 15) +
-			"px;top:" +
-			(a.height - 22) +
-			"px"
-		);
+	getShadow(a) {
+		return `left:${a.beAttackedPointL + 15}px;top:${a.height - 22}px`;
 	},
 	Produce:
 		'橄榄球僵尸的表演秀。<p>韧性：<font color="#CC241D">极高</font><br>速度：<font color="#CC241D">快</font></p>在球场上，橄榄球僵尸表现出110%的激情，他进攻防守样样在行。虽然他完全不知道橄榄球是什么。',
@@ -2919,17 +2883,17 @@ var oHeiFootballZombie = InheritO(oFootballZombie, {
 		var a = "images/Zombies/HeiFootballZombie/";
 		return [
 			"images/Card/Zombies/HeiFootballZombie.png",
-			a + "0.gif",
-			a + "FootballZombie.gif",
-			a + "Attack.gif",
-			a + "LostHead.gif",
-			a + "LostHeadAttack.gif",
-			"images/Zombies/Zombie/ZombieHead.gif" + $Random,
-			a + "Die.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			a + "OrnLost.gif",
-			a + "OrnLostAttack.gif",
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}FootballZombie.gif`,
+			`${a}Attack.gif`,
+			`${a}LostHead.gif`,
+			`${a}LostHeadAttack.gif`,
+			`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${a}OrnLost.gif`,
+			`${a}OrnLostAttack.gif`,
+			`${a}1.gif`,
 		];
 	})(),
 	Produce:
@@ -2942,17 +2906,17 @@ var oCFootballZombie = InheritO(oFootballZombie, {
 		var a = "images/Zombies/wall/FootballZombie/";
 		return [
 			"images/Card/Zombies/FootballZombie.png",
-			a + "0.gif",
-			a + "FootballZombie.gif",
-			a + "Attack.gif",
-			a + "LostHead.gif",
-			a + "LostHeadAttack.gif",
-			"images/Zombies/Zombie/ZombieHead.gif" + $Random,
-			a + "Die.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			a + "OrnLost.gif",
-			a + "OrnLostAttack.gif",
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}FootballZombie.gif`,
+			`${a}Attack.gif`,
+			`${a}LostHead.gif`,
+			`${a}LostHeadAttack.gif`,
+			`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${a}OrnLost.gif`,
+			`${a}OrnLostAttack.gif`,
+			`${a}1.gif`,
 		];
 	})(),
 	Produce: "",
@@ -2968,10 +2932,10 @@ var oPoleVaultingZombie = InheritO(OrnNoneZombies, {
 	beAttackedPointL: 215,
 	beAttackedPointR: 260,
 	StandGif: 13,
-	GetDX: function () {
+	GetDX() {
 		return -238;
 	},
-	GetDY: function () {
+	GetDY() {
 		return 2;
 	},
 	Lvl: 2,
@@ -2980,52 +2944,41 @@ var oPoleVaultingZombie = InheritO(OrnNoneZombies, {
 		var a = "images/Zombies/PoleVaultingZombie/";
 		return [
 			"images/Card/Zombies/PoleVaultingZombie.png",
-			a + "0.gif",
-			a + "PoleVaultingZombie.gif",
-			a + "PoleVaultingZombieAttack.gif",
-			a + "PoleVaultingZombieLostHead.gif",
-			a + "PoleVaultingZombieLostHeadAttack.gif",
-			a + "PoleVaultingZombieHead.gif" + $Random,
-			a + "PoleVaultingZombieDie.gif" + $Random,
-			a + "BoomDie.gif" + $Random,
-			a + "PoleVaultingZombieWalk.gif",
-			a + "PoleVaultingZombieLostHeadWalk.gif",
-			a + "PoleVaultingZombieJump.gif",
-			a + "PoleVaultingZombieJump2.gif",
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}PoleVaultingZombie.gif`,
+			`${a}PoleVaultingZombieAttack.gif`,
+			`${a}PoleVaultingZombieLostHead.gif`,
+			`${a}PoleVaultingZombieLostHeadAttack.gif`,
+			`${a}PoleVaultingZombieHead.gif${$Random}`,
+			`${a}PoleVaultingZombieDie.gif${$Random}`,
+			`${a}BoomDie.gif${$Random}`,
+			`${a}PoleVaultingZombieWalk.gif`,
+			`${a}PoleVaultingZombieLostHeadWalk.gif`,
+			`${a}PoleVaultingZombieJump.gif`,
+			`${a}PoleVaultingZombieJump2.gif`,
+			`${a}1.gif`,
 		];
 	})(),
 	AudioArr: ["polevault", "grassstep"],
 	Produce:
 		'撑杆僵尸运用标杆高高地跃过障碍物。<p>韧性：<font color="#CC241D">中</font><Br>速度：<font color="#CC241D">快,而后慢(跳跃后)</font><BR>特点：<font color="#CC241D">跃过他所碰到的第一筑植物</font></p>一些僵尸渴望走得更远、得到更多，这也促使他们由普通成为非凡。那就是撑杆僵尸。',
-	getShadow: function (a) {
-		return (
-			"left:" +
-			(a.beAttackedPointL - 20) +
-			"px;top:" +
-			(a.height - 35) +
-			"px"
-		);
+	getShadow(a) {
+		return `left:${a.beAttackedPointL - 20}px;top:${a.height - 35}px`;
 	},
-	GoingDieHead: function (c, a, b) {
+	GoingDieHead(c, a, b) {
 		oSym.addTask(200, ClearChild, [
 			NewImg(
 				0,
 				a[b.HeadGif],
-				"left:" +
-					b.X +
-					"px;top:" +
-					(b.pixelTop - 20) +
-					"px;z-index:" +
-					b.zIndex,
+				`left:${b.X}px;top:${b.pixelTop - 20}px;z-index:${b.zIndex}`,
 				EDPZ
 			),
 		]);
 	},
-	JudgeAttack: function () {
+	JudgeAttack() {
 		var g = this;
 		var b = g.ZX;
-		var d = g.R + "_";
+		var d = `${g.R}_`;
 		var c = GetC(b);
 		var h = oGd.$;
 		var f;
@@ -3038,7 +2991,7 @@ var oPoleVaultingZombie = InheritO(OrnNoneZombies, {
 			for (
 				a = 2;
 				a > -1;
-				(p = h[d + f + "_" + a--]) &&
+				(p = h[`${d + f}_${a--}`]) &&
 				(p.EName != "oBrains"
 					? p.AttackedRX >= e &&
 						p.AttackedLX < b &&
@@ -3057,7 +3010,7 @@ var oPoleVaultingZombie = InheritO(OrnNoneZombies, {
 			) {}
 		}
 	},
-	getCrushed: function (a) {
+	getCrushed(a) {
 		this.NormalAttack(this.id, a.id, a.AttackedLX);
 		this.getCrushed = function () {
 			return false;
@@ -3065,7 +3018,7 @@ var oPoleVaultingZombie = InheritO(OrnNoneZombies, {
 		a.Stature > 0 &&
 			oSym.addTask(
 				50,
-				function (c) {
+				(c) => {
 					var b = $Z[c];
 					b && b.CrushDie();
 				},
@@ -3073,22 +3026,21 @@ var oPoleVaultingZombie = InheritO(OrnNoneZombies, {
 			);
 		return false;
 	},
-	getRaven: function (a) {
+	getRaven(a) {
 		return (
 			!this.isAttacking &&
 				this.NormalAttack(this.id, a, $P[a].AttackedLX),
 			0
 		);
 	},
-	NormalAttack: function (d, b, g) {
+	NormalAttack(d, b, g) {
 		var f = $Z[d];
 		var a = f.Ele;
 		var c = f.EleShadow;
 		var e = f.EleBody;
-		e.src =
-			"images/Zombies/PoleVaultingZombie/PoleVaultingZombieJump.gif" +
-			$Random +
-			Math.random();
+		e.src = `images/Zombies/PoleVaultingZombie/PoleVaultingZombieJump.gif${
+			$Random
+		}${Math.random()}`;
 		PlayAudio("grassstep");
 		SetHidden(c);
 		f.isAttacking = 1;
@@ -3098,14 +3050,14 @@ var oPoleVaultingZombie = InheritO(OrnNoneZombies, {
 		};
 		oSym.addTask(
 			50,
-			function (h) {
+			(h) => {
 				$Z[h] && PlayAudio("polevault");
 			},
 			[d]
 		);
 		oSym.addTask(
 			100,
-			function (m, j, i, l, n) {
+			(m, j, i, l, n) => {
 				var h = $Z[m];
 				var k;
 				var q;
@@ -3116,7 +3068,7 @@ var oPoleVaultingZombie = InheritO(OrnNoneZombies, {
 								(h.X =
 									(h.AttackedLX = h.ZX = q = k.AttackedRX) -
 									h.beAttackedPointL) + h.beAttackedPointR),
-							SetStyle(i, { left: h.X + "px" }),
+							SetStyle(i, { left: `${h.X}px` }),
 							(n.src =
 								"images/Zombies/PoleVaultingZombie/PoleVaultingZombieWalk.gif"),
 							SetVisible(l),
@@ -3134,15 +3086,14 @@ var oPoleVaultingZombie = InheritO(OrnNoneZombies, {
 								(h.X =
 									(h.AttackedRX = g) - h.beAttackedPointR) +
 								h.beAttackedPointL),
-							SetStyle(i, { left: h.X + "px" }),
-							(n.src =
-								"images/Zombies/PoleVaultingZombie/PoleVaultingZombieJump2.gif" +
-								$Random +
-								Math.random()),
+							SetStyle(i, { left: `${h.X}px` }),
+							(n.src = `images/Zombies/PoleVaultingZombie/PoleVaultingZombieJump2.gif${
+								$Random
+							}${Math.random()}`),
 							SetVisible(l),
 							oSym.addTask(
 								80,
-								function (s, v) {
+								(s, v) => {
 									var u = $Z[s];
 									var t;
 									u &&
@@ -3177,10 +3128,10 @@ var oIPoleVaultingZombie = InheritO(OrnNoneZombies, {
 	beAttackedPointL: 215,
 	beAttackedPointR: 260,
 	StandGif: 13,
-	GetDX: function () {
+	GetDX() {
 		return -238;
 	},
-	GetDY: function () {
+	GetDY() {
 		return 2;
 	},
 	Lvl: 2,
@@ -3189,52 +3140,41 @@ var oIPoleVaultingZombie = InheritO(OrnNoneZombies, {
 		var a = "images/Zombies/PoleVaultingZombie/";
 		return [
 			"images/Card/Zombies/IPoleVaultingZombie.png",
-			a + "0.gif",
-			a + "PoleVaultingZombie.gif",
-			a + "PoleVaultingZombieAttack.gif",
-			a + "PoleVaultingZombieLostHead.gif",
-			a + "PoleVaultingZombieLostHeadAttack.gif",
-			a + "PoleVaultingZombieHead.gif" + $Random,
-			a + "PoleVaultingZombieDie.gif" + $Random,
-			a + "BoomDie.gif" + $Random,
-			a + "PoleVaultingZombieWalk.gif",
-			a + "PoleVaultingZombieLostHeadWalk.gif",
-			a + "PoleVaultingZombieJump.gif",
-			a + "PoleVaultingZombieJump2.gif",
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}PoleVaultingZombie.gif`,
+			`${a}PoleVaultingZombieAttack.gif`,
+			`${a}PoleVaultingZombieLostHead.gif`,
+			`${a}PoleVaultingZombieLostHeadAttack.gif`,
+			`${a}PoleVaultingZombieHead.gif${$Random}`,
+			`${a}PoleVaultingZombieDie.gif${$Random}`,
+			`${a}BoomDie.gif${$Random}`,
+			`${a}PoleVaultingZombieWalk.gif`,
+			`${a}PoleVaultingZombieLostHeadWalk.gif`,
+			`${a}PoleVaultingZombieJump.gif`,
+			`${a}PoleVaultingZombieJump2.gif`,
+			`${a}1.gif`,
 		];
 	})(),
 	AudioArr: ["polevault", "grassstep"],
 	Produce:
 		'撑杆僵尸运用标杆高高地跃过障碍物。<p>韧性：<font color="#CC241D">中</font><Br>速度：<font color="#CC241D">快,而后慢(跳跃后)</font><BR>特点：<font color="#CC241D">跃过他所碰到的第一筑植物</font></p>一些僵尸渴望走得更远、得到更多，这也促使他们由普通成为非凡。那就是撑杆僵尸。',
-	getShadow: function (a) {
-		return (
-			"left:" +
-			(a.beAttackedPointL - 20) +
-			"px;top:" +
-			(a.height - 35) +
-			"px"
-		);
+	getShadow(a) {
+		return `left:${a.beAttackedPointL - 20}px;top:${a.height - 35}px`;
 	},
-	GoingDieHead: function (c, a, b) {
+	GoingDieHead(c, a, b) {
 		oSym.addTask(200, ClearChild, [
 			NewImg(
 				0,
 				a[b.HeadGif],
-				"left:" +
-					b.X +
-					"px;top:" +
-					(b.pixelTop - 20) +
-					"px;z-index:" +
-					b.zIndex,
+				`left:${b.X}px;top:${b.pixelTop - 20}px;z-index:${b.zIndex}`,
 				EDPZ
 			),
 		]);
 	},
-	JudgeAttack: function () {
+	JudgeAttack() {
 		var g = this;
 		var b = g.ZX;
-		var d = g.R + "_";
+		var d = `${g.R}_`;
 		var c = GetC(b);
 		var h = oGd.$;
 		var f;
@@ -3247,7 +3187,7 @@ var oIPoleVaultingZombie = InheritO(OrnNoneZombies, {
 			for (
 				a = 2;
 				a > -1;
-				(p = h[d + f + "_" + a--]) &&
+				(p = h[`${d + f}_${a--}`]) &&
 				(p.EName != "oBrains"
 					? p.AttackedRX >= e &&
 						p.AttackedLX < b &&
@@ -3266,7 +3206,7 @@ var oIPoleVaultingZombie = InheritO(OrnNoneZombies, {
 			) {}
 		}
 	},
-	getCrushed: function (a) {
+	getCrushed(a) {
 		this.NormalAttack(this.id, a.id, a.AttackedLX);
 		this.getCrushed = function () {
 			return false;
@@ -3274,7 +3214,7 @@ var oIPoleVaultingZombie = InheritO(OrnNoneZombies, {
 		a.Stature > 0 &&
 			oSym.addTask(
 				50,
-				function (c) {
+				(c) => {
 					var b = $Z[c];
 					b && b.CrushDie();
 				},
@@ -3282,22 +3222,21 @@ var oIPoleVaultingZombie = InheritO(OrnNoneZombies, {
 			);
 		return false;
 	},
-	getRaven: function (a) {
+	getRaven(a) {
 		return (
 			!this.isAttacking &&
 				this.NormalAttack(this.id, a, $P[a].AttackedLX),
 			0
 		);
 	},
-	NormalAttack: function (d, b, g) {
+	NormalAttack(d, b, g) {
 		var f = $Z[d];
 		var a = f.Ele;
 		var c = f.EleShadow;
 		var e = f.EleBody;
-		e.src =
-			"images/Zombies/PoleVaultingZombie/PoleVaultingZombieJump.gif" +
-			$Random +
-			Math.random();
+		e.src = `images/Zombies/PoleVaultingZombie/PoleVaultingZombieJump.gif${
+			$Random
+		}${Math.random()}`;
 		PlayAudio("grassstep");
 		SetHidden(c);
 		f.isAttacking = 1;
@@ -3307,14 +3246,14 @@ var oIPoleVaultingZombie = InheritO(OrnNoneZombies, {
 		};
 		oSym.addTask(
 			50,
-			function (h) {
+			(h) => {
 				$Z[h] && PlayAudio("polevault");
 			},
 			[d]
 		);
 		oSym.addTask(
 			100,
-			function (m, j, i, l, n) {
+			(m, j, i, l, n) => {
 				var h = $Z[m];
 				var k;
 				var q;
@@ -3325,7 +3264,7 @@ var oIPoleVaultingZombie = InheritO(OrnNoneZombies, {
 								(h.X =
 									(h.AttackedLX = h.ZX = q = k.AttackedRX) -
 									h.beAttackedPointL) + h.beAttackedPointR),
-							SetStyle(i, { left: h.X + "px" }),
+							SetStyle(i, { left: `${h.X}px` }),
 							(n.src =
 								"images/Zombies/PoleVaultingZombie/PoleVaultingZombieWalk.gif"),
 							SetVisible(l),
@@ -3343,15 +3282,14 @@ var oIPoleVaultingZombie = InheritO(OrnNoneZombies, {
 								(h.X =
 									(h.AttackedRX = g) - h.beAttackedPointR) +
 								h.beAttackedPointL),
-							SetStyle(i, { left: h.X + "px" }),
-							(n.src =
-								"images/Zombies/PoleVaultingZombie/PoleVaultingZombieJump2.gif" +
-								$Random +
-								Math.random()),
+							SetStyle(i, { left: `${h.X}px` }),
+							(n.src = `images/Zombies/PoleVaultingZombie/PoleVaultingZombieJump2.gif${
+								$Random
+							}${Math.random()}`),
 							SetVisible(l),
 							oSym.addTask(
 								80,
-								function (s, v) {
+								(s, v) => {
 									var u = $Z[s];
 									var t;
 									u &&
@@ -3383,30 +3321,29 @@ var oCPoleVaultingZombie = InheritO(oPoleVaultingZombie, {
 		var a = "images/Zombies/wall/PoleVaultingZombie/";
 		return [
 			"images/Card/Zombies/PoleVaultingZombie.png",
-			a + "0.gif",
-			a + "PoleVaultingZombie.gif",
-			a + "PoleVaultingZombieAttack.gif",
-			a + "PoleVaultingZombieLostHead.gif",
-			a + "PoleVaultingZombieLostHeadAttack.gif",
-			a + "PoleVaultingZombieHead.gif" + $Random,
-			a + "PoleVaultingZombieDie.gif" + $Random,
-			b + "BoomDie.gif" + $Random,
-			a + "PoleVaultingZombieWalk.gif",
-			a + "PoleVaultingZombieLostHeadWalk.gif",
-			a + "PoleVaultingZombieJump.gif",
-			a + "PoleVaultingZombieJump2.gif",
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}PoleVaultingZombie.gif`,
+			`${a}PoleVaultingZombieAttack.gif`,
+			`${a}PoleVaultingZombieLostHead.gif`,
+			`${a}PoleVaultingZombieLostHeadAttack.gif`,
+			`${a}PoleVaultingZombieHead.gif${$Random}`,
+			`${a}PoleVaultingZombieDie.gif${$Random}`,
+			`${b}BoomDie.gif${$Random}`,
+			`${a}PoleVaultingZombieWalk.gif`,
+			`${a}PoleVaultingZombieLostHeadWalk.gif`,
+			`${a}PoleVaultingZombieJump.gif`,
+			`${a}PoleVaultingZombieJump2.gif`,
+			`${a}1.gif`,
 		];
 	})(),
-	NormalAttack: function (d, b, g) {
+	NormalAttack(d, b, g) {
 		var f = $Z[d];
 		var a = f.Ele;
 		var c = f.EleShadow;
 		var e = f.EleBody;
-		e.src =
-			"images/Zombies/wall/PoleVaultingZombie/PoleVaultingZombieJump.gif" +
-			$Random +
-			Math.random();
+		e.src = `images/Zombies/wall/PoleVaultingZombie/PoleVaultingZombieJump.gif${
+			$Random
+		}${Math.random()}`;
 		PlayAudio("grassstep");
 		SetHidden(c);
 		f.isAttacking = 1;
@@ -3416,14 +3353,14 @@ var oCPoleVaultingZombie = InheritO(oPoleVaultingZombie, {
 		};
 		oSym.addTask(
 			50,
-			function (h) {
+			(h) => {
 				$Z[h] && PlayAudio("polevault");
 			},
 			[d]
 		);
 		oSym.addTask(
 			100,
-			function (m, j, i, l, n) {
+			(m, j, i, l, n) => {
 				var h = $Z[m];
 				var k;
 				var q;
@@ -3434,7 +3371,7 @@ var oCPoleVaultingZombie = InheritO(oPoleVaultingZombie, {
 								(h.X =
 									(h.AttackedLX = h.ZX = q = k.AttackedRX) -
 									h.beAttackedPointL) + h.beAttackedPointR),
-							SetStyle(i, { left: h.X + "px" }),
+							SetStyle(i, { left: `${h.X}px` }),
 							(n.src =
 								"images/Zombies/wall/PoleVaultingZombie/PoleVaultingZombieWalk.gif"),
 							SetVisible(l),
@@ -3452,15 +3389,14 @@ var oCPoleVaultingZombie = InheritO(oPoleVaultingZombie, {
 								(h.X =
 									(h.AttackedRX = g) - h.beAttackedPointR) +
 								h.beAttackedPointL),
-							SetStyle(i, { left: h.X + "px" }),
-							(n.src =
-								"images/Zombies/wall/PoleVaultingZombie/PoleVaultingZombieJump2.gif" +
-								$Random +
-								Math.random()),
+							SetStyle(i, { left: `${h.X}px` }),
+							(n.src = `images/Zombies/wall/PoleVaultingZombie/PoleVaultingZombieJump2.gif${
+								$Random
+							}${Math.random()}`),
 							SetVisible(l),
 							oSym.addTask(
 								80,
-								function (s, v) {
+								(s, v) => {
 									var u = $Z[s];
 									var t;
 									u &&
@@ -3515,29 +3451,29 @@ var oNewspaperZombie = InheritO(OrnIIZombies, {
 		var a = "images/Zombies/NewspaperZombie/";
 		return [
 			"images/Card/Zombies/NewspaperZombie.png",
-			a + "0.gif",
-			a + "HeadWalk1.gif",
-			a + "HeadAttack1.gif",
-			a + "LostHeadWalk1.gif",
-			a + "LostHeadAttack1.gif",
-			a + "HeadWalk0.gif",
-			a + "HeadAttack0.gif",
-			a + "LostHeadWalk0.gif",
-			a + "LostHeadAttack0.gif",
-			a + "Head.gif" + $Random,
-			a + "Die.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			a + "LostNewspaper.gif",
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}HeadWalk1.gif`,
+			`${a}HeadAttack1.gif`,
+			`${a}LostHeadWalk1.gif`,
+			`${a}LostHeadAttack1.gif`,
+			`${a}HeadWalk0.gif`,
+			`${a}HeadAttack0.gif`,
+			`${a}LostHeadWalk0.gif`,
+			`${a}LostHeadAttack0.gif`,
+			`${a}Head.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${a}LostNewspaper.gif`,
+			`${a}1.gif`,
 		];
 	})(),
 	AudioArr: ["newspaper_rarrgh2"],
 	Produce:
 		'他的报纸只能提供有限的防御。<p>韧性：<font color="#CC241D">低</font><br>报纸韧性：<font color="#CC241D">低</font><br>速度：正常，而后快(失去报纸后)</p>读报僵尸，他正痴迷于完成他的数独难题。难怪他这么反常。',
-	getShadow: function (a) {
-		return "left:75px;top:" + (a.height - 25) + "px";
+	getShadow(a) {
+		return `left:75px;top:${a.height - 25}px`;
 	},
-	GoingDie: function (b) {
+	GoingDie(b) {
 		var a = this;
 		var c = a.id;
 		a.EleBody.src = b;
@@ -3545,12 +3481,9 @@ var oNewspaperZombie = InheritO(OrnIIZombies, {
 			NewImg(
 				0,
 				a.PicArr[a.HeadGif],
-				"left:" +
-					a.AttackedLX +
-					"px;top:" +
-					(a.pixelTop - 20) +
-					"px;z-index:" +
-					a.zIndex,
+				`left:${a.AttackedLX}px;top:${a.pixelTop - 20}px;z-index:${
+					a.zIndex
+				}`,
 				EDPZ
 			),
 		]);
@@ -3558,7 +3491,7 @@ var oNewspaperZombie = InheritO(OrnIIZombies, {
 		a.FreeFreezeTime = a.FreeSetbodyTime = a.FreeSlowTime = 0;
 		a.AutoReduceHP(c);
 	},
-	getHurtOrnLost: function (j, a, g, m, c, l, k, i) {
+	getHurtOrnLost(j, a, g, m, c, l, k, i) {
 		var e = this;
 		if (!e.beAttacked) {
 			k && e.DisappearDie();
@@ -3594,18 +3527,18 @@ var oNewspaperZombie = InheritO(OrnIIZombies, {
 		SetAlpha(e.EleBody, 50, 0.5);
 		oSym.addTask(
 			10,
-			function (q) {
+			(q) => {
 				var n = $Z[q];
 				n && SetAlpha(n.EleBody, 100, 1);
 			},
 			[b]
 		);
 	},
-	getSnowPea: function (c, a, b) {
-		PlayAudio("splat" + Math.floor(1 + Math.random() * 3));
+	getSnowPea(c, a, b) {
+		PlayAudio(`splat${Math.floor(1 + Math.random() * 3)}`);
 		c.getHit0(c, a, b);
 	},
-	getFirePea: function (f, b, e) {
+	getFirePea(f, b, e) {
 		f.PlayFireballAudio();
 		(f.FreeSlowTime || f.FreeFreezeTime) &&
 			((f.Speed = f.OSpeed),
@@ -3637,19 +3570,19 @@ var oNewspaperZombie = InheritO(OrnIIZombies, {
 				f.SetAlpha(f, f.EleBody, 50, 0.5),
 				oSym.addTask(
 					10,
-					function (j, i) {
+					(j, i) => {
 						(i = $Z[j]) && i.SetAlpha(i, i.EleBody, 100, 1);
 					},
 					[f.id]
 				));
 	},
-	getHit0: function (c, a, b) {
+	getHit0(c, a, b) {
 		b == c.WalkDirection
 			? (c.CheckOrnHP(c, c.id, c.OrnHP, a, c.PicArr, c.isAttacking, 1),
 				c.SetAlpha(c, c.EleBody, 50, 0.5),
 				oSym.addTask(
 					10,
-					function (e, d) {
+					(e, d) => {
 						(d = $Z[e]) && d.SetAlpha(d, d.EleBody, 100, 1);
 					},
 					[c.id]
@@ -3669,7 +3602,7 @@ var oNewspaperZombie = InheritO(OrnIIZombies, {
 					c.getHit3 =
 						function () {}));
 	},
-	getHit1: function (b, a) {
+	getHit1(b, a) {
 		(b.HP -= a) < b.BreakPoint
 			? (b.GoingDie(
 					b.PicArr[
@@ -3688,13 +3621,13 @@ var oNewspaperZombie = InheritO(OrnIIZombies, {
 				b.SetAlpha(b, b.EleBody, 50, 0.5),
 				oSym.addTask(
 					10,
-					function (d, c) {
+					(d, c) => {
 						(c = $Z[d]) && c.SetAlpha(c, c.EleBody, 100, 1);
 					},
 					[b.id]
 				));
 	},
-	getHit2: function (b, a) {
+	getHit2(b, a) {
 		(b.HP -= a) < b.BreakPoint
 			? (b.GoingDie(
 					b.PicArr[
@@ -3712,13 +3645,13 @@ var oNewspaperZombie = InheritO(OrnIIZombies, {
 			: (b.SetAlpha(b, b.EleBody, 50, 0.5),
 				oSym.addTask(
 					10,
-					function (d, c) {
+					(d, c) => {
 						(c = $Z[d]) && c.SetAlpha(c, c.EleBody, 100, 1);
 					},
 					[b.id]
 				));
 	},
-	getHit3: function (b, a) {
+	getHit3(b, a) {
 		(b.HP -= a) < b.BreakPoint
 			? (b.GoingDie(
 					b.PicArr[
@@ -3737,13 +3670,13 @@ var oNewspaperZombie = InheritO(OrnIIZombies, {
 				b.SetAlpha(b, b.EleBody, 50, 0.5),
 				oSym.addTask(
 					10,
-					function (d, c) {
+					(d, c) => {
 						(c = $Z[d]) && c.SetAlpha(c, c.EleBody, 100, 1);
 					},
 					[b.id]
 				));
 	},
-	CheckOrnHP: function (g, h, d, c, f, b, a) {
+	CheckOrnHP(g, h, d, c, f, b, a) {
 		var e = OrnNoneZombies.prototype;
 		(g.OrnHP = d -= c) < 1 &&
 			(a && (g.HP += d),
@@ -3767,7 +3700,7 @@ var oNewspaperZombie = InheritO(OrnIIZombies, {
 					e.getHit),
 			oSym.addTask(
 				150,
-				function (m, l) {
+				(m, l) => {
 					var k = $Z[m];
 					if (!k) {
 						return;
@@ -3815,55 +3748,55 @@ var oScreenDoorZombie = InheritO(oNewspaperZombie, {
 		var b = "images/Zombies/Zombie/";
 		return [
 			"images/Card/Zombies/ScreenDoorZombie.png",
-			a + "0.gif",
-			a + "HeadWalk1.gif",
-			a + "HeadAttack1.gif",
-			a + "LostHeadWalk1.gif",
-			a + "LostHeadAttack1.gif",
-			b + "Zombie.gif",
-			b + "ZombieAttack.gif",
-			b + "ZombieLostHead.gif",
-			b + "ZombieLostHeadAttack.gif",
-			b + "ZombieHead.gif" + $Random,
-			b + "ZombieDie.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}HeadWalk1.gif`,
+			`${a}HeadAttack1.gif`,
+			`${a}LostHeadWalk1.gif`,
+			`${a}LostHeadAttack1.gif`,
+			`${b}Zombie.gif`,
+			`${b}ZombieAttack.gif`,
+			`${b}ZombieLostHead.gif`,
+			`${b}ZombieLostHeadAttack.gif`,
+			`${b}ZombieHead.gif${$Random}`,
+			`${b}ZombieDie.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${a}1.gif`,
 		];
 	})(),
-	PlayNormalballAudio: function () {
-		PlayAudio("splat" + Math.floor(1 + Math.random() * 3));
+	PlayNormalballAudio() {
+		PlayAudio(`splat${Math.floor(1 + Math.random() * 3)}`);
 	},
 	Produce:
 		'他的铁栅门是有效的盾牌。<p>韧性：<font color="#CC241D">低</font><br>铁栅门韧性：<font color="#CC241D">高</font><br>弱点：大喷菇和磁力菇</p>门板僵尸上次拜访过的房主防守并不专业，在吃掉房主的脑子后拿走了他家的铁栅门。',
 	GoingDie: CZombies.prototype.GoingDie,
-	getFirePea: function (c, a, b) {
+	getFirePea(c, a, b) {
 		PlayAudio(
 			b == c.WalkDirection
 				? ["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]
-				: "splat" + Math.floor(1 + Math.random() * 3)
+				: `splat${Math.floor(1 + Math.random() * 3)}`
 		);
 		c.getHit0(c, a, b);
 	},
-	getFirePeaSputtering: function () {},
-	getSnowPea: function (c, a, b) {
+	getFirePeaSputtering() {},
+	getSnowPea(c, a, b) {
 		PlayAudio(["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]);
 		c.getHit0(c, a, b);
 	},
-	getPea: function (c, a, b) {
+	getPea(c, a, b) {
 		PlayAudio(
 			b == c.WalkDirection
 				? ["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]
-				: "splat" + Math.floor(1 + Math.random() * 3)
+				: `splat${Math.floor(1 + Math.random() * 3)}`
 		);
 		c.getHit0(c, a, b);
 	},
-	getHit0: function (c, a, b) {
+	getHit0(c, a, b) {
 		b == c.WalkDirection
 			? (c.CheckOrnHP(c, c.id, c.OrnHP, a, c.PicArr, c.isAttacking, 1),
 				c.SetAlpha(c, c.EleBody, 50, 0.5),
 				oSym.addTask(
 					10,
-					function (e, d) {
+					(e, d) => {
 						(d = $Z[e]) && d.SetAlpha(d, d.EleBody, 100, 1);
 					},
 					[c.id]
@@ -3881,7 +3814,7 @@ var oScreenDoorZombie = InheritO(oNewspaperZombie, {
 					c.getHit3 =
 						function () {}));
 	},
-	CheckOrnHP: function (g, h, d, c, f, b, a) {
+	CheckOrnHP(g, h, d, c, f, b, a) {
 		var e = OrnNoneZombies.prototype;
 		(g.OrnHP = d -= c) < 1 &&
 			(a && (g.HP += d),
@@ -3909,7 +3842,7 @@ var oScreenDoorZombie = InheritO(oNewspaperZombie, {
 				g.getHit3 =
 					e.getHit));
 	},
-	getFireball: function (c, a, b) {
+	getFireball(c, a, b) {
 		b != c.WalkDirection
 			? ((c.FreeSlowTime = 0),
 				(c.Attack = 100),
@@ -3918,8 +3851,8 @@ var oScreenDoorZombie = InheritO(oNewspaperZombie, {
 					: c.PlayFireballAudio())
 			: c.PlayNormalballAudio();
 	},
-	getSputtering: function () {},
-	getSlow: function (d, a, c, b, e) {
+	getSputtering() {},
+	getSlow(d, a, c, b, e) {
 		b != d.WalkDirection || e != -1
 			? CZombies.prototype.getSlow(d, a, c)
 			: d.PlayNormalballAudio();
@@ -3941,55 +3874,55 @@ var oIScreenDoorZombie = InheritO(oNewspaperZombie, {
 		var b = "images/Zombies/Zombie/";
 		return [
 			"images/Card/Zombies/IScreenDoorZombie.png",
-			a + "0.gif",
-			a + "HeadWalk1.gif",
-			a + "HeadAttack1.gif",
-			a + "LostHeadWalk1.gif",
-			a + "LostHeadAttack1.gif",
-			b + "Zombie.gif",
-			b + "ZombieAttack.gif",
-			b + "ZombieLostHead.gif",
-			b + "ZombieLostHeadAttack.gif",
-			b + "ZombieHead.gif" + $Random,
-			b + "ZombieDie.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}HeadWalk1.gif`,
+			`${a}HeadAttack1.gif`,
+			`${a}LostHeadWalk1.gif`,
+			`${a}LostHeadAttack1.gif`,
+			`${b}Zombie.gif`,
+			`${b}ZombieAttack.gif`,
+			`${b}ZombieLostHead.gif`,
+			`${b}ZombieLostHeadAttack.gif`,
+			`${b}ZombieHead.gif${$Random}`,
+			`${b}ZombieDie.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${a}1.gif`,
 		];
 	})(),
-	PlayNormalballAudio: function () {
-		PlayAudio("splat" + Math.floor(1 + Math.random() * 3));
+	PlayNormalballAudio() {
+		PlayAudio(`splat${Math.floor(1 + Math.random() * 3)}`);
 	},
 	Produce:
 		'他的铁栅门是有效的盾牌。<p>韧性：<font color="#CC241D">低</font><br>铁栅门韧性：<font color="#CC241D">高</font><br>弱点：大喷菇和磁力菇</p>门板僵尸上次拜访过的房主防守并不专业，在吃掉房主的脑子后拿走了他家的铁栅门。',
 	GoingDie: CZombies.prototype.GoingDie,
-	getFirePea: function (c, a, b) {
+	getFirePea(c, a, b) {
 		PlayAudio(
 			b == c.WalkDirection
 				? ["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]
-				: "splat" + Math.floor(1 + Math.random() * 3)
+				: `splat${Math.floor(1 + Math.random() * 3)}`
 		);
 		c.getHit0(c, a, b);
 	},
-	getFirePeaSputtering: function () {},
-	getSnowPea: function (c, a, b) {
+	getFirePeaSputtering() {},
+	getSnowPea(c, a, b) {
 		PlayAudio(["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]);
 		c.getHit0(c, a, b);
 	},
-	getPea: function (c, a, b) {
+	getPea(c, a, b) {
 		PlayAudio(
 			b == c.WalkDirection
 				? ["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]
-				: "splat" + Math.floor(1 + Math.random() * 3)
+				: `splat${Math.floor(1 + Math.random() * 3)}`
 		);
 		c.getHit0(c, a, b);
 	},
-	getHit0: function (c, a, b) {
+	getHit0(c, a, b) {
 		b == c.WalkDirection
 			? (c.CheckOrnHP(c, c.id, c.OrnHP, a, c.PicArr, c.isAttacking, 1),
 				c.SetAlpha(c, c.EleBody, 50, 0.5),
 				oSym.addTask(
 					10,
-					function (e, d) {
+					(e, d) => {
 						(d = $Z[e]) && d.SetAlpha(d, d.EleBody, 100, 1);
 					},
 					[c.id]
@@ -4007,7 +3940,7 @@ var oIScreenDoorZombie = InheritO(oNewspaperZombie, {
 					c.getHit3 =
 						function () {}));
 	},
-	CheckOrnHP: function (g, h, d, c, f, b, a) {
+	CheckOrnHP(g, h, d, c, f, b, a) {
 		var e = OrnNoneZombies.prototype;
 		(g.OrnHP = d -= c) < 1 &&
 			(a && (g.HP += d),
@@ -4035,7 +3968,7 @@ var oIScreenDoorZombie = InheritO(oNewspaperZombie, {
 				g.getHit3 =
 					e.getHit));
 	},
-	getFireball: function (c, a, b) {
+	getFireball(c, a, b) {
 		b != c.WalkDirection
 			? ((c.FreeSlowTime = 0),
 				(c.Attack = 100),
@@ -4044,8 +3977,8 @@ var oIScreenDoorZombie = InheritO(oNewspaperZombie, {
 					: c.PlayFireballAudio())
 			: c.PlayNormalballAudio();
 	},
-	getSputtering: function () {},
-	getSlow: function (d, a, c, b, e) {
+	getSputtering() {},
+	getSlow(d, a, c, b, e) {
 		b != d.WalkDirection || e != -1
 			? CZombies.prototype.getSlow(d, a, c)
 			: d.PlayNormalballAudio();
@@ -4059,19 +3992,19 @@ var oTrashZombie = InheritO(oScreenDoorZombie, {
 		var b = "images/Zombies/Zombie/";
 		return [
 			"images/Card/Zombies/TrashZombie.png",
-			a + "0.gif",
-			a + "HeadWalk1.gif",
-			a + "HeadAttack1.gif",
-			a + "LostHeadWalk1.gif",
-			a + "LostHeadAttack1.gif",
-			b + "Zombie.gif",
-			b + "ZombieAttack.gif",
-			b + "ZombieLostHead.gif",
-			b + "ZombieLostHeadAttack.gif",
-			b + "ZombieHead.gif" + $Random,
-			b + "ZombieDie.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}HeadWalk1.gif`,
+			`${a}HeadAttack1.gif`,
+			`${a}LostHeadWalk1.gif`,
+			`${a}LostHeadAttack1.gif`,
+			`${b}Zombie.gif`,
+			`${b}ZombieAttack.gif`,
+			`${b}ZombieLostHead.gif`,
+			`${b}ZombieLostHeadAttack.gif`,
+			`${b}ZombieHead.gif${$Random}`,
+			`${b}ZombieDie.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${a}1.gif`,
 		];
 	})(),
 	Produce:
@@ -4084,10 +4017,10 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 	DieGif: 7,
 	WalkGif0: 2,
 	WalkGif1: 3,
-	CanPass: function (b, a) {
+	CanPass(b, a) {
 		return a == 2;
 	},
-	BirthCallBack: function (g) {
+	BirthCallBack(g) {
 		var e = g.delayT;
 		var c = g.id;
 		var b = (g.Ele = $(c));
@@ -4112,11 +4045,11 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 				g.EleBody.src = g.PicArr[(g.NormalGif = g.WalkGif1)];
 				SetHidden(f);
 				NewEle(
-					(a = c + "_splash"),
+					(a = `${c}_splash`),
 					"div",
-					"position:absolute;background:url(images/interface/splash.png);left:61px;top:" +
-						(g.height - 88) +
-						"px;width:97px;height:88px;over-flow:hidden",
+					`position:absolute;background:url(images/interface/splash.png);left:61px;top:${
+						g.height - 88
+					}px;width:97px;height:88px;over-flow:hidden`,
 					0,
 					b
 				);
@@ -4134,7 +4067,7 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 						["-679px 0", 9, -1],
 					],
 					0,
-					function (i, j) {
+					(i, j) => {
 						ClearChild($(i));
 					}
 				);
@@ -4142,7 +4075,7 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 		e
 			? oSym.addTask(
 					e,
-					function (j, i) {
+					(j, i) => {
 						var k = $Z[j];
 						k && ((k.FreeSetbodyTime = 0), SetBlock(i));
 					},
@@ -4150,25 +4083,25 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 				)
 			: SetBlock(b);
 	},
-	ChkActsL1: function (f, e, g, d) {
+	ChkActsL1(f, e, g, d) {
 		var c;
 		var a;
 		var b = f.id;
 		!(f.FreeFreezeTime || f.FreeSetbodyTime) &&
 			((f.AttackedRX -= c = f.Speed),
 			(LX = f.ZX = f.AttackedLX -= c),
-			(f.Ele.style.left = Math.floor((f.X -= c)) + "px"));
+			(f.Ele.style.left = `${Math.floor((f.X -= c))}px`));
 		f.AttackedLX < GetX(9) &&
 			(PlayAudio("zombie_entering_water"),
 			(f.WalkStatus = 1),
 			(f.EleBody.src = f.PicArr[(f.NormalGif = f.WalkGif1)]),
 			SetHidden(f.EleShadow),
 			NewEle(
-				(a = b + "_splash"),
+				(a = `${b}_splash`),
 				"div",
-				"position:absolute;background:url(images/interface/splash.png);left:61px;top:" +
-					(f.height - 88) +
-					"px;width:97px;height:88px;over-flow:hidden",
+				`position:absolute;background:url(images/interface/splash.png);left:61px;top:${
+					f.height - 88
+				}px;width:97px;height:88px;over-flow:hidden`,
 				0,
 				f.Ele
 			),
@@ -4187,20 +4120,20 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 					["-679px 0", 9, -1],
 				],
 				0,
-				function (h, i) {
+				(h, i) => {
 					ClearChild($(h));
 				}
 			));
 		return 1;
 	},
-	ChkActsL2: function (d, c, e, b) {
+	ChkActsL2(d, c, e, b) {
 		var a;
 		!(d.FreeFreezeTime || d.FreeSetbodyTime) &&
 			(d.beAttacked && !d.isAttacking && d.JudgeAttack(),
 			!d.isAttacking &&
 				((d.AttackedRX -= a = d.Speed),
 				(d.ZX = d.AttackedLX -= a),
-				(d.Ele.style.left = Math.floor((d.X -= a)) + "px")));
+				(d.Ele.style.left = `${Math.floor((d.X -= a))}px`)));
 		d.AttackedLX < GetX(0) &&
 			((d.WalkStatus = 0),
 			(d.EleBody.src = d.PicArr[(d.NormalGif = d.WalkGif0)]),
@@ -4209,14 +4142,14 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 		return 1;
 	},
 	ChkActsL3: CZombies.prototype.ChkActs,
-	ChkActs1: function (d, c, e, b) {
+	ChkActs1(d, c, e, b) {
 		var a;
 		!(d.FreeFreezeTime || d.FreeSetbodyTime) &&
 			(d.beAttacked && !d.isAttacking && d.JudgeAttack(),
 			!d.isAttacking &&
 				((d.AttackedLX += a = d.Speed),
 				(d.ZX = d.AttackedRX += a),
-				(d.Ele.style.left = Math.ceil((d.X += a)) + "px")));
+				(d.Ele.style.left = `${Math.ceil((d.X += a))}px`)));
 		d.AttackedLX > GetX(9) &&
 			((d.WalkStatus = 0),
 			(d.EleBody.src = d.PicArr[(d.NormalGif = d.WalkGif0)]),
@@ -4224,7 +4157,7 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 			(d.ChkActs = d.ChkActs2));
 		return 1;
 	},
-	ChkActs2: function (e, c, f, b) {
+	ChkActs2(e, c, f, b) {
 		var a;
 		var d;
 		!(e.FreeFreezeTime || e.FreeSetbodyTime)
@@ -4233,29 +4166,25 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 					? (e.AttackedLX += a = e.Speed) > oS.W
 						? (f.splice(b, 1), e.DisappearDie(), (d = 0))
 						: ((e.ZX = e.AttackedRX += a),
-							(e.Ele.style.left = Math.ceil((e.X += a)) + "px"),
+							(e.Ele.style.left = `${Math.ceil((e.X += a))}px`),
 							(d = 1))
 					: (d = 1))
 			: (d = 1);
 		return d;
 	},
-	ExchangeLR: function (d, b) {
+	ExchangeLR(d, b) {
 		var c = d.width;
 		var f = d.beAttackedPointL;
 		var a = d.beAttackedPointR;
 		var e = d.Ele;
-		e.style.left =
-			(d.X = d.AttackedLX - (d.beAttackedPointL = c - a)) + "px";
+		e.style.left = `${(d.X = d.AttackedLX - (d.beAttackedPointL = c - a))}px`;
 		d.beAttackedPointR = c - f;
-		d.EleShadow.style.cssText =
-			"visibility:hidden;left:" +
-			(d.beAttackedPointL - 10) +
-			"px;top:" +
-			(d.height - 22) +
-			"px";
+		d.EleShadow.style.cssText = `visibility:hidden;left:${
+			d.beAttackedPointL - 10
+		}px;top:${d.height - 22}px`;
 		d.ExchangeLR2(d, d.EleBody, b);
 	},
-	GoingDie: function () {
+	GoingDie() {
 		var b = this;
 		var c = b.id;
 		var a = b.PicArr;
@@ -4265,7 +4194,7 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 		b.FreeFreezeTime = b.FreeSetbodyTime = b.FreeSlowTime = 0;
 		b.AutoReduceHP(c);
 	},
-	AutoReduceHP: function (a) {
+	AutoReduceHP(a) {
 		oSym.addTask(
 			100,
 			function (c) {
@@ -4278,25 +4207,25 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 			[a]
 		);
 	},
-	ExplosionDie: function () {
+	ExplosionDie() {
 		ClearChild(this.Ele);
 		this.HP = 0;
 		delete $Z[this.id];
 		this.PZ && oP.MonPrgs();
 	},
-	DisappearDie: function () {
+	DisappearDie() {
 		ClearChild(this.Ele);
 		this.HP = 0;
 		delete $Z[this.id];
 		this.PZ && oP.MonPrgs();
 	},
-	CrushDie: function () {
+	CrushDie() {
 		ClearChild(this.Ele);
 		this.HP = 0;
 		delete $Z[this.id];
 		this.PZ && oP.MonPrgs();
 	},
-	NormalDie: function () {
+	NormalDie() {
 		this.HP = 0;
 		delete $Z[this.id];
 		this.PZ && oP.MonPrgs();
@@ -4306,7 +4235,7 @@ var oDuckyTubeZombie1 = InheritO(oAquaticZombie, {
 	EName: "oDuckyTubeZombie1",
 	CName: "Ducky Tube Zombie",
 	beAttackedPointR: 130,
-	GetDY: function () {
+	GetDY() {
 		return 5;
 	},
 	Produce:
@@ -4315,13 +4244,13 @@ var oDuckyTubeZombie1 = InheritO(oAquaticZombie, {
 		var a = "images/Zombies/DuckyTubeZombie1/";
 		return [
 			"images/Card/Zombies/DuckyTubeZombie1.png",
-			a + "0.gif",
-			a + "Walk1.gif",
-			a + "Walk2.gif",
-			a + "1.gif",
-			a + "Attack.gif",
-			a + "ZombieHead.gif" + $Random,
-			a + "Die.gif" + $Random,
+			`${a}0.gif`,
+			`${a}Walk1.gif`,
+			`${a}Walk2.gif`,
+			`${a}1.gif`,
+			`${a}Attack.gif`,
+			`${a}ZombieHead.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
 		];
 	})(),
 	AudioArr: ["zombie_entering_water"],
@@ -4330,7 +4259,7 @@ var oIDuckyTubeZombie1 = InheritO(oAquaticZombie, {
 	EName: "oIDuckyTubeZombie1",
 	CName: "Ducky Tube Zombie",
 	beAttackedPointR: 130,
-	GetDY: function () {
+	GetDY() {
 		return 5;
 	},
 	Produce:
@@ -4339,13 +4268,13 @@ var oIDuckyTubeZombie1 = InheritO(oAquaticZombie, {
 		var a = "images/Zombies/DuckyTubeZombie1/";
 		return [
 			"images/Card/Zombies/IDuckyTubeZombie1.png",
-			a + "Walk2.gif",
-			a + "Walk1.gif",
-			a + "Walk2.gif",
-			a + "Walk2.gif",
-			a + "Attack.gif",
-			a + "ZombieHead.gif" + $Random,
-			a + "Die.gif" + $Random,
+			`${a}Walk2.gif`,
+			`${a}Walk1.gif`,
+			`${a}Walk2.gif`,
+			`${a}Walk2.gif`,
+			`${a}Attack.gif`,
+			`${a}ZombieHead.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
 		];
 	})(),
 	AudioArr: ["zombie_entering_water"],
@@ -4362,7 +4291,7 @@ var oWarshipsZombie = InheritO(oDuckyTubeZombie1, {
 	beAttackedPointR: 290,
 	Attack: 550,
 	BookHandBack: 4.9,
-	getShadow: function (a) {
+	getShadow(a) {
 		return "display:none";
 	},
 	Produce:
@@ -4371,13 +4300,13 @@ var oWarshipsZombie = InheritO(oDuckyTubeZombie1, {
 		var a = "images/Zombies/WarshipsZombie/";
 		return [
 			"images/Card/Zombies/WarshipsZombie.png",
-			a + "0.gif",
-			a + "Walk1.gif",
-			a + "Walk2.gif",
-			a + "1.gif",
-			a + "Attack.gif",
-			a + "ZombieHead.gif" + $Random,
-			a + "Die.gif" + $Random,
+			`${a}0.gif`,
+			`${a}Walk1.gif`,
+			`${a}Walk2.gif`,
+			`${a}1.gif`,
+			`${a}Attack.gif`,
+			`${a}ZombieHead.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
 		];
 	})(),
 });
@@ -4390,7 +4319,7 @@ var oDuckyTubeZombie2 = InheritO(oDuckyTubeZombie1, {
 	CanDisplay: 0,
 	OrnLostNormalGif: 9,
 	OrnLostAttackGif: 10,
-	PlayNormalballAudio: function () {
+	PlayNormalballAudio() {
 		PlayAudio("plastichit");
 	},
 	PicArr: (function () {
@@ -4398,16 +4327,16 @@ var oDuckyTubeZombie2 = InheritO(oDuckyTubeZombie1, {
 		var a = "images/Zombies/DuckyTubeZombie1/";
 		return [
 			"images/Card/Zombies/DuckyTubeZombie1.png",
-			b + "0.gif",
-			b + "Walk1.gif",
-			b + "Walk2.gif",
-			b + "1.gif",
-			b + "Attack.gif",
-			"images/Zombies/Zombie/ZombieHead.gif" + $Random,
-			a + "Die.gif" + $Random,
-			a + "Walk1.gif",
-			a + "Walk2.gif",
-			a + "Attack.gif",
+			`${b}0.gif`,
+			`${b}Walk1.gif`,
+			`${b}Walk2.gif`,
+			`${b}1.gif`,
+			`${b}Attack.gif`,
+			`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`${a}Walk1.gif`,
+			`${a}Walk2.gif`,
+			`${a}Attack.gif`,
 		];
 	})(),
 	AudioArr: ["plastichit", "zombie_entering_water"],
@@ -4426,7 +4355,7 @@ var oIDuckyTubeZombie2 = InheritO(oDuckyTubeZombie1, {
 	CanDisplay: 0,
 	OrnLostNormalGif: 9,
 	OrnLostAttackGif: 10,
-	PlayNormalballAudio: function () {
+	PlayNormalballAudio() {
 		PlayAudio("plastichit");
 	},
 	PicArr: (function () {
@@ -4434,16 +4363,16 @@ var oIDuckyTubeZombie2 = InheritO(oDuckyTubeZombie1, {
 		var a = "images/Zombies/DuckyTubeZombie1/";
 		return [
 			"images/Card/Zombies/IDuckyTubeZombie2.png",
-			b + "Walk2.gif",
-			b + "Walk1.gif",
-			b + "Walk2.gif",
-			b + "Walk2.gif",
-			b + "Attack.gif",
-			"images/Zombies/Zombie/ZombieHead.gif" + $Random,
-			a + "Die.gif" + $Random,
-			a + "Walk1.gif",
-			a + "Walk2.gif",
-			a + "Attack.gif",
+			`${b}Walk2.gif`,
+			`${b}Walk1.gif`,
+			`${b}Walk2.gif`,
+			`${b}Walk2.gif`,
+			`${b}Attack.gif`,
+			`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`${a}Walk1.gif`,
+			`${a}Walk2.gif`,
+			`${a}Attack.gif`,
 		];
 	})(),
 	AudioArr: ["plastichit", "zombie_entering_water"],
@@ -4459,7 +4388,7 @@ var oDuckyTubeZombie3 = InheritO(oDuckyTubeZombie2, {
 	OrnHP: 1100,
 	Lvl: 3,
 	SunNum: 125,
-	PlayNormalballAudio: function () {
+	PlayNormalballAudio() {
 		PlayAudio(["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]);
 	},
 	AudioArr: ["shieldhit", "shieldhit2", "zombie_entering_water"],
@@ -4468,16 +4397,16 @@ var oDuckyTubeZombie3 = InheritO(oDuckyTubeZombie2, {
 		var a = "images/Zombies/DuckyTubeZombie1/";
 		return [
 			"images/Card/Zombies/DuckyTubeZombie1.png",
-			b + "0.gif",
-			b + "Walk1.gif",
-			b + "Walk2.gif",
-			b + "1.gif",
-			b + "Attack.gif",
-			"images/Zombies/Zombie/ZombieHead.gif" + $Random,
-			a + "Die.gif" + $Random,
-			a + "Walk1.gif",
-			a + "Walk2.gif",
-			a + "Attack.gif",
+			`${b}0.gif`,
+			`${b}Walk1.gif`,
+			`${b}Walk2.gif`,
+			`${b}1.gif`,
+			`${b}Attack.gif`,
+			`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`${a}Walk1.gif`,
+			`${a}Walk2.gif`,
+			`${a}Attack.gif`,
 		];
 	})(),
 });
@@ -4487,7 +4416,7 @@ var oIDuckyTubeZombie3 = InheritO(oDuckyTubeZombie2, {
 	OrnHP: 1100,
 	Lvl: 3,
 	SunNum: 125,
-	PlayNormalballAudio: function () {
+	PlayNormalballAudio() {
 		PlayAudio(["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]);
 	},
 	AudioArr: ["shieldhit", "shieldhit2", "zombie_entering_water"],
@@ -4496,16 +4425,16 @@ var oIDuckyTubeZombie3 = InheritO(oDuckyTubeZombie2, {
 		var a = "images/Zombies/DuckyTubeZombie1/";
 		return [
 			"images/Card/Zombies/IDuckyTubeZombie3.png",
-			b + "Walk2.gif",
-			b + "Walk1.gif",
-			b + "Walk2.gif",
-			b + "Walk2.gif",
-			b + "Attack.gif",
-			"images/Zombies/Zombie/ZombieHead.gif" + $Random,
-			a + "Die.gif" + $Random,
-			a + "Walk1.gif",
-			a + "Walk2.gif",
-			a + "Attack.gif",
+			`${b}Walk2.gif`,
+			`${b}Walk1.gif`,
+			`${b}Walk2.gif`,
+			`${b}Walk2.gif`,
+			`${b}Attack.gif`,
+			`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`${a}Walk1.gif`,
+			`${a}Walk2.gif`,
+			`${a}Attack.gif`,
 		];
 	})(),
 });
@@ -4517,16 +4446,16 @@ var oDuckyTubeZombie4 = InheritO(oDuckyTubeZombie3, {
 		var a = "images/Zombies/DuckyTubeZombie1/";
 		return [
 			"images/Card/Zombies/DuckyTubeZombie1.png",
-			b + "0.gif",
-			b + "Walk1.gif",
-			b + "Walk2.gif",
-			b + "1.gif",
-			b + "Attack.gif",
-			"images/Zombies/Zombie/ZombieHead.gif" + $Random,
-			a + "Die.gif" + $Random,
-			a + "Walk1.gif",
-			a + "Walk2.gif",
-			a + "Attack.gif",
+			`${b}0.gif`,
+			`${b}Walk1.gif`,
+			`${b}Walk2.gif`,
+			`${b}1.gif`,
+			`${b}Attack.gif`,
+			`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`${a}Walk1.gif`,
+			`${a}Walk2.gif`,
+			`${a}Attack.gif`,
 		];
 	})(),
 	getHit: OrnIIZombies.prototype.getHit,
@@ -4544,10 +4473,10 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 	DieGif: 7,
 	WalkGif0: 2,
 	WalkGif1: 3,
-	CanPass: function (b, a) {
+	CanPass(b, a) {
 		return a == 2;
 	},
-	BirthCallBack: function (g) {
+	BirthCallBack(g) {
 		var e = g.delayT;
 		var c = g.id;
 		var b = (g.Ele = $(c));
@@ -4572,11 +4501,11 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 				g.EleBody.src = g.PicArr[(g.NormalGif = g.WalkGif1)];
 				SetHidden(f);
 				NewEle(
-					(a = c + "_splash"),
+					(a = `${c}_splash`),
 					"div",
-					"position:absolute;background:url(images/interface/splash.png);left:61px;top:" +
-						(g.height - 88) +
-						"px;width:97px;height:88px;over-flow:hidden",
+					`position:absolute;background:url(images/interface/splash.png);left:61px;top:${
+						g.height - 88
+					}px;width:97px;height:88px;over-flow:hidden`,
 					0,
 					b
 				);
@@ -4594,7 +4523,7 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 						["-679px 0", 9, -1],
 					],
 					0,
-					function (i, j) {
+					(i, j) => {
 						ClearChild($(i));
 					}
 				);
@@ -4602,7 +4531,7 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 		e
 			? oSym.addTask(
 					e,
-					function (j, i) {
+					(j, i) => {
 						var k = $Z[j];
 						k && ((k.FreeSetbodyTime = 0), SetBlock(i));
 					},
@@ -4610,25 +4539,25 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 				)
 			: SetBlock(b);
 	},
-	ChkActsL1: function (f, e, g, d) {
+	ChkActsL1(f, e, g, d) {
 		var c;
 		var a;
 		var b = f.id;
 		!(f.FreeFreezeTime || f.FreeSetbodyTime) &&
 			((f.AttackedRX -= c = f.Speed),
 			(LX = f.ZX = f.AttackedLX -= c),
-			(f.Ele.style.left = Math.floor((f.X -= c)) + "px"));
+			(f.Ele.style.left = `${Math.floor((f.X -= c))}px`));
 		f.AttackedLX < GetX(9) &&
 			(PlayAudio("zombie_entering_water"),
 			(f.WalkStatus = 1),
 			(f.EleBody.src = f.PicArr[(f.NormalGif = f.WalkGif1)]),
 			SetHidden(f.EleShadow),
 			NewEle(
-				(a = b + "_splash"),
+				(a = `${b}_splash`),
 				"div",
-				"position:absolute;background:url(images/interface/splash.png);left:61px;top:" +
-					(f.height - 88) +
-					"px;width:97px;height:88px;over-flow:hidden",
+				`position:absolute;background:url(images/interface/splash.png);left:61px;top:${
+					f.height - 88
+				}px;width:97px;height:88px;over-flow:hidden`,
 				0,
 				f.Ele
 			),
@@ -4647,20 +4576,20 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 					["-679px 0", 9, -1],
 				],
 				0,
-				function (h, i) {
+				(h, i) => {
 					ClearChild($(h));
 				}
 			));
 		return 1;
 	},
-	ChkActsL2: function (d, c, e, b) {
+	ChkActsL2(d, c, e, b) {
 		var a;
 		!(d.FreeFreezeTime || d.FreeSetbodyTime) &&
 			(d.beAttacked && !d.isAttacking && d.JudgeAttack(),
 			!d.isAttacking &&
 				((d.AttackedRX -= a = d.Speed),
 				(d.ZX = d.AttackedLX -= a),
-				(d.Ele.style.left = Math.floor((d.X -= a)) + "px")));
+				(d.Ele.style.left = `${Math.floor((d.X -= a))}px`)));
 		d.AttackedLX < GetX(0) &&
 			((d.WalkStatus = 0),
 			(d.EleBody.src = d.PicArr[(d.NormalGif = d.WalkGif0)]),
@@ -4669,14 +4598,14 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 		return 1;
 	},
 	ChkActsL3: CZombies.prototype.ChkActs,
-	ChkActs1: function (d, c, e, b) {
+	ChkActs1(d, c, e, b) {
 		var a;
 		!(d.FreeFreezeTime || d.FreeSetbodyTime) &&
 			(d.beAttacked && !d.isAttacking && d.JudgeAttack(),
 			!d.isAttacking &&
 				((d.AttackedLX += a = d.Speed),
 				(d.ZX = d.AttackedRX += a),
-				(d.Ele.style.left = Math.ceil((d.X += a)) + "px")));
+				(d.Ele.style.left = `${Math.ceil((d.X += a))}px`)));
 		d.AttackedLX > GetX(9) &&
 			((d.WalkStatus = 0),
 			(d.EleBody.src = d.PicArr[(d.NormalGif = d.WalkGif0)]),
@@ -4684,7 +4613,7 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 			(d.ChkActs = d.ChkActs2));
 		return 1;
 	},
-	ChkActs2: function (e, c, f, b) {
+	ChkActs2(e, c, f, b) {
 		var a;
 		var d;
 		!(e.FreeFreezeTime || e.FreeSetbodyTime)
@@ -4693,29 +4622,25 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 					? (e.AttackedLX += a = e.Speed) > oS.W
 						? (f.splice(b, 1), e.DisappearDie(), (d = 0))
 						: ((e.ZX = e.AttackedRX += a),
-							(e.Ele.style.left = Math.ceil((e.X += a)) + "px"),
+							(e.Ele.style.left = `${Math.ceil((e.X += a))}px`),
 							(d = 1))
 					: (d = 1))
 			: (d = 1);
 		return d;
 	},
-	ExchangeLR: function (d, b) {
+	ExchangeLR(d, b) {
 		var c = d.width;
 		var f = d.beAttackedPointL;
 		var a = d.beAttackedPointR;
 		var e = d.Ele;
-		e.style.left =
-			(d.X = d.AttackedLX - (d.beAttackedPointL = c - a)) + "px";
+		e.style.left = `${(d.X = d.AttackedLX - (d.beAttackedPointL = c - a))}px`;
 		d.beAttackedPointR = c - f;
-		d.EleShadow.style.cssText =
-			"visibility:hidden;left:" +
-			(d.beAttackedPointL - 10) +
-			"px;top:" +
-			(d.height - 22) +
-			"px";
+		d.EleShadow.style.cssText = `visibility:hidden;left:${
+			d.beAttackedPointL - 10
+		}px;top:${d.height - 22}px`;
 		d.ExchangeLR2(d, d.EleBody, b);
 	},
-	GoingDie: function () {
+	GoingDie() {
 		var b = this;
 		var c = b.id;
 		var a = b.PicArr;
@@ -4725,7 +4650,7 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 		b.FreeFreezeTime = b.FreeSetbodyTime = b.FreeSlowTime = 0;
 		b.AutoReduceHP(c);
 	},
-	AutoReduceHP: function (a) {
+	AutoReduceHP(a) {
 		oSym.addTask(
 			100,
 			function (c) {
@@ -4738,25 +4663,25 @@ var oAquaticZombie = InheritO(OrnNoneZombies, {
 			[a]
 		);
 	},
-	ExplosionDie: function () {
+	ExplosionDie() {
 		ClearChild(this.Ele);
 		this.HP = 0;
 		delete $Z[this.id];
 		this.PZ && oP.MonPrgs();
 	},
-	DisappearDie: function () {
+	DisappearDie() {
 		ClearChild(this.Ele);
 		this.HP = 0;
 		delete $Z[this.id];
 		this.PZ && oP.MonPrgs();
 	},
-	CrushDie: function () {
+	CrushDie() {
 		ClearChild(this.Ele);
 		this.HP = 0;
 		delete $Z[this.id];
 		this.PZ && oP.MonPrgs();
 	},
-	NormalDie: function () {
+	NormalDie() {
 		this.HP = 0;
 		delete $Z[this.id];
 		this.PZ && oP.MonPrgs();
@@ -4774,7 +4699,7 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 	OSpeed: 3.2,
 	Speed: 3.2,
 	Altitude: 1,
-	BirthCallBack: function (g) {
+	BirthCallBack(g) {
 		var e = g.delayT;
 		var c = g.id;
 		var b = (g.Ele = $(c));
@@ -4799,11 +4724,11 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 				g.EleBody.src = g.PicArr[(g.NormalGif = g.WalkGif1)];
 				SetHidden(f);
 				NewEle(
-					(a = c + "_splash"),
+					(a = `${c}_splash`),
 					"div",
-					"position:absolute;background:url(images/interface/splash.png);left:61px;top:" +
-						(g.height - 88) +
-						"px;width:97px;height:88px;over-flow:hidden",
+					`position:absolute;background:url(images/interface/splash.png);left:61px;top:${
+						g.height - 88
+					}px;width:97px;height:88px;over-flow:hidden`,
 					0,
 					b
 				);
@@ -4821,7 +4746,7 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 						["-679px 0", 9, -1],
 					],
 					0,
-					function (i, j) {
+					(i, j) => {
 						ClearChild($(i));
 					}
 				);
@@ -4829,7 +4754,7 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 		e
 			? oSym.addTask(
 					e,
-					function (j, i) {
+					(j, i) => {
 						var k = $Z[j];
 						k && ((k.FreeSetbodyTime = 0), SetBlock(i));
 					},
@@ -4840,29 +4765,27 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 	Produce:
 		'潜水僵尸可以在水下前行。<p>韧性：<font color="#CC241D">低</font><br>特点：<font color="#CC241D">潜泳以避免遭到攻击<br>只在水池Level出现</font></p>僵尸不呼吸。他们不需要空气。那么为什么潜水僵尸需要一套潜水装置来潜水呢？<br>答案：同行的压力。',
 	JumpTime: 40,
-	getShadow: function (a) {
-		return (
-			"left:" + a.beAttackedPointL + "px;top:" + (a.height - 45) + "px"
-		);
+	getShadow(a) {
+		return `left:${a.beAttackedPointL}px;top:${a.height - 45}px`;
 	},
 	PicArr: (function () {
 		var a = "images/Zombies/SnorkelZombie/";
 		return [
 			"images/Card/Zombies/SnorkelZombie.png",
-			a + "0.gif",
-			a + "Walk1.gif",
-			a + "Walk2.gif",
-			a + "1.gif",
-			a + "Attack.gif",
-			a + "Head.gif" + $Random,
-			a + "Die.gif" + $Random,
-			a + "Jump.gif" + $Random,
-			a + "Risk.gif" + $Random,
-			a + "Sink.gif" + $Random,
+			`${a}0.gif`,
+			`${a}Walk1.gif`,
+			`${a}Walk2.gif`,
+			`${a}1.gif`,
+			`${a}Attack.gif`,
+			`${a}Head.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`${a}Jump.gif${$Random}`,
+			`${a}Risk.gif${$Random}`,
+			`${a}Sink.gif${$Random}`,
 		];
 	})(),
 	AudioArr: ["zombie_entering_water"],
-	Jump: function (a) {
+	Jump(a) {
 		a.beAttacked &&
 			(PlayAudio("zombie_entering_water"),
 			(a.Altitude = 2),
@@ -4870,7 +4793,7 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 			(a.EleBody.src = a.PicArr[8]),
 			oSym.addTask(
 				160,
-				function (c, b) {
+				(c, b) => {
 					$Z[c] &&
 						b.beAttacked &&
 						((b.WalkStatus = 1),
@@ -4885,7 +4808,7 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 				return 1;
 			}));
 	},
-	ChkActsL1: function (d, c, e, b) {
+	ChkActsL1(d, c, e, b) {
 		if (d.JumpTime <= 0) {
 			d.Jump(d);
 			return 1;
@@ -4894,11 +4817,11 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 		!(d.FreeFreezeTime || d.FreeSetbodyTime) &&
 			((d.AttackedRX -= a = d.Speed),
 			(LX = d.ZX = d.AttackedLX -= a),
-			(d.Ele.style.left = Math.floor((d.X -= a)) + "px"),
+			(d.Ele.style.left = `${Math.floor((d.X -= a))}px`),
 			--d.JumpTime);
 		return 1;
 	},
-	ChkActsL2: function (d, c, e, b) {
+	ChkActsL2(d, c, e, b) {
 		var a;
 		!(d.FreeFreezeTime || d.FreeSetbodyTime) &&
 			(d.AttackedLX > GetX(0)
@@ -4906,7 +4829,7 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 					!d.isAttacking &&
 						((d.AttackedRX -= a = d.Speed),
 						(d.ZX = d.AttackedLX -= a),
-						(d.Ele.style.left = Math.floor((d.X -= a)) + "px")))
+						(d.Ele.style.left = `${Math.floor((d.X -= a))}px`)))
 				: d.beAttacked &&
 					((d.WalkStatus = 0),
 					(d.Altitude = 1),
@@ -4915,10 +4838,10 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 					(d.ChkActs = d.ChkActsL3)));
 		return 1;
 	},
-	JudgeAttack: function () {
+	JudgeAttack() {
 		var e = this;
 		var b = e.ZX;
-		var c = e.R + "_";
+		var c = `${e.R}_`;
 		var d = GetC(b);
 		var g = oGd.$;
 		var a;
@@ -4929,7 +4852,7 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 					(e.EleBody.src = e.PicArr[9]),
 					oSym.addTask(
 						50,
-						function (i, h) {
+						(i, h) => {
 							$Z[i] &&
 								h.beAttacked &&
 								((h.EleBody.src = h.PicArr[h.AttackGif]),
@@ -4944,7 +4867,7 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 				(e.Altitude = 0),
 				oSym.addTask(
 					70,
-					function (i, h) {
+					(i, h) => {
 						$Z[i] &&
 							h.beAttacked &&
 							((h.isAttacking = 0),
@@ -4953,10 +4876,10 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 					[f, e]
 				));
 	},
-	NormalAttack: function (b, a) {
+	NormalAttack(b, a) {
 		oSym.addTask(
 			100,
-			function (d, c) {
+			(d, c) => {
 				var f = $Z[d];
 				var e;
 				f &&
@@ -4968,7 +4891,7 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 			[b, a]
 		);
 	},
-	JudgeAttackH: function () {
+	JudgeAttackH() {
 		var c = this;
 		var b = oZ.getZ0(c.ZX, c.R);
 		var d = c.id;
@@ -4981,7 +4904,7 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 					!b.isAttacking && b.AttackZombie2(b, a, d),
 					oSym.addTask(
 						50,
-						function (g, h, f, e) {
+						(g, h, f, e) => {
 							$Z[h] &&
 								g.beAttacked &&
 								($Z[e] && f.beAttacked
@@ -4998,7 +4921,7 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 				(c.Altitude = 0),
 				oSym.addTask(
 					70,
-					function (f, e) {
+					(f, e) => {
 						$Z[f] &&
 							e.beAttacked &&
 							((e.isAttacking = 0),
@@ -5007,12 +4930,12 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 					[d, c]
 				));
 	},
-	AttackZombie2: function (c, b, a) {
+	AttackZombie2(c, b, a) {
 		c.isAttacking = 1;
 		c.EleBody.src = c.PicArr[9];
 		oSym.addTask(
 			50,
-			function (g, e, d, f) {
+			(g, e, d, f) => {
 				$Z[e] &&
 					g.beAttacked &&
 					((f = $Z[d]) && f.beAttacked
@@ -5038,7 +4961,7 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 												(k.Altitude = 0),
 												oSym.addTask(
 													70,
-													function (l, m) {
+													(l, m) => {
 														$Z[l] &&
 															m.beAttacked &&
 															((m.isAttacking = 0),
@@ -5056,7 +4979,7 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 							(g.Altitude = 0),
 							oSym.addTask(
 								70,
-								function (h, i) {
+								(h, i) => {
 									$Z[h] &&
 										i.beAttacked &&
 										((i.isAttacking = 0),
@@ -5069,7 +4992,7 @@ var oSnorkelZombie = InheritO(oDuckyTubeZombie1, {
 			[c, b, a]
 		);
 	},
-	AutoReduceHP: function (a) {
+	AutoReduceHP(a) {
 		oSym.addTask(
 			100,
 			function (c) {
@@ -5102,16 +5025,16 @@ var oSubZombie = InheritO(oSnorkelZombie, {
 		var a = "images/Zombies/SubZombie/";
 		return [
 			"images/Card/Zombies/SubZombie.png",
-			a + "0.gif",
-			a + "Walk1.gif",
-			a + "Walk2.gif",
-			a + "1.gif",
-			a + "Attack.gif",
-			a + "Head.gif" + $Random,
-			a + "Die.gif" + $Random,
-			a + "Jump.gif" + $Random,
-			a + "Risk.gif" + $Random,
-			a + "Sink.gif" + $Random,
+			`${a}0.gif`,
+			`${a}Walk1.gif`,
+			`${a}Walk2.gif`,
+			`${a}1.gif`,
+			`${a}Attack.gif`,
+			`${a}Head.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`${a}Jump.gif${$Random}`,
+			`${a}Risk.gif${$Random}`,
+			`${a}Sink.gif${$Random}`,
 		];
 	})(),
 });
@@ -5124,7 +5047,7 @@ var oSmallZombie = InheritO(oZombie, {
 	beAttackedPointL: 41,
 	beAttackedPointR: 78,
 	BreakPoint: 25,
-	Init: function (e, g, c, b) {
+	Init(e, g, c, b) {
 		var a = 0;
 		var f = this;
 		var d = [];
@@ -5141,39 +5064,30 @@ var oSmallZombie = InheritO(oZombie, {
 			";left:",
 			"px;top:",
 			"px;z-index:",
-			'"><img src="' +
-				ShadowPNG +
-				'" style="' +
-				g.getShadow(g) +
-				'"><img style="position:absolute;clip:rect(0,auto,',
+			`"><img src="${ShadowPNG}" style="${g.getShadow(
+				g
+			)}"><img style="position:absolute;clip:rect(0,auto,`,
 			",0);width:83px;height:72px;top:",
 			'px" src="',
 			'"></div>',
 		];
 	},
-	GoingDieHead: function (c, a, b) {
+	GoingDieHead(c, a, b) {
 		oSym.addTask(200, ClearChild, [
 			NewImg(
 				0,
 				a[b.HeadGif],
-				"width:75px;height:93px;left:" +
-					b.AttackedLX +
-					"px;top:" +
-					(b.pixelTop - 20) +
-					"px;z-index:" +
-					b.zIndex,
+				`width:75px;height:93px;left:${b.AttackedLX}px;top:${
+					b.pixelTop - 20
+				}px;z-index:${b.zIndex}`,
 				EDPZ
 			),
 		]);
 	},
-	getShadow: function (a) {
-		return (
-			"width:43px;height:18px;left:" +
-			(a.beAttackedPointL - 5) +
-			"px;top:" +
-			(a.height - 15) +
-			"px"
-		);
+	getShadow(a) {
+		return `width:43px;height:18px;left:${a.beAttackedPointL - 5}px;top:${
+			a.height - 15
+		}px`;
 	},
 });
 var oSmallFlagZombie = InheritO(oFlagZombie, {
@@ -5185,7 +5099,7 @@ var oSmallFlagZombie = InheritO(oFlagZombie, {
 	beAttackedPointL: 41,
 	beAttackedPointR: 78,
 	BreakPoint: 25,
-	Init: function (e, g, c, b) {
+	Init(e, g, c, b) {
 		var a = 0;
 		var f = this;
 		var d = [];
@@ -5202,39 +5116,30 @@ var oSmallFlagZombie = InheritO(oFlagZombie, {
 			";left:",
 			"px;top:",
 			"px;z-index:",
-			'"><img src="' +
-				ShadowPNG +
-				'" style="' +
-				g.getShadow(g) +
-				'"><img style="position:absolute;clip:rect(0,auto,',
+			`"><img src="${ShadowPNG}" style="${g.getShadow(
+				g
+			)}"><img style="position:absolute;clip:rect(0,auto,`,
 			",0);width:83px;height:72px;top:",
 			'px" src="',
 			'"></div>',
 		];
 	},
-	GoingDieHead: function (c, a, b) {
+	GoingDieHead(c, a, b) {
 		oSym.addTask(200, ClearChild, [
 			NewImg(
 				0,
 				a[b.HeadGif],
-				"width:75px;height:93px;left:" +
-					b.AttackedLX +
-					"px;top:" +
-					(b.pixelTop - 20) +
-					"px;z-index:" +
-					b.zIndex,
+				`width:75px;height:93px;left:${b.AttackedLX}px;top:${
+					b.pixelTop - 20
+				}px;z-index:${b.zIndex}`,
 				EDPZ
 			),
 		]);
 	},
-	getShadow: function (a) {
-		return (
-			"width:43px;height:18px;left:" +
-			(a.beAttackedPointL - 5) +
-			"px;top:" +
-			(a.height - 15) +
-			"px"
-		);
+	getShadow(a) {
+		return `width:43px;height:18px;left:${a.beAttackedPointL - 5}px;top:${
+			a.height - 15
+		}px`;
 	},
 });
 var oSmallDuckyTubeZombie1 = InheritO(oDuckyTubeZombie1, {
@@ -5246,7 +5151,7 @@ var oSmallDuckyTubeZombie1 = InheritO(oDuckyTubeZombie1, {
 	beAttackedPointL: 41,
 	beAttackedPointR: 73,
 	BreakPoint: 25,
-	Init: function (e, g, c, b) {
+	Init(e, g, c, b) {
 		var a = 0;
 		var f = this;
 		var d = [];
@@ -5263,39 +5168,30 @@ var oSmallDuckyTubeZombie1 = InheritO(oDuckyTubeZombie1, {
 			";left:",
 			"px;top:",
 			"px;z-index:",
-			'"><img src="' +
-				ShadowPNG +
-				'" style="' +
-				g.getShadow(g) +
-				'"><img style="position:absolute;clip:rect(0,auto,',
+			`"><img src="${ShadowPNG}" style="${g.getShadow(
+				g
+			)}"><img style="position:absolute;clip:rect(0,auto,`,
 			",0);width:83px;height:72px;top:",
 			'px" src="',
 			'"></div>',
 		];
 	},
-	GoingDieHead: function (c, a, b) {
+	GoingDieHead(c, a, b) {
 		oSym.addTask(200, ClearChild, [
 			NewImg(
 				0,
 				a[b.HeadGif],
-				"width:75px;height:93px;left:" +
-					b.AttackedLX +
-					"px;top:" +
-					(b.pixelTop - 20) +
-					"px;z-index:" +
-					b.zIndex,
+				`width:75px;height:93px;left:${b.AttackedLX}px;top:${
+					b.pixelTop - 20
+				}px;z-index:${b.zIndex}`,
 				EDPZ
 			),
 		]);
 	},
-	getShadow: function (a) {
-		return (
-			"width:43px;height:18px;left:" +
-			(a.beAttackedPointL - 5) +
-			"px;top:" +
-			(a.height - 15) +
-			"px"
-		);
+	getShadow(a) {
+		return `width:43px;height:18px;left:${a.beAttackedPointL - 5}px;top:${
+			a.height - 15
+		}px`;
 	},
 });
 var oSmallConeheadZombie = InheritO(oConeheadZombie, {
@@ -5308,7 +5204,7 @@ var oSmallConeheadZombie = InheritO(oConeheadZombie, {
 	beAttackedPointL: 41,
 	beAttackedPointR: 78,
 	BreakPoint: 25,
-	Init: function (e, g, c, b) {
+	Init(e, g, c, b) {
 		var a = 0;
 		var f = this;
 		var d = [];
@@ -5325,39 +5221,30 @@ var oSmallConeheadZombie = InheritO(oConeheadZombie, {
 			";left:",
 			"px;top:",
 			"px;z-index:",
-			'"><img src="' +
-				ShadowPNG +
-				'" style="' +
-				g.getShadow(g) +
-				'"><img style="position:absolute;clip:rect(0,auto,',
+			`"><img src="${ShadowPNG}" style="${g.getShadow(
+				g
+			)}"><img style="position:absolute;clip:rect(0,auto,`,
 			",0);width:83px;height:72px;top:",
 			'px" src="',
 			'"></div>',
 		];
 	},
-	GoingDieHead: function (c, a, b) {
+	GoingDieHead(c, a, b) {
 		oSym.addTask(200, ClearChild, [
 			NewImg(
 				0,
 				a[b.HeadGif],
-				"width:75px;height:93px;left:" +
-					b.AttackedLX +
-					"px;top:" +
-					(b.pixelTop - 20) +
-					"px;z-index:" +
-					b.zIndex,
+				`width:75px;height:93px;left:${b.AttackedLX}px;top:${
+					b.pixelTop - 20
+				}px;z-index:${b.zIndex}`,
 				EDPZ
 			),
 		]);
 	},
-	getShadow: function (a) {
-		return (
-			"width:43px;height:18px;left:" +
-			(a.beAttackedPointL - 5) +
-			"px;top:" +
-			(a.height - 15) +
-			"px"
-		);
+	getShadow(a) {
+		return `width:43px;height:18px;left:${a.beAttackedPointL - 5}px;top:${
+			a.height - 15
+		}px`;
 	},
 });
 var oSmallFootballZombie = InheritO(oFootballZombie, {
@@ -5370,7 +5257,7 @@ var oSmallFootballZombie = InheritO(oFootballZombie, {
 	beAttackedPointL: 20,
 	beAttackedPointR: 77,
 	BreakPoint: 25,
-	Init: function (e, g, c, b) {
+	Init(e, g, c, b) {
 		var a = 0;
 		var f = this;
 		var d = [];
@@ -5387,39 +5274,30 @@ var oSmallFootballZombie = InheritO(oFootballZombie, {
 			";left:",
 			"px;top:",
 			"px;z-index:",
-			'"><img src="' +
-				ShadowPNG +
-				'" style="' +
-				g.getShadow(g) +
-				'"><img style="position:absolute;clip:rect(0,auto,',
+			`"><img src="${ShadowPNG}" style="${g.getShadow(
+				g
+			)}"><img style="position:absolute;clip:rect(0,auto,`,
 			",0);width:77px;height:80px;top:",
 			'px" src="',
 			'"></div>',
 		];
 	},
-	GoingDieHead: function (c, a, b) {
+	GoingDieHead(c, a, b) {
 		oSym.addTask(200, ClearChild, [
 			NewImg(
 				0,
 				a[b.HeadGif],
-				"width:75px;height:93px;left:" +
-					b.AttackedLX +
-					"px;top:" +
-					(b.pixelTop - 20) +
-					"px;z-index:" +
-					b.zIndex,
+				`width:75px;height:93px;left:${b.AttackedLX}px;top:${
+					b.pixelTop - 20
+				}px;z-index:${b.zIndex}`,
 				EDPZ
 			),
 		]);
 	},
-	getShadow: function (a) {
-		return (
-			"width:43px;height:18px;left:" +
-			(a.beAttackedPointL + 15) +
-			"px;top:" +
-			(a.height - 22) +
-			"px"
-		);
+	getShadow(a) {
+		return `width:43px;height:18px;left:${a.beAttackedPointL + 15}px;top:${
+			a.height - 22
+		}px`;
 	},
 });
 var oSmallSnorkelZombie = InheritO(oSnorkelZombie, {
@@ -5431,7 +5309,7 @@ var oSmallSnorkelZombie = InheritO(oSnorkelZombie, {
 	beAttackedPointL: 20,
 	beAttackedPointR: 50,
 	BreakPoint: 25,
-	Init: function (e, g, c, b) {
+	Init(e, g, c, b) {
 		var a = 0;
 		var f = this;
 		var d = [];
@@ -5448,39 +5326,30 @@ var oSmallSnorkelZombie = InheritO(oSnorkelZombie, {
 			";left:",
 			"px;top:",
 			"px;z-index:",
-			'"><img src="' +
-				ShadowPNG +
-				'" style="' +
-				g.getShadow(g) +
-				'"><img style="position:absolute;clip:rect(0,auto,',
+			`"><img src="${ShadowPNG}" style="${g.getShadow(
+				g
+			)}"><img style="position:absolute;clip:rect(0,auto,`,
 			",0);width:71px;height:100px;top:",
 			'px" src="',
 			'"></div>',
 		];
 	},
-	GoingDieHead: function (c, a, b) {
+	GoingDieHead(c, a, b) {
 		oSym.addTask(200, ClearChild, [
 			NewImg(
 				0,
 				a[b.HeadGif],
-				"width:71px;height:105px;left:" +
-					b.AttackedLX +
-					"px;top:" +
-					(b.pixelTop - 20) +
-					"px;z-index:" +
-					b.zIndex,
+				`width:71px;height:105px;left:${b.AttackedLX}px;top:${
+					b.pixelTop - 20
+				}px;z-index:${b.zIndex}`,
 				EDPZ
 			),
 		]);
 	},
-	getShadow: function (a) {
-		return (
-			"width:43px;height:18px;left:" +
-			a.beAttackedPointL +
-			"px;top:" +
-			(a.height - 45) +
-			"px"
-		);
+	getShadow(a) {
+		return `width:43px;height:18px;left:${a.beAttackedPointL}px;top:${
+			a.height - 45
+		}px`;
 	},
 });
 var oZomboni = (function () {
@@ -5500,7 +5369,7 @@ var oZomboni = (function () {
 		d.SetAlpha(d, d.EleBody, 50, 0.5);
 		oSym.addTask(
 			10,
-			function (f, e) {
+			(f, e) => {
 				(e = $Z[f]) && e.SetAlpha(e, e.EleBody, 100, 1);
 			},
 			[d.id]
@@ -5522,7 +5391,7 @@ var oZomboni = (function () {
 		beAttackedPointR: 290,
 		BreakPoint: 200,
 		SunNum: 350,
-		GetDY: function () {
+		GetDY() {
 			return 0;
 		},
 		OSpeed: 2.5,
@@ -5535,19 +5404,19 @@ var oZomboni = (function () {
 			var b = "images/Zombies/Zomboni/";
 			return [
 				"images/Card/Zombies/Zomboni.png",
-				b + "0.gif",
-				b + "1.gif",
-				b + "2.gif",
-				b + "3.gif",
-				b + "4.gif",
-				b + "5.gif" + $Random,
-				b + "BoomDie.gif" + $Random,
-				b + "ice.png",
-				b + "ice_cap.png",
+				`${b}0.gif`,
+				`${b}1.gif`,
+				`${b}2.gif`,
+				`${b}3.gif`,
+				`${b}4.gif`,
+				`${b}5.gif${$Random}`,
+				`${b}BoomDie.gif${$Random}`,
+				`${b}ice.png`,
+				`${b}ice_cap.png`,
 			];
 		})(),
 		AudioArr: ["zamboni", "explosion"],
-		BirthCallBack: function (h) {
+		BirthCallBack(h) {
 			var g = h.delayT;
 			var e = h.id;
 			var c = (h.Ele = $(e));
@@ -5558,11 +5427,11 @@ var oZomboni = (function () {
 			h.EleBody = c.childNodes[1];
 			!b[d]
 				? ((f = NewEle(
-						"dIceCar" + d,
+						`dIceCar${d}`,
 						"div",
-						"position:absolute;z-index:1;left:145px;top:" +
-							(GetY(d) - 65) +
-							"px;width:800px;height:72px",
+						`position:absolute;z-index:1;left:145px;top:${
+							GetY(d) - 65
+						}px;width:800px;height:72px`,
 						0,
 						EDPZ
 					)),
@@ -5583,7 +5452,7 @@ var oZomboni = (function () {
 			g
 				? oSym.addTask(
 						g,
-						function (j, i) {
+						(j, i) => {
 							var k = $Z[j];
 							k &&
 								((k.FreeSetbodyTime = 0),
@@ -5594,7 +5463,7 @@ var oZomboni = (function () {
 					)
 				: (SetBlock(c), PlayAudio("zamboni"));
 		},
-		ChkActs: function (e, j, q, k) {
+		ChkActs(e, j, q, k) {
 			var b;
 			var r;
 			var m;
@@ -5604,7 +5473,7 @@ var oZomboni = (function () {
 			var h;
 			var f;
 			var c;
-			var l = $("dIceCar" + j);
+			var l = $(`dIceCar${j}`);
 			e.JudgeAttack();
 			(r = e.AttackedRX -= b = e.Speed) < -50
 				? (q.splice(k, 1), e.DisappearDie(), (m = 0))
@@ -5619,74 +5488,68 @@ var oZomboni = (function () {
 							CustomTop: 400 - e.height + e.GetDY(),
 						})),
 					(e.ZX = e.AttackedLX -= b),
-					(e.Ele.style.left = Math.floor((e.X -= b)) + "px"),
+					(e.Ele.style.left = `${Math.floor((e.X -= b))}px`),
 					(m = 1));
 			d = e.X;
 			h = d + 250;
 			f = d + 100;
 			c = GetC(h);
-			c > -1 && c < n[1] && ((oGd.$Crater[j + "_" + c] = 1), (n[1] = c));
+			c > -1 && c < n[1] && ((oGd.$Crater[`${j}_${c}`] = 1), (n[1] = c));
 			h > 120 &&
 				h < n[2] &&
 				((n[2] = h),
-				(l.firstChild.style.clip = "rect(0,auto,auto," + f + "px)"),
-				(l.childNodes[1].style.left = Math.max(0, f) + "px"));
+				(l.firstChild.style.clip = `rect(0,auto,auto,${f}px)`),
+				(l.childNodes[1].style.left = `${Math.max(0, f)}px`));
 			GetC(e.AttackedLX) > 5 && (e.OSpeed = e.Speed -= 0.005);
 			return m;
 		},
-		ChkActs1: function (f, d, g, c) {
+		ChkActs1(f, d, g, c) {
 			var b;
 			var e;
 			f.JudgeAttack();
 			(f.AttackedLX += b = f.Speed) > oS.W
 				? (g.splice(c, 1), f.DisappearDie(), (e = 0))
 				: ((f.ZX = f.AttackedRX += b),
-					(f.Ele.style.left = Math.ceil((f.X += b)) + "px"),
+					(f.Ele.style.left = `${Math.ceil((f.X += b))}px`),
 					(e = 1));
 			return e;
 		},
-		getPea: function (c, b) {
+		getPea(c, b) {
 			PlayAudio(
 				["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]
 			);
 			c.getHit0(c, b);
 		},
-		getFirePea: function (c, b) {
+		getFirePea(c, b) {
 			PlayAudio(
 				["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]
 			);
 			c.getHit0(c, b);
 		},
-		getSnowPea: function (c, b) {
+		getSnowPea(c, b) {
 			PlayAudio(
 				["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]
 			);
 			c.getHit0(c, b);
 		},
-		getFirePeaSputtering: function () {},
-		getFreeze: function (c, b) {
+		getFirePeaSputtering() {},
+		getFreeze(c, b) {
 			c.getHit0(c, 20);
 		},
-		getShadow: function (b) {
-			return (
-				"left:" +
-				(b.beAttackedPointL - 10) +
-				"px;top:" +
-				(b.height - 22) +
-				"px"
-			);
+		getShadow(b) {
+			return `left:${b.beAttackedPointL - 10}px;top:${b.height - 22}px`;
 		},
 		getHit: a,
 		getHit0: a,
 		getHit1: a,
 		getHit2: a,
 		getHit3: a,
-		GoingDie: function () {
+		GoingDie() {
 			var b = this;
 			b.beAttacked = 0;
 			b.AutoReduceHP(b.id);
 		},
-		NormalDie: function () {
+		NormalDie() {
 			var b = this;
 			PlayAudio("explosion");
 			b.EleBody.src = b.PicArr[b.DieGif];
@@ -5696,7 +5559,7 @@ var oZomboni = (function () {
 			b.JudgeIce();
 			b.PZ && oP.MonPrgs();
 		},
-		DisappearDie: function () {
+		DisappearDie() {
 			var b = this;
 			ClearChild(b.Ele);
 			b.HP = 0;
@@ -5704,7 +5567,7 @@ var oZomboni = (function () {
 			b.JudgeIce();
 			b.PZ && oP.MonPrgs();
 		},
-		ExplosionDie: function () {
+		ExplosionDie() {
 			var b = this;
 			b.EleBody.src = b.PicArr[b.BoomDieGif];
 			oSym.addTask(300, ClearChild, [b.Ele]);
@@ -5713,19 +5576,19 @@ var oZomboni = (function () {
 			b.JudgeIce();
 			b.PZ && oP.MonPrgs();
 		},
-		CrushDie: function () {
+		CrushDie() {
 			this.NormalDie();
 		},
-		JudgeIce: function () {
+		JudgeIce() {
 			var d = this;
 			var b = d.R;
-			var e = $("dIceCar" + b);
+			var e = $(`dIceCar${b}`);
 			var c = oGd.$Ice[b];
 			e && e.childNodes[1] && SetBlock(e.childNodes[1]);
 			--c[0] <= 0 &&
 				oSym.addTask(
 					3e3,
-					function (k, h) {
+					(k, h) => {
 						var j = oGd.$Ice[h];
 						var g;
 						var f = oGd.$Crater;
@@ -5733,7 +5596,7 @@ var oZomboni = (function () {
 							ClearChild(k);
 							g = j[1];
 							while (g < 11) {
-								delete f[h + "_" + g++];
+								delete f[`${h}_${g++}`];
 								delete oGd.$Ice[h];
 							}
 						}
@@ -5741,7 +5604,7 @@ var oZomboni = (function () {
 					[e, b]
 				);
 		},
-		flatTire: function () {
+		flatTire() {
 			var b = this;
 			b.EleBody.src = "images/Zombies/Zomboni/4.gif";
 			b.beAttacked = 0;
@@ -5750,28 +5613,28 @@ var oZomboni = (function () {
 			b.ChkActs = b.ChkActs1 = function () {};
 			oSym.addTask(
 				290,
-				function (e, c) {
+				(e, c) => {
 					var d = $Z[e];
 					d && d.NormalDie();
 				},
 				[b.id, b.EleBody]
 			);
 		},
-		JudgeAttack: function () {
+		JudgeAttack() {
 			var f = this;
 			var c = f.ZX;
-			var d = f.R + "_";
+			var d = `${f.R}_`;
 			var e = GetC(c);
 			var g = oGd.$;
 			var b;
 			(b = f.JudgeLR(f, d, e, c, g) || f.JudgeSR(f, d, e, c, g)) &&
 				f.NormalAttack(b[0], b[1]);
 		},
-		JudgeLR: function (e, c, d, b, f) {
+		JudgeLR(e, c, d, b, f) {
 			return d > 10 || d < 1
 				? false
 				: (function () {
-						c += --d + "_";
+						c += `${--d}_`;
 						var g = 3;
 						var h;
 						while (g--) {
@@ -5783,11 +5646,11 @@ var oZomboni = (function () {
 						}
 					})();
 		},
-		JudgeSR: function (e, c, d, b, f) {
+		JudgeSR(e, c, d, b, f) {
 			return d > 9
 				? false
 				: (function () {
-						c += d + "_";
+						c += `${d}_`;
 						var g = 3;
 						var h;
 						while (g--) {
@@ -5799,11 +5662,11 @@ var oZomboni = (function () {
 						}
 					})();
 		},
-		NormalAttack: function (c, b) {
+		NormalAttack(c, b) {
 			var d = $Z[c];
 			$P[b].getHurt(d, 2, d.Attack);
 		},
-		getThump: function () {
+		getThump() {
 			this.NormalDie();
 		},
 	});
@@ -5825,7 +5688,7 @@ var oCZomboni = (function () {
 		d.SetAlpha(d, d.EleBody, 50, 0.5);
 		oSym.addTask(
 			10,
-			function (f, e) {
+			(f, e) => {
 				(e = $Z[f]) && e.SetAlpha(e, e.EleBody, 100, 1);
 			},
 			[d.id]
@@ -5847,7 +5710,7 @@ var oCZomboni = (function () {
 		beAttackedPointR: 290,
 		BreakPoint: 200,
 		SunNum: 350,
-		GetDY: function () {
+		GetDY() {
 			return 0;
 		},
 		OSpeed: 2.5,
@@ -5858,19 +5721,19 @@ var oCZomboni = (function () {
 			var b = "images/Zombies/wall/Zomboni/";
 			return [
 				"images/Card/Zombies/Zomboni.png",
-				b + "0.gif",
-				b + "1.gif",
-				b + "2.gif",
-				b + "3.gif",
-				b + "4.gif",
-				b + "5.gif" + $Random,
-				b + "BoomDie.gif" + $Random,
-				b + "ice.png",
-				b + "ice_cap.png",
+				`${b}0.gif`,
+				`${b}1.gif`,
+				`${b}2.gif`,
+				`${b}3.gif`,
+				`${b}4.gif`,
+				`${b}5.gif${$Random}`,
+				`${b}BoomDie.gif${$Random}`,
+				`${b}ice.png`,
+				`${b}ice_cap.png`,
 			];
 		})(),
 		AudioArr: ["zamboni", "explosion"],
-		BirthCallBack: function (h) {
+		BirthCallBack(h) {
 			var g = h.delayT;
 			var e = h.id;
 			var c = (h.Ele = $(e));
@@ -5881,11 +5744,11 @@ var oCZomboni = (function () {
 			h.EleBody = c.childNodes[1];
 			!b[d]
 				? ((f = NewEle(
-						"dIceCar" + d,
+						`dIceCar${d}`,
 						"div",
-						"position:absolute;z-index:1;left:145px;top:" +
-							(GetY(d) - 65) +
-							"px;width:800px;height:72px",
+						`position:absolute;z-index:1;left:145px;top:${
+							GetY(d) - 65
+						}px;width:800px;height:72px`,
 						0,
 						EDPZ
 					)),
@@ -5906,7 +5769,7 @@ var oCZomboni = (function () {
 			g
 				? oSym.addTask(
 						g,
-						function (j, i) {
+						(j, i) => {
 							var k = $Z[j];
 							k &&
 								((k.FreeSetbodyTime = 0),
@@ -5917,7 +5780,7 @@ var oCZomboni = (function () {
 					)
 				: (SetBlock(c), PlayAudio("zamboni"));
 		},
-		ChkActs: function (e, j, q, k) {
+		ChkActs(e, j, q, k) {
 			var b;
 			var r;
 			var m;
@@ -5927,7 +5790,7 @@ var oCZomboni = (function () {
 			var h;
 			var f;
 			var c;
-			var l = $("dIceCar" + j);
+			var l = $(`dIceCar${j}`);
 			e.JudgeAttack();
 			(r = e.AttackedRX -= b = e.Speed) < -50
 				? (q.splice(k, 1), e.DisappearDie(), (m = 0))
@@ -5942,74 +5805,68 @@ var oCZomboni = (function () {
 							CustomTop: 400 - e.height + e.GetDY(),
 						})),
 					(e.ZX = e.AttackedLX -= b),
-					(e.Ele.style.left = Math.floor((e.X -= b)) + "px"),
+					(e.Ele.style.left = `${Math.floor((e.X -= b))}px`),
 					(m = 1));
 			d = e.X;
 			h = d + 250;
 			f = d + 100;
 			c = GetC(h);
-			c > -1 && c < n[1] && ((oGd.$Crater[j + "_" + c] = 1), (n[1] = c));
+			c > -1 && c < n[1] && ((oGd.$Crater[`${j}_${c}`] = 1), (n[1] = c));
 			h > 120 &&
 				h < n[2] &&
 				((n[2] = h),
-				(l.firstChild.style.clip = "rect(0,auto,auto," + f + "px)"),
-				(l.childNodes[1].style.left = Math.max(0, f) + "px"));
+				(l.firstChild.style.clip = `rect(0,auto,auto,${f}px)`),
+				(l.childNodes[1].style.left = `${Math.max(0, f)}px`));
 			GetC(e.AttackedLX) > 5 && (e.OSpeed = e.Speed -= 0.005);
 			return m;
 		},
-		ChkActs1: function (f, d, g, c) {
+		ChkActs1(f, d, g, c) {
 			var b;
 			var e;
 			f.JudgeAttack();
 			(f.AttackedLX += b = f.Speed) > oS.W
 				? (g.splice(c, 1), f.DisappearDie(), (e = 0))
 				: ((f.ZX = f.AttackedRX += b),
-					(f.Ele.style.left = Math.ceil((f.X += b)) + "px"),
+					(f.Ele.style.left = `${Math.ceil((f.X += b))}px`),
 					(e = 1));
 			return e;
 		},
-		getPea: function (c, b) {
+		getPea(c, b) {
 			PlayAudio(
 				["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]
 			);
 			c.getHit0(c, b);
 		},
-		getFirePea: function (c, b) {
+		getFirePea(c, b) {
 			PlayAudio(
 				["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]
 			);
 			c.getHit0(c, b);
 		},
-		getSnowPea: function (c, b) {
+		getSnowPea(c, b) {
 			PlayAudio(
 				["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]
 			);
 			c.getHit0(c, b);
 		},
-		getFirePeaSputtering: function () {},
-		getFreeze: function (c, b) {
+		getFirePeaSputtering() {},
+		getFreeze(c, b) {
 			c.getHit0(c, 20);
 		},
-		getShadow: function (b) {
-			return (
-				"left:" +
-				(b.beAttackedPointL - 10) +
-				"px;top:" +
-				(b.height - 22) +
-				"px"
-			);
+		getShadow(b) {
+			return `left:${b.beAttackedPointL - 10}px;top:${b.height - 22}px`;
 		},
 		getHit: a,
 		getHit0: a,
 		getHit1: a,
 		getHit2: a,
 		getHit3: a,
-		GoingDie: function () {
+		GoingDie() {
 			var b = this;
 			b.beAttacked = 0;
 			b.AutoReduceHP(b.id);
 		},
-		NormalDie: function () {
+		NormalDie() {
 			var b = this;
 			PlayAudio("explosion");
 			b.EleBody.src = b.PicArr[b.DieGif];
@@ -6019,7 +5876,7 @@ var oCZomboni = (function () {
 			b.JudgeIce();
 			b.PZ && oP.MonPrgs();
 		},
-		DisappearDie: function () {
+		DisappearDie() {
 			var b = this;
 			ClearChild(b.Ele);
 			b.HP = 0;
@@ -6027,7 +5884,7 @@ var oCZomboni = (function () {
 			b.JudgeIce();
 			b.PZ && oP.MonPrgs();
 		},
-		ExplosionDie: function () {
+		ExplosionDie() {
 			var b = this;
 			b.EleBody.src = b.PicArr[b.BoomDieGif];
 			oSym.addTask(300, ClearChild, [b.Ele]);
@@ -6036,19 +5893,19 @@ var oCZomboni = (function () {
 			b.JudgeIce();
 			b.PZ && oP.MonPrgs();
 		},
-		CrushDie: function () {
+		CrushDie() {
 			this.NormalDie();
 		},
-		JudgeIce: function () {
+		JudgeIce() {
 			var d = this;
 			var b = d.R;
-			var e = $("dIceCar" + b);
+			var e = $(`dIceCar${b}`);
 			var c = oGd.$Ice[b];
 			e && e.childNodes[1] && SetBlock(e.childNodes[1]);
 			--c[0] <= 0 &&
 				oSym.addTask(
 					3e3,
-					function (k, h) {
+					(k, h) => {
 						var j = oGd.$Ice[h];
 						var g;
 						var f = oGd.$Crater;
@@ -6056,7 +5913,7 @@ var oCZomboni = (function () {
 							ClearChild(k);
 							g = j[1];
 							while (g < 11) {
-								delete f[h + "_" + g++];
+								delete f[`${h}_${g++}`];
 								delete oGd.$Ice[h];
 							}
 						}
@@ -6064,7 +5921,7 @@ var oCZomboni = (function () {
 					[e, b]
 				);
 		},
-		flatTire: function () {
+		flatTire() {
 			var b = this;
 			b.EleBody.src = "images/Zombies/wall/Zomboni/4.gif";
 			b.beAttacked = 0;
@@ -6073,28 +5930,28 @@ var oCZomboni = (function () {
 			b.ChkActs = b.ChkActs1 = function () {};
 			oSym.addTask(
 				290,
-				function (e, c) {
+				(e, c) => {
 					var d = $Z[e];
 					d && d.NormalDie();
 				},
 				[b.id, b.EleBody]
 			);
 		},
-		JudgeAttack: function () {
+		JudgeAttack() {
 			var f = this;
 			var c = f.ZX;
-			var d = f.R + "_";
+			var d = `${f.R}_`;
 			var e = GetC(c);
 			var g = oGd.$;
 			var b;
 			(b = f.JudgeLR(f, d, e, c, g) || f.JudgeSR(f, d, e, c, g)) &&
 				f.NormalAttack(b[0], b[1]);
 		},
-		JudgeLR: function (e, c, d, b, f) {
+		JudgeLR(e, c, d, b, f) {
 			return d > 10 || d < 1
 				? false
 				: (function () {
-						c += --d + "_";
+						c += `${--d}_`;
 						var g = 3;
 						var h;
 						while (g--) {
@@ -6106,11 +5963,11 @@ var oCZomboni = (function () {
 						}
 					})();
 		},
-		JudgeSR: function (e, c, d, b, f) {
+		JudgeSR(e, c, d, b, f) {
 			return d > 9
 				? false
 				: (function () {
-						c += d + "_";
+						c += `${d}_`;
 						var g = 3;
 						var h;
 						while (g--) {
@@ -6122,11 +5979,11 @@ var oCZomboni = (function () {
 						}
 					})();
 		},
-		NormalAttack: function (c, b) {
+		NormalAttack(c, b) {
 			var d = $Z[c];
 			$P[b].getHurt(d, 2, d.Attack);
 		},
-		getThump: function () {
+		getThump() {
 			this.NormalDie();
 		},
 	});
@@ -6140,13 +5997,13 @@ var oDolphinRiderZombie = InheritO(oAquaticZombie, {
 	width: 282,
 	height: 210,
 	Lvl: 2,
-	getShadow: function (a) {
+	getShadow(a) {
 		return "left:105px;top:175px";
 	},
-	GetDX: function () {
+	GetDX() {
 		return -137;
 	},
-	GetDY: function () {
+	GetDY() {
 		return 0;
 	},
 	GetDTop: 0,
@@ -6162,19 +6019,19 @@ var oDolphinRiderZombie = InheritO(oAquaticZombie, {
 		var a = "images/Zombies/DolphinRiderZombie/";
 		return [
 			"images/Card/Zombies/DolphinRiderZombie.png",
-			a + "0.gif",
-			a + "Walk1.gif",
-			a + "Walk2.gif",
-			a + "1.gif",
-			a + "Attack.gif",
-			a + "Head.gif" + $Random,
-			a + "Die.gif" + $Random,
-			a + "Jump.gif" + $Random,
-			a + "Jump2.gif" + $Random,
-			a + "Walk3.gif",
-			a + "Walk4.gif",
-			a + "Die2.gif" + $Random,
-			a + "Jump3.gif" + $Random,
+			`${a}0.gif`,
+			`${a}Walk1.gif`,
+			`${a}Walk2.gif`,
+			`${a}1.gif`,
+			`${a}Attack.gif`,
+			`${a}Head.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`${a}Jump.gif${$Random}`,
+			`${a}Jump2.gif${$Random}`,
+			`${a}Walk3.gif`,
+			`${a}Walk4.gif`,
+			`${a}Die2.gif${$Random}`,
+			`${a}Jump3.gif${$Random}`,
 		];
 	})(),
 	AudioArr: [
@@ -6184,11 +6041,11 @@ var oDolphinRiderZombie = InheritO(oAquaticZombie, {
 	],
 	Produce:
 		'海豚骑士僵尸善于利用你水池防御的弱点。<p>韧性：<font color="#CC241D">中</font><br>速度：<font color="#CC241D">快，慢（跳越后）</font><br>特点：<font color="#CC241D">跃过他所遇到的第一株植物</font><br>只在水池Level出现</font></p>那海豚其实也是个僵尸。',
-	BirthCallBack: function (a) {
+	BirthCallBack(a) {
 		PlayAudio("dolphin_appears");
 		oAquaticZombie.prototype.BirthCallBack(a);
 	},
-	Jump: function (a) {
+	Jump(a) {
 		a.beAttacked &&
 			(PlayAudio("zombie_entering_water"),
 			(a.Altitude = 2),
@@ -6196,14 +6053,14 @@ var oDolphinRiderZombie = InheritO(oAquaticZombie, {
 			(a.EleBody.src = a.PicArr[8]),
 			oSym.addTask(
 				240,
-				function (d, b) {
+				(d, b) => {
 					var c;
 					$Z[d] &&
 						b.beAttacked &&
 						((b.WalkStatus = 1),
 						(b.Altitude = 1),
 						(b.OSpeed = b.Speed = 10.8),
-						SetStyle(b.Ele, { left: (c = b.X -= 140) + "px" }),
+						SetStyle(b.Ele, { left: `${(c = b.X -= 140)}px` }),
 						(b.AttackedLX = c + (b.beAttackedPointL = 185)),
 						(b.AttackedRX = c + (b.beAttackedPointR = 265)),
 						(b.EleBody.src = b.PicArr[(b.NormalGif = b.WalkGif1)]),
@@ -6215,7 +6072,7 @@ var oDolphinRiderZombie = InheritO(oAquaticZombie, {
 				return 1;
 			}));
 	},
-	ChkActsL1: function (d, c, e, b) {
+	ChkActsL1(d, c, e, b) {
 		if (d.JumpTime <= 0) {
 			d.Jump(d);
 			return 1;
@@ -6224,11 +6081,11 @@ var oDolphinRiderZombie = InheritO(oAquaticZombie, {
 		!(d.FreeFreezeTime || d.FreeSetbodyTime) &&
 			((d.AttackedRX -= a = d.Speed),
 			(LX = d.ZX = d.AttackedLX -= a),
-			(d.Ele.style.left = Math.floor((d.X -= a)) + "px"),
+			(d.Ele.style.left = `${Math.floor((d.X -= a))}px`),
 			--d.JumpTime);
 		return 1;
 	},
-	getCrushed: function (a) {
+	getCrushed(a) {
 		this.NormalAttack(this.id, a.id, a.AttackedLX);
 		this.getCrushed = function () {
 			return false;
@@ -6236,7 +6093,7 @@ var oDolphinRiderZombie = InheritO(oAquaticZombie, {
 		a.Stature > 0 &&
 			oSym.addTask(
 				50,
-				function (c) {
+				(c) => {
 					var b = $Z[c];
 					b && b.CrushDie();
 				},
@@ -6244,17 +6101,17 @@ var oDolphinRiderZombie = InheritO(oAquaticZombie, {
 			);
 		return false;
 	},
-	getRaven: function (a) {
+	getRaven(a) {
 		return (
 			!this.isAttacking &&
 				this.NormalAttack(this.id, a, $P[a].AttackedLX),
 			0
 		);
 	},
-	JudgeAttack: function () {
+	JudgeAttack() {
 		var f = this;
 		var b = f.ZX;
-		var d = f.R + "_";
+		var d = `${f.R}_`;
 		var c = GetC(b);
 		var g = oGd.$;
 		var e;
@@ -6266,7 +6123,7 @@ var oDolphinRiderZombie = InheritO(oAquaticZombie, {
 			for (
 				a = 2;
 				a > -1;
-				(p = g[d + e + "_" + a--]) &&
+				(p = g[`${d + e}_${a--}`]) &&
 				(p.EName != "oBrains"
 					? p.AttackedRX >= b &&
 						p.AttackedLX < b &&
@@ -6284,10 +6141,10 @@ var oDolphinRiderZombie = InheritO(oAquaticZombie, {
 			) {}
 		}
 	},
-	AttackZombie2: function (c, b, a) {
+	AttackZombie2(c, b, a) {
 		c.NormalAttack(b, a, $Z[a].AttackedLX);
 	},
-	NormalAttack: function (d, b, g) {
+	NormalAttack(d, b, g) {
 		var f = $Z[d];
 		var a = f.Ele;
 		var c = f.EleShadow;
@@ -6303,7 +6160,7 @@ var oDolphinRiderZombie = InheritO(oAquaticZombie, {
 		};
 		oSym.addTask(
 			50,
-			function (m, j, i, l, q) {
+			(m, j, i, l, q) => {
 				var h = $Z[m];
 				var k;
 				var r;
@@ -6329,7 +6186,7 @@ var oDolphinRiderZombie = InheritO(oAquaticZombie, {
 									(h.AttackedLX = h.ZX = r = k.AttackedRX) -
 									(h.beAttackedPointL = 45)) +
 								(h.beAttackedPointR = 100)),
-							SetStyle(i, { left: h.X + "px" }),
+							SetStyle(i, { left: `${h.X}px` }),
 							(h.EleShadow.style.left = "45px"),
 							n())
 						: ((h.ZX = h.AttackedLX =
@@ -6337,12 +6194,12 @@ var oDolphinRiderZombie = InheritO(oAquaticZombie, {
 									(h.AttackedRX = g) -
 									(h.beAttackedPointR = 100)) +
 								(h.beAttackedPointL = 45)),
-							SetStyle(i, { left: h.X + "px" }),
+							SetStyle(i, { left: `${h.X}px` }),
 							(h.EleShadow.style.left = "45px"),
 							(q.src = h.PicArr[13]),
 							oSym.addTask(
 								170,
-								function (t, w) {
+								(t, w) => {
 									var v = $Z[t];
 									var u;
 									v && n();
@@ -6353,7 +6210,7 @@ var oDolphinRiderZombie = InheritO(oAquaticZombie, {
 			[d, b, a, c, e]
 		);
 	},
-	GoingDie: function () {
+	GoingDie() {
 		var b = this;
 		var c = b.id;
 		var a = b.PicArr;
@@ -6377,15 +6234,15 @@ var oImp = InheritO(OrnNoneZombies, {
 		var a = "images/Zombies/Imp/";
 		return [
 			"images/Card/Zombies/Imp.png",
-			a + "0.gif",
-			a + "Zombie.gif",
-			a + "ZombieAttack.gif",
-			a + "ZombieLostHead.gif",
-			a + "ZombieLostHeadAttack.gif",
-			a + "ZombieHead.gif" + $Random,
-			a + "ZombieDie.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}Zombie.gif`,
+			`${a}ZombieAttack.gif`,
+			`${a}ZombieLostHead.gif`,
+			`${a}ZombieLostHeadAttack.gif`,
+			`${a}ZombieHead.gif${$Random}`,
+			`${a}ZombieDie.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${a}1.gif`,
 		];
 	})(),
 	Produce:
@@ -6403,15 +6260,15 @@ var oIImp = InheritO(OrnNoneZombies, {
 		var a = "images/Zombies/Imp/";
 		return [
 			"images/Card/Zombies/IImp.png",
-			a + "0.gif",
-			a + "Zombie.gif",
-			a + "ZombieAttack.gif",
-			a + "ZombieLostHead.gif",
-			a + "ZombieLostHeadAttack.gif",
-			a + "ZombieHead.gif" + $Random,
-			a + "ZombieDie.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}Zombie.gif`,
+			`${a}ZombieAttack.gif`,
+			`${a}ZombieLostHead.gif`,
+			`${a}ZombieLostHeadAttack.gif`,
+			`${a}ZombieHead.gif${$Random}`,
+			`${a}ZombieDie.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${a}1.gif`,
 		];
 	})(),
 	Produce:
@@ -6430,15 +6287,15 @@ var oJX = InheritO(OrnNoneZombies, {
 		var a = "images/Zombies/JX/";
 		return [
 			"images/Card/Zombies/JX.png",
-			a + "0.gif",
-			a + "Zombie.gif",
-			a + "ZombieAttack.gif",
-			a + "ZombieLostHead.gif",
-			a + "ZombieLostHeadAttack.gif",
-			a + "ZombieHead.gif" + $Random,
-			a + "ZombieDie.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}Zombie.gif`,
+			`${a}ZombieAttack.gif`,
+			`${a}ZombieLostHead.gif`,
+			`${a}ZombieLostHeadAttack.gif`,
+			`${a}ZombieHead.gif${$Random}`,
+			`${a}ZombieDie.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${a}1.gif`,
 		];
 	})(),
 	Produce:
@@ -6474,32 +6331,32 @@ var oJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 		var a = "images/Zombies/JackinTheBoxZombie/";
 		return [
 			"images/Card/Zombies/JackboxZombie.png",
-			a + "0.gif",
-			a + "Attack.gif",
-			a + "Die.gif" + $Random,
-			a + "BoomDie.gif" + $Random,
-			a + "1.gif",
-			a + "Walk.gif",
-			a + "OpenBox.gif",
-			a + "Boom.gif" + $Random,
-			a + "LostHead.gif",
-			a + "LostHeadAttack.gif",
-			"images/Zombies/Zombie/ZombieHead.gif" + $Random,
+			`${a}0.gif`,
+			`${a}Attack.gif`,
+			`${a}Die.gif${$Random}`,
+			`${a}BoomDie.gif${$Random}`,
+			`${a}1.gif`,
+			`${a}Walk.gif`,
+			`${a}OpenBox.gif`,
+			`${a}Boom.gif${$Random}`,
+			`${a}LostHead.gif`,
+			`${a}LostHeadAttack.gif`,
+			`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
 		];
 	})(),
-	RandomOpenBox: function (a) {
+	RandomOpenBox(a) {
 		oSym.addTask(
 			Math.floor(Math.random() * 100) > 4
 				? Math.floor(1325 + Math.random() * 976)
 				: Math.floor(450 + Math.random() * 301),
-			function (c) {
+			(c) => {
 				var b = $Z[c];
 				b && b.beAttacked && b.OpenBox(c);
 			},
 			[a]
 		);
 	},
-	OpenBox: function (b) {
+	OpenBox(b) {
 		var a = $Z[b];
 		a.EleBody.src = a.PicArr[7];
 		a.ChkActs = a.ChkActs1 = function () {
@@ -6508,7 +6365,7 @@ var oJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 		a.JudgeAttack = function () {
 			var g = this;
 			var d = g.ZX;
-			var e = g.R + "_";
+			var e = `${g.R}_`;
 			var f = GetC(d);
 			var h = oGd.$;
 			var c;
@@ -6547,25 +6404,23 @@ var oJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 				function () {};
 		oSym.addTask(
 			50,
-			function (c) {
+			(c) => {
 				$Z[c] &&
 					((a.Status = 0),
 					!--oGd.$JackinTheBox && StopAudio("jackinthebox"),
 					PlayAudio("jackinthebox"),
 					oSym.addTask(
 						90,
-						function (f) {
+						(f) => {
 							var e = $Z[f];
 							var d;
 							e &&
 								((d = NewImg(
 									"",
 									"",
-									"width:306px;height:300px;left:" +
-										(e.X - 16) +
-										"px;top:" +
-										(e.pixelTop - 90) +
-										"px;z-index:20"
+									`width:306px;height:300px;left:${
+										e.X - 16
+									}px;top:${e.pixelTop - 90}px;z-index:20`
 								)),
 								PlayAudio("explosion"),
 								(d.src = e.PicArr[8]),
@@ -6584,7 +6439,7 @@ var oJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 											do {
 												g = n;
 												do {
-													j = q + "_" + g + "_";
+													j = `${q}_${g}_`;
 													for (l = 0; l < 4; l++) {
 														(m = r[j + l]) &&
 															m.BoomDie();
@@ -6615,16 +6470,10 @@ var oJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 			[b]
 		);
 	},
-	getShadow: function (a) {
-		return (
-			"left:" +
-			(a.beAttackedPointL - 8) +
-			"px;top:" +
-			(a.height - 32) +
-			"px"
-		);
+	getShadow(a) {
+		return `left:${a.beAttackedPointL - 8}px;top:${a.height - 32}px`;
 	},
-	BirthCallBack: function (d) {
+	BirthCallBack(d) {
 		var c = d.delayT;
 		var b = d.id;
 		var a = (d.Ele = $(b));
@@ -6633,7 +6482,7 @@ var oJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 		c
 			? oSym.addTask(
 					c,
-					function (f, e) {
+					(f, e) => {
 						var g = $Z[f];
 						g &&
 							(PlayAudio("jackinthebox", true),
@@ -6649,7 +6498,7 @@ var oJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 				SetBlock(a),
 				d.RandomOpenBox(b));
 	},
-	NormalDie: function () {
+	NormalDie() {
 		var a = this;
 		a.Status && !--oGd.$JackinTheBox && StopAudio("jackinthebox");
 		a.EleBody.src = a.PicArr[a.DieGif];
@@ -6658,7 +6507,7 @@ var oJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 		delete $Z[a.id];
 		a.PZ && oP.MonPrgs();
 	},
-	ExplosionDie: function () {
+	ExplosionDie() {
 		var a = this;
 		a.Status && !--oGd.$JackinTheBox && StopAudio("jackinthebox");
 		a.EleBody.src = a.PicArr[a.BoomDieGif];
@@ -6667,14 +6516,14 @@ var oJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 		delete $Z[a.id];
 		a.PZ && oP.MonPrgs();
 	},
-	DisappearDie: function () {
+	DisappearDie() {
 		this.Status && !--oGd.$JackinTheBox && StopAudio("jackinthebox");
 		ClearChild(this.Ele);
 		this.HP = 0;
 		delete $Z[this.id];
 		this.PZ && oP.MonPrgs();
 	},
-	CrushDie: function () {
+	CrushDie() {
 		var a = this;
 		a.Status && !--oGd.$JackinTheBox && StopAudio("jackinthebox");
 		a.GoingDieHead(a.id, a.PicArr, a);
@@ -6714,32 +6563,32 @@ var oIJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 		var a = "images/Zombies/JackinTheBoxZombie/";
 		return [
 			"images/Card/Zombies/IJackboxZombie.png",
-			a + "0.gif",
-			a + "Attack.gif",
-			a + "Die.gif" + $Random,
-			a + "BoomDie.gif" + $Random,
-			a + "1.gif",
-			a + "Walk.gif",
-			a + "OpenBox.gif",
-			a + "Boom.gif" + $Random,
-			a + "LostHead.gif",
-			a + "LostHeadAttack.gif",
-			"images/Zombies/Zombie/ZombieHead.gif" + $Random,
+			`${a}0.gif`,
+			`${a}Attack.gif`,
+			`${a}Die.gif${$Random}`,
+			`${a}BoomDie.gif${$Random}`,
+			`${a}1.gif`,
+			`${a}Walk.gif`,
+			`${a}OpenBox.gif`,
+			`${a}Boom.gif${$Random}`,
+			`${a}LostHead.gif`,
+			`${a}LostHeadAttack.gif`,
+			`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
 		];
 	})(),
-	RandomOpenBox: function (a) {
+	RandomOpenBox(a) {
 		oSym.addTask(
 			Math.floor(Math.random() * 100) > 4
 				? Math.floor(1325 + Math.random() * 976)
 				: Math.floor(450 + Math.random() * 301),
-			function (c) {
+			(c) => {
 				var b = $Z[c];
 				b && b.beAttacked && b.OpenBox(c);
 			},
 			[a]
 		);
 	},
-	OpenBox: function (b) {
+	OpenBox(b) {
 		var a = $Z[b];
 		a.EleBody.src = a.PicArr[7];
 		a.ChkActs = a.ChkActs1 = function () {
@@ -6748,7 +6597,7 @@ var oIJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 		a.JudgeAttack = function () {
 			var g = this;
 			var d = g.ZX;
-			var e = g.R + "_";
+			var e = `${g.R}_`;
 			var f = GetC(d);
 			var h = oGd.$;
 			var c;
@@ -6787,25 +6636,23 @@ var oIJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 				function () {};
 		oSym.addTask(
 			50,
-			function (c) {
+			(c) => {
 				$Z[c] &&
 					((a.Status = 0),
 					!--oGd.$JackinTheBox && StopAudio("jackinthebox"),
 					PlayAudio("jackinthebox"),
 					oSym.addTask(
 						90,
-						function (f) {
+						(f) => {
 							var e = $Z[f];
 							var d;
 							e &&
 								((d = NewImg(
 									"",
 									"",
-									"width:306px;height:300px;left:" +
-										(e.X - 16) +
-										"px;top:" +
-										(e.pixelTop - 90) +
-										"px;z-index:20"
+									`width:306px;height:300px;left:${
+										e.X - 16
+									}px;top:${e.pixelTop - 90}px;z-index:20`
 								)),
 								PlayAudio("explosion"),
 								(d.src = e.PicArr[8]),
@@ -6824,7 +6671,7 @@ var oIJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 											do {
 												g = n;
 												do {
-													j = q + "_" + g + "_";
+													j = `${q}_${g}_`;
 													for (l = 0; l < 4; l++) {
 														(m = r[j + l]) &&
 															m.BoomDie();
@@ -6855,16 +6702,10 @@ var oIJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 			[b]
 		);
 	},
-	getShadow: function (a) {
-		return (
-			"left:" +
-			(a.beAttackedPointL - 8) +
-			"px;top:" +
-			(a.height - 32) +
-			"px"
-		);
+	getShadow(a) {
+		return `left:${a.beAttackedPointL - 8}px;top:${a.height - 32}px`;
 	},
-	BirthCallBack: function (d) {
+	BirthCallBack(d) {
 		var c = d.delayT;
 		var b = d.id;
 		var a = (d.Ele = $(b));
@@ -6873,7 +6714,7 @@ var oIJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 		c
 			? oSym.addTask(
 					c,
-					function (f, e) {
+					(f, e) => {
 						var g = $Z[f];
 						g &&
 							(PlayAudio("jackinthebox", true),
@@ -6889,7 +6730,7 @@ var oIJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 				SetBlock(a),
 				d.RandomOpenBox(b));
 	},
-	NormalDie: function () {
+	NormalDie() {
 		var a = this;
 		a.Status && !--oGd.$JackinTheBox && StopAudio("jackinthebox");
 		a.EleBody.src = a.PicArr[a.DieGif];
@@ -6898,7 +6739,7 @@ var oIJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 		delete $Z[a.id];
 		a.PZ && oP.MonPrgs();
 	},
-	ExplosionDie: function () {
+	ExplosionDie() {
 		var a = this;
 		a.Status && !--oGd.$JackinTheBox && StopAudio("jackinthebox");
 		a.EleBody.src = a.PicArr[a.BoomDieGif];
@@ -6907,14 +6748,14 @@ var oIJackinTheBoxZombie = InheritO(OrnNoneZombies, {
 		delete $Z[a.id];
 		a.PZ && oP.MonPrgs();
 	},
-	DisappearDie: function () {
+	DisappearDie() {
 		this.Status && !--oGd.$JackinTheBox && StopAudio("jackinthebox");
 		ClearChild(this.Ele);
 		this.HP = 0;
 		delete $Z[this.id];
 		this.PZ && oP.MonPrgs();
 	},
-	CrushDie: function () {
+	CrushDie() {
 		var a = this;
 		a.Status && !--oGd.$JackinTheBox && StopAudio("jackinthebox");
 		a.GoingDieHead(a.id, a.PicArr, a);
@@ -6943,14 +6784,8 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 	Altitude: 3,
 	OrnLostNormalGif: 9,
 	OrnLostAttackGif: 3,
-	getShadow: function (c) {
-		return (
-			"left:" +
-			(c.beAttackedPointL - 0) +
-			"px;top:" +
-			(c.height - 22) +
-			"px"
-		);
+	getShadow(c) {
+		return `left:${c.beAttackedPointL - 0}px;top:${c.height - 22}px`;
 	},
 	AudioArr: ["ballooninflate", "balloon_pop"],
 	BookHandPosition: "80% 80%",
@@ -6958,26 +6793,26 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 		var a = "images/Zombies/BalloonZombie/";
 		return [
 			"images/Card/Zombies/Balloonzombie.png",
-			a + "0.gif",
-			a + "1.gif",
-			a + "Attack.gif",
-			a + "Walk2.gif",
-			a + "Attack2.gif",
-			a + "Head.gif" + $Random,
-			a + "Die.gif" + $Random,
-			a + "Boom.gif",
-			a + "Walk.gif",
-			a + "Drop.gif",
-			a + "Boom2.gif",
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}1.gif`,
+			`${a}Attack.gif`,
+			`${a}Walk2.gif`,
+			`${a}Attack2.gif`,
+			`${a}Head.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`${a}Boom.gif`,
+			`${a}Walk.gif`,
+			`${a}Drop.gif`,
+			`${a}Boom2.gif`,
+			`${a}1.gif`,
 		];
 	})(),
 	Produce:
 		'气球僵尸漂浮在空中，躲过大多数攻击。<p>韧性：<font color="#CC241D">低</font><br>特点：<font color="#CC241D">飞行</font><br>弱点：<font color="#CC241D">仙人掌和三叶草</font></p>气球僵尸真幸运。气球有很多功效，而其他僵尸都不曾捡到过。',
-	GetDX: function () {
+	GetDX() {
 		return -10;
 	},
-	BirthCallBack: function (e) {
+	BirthCallBack(e) {
 		var d = e.delayT;
 		var c = e.id;
 		var a = (e.Ele = $(c));
@@ -6988,7 +6823,7 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 		d
 			? oSym.addTask(
 					d,
-					function (i, g) {
+					(i, g) => {
 						var j = $Z[i];
 						var k = oGd.$Balloon;
 						var h = j.R;
@@ -7002,7 +6837,7 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 				f[b] == undefined ? (f[b] = 1) : ++f[b],
 				PlayAudio("ballooninflate"));
 	},
-	ChkActs: function (f, d, g, c) {
+	ChkActs(f, d, g, c) {
 		var b;
 		var a;
 		var e;
@@ -7020,16 +6855,15 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 							CustomTop: 400 - f.height + f.GetDY(),
 						})),
 					(f.ZX = f.AttackedLX -= b),
-					(f.Ele.style.left = Math.floor((f.X -= b)) + "px"),
+					(f.Ele.style.left = `${Math.floor((f.X -= b))}px`),
 					(e = 1))
 			: (e = 1);
 		return e;
 	},
-	Drop: function () {
+	Drop() {
 		var a = this;
 		PlayAudio("balloon_pop");
-		a.EleBody.src =
-			"images/Zombies/BalloonZombie/Drop.gif" + $Random + Math.random();
+		a.EleBody.src = `images/Zombies/BalloonZombie/Drop.gif${$Random}${Math.random()}`;
 		a.ChkActs = function () {
 			return 1;
 		};
@@ -7037,7 +6871,7 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 		--oGd.$Balloon[a.R];
 		oSym.addTask(
 			120,
-			function (b) {
+			(b) => {
 				var c = $Z[b];
 				if (c) {
 					c.BoomDieGif = 11;
@@ -7073,12 +6907,12 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 			[a.id]
 		);
 	},
-	getFreeze: function (b, a) {
+	getFreeze(b, a) {
 		b.Attack = 50;
 		b.Speed = 0.5 * b.OSpeed;
 		oSym.addTask(
 			1500,
-			function (d, c) {
+			(d, c) => {
 				var e = $Z[d];
 				e &&
 					e.FreeSlowTime == c &&
@@ -7089,7 +6923,7 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 			[a, (b.FreeSlowTime = oSym.Now + 1500)]
 		);
 	},
-	NormalDie: function () {
+	NormalDie() {
 		var a = this;
 		a.EleBody.src = a.PicArr[a.DieGif];
 		oSym.addTask(250, ClearChild, [a.Ele]);
@@ -7097,7 +6931,7 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 		delete $Z[a.id];
 		a.PZ && oP.MonPrgs();
 	},
-	ExplosionDie: function () {
+	ExplosionDie() {
 		var a = this;
 		a.EleBody.src = a.PicArr[a.BoomDieGif];
 		oSym.addTask(200, ClearChild, [a.Ele]);
@@ -7106,14 +6940,14 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 		a.PZ && oP.MonPrgs();
 		--oGd.$Balloon[a.R];
 	},
-	DisappearDie: function () {
+	DisappearDie() {
 		ClearChild(this.Ele);
 		this.HP = 0;
 		delete $Z[this.id];
 		this.PZ && oP.MonPrgs();
 		--oGd.$Balloon[this.R];
 	},
-	CrushDie: function () {
+	CrushDie() {
 		this.DisappearDie();
 	},
 })),
@@ -7133,23 +6967,17 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 		OrnLostNormalGif: 9,
 		OrnLostAttackGif: 3,
 		BreakBall: false, // 气球是否被戳破
-		MulBallNum: function () {
+		MulBallNum() {
 			// 减去气球数
 			if (!this.BreakBall)
 				(this.BreakBall = true),
 					(oGd.$Balloon[this.R] |= 0),
 					--oGd.$Balloon[this.R];
 		},
-		getShadow: function (a) {
-			return (
-				"left:" +
-				(a.beAttackedPointL - 10) +
-				"px;top:" +
-				(a.height - 32) +
-				"px"
-			);
+		getShadow(a) {
+			return `left:${a.beAttackedPointL - 10}px;top:${a.height - 32}px`;
 		},
-		CanPass: function (d, c) {
+		CanPass(d, c) {
 			return c;
 		},
 		AudioArr: ["ballooninflate", "balloon_pop"],
@@ -7158,22 +6986,22 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 			var a = "images/Zombies/BalloonZombie/";
 			return [
 				"images/Card/Zombies/IBalloonzombie.png",
-				a + "1.gif",
-				a + "1.gif",
-				a + "Attack.gif",
-				a + "Walk2.gif",
-				a + "Attack2.gif",
-				a + "Head.gif" + $Random,
-				a + "Die.gif" + $Random,
-				a + "Boom.gif",
-				a + "Walk.gif",
-				a + "Drop.gif",
-				a + "Boom2.gif",
+				`${a}1.gif`,
+				`${a}1.gif`,
+				`${a}Attack.gif`,
+				`${a}Walk2.gif`,
+				`${a}Attack2.gif`,
+				`${a}Head.gif${$Random}`,
+				`${a}Die.gif${$Random}`,
+				`${a}Boom.gif`,
+				`${a}Walk.gif`,
+				`${a}Drop.gif`,
+				`${a}Boom2.gif`,
 			];
 		})(),
 		Produce:
 			'气球僵尸漂浮在空中，躲过大多数攻击。<p>韧性：<font color="#CC241D">低</font><br>特点：<font color="#CC241D">飞行</font><br>弱点：<font color="#CC241D">仙人掌和三叶草</font></p>气球僵尸真幸运。气球有很多功效，而其他僵尸都不曾捡到过。',
-		BirthCallBack: function (e) {
+		BirthCallBack(e) {
 			var d = e.delayT;
 			var c = e.id;
 			var a = (e.Ele = $(c));
@@ -7184,7 +7012,7 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 			d
 				? oSym.addTask(
 						d,
-						function (i, g, c) {
+						(i, g, c) => {
 							var j = $Z[i];
 							var k = oGd.$Balloon;
 							j && ((j.FreeSetbodyTime = 0), SetBlock(g));
@@ -7197,7 +7025,7 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 					f[b] == undefined ? (f[b] = 1) : ++f[b],
 					PlayAudio("ballooninflate"));
 		},
-		ChkActs: function (f, d, g, c) {
+		ChkActs(f, d, g, c) {
 			var b;
 			var a;
 			var e;
@@ -7220,18 +7048,17 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 								CustomTop: 400 - f.height + f.GetDY(),
 							})),
 						(f.ZX = f.AttackedLX -= b),
-						(f.Ele.style.left = Math.floor((f.X -= b)) + "px"),
+						(f.Ele.style.left = `${Math.floor((f.X -= b))}px`),
 						(e = 1))
 				: (e = 1);
 			return e;
 		},
-		Drop: function () {
+		Drop() {
 			var a = this;
 			PlayAudio("balloon_pop");
-			a.EleBody.src =
-				"images/Zombies/BalloonZombie/Drop.gif" +
-				$Random +
-				Math.random();
+			a.EleBody.src = `images/Zombies/BalloonZombie/Drop.gif${
+				$Random
+			}${Math.random()}`;
 			a.ChkActs = function () {
 				return 1;
 			};
@@ -7239,7 +7066,7 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 			a.MulBallNum();
 			oSym.addTask(
 				120,
-				function (b) {
+				(b) => {
 					var c = $Z[b];
 					if (c) {
 						c.BoomDieGif = 11;
@@ -7278,12 +7105,12 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 				[a.id]
 			);
 		},
-		getFreeze: function (b, a) {
+		getFreeze(b, a) {
 			b.Attack = 50;
 			b.Speed = 0.5 * b.OSpeed;
 			oSym.addTask(
 				1500,
-				function (d, c) {
+				(d, c) => {
 					var e = $Z[d];
 					e &&
 						e.FreeSlowTime == c &&
@@ -7294,7 +7121,7 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 				[a, (b.FreeSlowTime = oSym.Now + 1500)]
 			);
 		},
-		NormalDie: function () {
+		NormalDie() {
 			var a = this;
 			a.EleBody.src = a.PicArr[a.DieGif];
 			oSym.addTask(250, ClearChild, [a.Ele]);
@@ -7303,7 +7130,7 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 			a.PZ && oP.MonPrgs();
 			a.MulBallNum();
 		},
-		ExplosionDie: function () {
+		ExplosionDie() {
 			var a = this;
 			a.EleBody.src = a.PicArr[a.BoomDieGif];
 			oSym.addTask(200, ClearChild, [a.Ele]);
@@ -7312,17 +7139,17 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 			a.PZ && oP.MonPrgs();
 			a.MulBallNum();
 		},
-		DisappearDie: function () {
+		DisappearDie() {
 			ClearChild(this.Ele);
 			this.HP = 0;
 			delete $Z[this.id];
 			this.PZ && oP.MonPrgs();
 			this.MulBallNum();
 		},
-		CrushDie: function () {
+		CrushDie() {
 			this.DisappearDie();
 		},
-		getDispelled: function () {
+		getDispelled() {
 			if (this.Altitude != 3 || this.AttackedRX < GetX(0)) {
 				return;
 			}
@@ -7333,7 +7160,7 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 				var o = $Z[id];
 				if (!o) return;
 				var d = (o.WalkDirection = 1);
-				var R = o.R;
+				var { R } = o;
 				var C = GetC(o.AttackedLX);
 				var sx = 50;
 				o.AttackedLX += sx;
@@ -7343,11 +7170,11 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 					o.DisappearDie();
 					return;
 				}
-				SetStyle($(id), { left: o.X + "px" });
+				SetStyle($(id), { left: `${o.X}px` });
 				oSym.addTask(2, arguments.callee, [id]);
 			})(this.id);
 		},
-		getFirePeaSputtering: function () {
+		getFirePeaSputtering() {
 			this.Altitude == 1 && this.getHit0(this, 13);
 		},
 		prepareBirth: oZomboni.prototype.prepareBirth,
@@ -7361,26 +7188,26 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 		var a = "images/Zombies/JY/";
 		return [
 			"images/Card/Zombies/JY.png",
-			a + "0.gif",
-			a + "1.gif",
-			a + "Attack.gif",
-			a + "Walk2.gif",
-			a + "Attack2.gif",
-			a + "Head.gif" + $Random,
-			a + "Die.gif" + $Random,
-			a + "Boom.gif",
-			a + "Walk.gif",
-			a + "Drop.gif",
-			a + "Boom2.gif",
-			a + "BalloonZombie.gif",
+			`${a}0.gif`,
+			`${a}1.gif`,
+			`${a}Attack.gif`,
+			`${a}Walk2.gif`,
+			`${a}Attack2.gif`,
+			`${a}Head.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`${a}Boom.gif`,
+			`${a}Walk.gif`,
+			`${a}Drop.gif`,
+			`${a}Boom2.gif`,
+			`${a}BalloonZombie.gif`,
 		];
 	})(),
 	Produce:
 		'贱鱼僵尸利用鱼形飞行器，躲过了陆地上的攻击。<p>速度：<font color="#CC241D">快</font><br>特点：<font color="#CC241D">飞行</font><br>弱点：<font color="#CC241D">仙人掌</font></p>曾经站在巨人肩膀上的他也想要体验做巨人的感觉，他把鱼形飞行器系在背上，可让他万万没想到，这玩意居然让自己飞了起来!',
-	GetDX: function () {
+	GetDX() {
 		return -10;
 	},
-	BirthCallBack: function (e) {
+	BirthCallBack(e) {
 		var d = e.delayT;
 		var c = e.id;
 		var a = (e.Ele = $(c));
@@ -7391,7 +7218,7 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 		d
 			? oSym.addTask(
 					d,
-					function (i, g) {
+					(i, g) => {
 						var j = $Z[i];
 						var k = oGd.$Balloon;
 						var h = j.R;
@@ -7405,7 +7232,7 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 				f[b] == undefined ? (f[b] = 1) : ++f[b],
 				PlayAudio("ballooninflate"));
 	},
-	ChkActs: function (f, d, g, c) {
+	ChkActs(f, d, g, c) {
 		var b;
 		var a;
 		var e;
@@ -7423,15 +7250,15 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 							CustomTop: 400 - f.height + f.GetDY(),
 						})),
 					(f.ZX = f.AttackedLX -= b),
-					(f.Ele.style.left = Math.floor((f.X -= b)) + "px"),
+					(f.Ele.style.left = `${Math.floor((f.X -= b))}px`),
 					(e = 1))
 			: (e = 1);
 		return e;
 	},
-	Drop: function () {
+	Drop() {
 		var a = this;
 		PlayAudio("balloon_pop");
-		a.EleBody.src = "images/Zombies/JY/Drop.gif" + $Random + Math.random();
+		a.EleBody.src = `images/Zombies/JY/Drop.gif${$Random}${Math.random()}`;
 		a.ChkActs = function () {
 			return 1;
 		};
@@ -7439,7 +7266,7 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 		--oGd.$Balloon[a.R];
 		oSym.addTask(
 			120,
-			function (b) {
+			(b) => {
 				var c = $Z[b];
 				if (c) {
 					c.BoomDieGif = 11;
@@ -7475,12 +7302,12 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 			[a.id]
 		);
 	},
-	getFreeze: function (b, a) {
+	getFreeze(b, a) {
 		b.Attack = 50;
 		b.Speed = 0.5 * b.OSpeed;
 		oSym.addTask(
 			1500,
-			function (d, c) {
+			(d, c) => {
 				var e = $Z[d];
 				e &&
 					e.FreeSlowTime == c &&
@@ -7491,7 +7318,7 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 			[a, (b.FreeSlowTime = oSym.Now + 1500)]
 		);
 	},
-	NormalDie: function () {
+	NormalDie() {
 		var a = this;
 		a.EleBody.src = a.PicArr[a.DieGif];
 		oSym.addTask(250, ClearChild, [a.Ele]);
@@ -7499,7 +7326,7 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 		delete $Z[a.id];
 		a.PZ && oP.MonPrgs();
 	},
-	ExplosionDie: function () {
+	ExplosionDie() {
 		var a = this;
 		a.EleBody.src = a.PicArr[a.BoomDieGif];
 		oSym.addTask(200, ClearChild, [a.Ele]);
@@ -7508,14 +7335,14 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 		a.PZ && oP.MonPrgs();
 		--oGd.$Balloon[a.R];
 	},
-	DisappearDie: function () {
+	DisappearDie() {
 		ClearChild(this.Ele);
 		this.HP = 0;
 		delete $Z[this.id];
 		this.PZ && oP.MonPrgs();
 		--oGd.$Balloon[this.R];
 	},
-	CrushDie: function () {
+	CrushDie() {
 		this.DisappearDie();
 	},
 })),
@@ -7527,15 +7354,15 @@ var oCJackinTheBoxZombie = InheritO(oJackinTheBoxZombie, {
 			var a = "images/Zombies/wall/Zombie/";
 			return [
 				"images/Card/Zombies/CZombie.png",
-				a + "0.gif",
-				a + "Zombie.gif",
-				a + "ZombieAttack.gif",
-				a + "ZombieLostHead.gif",
-				a + "ZombieLostHeadAttack.gif",
-				a + "ZombieHead.gif" + $Random,
-				a + "ZombieDie.gif" + $Random,
-				"images/Zombies/BoomDie.gif" + $Random,
-				a + "1.gif",
+				`${a}0.gif`,
+				`${a}Zombie.gif`,
+				`${a}ZombieAttack.gif`,
+				`${a}ZombieLostHead.gif`,
+				`${a}ZombieLostHeadAttack.gif`,
+				`${a}ZombieHead.gif${$Random}`,
+				`${a}ZombieDie.gif${$Random}`,
+				`images/Zombies/BoomDie.gif${$Random}`,
+				`${a}1.gif`,
 			];
 		})(),
 		Produce:
@@ -7574,21 +7401,21 @@ oCConeheadZombie = InheritO(OrnIZombies, {
 		var a = "images/Zombies/wall/Zombie/";
 		return [
 			"images/Card/Zombies/CConeheadZombie.png",
-			b + "0.gif",
-			b + "ConeheadZombie.gif",
-			b + "ConeheadZombieAttack.gif",
-			a + "ZombieLostHead.gif",
-			a + "ZombieLostHeadAttack.gif",
-			a + "ZombieHead.gif" + $Random,
-			a + "ZombieDie.gif" + $Random,
-			"images/Zombies/BoomDie.gif" + $Random,
-			a + "Zombie.gif",
-			a + "ZombieAttack.gif",
-			b + "1.gif",
+			`${b}0.gif`,
+			`${b}ConeheadZombie.gif`,
+			`${b}ConeheadZombieAttack.gif`,
+			`${a}ZombieLostHead.gif`,
+			`${a}ZombieLostHeadAttack.gif`,
+			`${a}ZombieHead.gif${$Random}`,
+			`${a}ZombieDie.gif${$Random}`,
+			`images/Zombies/BoomDie.gif${$Random}`,
+			`${a}Zombie.gif`,
+			`${a}ZombieAttack.gif`,
+			`${b}1.gif`,
 		];
 	})(),
 	AudioArr: ["plastichit"],
-	PlayNormalballAudio: function () {
+	PlayNormalballAudio() {
 		PlayAudio("plastichit");
 	},
 	Produce:
@@ -7603,7 +7430,7 @@ oCBucketheadZombie = InheritO(
 		Lvl: 3,
 		SunNum: 125,
 
-		PlayNormalballAudio: function () {
+		PlayNormalballAudio() {
 			PlayAudio(
 				["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]
 			);
@@ -7634,10 +7461,10 @@ oCBucketheadZombie = InheritO(
 	beAttackedPointR: 260,
 	StandGif: 13,
 
-	GetDX: function () {
+	GetDX() {
 		return -238;
 	},
-	GetDY: function () {
+	GetDY() {
 		return 2;
 	},
 	Lvl: 2,
@@ -7646,51 +7473,40 @@ oCBucketheadZombie = InheritO(
 		var a = "images/Zombies/wall/thugZombie/";
 		return [
 			"images/Card/Zombies/thugZombie.png",
-			a + "0.gif",
-			a + "PoleVaultingZombie.gif",
-			a + "PoleVaultingZombieAttack.gif",
-			a + "PoleVaultingZombieLostHead.gif",
-			a + "PoleVaultingZombieLostHeadAttack.gif",
-			a + "PoleVaultingZombieHead.gif" + $Random,
-			a + "PoleVaultingZombieDie.gif" + $Random,
-			"images/Zombies/PoleVaultingZombie/BoomDie.gif" + $Random,
-			a + "PoleVaultingZombieWalk.gif",
-			a + "PoleVaultingZombieLostHeadWalk.gif",
-			a + "PoleVaultingZombieJump.gif",
-			a + "PoleVaultingZombieJump2.gif",
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}PoleVaultingZombie.gif`,
+			`${a}PoleVaultingZombieAttack.gif`,
+			`${a}PoleVaultingZombieLostHead.gif`,
+			`${a}PoleVaultingZombieLostHeadAttack.gif`,
+			`${a}PoleVaultingZombieHead.gif${$Random}`,
+			`${a}PoleVaultingZombieDie.gif${$Random}`,
+			`images/Zombies/PoleVaultingZombie/BoomDie.gif${$Random}`,
+			`${a}PoleVaultingZombieWalk.gif`,
+			`${a}PoleVaultingZombieLostHeadWalk.gif`,
+			`${a}PoleVaultingZombieJump.gif`,
+			`${a}PoleVaultingZombieJump2.gif`,
+			`${a}1.gif`,
 		];
 	})(),
 	Produce:
 		'刺客僵尸出其不意地突破你的阵型<p>韧性：<font color="#CC241D">高</font></p>刺客，生前经受着残酷的训练；死后，他们虽然已经忘记了刺杀的使命，但是反复训练过的轻功奇术却还熟记于心，当然还有那忘不了的美味脑子。',
-	getShadow: function (a) {
-		return (
-			"left:" +
-			(a.beAttackedPointL - 20) +
-			"px;top:" +
-			(a.height - 35) +
-			"px"
-		);
+	getShadow(a) {
+		return `left:${a.beAttackedPointL - 20}px;top:${a.height - 35}px`;
 	},
-	GoingDieHead: function (c, a, b) {
+	GoingDieHead(c, a, b) {
 		oSym.addTask(200, ClearChild, [
 			NewImg(
 				0,
 				a[b.HeadGif],
-				"left:" +
-					b.X +
-					"px;top:" +
-					(b.pixelTop - 20) +
-					"px;z-index:" +
-					b.zIndex,
+				`left:${b.X}px;top:${b.pixelTop - 20}px;z-index:${b.zIndex}`,
 				EDPZ
 			),
 		]);
 	},
-	JudgeAttack: function () {
+	JudgeAttack() {
 		var g = this;
 		var b = g.ZX;
-		var d = g.R + "_";
+		var d = `${g.R}_`;
 		var c = GetC(b);
 		var h = oGd.$;
 		var f;
@@ -7703,7 +7519,7 @@ oCBucketheadZombie = InheritO(
 			for (
 				a = 2;
 				a > -1;
-				(p = h[d + f + "_" + a--]) &&
+				(p = h[`${d + f}_${a--}`]) &&
 				(p.EName != "oBrains"
 					? p.AttackedRX >= e &&
 						p.AttackedLX < b &&
@@ -7722,7 +7538,7 @@ oCBucketheadZombie = InheritO(
 			) {}
 		}
 	},
-	getCrushed: function (a) {
+	getCrushed(a) {
 		this.NormalAttack(this.id, a.id, a.AttackedLX);
 		this.getCrushed = function () {
 			return false;
@@ -7730,7 +7546,7 @@ oCBucketheadZombie = InheritO(
 		a.Stature > 0 &&
 			oSym.addTask(
 				50,
-				function (c) {
+				(c) => {
 					var b = $Z[c];
 					b && b.CrushDie();
 				},
@@ -7738,22 +7554,21 @@ oCBucketheadZombie = InheritO(
 			);
 		return false;
 	},
-	getRaven: function (a) {
+	getRaven(a) {
 		return (
 			!this.isAttacking &&
 				this.NormalAttack(this.id, a, $P[a].AttackedLX),
 			0
 		);
 	},
-	NormalAttack: function (d, b, g) {
+	NormalAttack(d, b, g) {
 		var f = $Z[d];
 		var a = f.Ele;
 		var c = f.EleShadow;
 		var e = f.EleBody;
-		e.src =
-			"images/Zombies/wall/thugZombie/PoleVaultingZombieJump.gif" +
-			$Random +
-			Math.random();
+		e.src = `images/Zombies/wall/thugZombie/PoleVaultingZombieJump.gif${
+			$Random
+		}${Math.random()}`;
 		SetHidden(c);
 		f.isAttacking = 2;
 		f.Altitude = 2;
@@ -7762,14 +7577,14 @@ oCBucketheadZombie = InheritO(
 		};
 		oSym.addTask(
 			50,
-			function (h) {
+			(h) => {
 				$Z[h] && PlayAudio("polevault");
 			},
 			[d]
 		);
 		oSym.addTask(
 			100,
-			function (m, j, i, l, n) {
+			(m, j, i, l, n) => {
 				var h = $Z[m];
 				var k;
 				var q;
@@ -7780,7 +7595,7 @@ oCBucketheadZombie = InheritO(
 								(h.X =
 									(h.AttackedLX = h.ZX = q = k.AttackedRX) -
 									h.beAttackedPointL) + h.beAttackedPointR),
-							SetStyle(i, { left: h.X + "px" }),
+							SetStyle(i, { left: `${h.X}px` }),
 							(n.src =
 								"images/Zombies/wall/thugZombie/PoleVaultingZombieWalk.gif"),
 							SetVisible(l),
@@ -7798,15 +7613,14 @@ oCBucketheadZombie = InheritO(
 								(h.X =
 									(h.AttackedRX = g) - h.beAttackedPointR) +
 								h.beAttackedPointL),
-							SetStyle(i, { left: h.X + "px" }),
-							(n.src =
-								"images/Zombies/wall/thugZombie/PoleVaultingZombieJump2.gif" +
-								$Random +
-								Math.random()),
+							SetStyle(i, { left: `${h.X}px` }),
+							(n.src = `images/Zombies/wall/thugZombie/PoleVaultingZombieJump2.gif${
+								$Random
+							}${Math.random()}`),
 							SetVisible(l),
 							oSym.addTask(
 								80,
-								function (s, v) {
+								(s, v) => {
 									var u = $Z[s];
 									var t;
 									u &&
@@ -7848,28 +7662,28 @@ oCBucketheadZombie = InheritO(
 			var a = "images/Zombies/wall/EunZombie/";
 			return [
 				"images/Card/Zombies/EunZombie.png",
-				a + "0.gif",
-				a + "HeadWalk1.gif",
-				a + "HeadAttack1.gif",
-				a + "LostHeadWalk1.gif",
-				a + "LostHeadAttack1.gif",
-				a + "HeadWalk0.gif",
-				a + "HeadAttack0.gif",
-				a + "LostHeadWalk0.gif",
-				a + "LostHeadAttack0.gif",
-				a + "Head.gif" + $Random,
-				a + "Die.gif" + $Random,
-				"images/Zombies/NewspaperZombie/BoomDie.gif" + $Random,
-				a + "LostNewspaper.gif",
-				a + "1.gif",
+				`${a}0.gif`,
+				`${a}HeadWalk1.gif`,
+				`${a}HeadAttack1.gif`,
+				`${a}LostHeadWalk1.gif`,
+				`${a}LostHeadAttack1.gif`,
+				`${a}HeadWalk0.gif`,
+				`${a}HeadAttack0.gif`,
+				`${a}LostHeadWalk0.gif`,
+				`${a}LostHeadAttack0.gif`,
+				`${a}Head.gif${$Random}`,
+				`${a}Die.gif${$Random}`,
+				`images/Zombies/NewspaperZombie/BoomDie.gif${$Random}`,
+				`${a}LostNewspaper.gif`,
+				`${a}1.gif`,
 			];
 		})(),
 		Produce:
 			'同样是尸变，这位老兄不大一样<p>韧性：<font color="#CC241D">高</font><br>特点：<font color="#CC241D">灵符被打掉后会进入爆发状态</font></p>灵符僵尸生前官至一品，所以尽管他已经不能好好走路了，他还是时刻提醒自己：穿好袍子、戴好顶戴…。',
-		getShadow: function (a) {
-			return "left:75px;top:" + (a.height - 25) + "px";
+		getShadow(a) {
+			return `left:75px;top:${a.height - 25}px`;
 		},
-		GoingDie: function (b) {
+		GoingDie(b) {
 			var a = this;
 			var c = a.id;
 			a.EleBody.src = b;
@@ -7877,12 +7691,9 @@ oCBucketheadZombie = InheritO(
 				NewImg(
 					0,
 					a.PicArr[a.HeadGif],
-					"left:" +
-						a.AttackedLX +
-						"px;top:" +
-						(a.pixelTop - 20) +
-						"px;z-index:" +
-						a.zIndex,
+					`left:${a.AttackedLX}px;top:${a.pixelTop - 20}px;z-index:${
+						a.zIndex
+					}`,
 					EDPZ
 				),
 			]);
@@ -7890,7 +7701,7 @@ oCBucketheadZombie = InheritO(
 			a.FreeFreezeTime = a.FreeSetbodyTime = a.FreeSlowTime = 0;
 			a.AutoReduceHP(c);
 		},
-		getHurtOrnLost: function (j, a, g, m, c, l, k, i) {
+		getHurtOrnLost(j, a, g, m, c, l, k, i) {
 			var e = this;
 			if (!e.beAttacked) {
 				k && e.DisappearDie();
@@ -7926,18 +7737,18 @@ oCBucketheadZombie = InheritO(
 			SetAlpha(e.EleBody, 50, 0.5);
 			oSym.addTask(
 				10,
-				function (q) {
+				(q) => {
 					var n = $Z[q];
 					n && SetAlpha(n.EleBody, 100, 1);
 				},
 				[b]
 			);
 		},
-		getSnowPea: function (c, a, b) {
-			PlayAudio("splat" + Math.floor(1 + Math.random() * 3));
+		getSnowPea(c, a, b) {
+			PlayAudio(`splat${Math.floor(1 + Math.random() * 3)}`);
 			c.getHit0(c, a, b);
 		},
-		getFirePea: function (f, b, e) {
+		getFirePea(f, b, e) {
 			f.PlayFireballAudio();
 			(f.FreeSlowTime || f.FreeFreezeTime) &&
 				((f.Speed = f.OSpeed),
@@ -7977,13 +7788,13 @@ oCBucketheadZombie = InheritO(
 					f.SetAlpha(f, f.EleBody, 50, 0.5),
 					oSym.addTask(
 						10,
-						function (j, i) {
+						(j, i) => {
 							(i = $Z[j]) && i.SetAlpha(i, i.EleBody, 100, 1);
 						},
 						[f.id]
 					));
 		},
-		getHit0: function (c, a, b) {
+		getHit0(c, a, b) {
 			b == c.WalkDirection
 				? (c.CheckOrnHP(
 						c,
@@ -7997,7 +7808,7 @@ oCBucketheadZombie = InheritO(
 					c.SetAlpha(c, c.EleBody, 50, 0.5),
 					oSym.addTask(
 						10,
-						function (e, d) {
+						(e, d) => {
 							(d = $Z[e]) && d.SetAlpha(d, d.EleBody, 100, 1);
 						},
 						[c.id]
@@ -8017,7 +7828,7 @@ oCBucketheadZombie = InheritO(
 						c.getHit3 =
 							function () {}));
 		},
-		getHit1: function (b, a) {
+		getHit1(b, a) {
 			(b.HP -= a) < b.BreakPoint
 				? (b.GoingDie(
 						b.PicArr[
@@ -8044,13 +7855,13 @@ oCBucketheadZombie = InheritO(
 					b.SetAlpha(b, b.EleBody, 50, 0.5),
 					oSym.addTask(
 						10,
-						function (d, c) {
+						(d, c) => {
 							(c = $Z[d]) && c.SetAlpha(c, c.EleBody, 100, 1);
 						},
 						[b.id]
 					));
 		},
-		getHit2: function (b, a) {
+		getHit2(b, a) {
 			(b.HP -= a) < b.BreakPoint
 				? (b.GoingDie(
 						b.PicArr[
@@ -8068,13 +7879,13 @@ oCBucketheadZombie = InheritO(
 				: (b.SetAlpha(b, b.EleBody, 50, 0.5),
 					oSym.addTask(
 						10,
-						function (d, c) {
+						(d, c) => {
 							(c = $Z[d]) && c.SetAlpha(c, c.EleBody, 100, 1);
 						},
 						[b.id]
 					));
 		},
-		getHit3: function (b, a) {
+		getHit3(b, a) {
 			(b.HP -= a) < b.BreakPoint
 				? (b.GoingDie(
 						b.PicArr[
@@ -8101,13 +7912,13 @@ oCBucketheadZombie = InheritO(
 					b.SetAlpha(b, b.EleBody, 50, 0.5),
 					oSym.addTask(
 						10,
-						function (d, c) {
+						(d, c) => {
 							(c = $Z[d]) && c.SetAlpha(c, c.EleBody, 100, 1);
 						},
 						[b.id]
 					));
 		},
-		CheckOrnHP: function (g, h, d, c, f, b, a) {
+		CheckOrnHP(g, h, d, c, f, b, a) {
 			var e = OrnNoneZombies.prototype;
 			(g.OrnHP = d -= c) < 1 &&
 				(a && (g.HP += d),
@@ -8131,7 +7942,7 @@ oCBucketheadZombie = InheritO(
 						e.getHit),
 				oSym.addTask(
 					150,
-					function (m, l) {
+					(m, l) => {
 						var k = $Z[m];
 						if (!k) {
 							return;
@@ -8172,22 +7983,22 @@ oCBucketheadZombie = InheritO(
 	height: 164,
 	beAttackedPointL: 60,
 	beAttackedPointR: 130,
-	getShadow: function (a) {
+	getShadow(a) {
 		return "display:none";
 	},
 	PicArr: (function () {
 		var a = "images/Zombies/wall/ZZ/";
 		return [
 			"images/Card/Zombies/ZZ.png",
-			a + "0.gif",
-			a + "Zombie.gif",
-			a + "ZombieAttack.gif",
-			a + "ZombieLostHead.gif",
-			a + "ZombieLostHeadAttack.gif",
-			a + "ZombieHead.gif" + $Random,
-			a + "ZombieDie.gif" + $Random,
-			"images/Zombies/NewspaperZombie/BoomDie.gif" + $Random,
-			a + "1.gif",
+			`${a}0.gif`,
+			`${a}Zombie.gif`,
+			`${a}ZombieAttack.gif`,
+			`${a}ZombieLostHead.gif`,
+			`${a}ZombieLostHeadAttack.gif`,
+			`${a}ZombieHead.gif${$Random}`,
+			`${a}ZombieDie.gif${$Random}`,
+			`images/Zombies/NewspaperZombie/BoomDie.gif${$Random}`,
+			`${a}1.gif`,
 		];
 	})(),
 	Produce:
@@ -8204,7 +8015,7 @@ oCBucketheadZombie = InheritO(
 		OSpeed: 1,
 		Speed: 1,
 		Attack: 3600,
-		PlayNormalballAudio: function () {
+		PlayNormalballAudio() {
 			PlayAudio(
 				["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]
 			);
@@ -8213,15 +8024,15 @@ oCBucketheadZombie = InheritO(
 			var a = "images/Zombies/wall/Emperor/";
 			return [
 				"images/Card/Zombies/Emperor.png",
-				a + "0.gif",
-				a + "Zombie.gif",
-				a + "ZombieAttack.gif",
-				a + "ZombieLostHead.gif",
-				a + "ZombieLostHeadAttack.gif",
-				"images/Zombies/Imp/ZombieHead.gif" + $Random,
-				a + "ZombieDie.gif" + $Random,
-				"images/Zombies/BoomDie.gif" + $Random,
-				a + "1.gif",
+				`${a}0.gif`,
+				`${a}Zombie.gif`,
+				`${a}ZombieAttack.gif`,
+				`${a}ZombieLostHead.gif`,
+				`${a}ZombieLostHeadAttack.gif`,
+				`images/Zombies/Imp/ZombieHead.gif${$Random}`,
+				`${a}ZombieDie.gif${$Random}`,
+				`images/Zombies/BoomDie.gif${$Random}`,
+				`${a}1.gif`,
 			];
 		})(),
 		Produce:
@@ -8241,20 +8052,20 @@ oCBucketheadZombie = InheritO(
 			var a = "images/Zombies/WJY/";
 			return [
 				"images/Card/Zombies/WJY.png",
-				a + "0.gif",
-				a + "HeadWalk1.gif",
-				a + "HeadAttack1.gif",
-				a + "LostHeadWalk1.gif",
-				a + "LostHeadAttack1.gif",
-				a + "HeadWalk0.gif",
-				a + "HeadAttack0.gif",
-				a + "LostHeadWalk0.gif",
-				a + "LostHeadAttack0.gif",
-				a + "Head.gif" + $Random,
-				a + "Die.gif" + $Random,
-				"images/Zombies/BoomDie.gif" + $Random,
-				a + "LostNewspaper.gif",
-				a + "1.gif",
+				`${a}0.gif`,
+				`${a}HeadWalk1.gif`,
+				`${a}HeadAttack1.gif`,
+				`${a}LostHeadWalk1.gif`,
+				`${a}LostHeadAttack1.gif`,
+				`${a}HeadWalk0.gif`,
+				`${a}HeadAttack0.gif`,
+				`${a}LostHeadWalk0.gif`,
+				`${a}LostHeadAttack0.gif`,
+				`${a}Head.gif${$Random}`,
+				`${a}Die.gif${$Random}`,
+				`images/Zombies/BoomDie.gif${$Random}`,
+				`${a}LostNewspaper.gif`,
+				`${a}1.gif`,
 			];
 		})(),
 		Produce:
@@ -8270,20 +8081,20 @@ oCBucketheadZombie = InheritO(
 	height: 164,
 	beAttackedPointL: 60,
 	beAttackedPointR: 130,
-	getShadow: function (a) {
+	getShadow(a) {
 		return "display:none";
 	},
 	PicArr: (function () {
 		var a = "images/Zombies/WJY/water/";
 		return [
 			"images/Card/Zombies/DuckyTubeZombie1.png",
-			a + "0.gif",
-			a + "Walk1.gif",
-			a + "Walk2.gif",
-			a + "1.gif",
-			a + "Attack.gif",
-			a + "ZombieHead.gif" + $Random,
-			a + "Die.gif" + $Random,
+			`${a}0.gif`,
+			`${a}Walk1.gif`,
+			`${a}Walk2.gif`,
+			`${a}1.gif`,
+			`${a}Attack.gif`,
+			`${a}ZombieHead.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
 		];
 	})(),
 	AudioArr: ["zombie_entering_water"],
@@ -8299,15 +8110,15 @@ oCBucketheadZombie = InheritO(
 			var a = "images/Zombies/XB/";
 			return [
 				"images/Card/Zombies/XB.png",
-				a + "0.gif",
-				a + "Zombie.gif",
-				a + "ZombieAttack.gif",
-				a + "ZombieLostHead.gif",
-				a + "ZombieLostHeadAttack.gif",
-				a + "ZombieHead.gif" + $Random,
-				a + "ZombieDie.gif" + $Random,
-				"images/Zombies/BoomDie.gif" + $Random,
-				a + "1.gif",
+				`${a}0.gif`,
+				`${a}Zombie.gif`,
+				`${a}ZombieAttack.gif`,
+				`${a}ZombieLostHead.gif`,
+				`${a}ZombieLostHeadAttack.gif`,
+				`${a}ZombieHead.gif${$Random}`,
+				`${a}ZombieDie.gif${$Random}`,
+				`images/Zombies/BoomDie.gif${$Random}`,
+				`${a}1.gif`,
 			];
 		})(),
 		Produce:
@@ -8328,15 +8139,15 @@ oCBucketheadZombie = InheritO(
 			var a = "images/Zombies/CX/";
 			return [
 				"images/Card/Zombies/CX.png",
-				a + "0.gif",
-				a + "Zombie.gif",
-				a + "ZombieAttack.gif",
-				a + "ZombieLostHead.gif",
-				a + "ZombieLostHeadAttack.gif",
-				a + "ZombieHead.gif" + $Random,
-				a + "ZombieDie.gif" + $Random,
-				"images/Zombies/NewspaperZombie/BoomDie.gif" + $Random,
-				a + "1.gif",
+				`${a}0.gif`,
+				`${a}Zombie.gif`,
+				`${a}ZombieAttack.gif`,
+				`${a}ZombieLostHead.gif`,
+				`${a}ZombieLostHeadAttack.gif`,
+				`${a}ZombieHead.gif${$Random}`,
+				`${a}ZombieDie.gif${$Random}`,
+				`images/Zombies/NewspaperZombie/BoomDie.gif${$Random}`,
+				`${a}1.gif`,
 			];
 		})(),
 		Produce:
@@ -8358,15 +8169,15 @@ oCBucketheadZombie = InheritO(
 			var a = "images/Zombies/CX/";
 			return [
 				"images/Card/Zombies/ICX.png",
-				a + "0.gif",
-				a + "Zombie.gif",
-				a + "ZombieAttack.gif",
-				a + "ZombieLostHead.gif",
-				a + "ZombieLostHeadAttack.gif",
-				a + "ZombieHead.gif" + $Random,
-				a + "ZombieDie.gif" + $Random,
-				"images/Zombies/NewspaperZombie/BoomDie.gif" + $Random,
-				a + "1.gif",
+				`${a}0.gif`,
+				`${a}Zombie.gif`,
+				`${a}ZombieAttack.gif`,
+				`${a}ZombieLostHead.gif`,
+				`${a}ZombieLostHeadAttack.gif`,
+				`${a}ZombieHead.gif${$Random}`,
+				`${a}ZombieDie.gif${$Random}`,
+				`images/Zombies/NewspaperZombie/BoomDie.gif${$Random}`,
+				`${a}1.gif`,
 			];
 		})(),
 		Produce:
@@ -8393,7 +8204,7 @@ oCBucketheadZombie = InheritO(
 			d.SetAlpha(d, d.EleBody, 50, 0.5);
 			oSym.addTask(
 				10,
-				function (f, e) {
+				(f, e) => {
 					(e = $Z[f]) && e.SetAlpha(e, e.EleBody, 100, 1);
 				},
 				[d.id]
@@ -8413,18 +8224,18 @@ oCBucketheadZombie = InheritO(
 				var b = "images/Zombies/LGBOSS/";
 				return [
 					"images/Card/Zombies/LGBOSS.png",
-					b + "0.gif",
-					b + "1.gif",
-					b + "2.gif",
-					b + "3.gif",
-					b + "5.gif" + $Random,
-					b + "BoomDie.gif" + $Random,
-					b + "ice.png",
-					b + "ice_cap.png",
+					`${b}0.gif`,
+					`${b}1.gif`,
+					`${b}2.gif`,
+					`${b}3.gif`,
+					`${b}5.gif${$Random}`,
+					`${b}BoomDie.gif${$Random}`,
+					`${b}ice.png`,
+					`${b}ice_cap.png`,
 				];
 			})(),
 			AudioArr: ["zamboni", "explosion"],
-			BirthCallBack: function (h) {
+			BirthCallBack(h) {
 				var g = h.delayT;
 				var e = h.id;
 				var c = (h.Ele = $(e));
@@ -8435,11 +8246,11 @@ oCBucketheadZombie = InheritO(
 				h.EleBody = c.childNodes[1];
 				!b[d]
 					? ((f = NewEle(
-							"dIceCar" + d,
+							`dIceCar${d}`,
 							"div",
-							"position:absolute;z-index:1;left:145px;top:" +
-								(GetY(d) - 65) +
-								"px;width:800px;height:205px",
+							`position:absolute;z-index:1;left:145px;top:${
+								GetY(d) - 65
+							}px;width:800px;height:205px`,
 							0,
 							EDPZ
 						)),
@@ -8460,7 +8271,7 @@ oCBucketheadZombie = InheritO(
 				g
 					? oSym.addTask(
 							g,
-							function (j, i) {
+							(j, i) => {
 								var k = $Z[j];
 								k &&
 									((k.FreeSetbodyTime = 0),
@@ -8471,7 +8282,7 @@ oCBucketheadZombie = InheritO(
 						)
 					: (SetBlock(c), PlayAudio("zamboni"));
 			},
-			ChkActs: function (e, j, q, k) {
+			ChkActs(e, j, q, k) {
 				var b;
 				var r;
 				var m;
@@ -8481,7 +8292,7 @@ oCBucketheadZombie = InheritO(
 				var h;
 				var f;
 				var c;
-				var l = $("dIceCar" + j);
+				var l = $(`dIceCar${j}`);
 				e.JudgeAttack();
 				(r = e.AttackedRX -= b = e.Speed) < -50
 					? (q.splice(k, 1), e.DisappearDie(), (m = 0))
@@ -8496,7 +8307,7 @@ oCBucketheadZombie = InheritO(
 								CustomTop: 400 - e.height + e.GetDY(),
 							})),
 						(e.ZX = e.AttackedLX -= b),
-						(e.Ele.style.left = Math.floor((e.X -= b)) + "px"),
+						(e.Ele.style.left = `${Math.floor((e.X -= b))}px`),
 						(m = 1));
 				d = e.X;
 				h = d + 250;
@@ -8504,68 +8315,64 @@ oCBucketheadZombie = InheritO(
 				c = GetC(h);
 				c > -1 &&
 					c < n[1] &&
-					((oGd.$Crater[j + "_" + c] = 1), (n[1] = c));
+					((oGd.$Crater[`${j}_${c}`] = 1), (n[1] = c));
 				h > 120 &&
 					h < n[2] &&
 					((n[2] = h),
-					(l.firstChild.style.clip = "rect(0,auto,auto," + f + "px)"),
-					(l.childNodes[1].style.left = Math.max(0, f) + "px"));
+					(l.firstChild.style.clip = `rect(0,auto,auto,${f}px)`),
+					(l.childNodes[1].style.left = `${Math.max(0, f)}px`));
 				GetC(e.AttackedLX) > 5 && (e.OSpeed = e.Speed -= 0.005);
 				return m;
 			},
-			ChkActs1: function (f, d, g, c) {
+			ChkActs1(f, d, g, c) {
 				var b;
 				var e;
 				f.JudgeAttack();
 				(f.AttackedLX += b = f.Speed) > oS.W
 					? (g.splice(c, 1), f.DisappearDie(), (e = 0))
 					: ((f.ZX = f.AttackedRX += b),
-						(f.Ele.style.left = Math.ceil((f.X += b)) + "px"),
+						(f.Ele.style.left = `${Math.ceil((f.X += b))}px`),
 						(e = 1));
 				return e;
 			},
-			getPea: function (c, b) {
+			getPea(c, b) {
 				PlayAudio(
 					["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]
 				);
 				c.getHit0(c, b);
 			},
-			getFirePea: function (c, b) {
+			getFirePea(c, b) {
 				PlayAudio(
 					["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]
 				);
 				c.getHit0(c, b);
 			},
-			getSnowPea: function (c, b) {
+			getSnowPea(c, b) {
 				PlayAudio(
 					["shieldhit", "shieldhit2"][Math.floor(Math.random() * 2)]
 				);
 				c.getHit0(c, b);
 			},
-			getFirePeaSputtering: function () {},
-			getFreeze: function (c, b) {
+			getFirePeaSputtering() {},
+			getFreeze(c, b) {
 				c.getHit0(c, 20);
 			},
-			getShadow: function (b) {
-				return (
-					"left:" +
-					(b.beAttackedPointL - 10) +
-					"px;top:" +
-					(b.height - 22) +
-					"px"
-				);
+			getShadow(b) {
+				return `left:${b.beAttackedPointL - 10}px;top:${
+					b.height - 22
+				}px`;
 			},
 			getHit: a,
 			getHit0: a,
 			getHit1: a,
 			getHit2: a,
 			getHit3: a,
-			GoingDie: function () {
+			GoingDie() {
 				var b = this;
 				b.beAttacked = 0;
 				b.AutoReduceHP(b.id);
 			},
-			NormalDie: function () {
+			NormalDie() {
 				var b = this;
 				PlayAudio("explosion");
 				b.EleBody.src = b.PicArr[b.DieGif];
@@ -8575,7 +8382,7 @@ oCBucketheadZombie = InheritO(
 				b.JudgeIce();
 				b.PZ && oP.MonPrgs();
 			},
-			DisappearDie: function () {
+			DisappearDie() {
 				var b = this;
 				ClearChild(b.Ele);
 				b.HP = 0;
@@ -8583,7 +8390,7 @@ oCBucketheadZombie = InheritO(
 				b.JudgeIce();
 				b.PZ && oP.MonPrgs();
 			},
-			ExplosionDie: function () {
+			ExplosionDie() {
 				var b = this;
 				b.EleBody.src = b.PicArr[b.BoomDieGif];
 				oSym.addTask(300, ClearChild, [b.Ele]);
@@ -8592,19 +8399,19 @@ oCBucketheadZombie = InheritO(
 				b.JudgeIce();
 				b.PZ && oP.MonPrgs();
 			},
-			CrushDie: function () {
+			CrushDie() {
 				this.NormalDie();
 			},
-			JudgeIce: function () {
+			JudgeIce() {
 				var d = this;
 				var b = d.R;
-				var e = $("dIceCar" + b);
+				var e = $(`dIceCar${b}`);
 				var c = oGd.$Ice[b];
 				e && e.childNodes[1] && SetBlock(e.childNodes[1]);
 				--c[0] <= 0 &&
 					oSym.addTask(
 						3e3,
-						function (k, h) {
+						(k, h) => {
 							var j = oGd.$Ice[h];
 							var g;
 							var f = oGd.$Crater;
@@ -8612,7 +8419,7 @@ oCBucketheadZombie = InheritO(
 								ClearChild(k);
 								g = j[1];
 								while (g < 11) {
-									delete f[h + "_" + g++];
+									delete f[`${h}_${g++}`];
 									delete oGd.$Ice[h];
 								}
 							}
@@ -8620,7 +8427,7 @@ oCBucketheadZombie = InheritO(
 						[e, b]
 					);
 			},
-			flatTire: function () {
+			flatTire() {
 				var b = this;
 				b.EleBody.src = "images/Zombies/LGBOSS/5.gif";
 				b.beAttacked = 0;
@@ -8629,28 +8436,28 @@ oCBucketheadZombie = InheritO(
 				b.ChkActs = b.ChkActs1 = function () {};
 				oSym.addTask(
 					290,
-					function (e, c) {
+					(e, c) => {
 						var d = $Z[e];
 						d && d.NormalDie();
 					},
 					[b.id, b.EleBody]
 				);
 			},
-			JudgeAttack: function () {
+			JudgeAttack() {
 				var f = this;
 				var c = f.ZX;
-				var d = f.R + "_";
+				var d = `${f.R}_`;
 				var e = GetC(c);
 				var g = oGd.$;
 				var b;
 				(b = f.JudgeLR(f, d, e, c, g) || f.JudgeSR(f, d, e, c, g)) &&
 					f.NormalAttack(b[0], b[1]);
 			},
-			JudgeLR: function (e, c, d, b, f) {
+			JudgeLR(e, c, d, b, f) {
 				return d > 10 || d < 1
 					? false
 					: (function () {
-							c += --d + "_";
+							c += `${--d}_`;
 							var g = 3;
 							var h;
 							while (g--) {
@@ -8663,11 +8470,11 @@ oCBucketheadZombie = InheritO(
 							}
 						})();
 			},
-			JudgeSR: function (e, c, d, b, f) {
+			JudgeSR(e, c, d, b, f) {
 				return d > 9
 					? false
 					: (function () {
-							c += d + "_";
+							c += `${d}_`;
 							var g = 3;
 							var h;
 							while (g--) {
@@ -8680,11 +8487,11 @@ oCBucketheadZombie = InheritO(
 							}
 						})();
 			},
-			NormalAttack: function (c, b) {
+			NormalAttack(c, b) {
 				var d = $Z[c];
 				$P[b].getHurt(d, 2, d.Attack);
 			},
-			getThump: function () {
+			getThump() {
 				this.NormalDie();
 				var CZombies = (function (b, a) {
 					return (
@@ -8730,16 +8537,16 @@ oCBucketheadZombie = InheritO(
 							FreeSetbodyTime: 0,
 							FreeFreezeTime: 0,
 							FreeSlowTime: 0,
-							CanPass: function (d, c) {
+							CanPass(d, c) {
 								return c && c != 2;
 							},
-							CanGrow: function (d, c, e) {
+							CanGrow(d, c, e) {
 								return (
 									this.CanPass(c, oGd.$LF[c]) &&
 									(oS.ArP ? e > oS.ArP.ArC[1] : true)
 								);
 							},
-							ChkActs: function (h, f, j, e) {
+							ChkActs(h, f, j, e) {
 								var d;
 								var c;
 								var g;
@@ -8773,15 +8580,15 @@ oCBucketheadZombie = InheritO(
 																h.GetDY(),
 														})),
 													(h.ZX = h.AttackedLX -= d),
-													(h.Ele.style.left =
-														Math.floor((h.X -= d)) +
-														"px"),
+													(h.Ele.style.left = `${Math.floor(
+														(h.X -= d)
+													)}px`),
 													(g = 1))
 											: (g = 1))
 									: (g = 1);
 								return g;
 							},
-							ChkActs1: function (g, e, h, d) {
+							ChkActs1(g, e, h, d) {
 								var c;
 								var f;
 								!(g.FreeFreezeTime || g.FreeSetbodyTime)
@@ -8795,22 +8602,22 @@ oCBucketheadZombie = InheritO(
 													g.DisappearDie(),
 													(f = 0))
 												: ((g.ZX = g.AttackedRX += c),
-													(g.Ele.style.left =
-														Math.ceil((g.X += c)) +
-														"px"),
+													(g.Ele.style.left = `${Math.ceil(
+														(g.X += c)
+													)}px`),
 													(f = 1))
 											: (f = 1))
 									: (f = 1);
 								return f;
 							},
-							GetDX: function () {
+							GetDX() {
 								return -110;
 							},
-							GetDY: function () {
+							GetDY() {
 								return -10;
 							},
 							GetDTop: 0,
-							ChangeR: function (e) {
+							ChangeR(e) {
 								var h = e.R;
 								var g = e.ar || [];
 								var j = e.CustomTop;
@@ -8839,14 +8646,13 @@ oCBucketheadZombie = InheritO(
 												)
 											]),
 										SetStyle(f, {
-											left: d.X + "px",
-											top:
-												(d.pixelTop =
-													j == undefined
-														? GetY(q) -
-															d.height +
-															d.GetDY()
-														: j) + "px",
+											left: `${d.X}px`,
+											top: `${(d.pixelTop =
+												j == undefined
+													? GetY(q) -
+														d.height +
+														d.GetDY()
+													: j)}px`,
 											zIndex: (d.zIndex = 3 * q + 1),
 										}),
 										d.isAttacking &&
@@ -8855,16 +8661,12 @@ oCBucketheadZombie = InheritO(
 									: (n.src = d.PicArr[d.NormalGif]);
 								d.isAttacking = 0;
 							},
-							getShadow: function (c) {
-								return (
-									"left:" +
-									(c.beAttackedPointL - 10) +
-									"px;top:" +
-									(c.height - 22) +
-									"px"
-								);
+							getShadow(c) {
+								return `left:${c.beAttackedPointL - 10}px;top:${
+									c.height - 22
+								}px`;
 							},
-							Init: function (g, i, e, d) {
+							Init(g, i, e, d) {
 								var c = 0;
 								var h = this;
 								var f = [];
@@ -8883,17 +8685,17 @@ oCBucketheadZombie = InheritO(
 									";left:",
 									"px;top:",
 									"px;z-index:",
-									'"><img src="' +
-										ShadowPNG +
-										'" style="' +
-										i.getShadow(i) +
-										'"><img style="position:absolute;clip:rect(0,auto,',
+									`"><img src="${
+										ShadowPNG
+									}" style="${i.getShadow(
+										i
+									)}"><img style="position:absolute;clip:rect(0,auto,`,
 									",0);top:",
 									'px" src="',
 									'"></div>',
 								];
 							},
-							getHTML: function (d, g, i, h, f, k, j, c) {
+							getHTML(d, g, i, h, f, k, j, c) {
 								var e = this.ArHTML;
 								return (
 									e[0] +
@@ -8915,14 +8717,14 @@ oCBucketheadZombie = InheritO(
 									e[8]
 								);
 							},
-							prepareBirth: function (f) {
+							prepareBirth(f) {
 								var h = this;
 								var e = h.ArR;
 								var d = e[Math.floor(Math.random() * e.length)];
 								var g = GetY(d) + h.GetDY();
 								var c = g - h.height;
 								var j = 3 * d + 1;
-								var i = (h.id = "Z_" + Math.random());
+								var i = (h.id = `Z_${Math.random()}`);
 								h.R = d;
 								h.pixelTop = c;
 								h.zIndex = j;
@@ -8939,12 +8741,12 @@ oCBucketheadZombie = InheritO(
 									h.PicArr[h.NormalGif]
 								);
 							},
-							CustomBirth: function (i, c, d, m) {
+							CustomBirth(i, c, d, m) {
 								var g = this;
 								var f = GetY(i) + g.GetDY();
 								var h = f - g.height;
 								var k = 3 * i + 1;
-								var e = (g.id = "Z_" + Math.random());
+								var e = (g.id = `Z_${Math.random()}`);
 								var l = g.beAttackedPointL;
 								var j = g.beAttackedPointR;
 								g.AttackedRX =
@@ -8967,7 +8769,7 @@ oCBucketheadZombie = InheritO(
 									g.PicArr[g.NormalGif]
 								);
 							},
-							BirthCallBack: function (f) {
+							BirthCallBack(f) {
 								var e = f.delayT;
 								var d = f.id;
 								var c = (f.Ele = $(d));
@@ -8976,7 +8778,7 @@ oCBucketheadZombie = InheritO(
 								e
 									? oSym.addTask(
 											e,
-											function (h, g) {
+											(h, g) => {
 												var i = $Z[h];
 												i &&
 													((i.FreeSetbodyTime = 0),
@@ -8986,40 +8788,40 @@ oCBucketheadZombie = InheritO(
 										)
 									: SetBlock(c);
 							},
-							Birth: function () {
+							Birth() {
 								var c = this;
 								$Z[c.id] = c;
 								oZ.add(c);
 								c.BirthCallBack(c);
 							},
-							getCrushed: function (c) {
+							getCrushed(c) {
 								return true;
 							},
-							getRaven: function () {
+							getRaven() {
 								return this.DisappearDie(), 1;
 							},
-							getExplosion: function () {
+							getExplosion() {
 								this.ExplosionDie();
 							},
-							getThump: function () {
+							getThump() {
 								this.DisappearDie();
 							},
-							PlayNormalballAudio: function () {
+							PlayNormalballAudio() {
 								PlayAudio(
-									"splat" + Math.floor(1 + Math.random() * 3)
+									`splat${Math.floor(1 + Math.random() * 3)}`
 								);
 							},
-							PlayFireballAudio: function () {
+							PlayFireballAudio() {
 								PlayAudio(
 									["ignite", "ignite2"][
 										Math.floor(Math.random() * 2)
 									]
 								);
 							},
-							PlaySlowballAudio: function () {
+							PlaySlowballAudio() {
 								PlayAudio("frozen");
 							},
-							getFireball: function (h, e, g) {
+							getFireball(h, e, g) {
 								h.FreeSlowTime = 0;
 								h.Attack = 100;
 								h.FreeFreezeTime || h.FreeSetbodyTime
@@ -9036,10 +8838,10 @@ oCBucketheadZombie = InheritO(
 									c[d].getSputtering();
 								}
 							},
-							getSputtering: function (c) {
+							getSputtering(c) {
 								this.getHit2(this, c || 13, 0);
 							},
-							getSlow: function (h, f, g) {
+							getSlow(h, f, g) {
 								var d = oSym.Now + g;
 								var e = h.FreeSlowTime;
 								var c = 0;
@@ -9062,7 +8864,7 @@ oCBucketheadZombie = InheritO(
 								c &&
 									oSym.addTask(
 										g,
-										function (j, i) {
+										(j, i) => {
 											var k = $Z[j];
 											k &&
 												k.FreeSlowTime == i &&
@@ -9074,12 +8876,12 @@ oCBucketheadZombie = InheritO(
 										[f, d]
 									);
 							},
-							getFreeze: function (d, c) {
+							getFreeze(d, c) {
 								d.beAttacked && d.getHit0(d, 20, 0);
 								d.Speed = 0;
 								oSym.addTask(
 									400,
-									function (g, f, e) {
+									(g, f, e) => {
 										ClearChild(e);
 										var h = $Z[g];
 										h &&
@@ -9092,7 +8894,7 @@ oCBucketheadZombie = InheritO(
 													h.JudgeAttack()),
 											oSym.addTask(
 												1500,
-												function (j, i) {
+												(j, i) => {
 													var k = $Z[j];
 													k &&
 														k.FreeSlowTime == i &&
@@ -9113,7 +8915,7 @@ oCBucketheadZombie = InheritO(
 										c,
 										(d.FreeFreezeTime = oSym.Now + 400),
 										NewImg(
-											"icetrap_" + Math.random(),
+											`icetrap_${Math.random()}`,
 											"images/Plants/IceShroom/icetrap.gif",
 											d.getShadow(d),
 											d.Ele
@@ -9121,7 +8923,7 @@ oCBucketheadZombie = InheritO(
 									]
 								);
 							},
-							NormalDie: function () {
+							NormalDie() {
 								var c = this;
 								c.EleBody.src = c.PicArr[c.DieGif];
 								oSym.addTask(250, ClearChild, [c.Ele]);
@@ -9129,7 +8931,7 @@ oCBucketheadZombie = InheritO(
 								delete $Z[c.id];
 								c.PZ && oP.MonPrgs();
 							},
-							ExplosionDie: function () {
+							ExplosionDie() {
 								var c = this;
 								c.EleBody.src = c.PicArr[c.BoomDieGif];
 								oSym.addTask(300, ClearChild, [c.Ele]);
@@ -9137,13 +8939,13 @@ oCBucketheadZombie = InheritO(
 								delete $Z[c.id];
 								c.PZ && oP.MonPrgs();
 							},
-							DisappearDie: function () {
+							DisappearDie() {
 								ClearChild(this.Ele);
 								this.HP = 0;
 								delete $Z[this.id];
 								this.PZ && oP.MonPrgs();
 							},
-							CrushDie: function () {
+							CrushDie() {
 								var c = this;
 								c.GoingDieHead(c.id, c.PicArr, c);
 								ClearChild(c.Ele);
@@ -9151,22 +8953,19 @@ oCBucketheadZombie = InheritO(
 								delete $Z[c.id];
 								c.PZ && oP.MonPrgs();
 							},
-							GoingDieHead: function (e, c, d) {
+							GoingDieHead(e, c, d) {
 								oSym.addTask(200, ClearChild, [
 									NewImg(
 										0,
 										c[d.HeadGif],
-										"left:" +
-											d.AttackedLX +
-											"px;top:" +
-											(d.pixelTop - 20) +
-											"px;z-index:" +
-											d.zIndex,
+										`left:${d.AttackedLX}px;top:${
+											d.pixelTop - 20
+										}px;z-index:${d.zIndex}`,
 										EDPZ
 									),
 								]);
 							},
-							GoingDie: function (d) {
+							GoingDie(d) {
 								var c = this;
 								var e = c.id;
 								c.EleBody.src = d;
@@ -9178,10 +8977,10 @@ oCBucketheadZombie = InheritO(
 										0;
 								c.AutoReduceHP(e);
 							},
-							AutoReduceHP: function (c) {
+							AutoReduceHP(c) {
 								oSym.addTask(
 									100,
-									function (e) {
+									(e) => {
 										var d = $Z[e];
 										d &&
 											((d.HP -= 60) < 1
@@ -9191,10 +8990,10 @@ oCBucketheadZombie = InheritO(
 									[c]
 								);
 							},
-							JudgeAttack: function () {
+							JudgeAttack() {
 								var g = this;
 								var d = g.ZX;
-								var e = g.R + "_";
+								var e = `${g.R}_`;
 								var f = GetC(d);
 								var h = oGd.$;
 								var c;
@@ -9211,11 +9010,11 @@ oCBucketheadZombie = InheritO(
 										(g.EleBody.src =
 											g.PicArr[g.NormalGif]));
 							},
-							JudgeLR: function (f, d, e, c, g) {
+							JudgeLR(f, d, e, c, g) {
 								return e > 10 || e < 1
 									? false
 									: (function () {
-											d += --e + "_";
+											d += `${--e}_`;
 											var h = 3;
 											var i;
 											while (h--) {
@@ -9231,11 +9030,11 @@ oCBucketheadZombie = InheritO(
 											}
 										})();
 							},
-							JudgeSR: function (f, d, e, c, g) {
+							JudgeSR(f, d, e, c, g) {
 								return e > 9
 									? false
 									: (function () {
-											d += e + "_";
+											d += `${e}_`;
 											var h = 3;
 											var i;
 											while (h--) {
@@ -9251,7 +9050,7 @@ oCBucketheadZombie = InheritO(
 											}
 										})();
 							},
-							JudgeAttackH1: function () {
+							JudgeAttackH1() {
 								var e = this;
 								var d = oZ.getZ0(e.ZX, e.R);
 								var c = e.id;
@@ -9262,7 +9061,7 @@ oCBucketheadZombie = InheritO(
 									(e.AttackZombie(d.id),
 									!d.isAttacking && d.AttackZombie(c));
 							},
-							JudgeAttackH: function () {
+							JudgeAttackH() {
 								var e = this;
 								var d = oZ.getZ0(e.ZX, e.R);
 								var f = e.id;
@@ -9284,10 +9083,10 @@ oCBucketheadZombie = InheritO(
 										(e.EleBody.src =
 											e.PicArr[e.NormalGif]));
 							},
-							AttackZombie: function (d, c) {
+							AttackZombie(d, c) {
 								oSym.addTask(
 									10,
-									function (f, e) {
+									(f, e) => {
 										var h = $Z[f];
 										var g;
 										h &&
@@ -9300,7 +9099,7 @@ oCBucketheadZombie = InheritO(
 									[d, c]
 								);
 							},
-							AttackZombie2: function (e, d, c) {
+							AttackZombie2(e, d, c) {
 								e.isAttacking = 1;
 								e.EleBody.src = e.PicArr[e.AttackGif];
 								oSym.addTask(
@@ -9328,7 +9127,7 @@ oCBucketheadZombie = InheritO(
 									[d, c]
 								);
 							},
-							NormalAttack: function (d, c) {
+							NormalAttack(d, c) {
 								PlayAudio(
 									["chomp", "chomp2", "chompsoft"][
 										Math.floor(Math.random() * 2)
@@ -9337,7 +9136,7 @@ oCBucketheadZombie = InheritO(
 								oSym.addTask(85, console.log("chomp"));
 								oSym.addTask(
 									100,
-									function (f, e) {
+									(f, e) => {
 										var h = $Z[f];
 										var g;
 										h &&
@@ -9352,15 +9151,14 @@ oCBucketheadZombie = InheritO(
 								);
 							},
 							PZ: 1,
-							ExchangeLR: function (f, d) {
+							ExchangeLR(f, d) {
 								var e = f.width;
 								var h = f.beAttackedPointL;
 								var c = f.beAttackedPointR;
 								var g = f.Ele;
-								g.style.left =
-									(f.X =
-										f.AttackedLX -
-										(f.beAttackedPointL = e - c)) + "px";
+								g.style.left = `${(f.X =
+									f.AttackedLX -
+									(f.beAttackedPointL = e - c))}px`;
 								f.beAttackedPointR = e - h;
 								f.EleShadow.style.cssText = f.getShadow(f);
 								f.ExchangeLR2(f, f.EleBody, d);
@@ -9374,7 +9172,7 @@ oCBucketheadZombie = InheritO(
 								: function (e, c, d) {
 										c.className = d ? "fliph" : "";
 									},
-							bedevil: function (c) {
+							bedevil(c) {
 								c.ExchangeLR(c, 1);
 								c.JudgeAttack = c.JudgeAttackH;
 								c.PZ = 0;
@@ -9386,8 +9184,7 @@ oCBucketheadZombie = InheritO(
 							SetAlpha: $User.Browser.IE
 								? function (f, d, e, c) {
 										d.style.filter =
-											(f.CSS_alpha =
-												"alpha(opacity=" + e + ")") +
+											(f.CSS_alpha = `alpha(opacity=${e})`) +
 											f.CSS_fliph;
 									}
 								: function (f, d, e, c) {
@@ -9417,7 +9214,7 @@ oCBucketheadZombie = InheritO(
 						c.SetAlpha(c, c.EleBody, 50, 0.5);
 						oSym.addTask(
 							10,
-							function (e, d) {
+							(e, d) => {
 								(d = $Z[e]) && d.SetAlpha(d, d.EleBody, 100, 1);
 							},
 							[c.id]
@@ -9429,11 +9226,11 @@ oCBucketheadZombie = InheritO(
 						getHit1: a,
 						getHit2: a,
 						getHit3: a,
-						getPea: function (e, b, c) {
+						getPea(e, b, c) {
 							e.PlayNormalballAudio();
 							e.getHit0(e, b, c);
 						},
-						getFirePea: function (g, c, j) {
+						getFirePea(g, c, j) {
 							g.PlayFireballAudio();
 							(g.FreeSlowTime || g.FreeFreezeTime) &&
 								((g.Speed = g.OSpeed),
@@ -9449,10 +9246,10 @@ oCBucketheadZombie = InheritO(
 							}
 							g.getHit0(g, c, j);
 						},
-						getFirePeaSputtering: function () {
+						getFirePeaSputtering() {
 							this.getHit0(this, 13);
 						},
-						getSnowPea: function (f, c, g) {
+						getSnowPea(f, c, g) {
 							var e = f.FreeSlowTime;
 							var b = oSym.Now + 1000;
 							e == 0
@@ -9464,7 +9261,7 @@ oCBucketheadZombie = InheritO(
 								((f.FreeSlowTime = b),
 								oSym.addTask(
 									1000,
-									function (h, d) {
+									(h, d) => {
 										var i = $Z[h];
 										i &&
 											i.FreeSlowTime == d &&
@@ -9496,20 +9293,20 @@ oCBucketheadZombie = InheritO(
 						var a = "images/Zombies/BackupDancer/";
 						return [
 							"images/Card/Zombies/BackupDancer.png",
-							a + "0.gif",
-							a + "BackupDancer.gif",
-							a + "Attack.gif",
-							a + "LostHead.gif",
-							a + "LostHeadAttack.gif",
-							a + "Head.gif" + $Random,
-							a + "Die.gif" + $Random,
-							a + "BoomDie.gif" + $Random,
-							a + "Dancing.gif" + $Random,
-							a + "LostHeadDancing.gif" + $Random,
-							a + "Mound.gif" + $Random,
+							`${a}0.gif`,
+							`${a}BackupDancer.gif`,
+							`${a}Attack.gif`,
+							`${a}LostHead.gif`,
+							`${a}LostHeadAttack.gif`,
+							`${a}Head.gif${$Random}`,
+							`${a}Die.gif${$Random}`,
+							`${a}BoomDie.gif${$Random}`,
+							`${a}Dancing.gif${$Random}`,
+							`${a}LostHeadDancing.gif${$Random}`,
+							`${a}Mound.gif${$Random}`,
 						];
 					})(),
-					bedevil: function (a) {
+					bedevil(a) {
 						a.ExchangeLR(a, 1);
 						a.JudgeAttack = a.JudgeAttackH;
 						a.PZ = 0;
@@ -9520,7 +9317,7 @@ oCBucketheadZombie = InheritO(
 						a.ChangeChkActsTo1(a, a.id, a.EleBody);
 						oP.MonPrgs();
 					},
-					getSlow: function (f, d, e) {
+					getSlow(f, d, e) {
 						var b = oSym.Now + e;
 						var c = f.FreeSlowTime;
 						var a = 0;
@@ -9539,7 +9336,7 @@ oCBucketheadZombie = InheritO(
 						a &&
 							oSym.addTask(
 								e,
-								function (h, g) {
+								(h, g) => {
 									var i = $Z[h];
 									i &&
 										i.FreeSlowTime == g &&
@@ -9549,11 +9346,11 @@ oCBucketheadZombie = InheritO(
 								[d, b]
 							);
 					},
-					getFreeze: function (b, a) {
+					getFreeze(b, a) {
 						b.beAttacked && b.getHit0(b, 20, 0);
 						oSym.addTask(
 							400,
-							function (e, d, c) {
+							(e, d, c) => {
 								ClearChild(c);
 								var f = $Z[e];
 								f &&
@@ -9565,7 +9362,7 @@ oCBucketheadZombie = InheritO(
 										f.JudgeAttack(),
 									oSym.addTask(
 										1500,
-										function (h, g) {
+										(h, g) => {
 											var i = $Z[h];
 											i &&
 												i.FreeSlowTime == g &&
@@ -9579,7 +9376,7 @@ oCBucketheadZombie = InheritO(
 								a,
 								(b.FreeFreezeTime = oSym.Now + 400),
 								NewImg(
-									"icetrap_" + Math.random(),
+									`icetrap_${Math.random()}`,
 									"images/Plants/IceShroom/icetrap.gif",
 									b.getShadow(b),
 									b.Ele
@@ -9587,7 +9384,7 @@ oCBucketheadZombie = InheritO(
 							]
 						);
 					},
-					CustomBirth: function (g, d, a, b, j) {
+					CustomBirth(g, d, a, b, j) {
 						var e = this;
 						var c = GetY(g) + e.GetDY();
 						var f = c - e.height;
@@ -9606,13 +9403,13 @@ oCBucketheadZombie = InheritO(
 							(e.zIndex = 3 * g + 1),
 							"none",
 							j || 0,
-							e.height + "px",
+							`${e.height}px`,
 							e.PicArr[e.StandGif]
 						);
 					},
 					Produce:
 						'当舞王僵尸摇摆时，这种僵尸四个结伙出现。</p><p>韧性：<font color="#CC241D">低</font><br>伴舞僵尸曾在位于僵尸纽约城的“咀利牙”表演艺术学院钻研过六年的舞技。',
-					BirthCallBack: function (e) {
+					BirthCallBack(e) {
 						var d = e.delayT;
 						var c = e.id;
 						var b = (e.Ele = $(c));
@@ -9620,14 +9417,14 @@ oCBucketheadZombie = InheritO(
 						e.EleShadow = b.firstChild;
 						oSym.addTask(
 							d,
-							function (g, f) {
+							(g, f) => {
 								var h = $Z[g];
 								h && ((h.FreeSetbodyTime = 0), SetBlock(f));
 							},
 							[c, b]
 						);
 					},
-					ChangeChkActsTo0: function (c, b, a) {
+					ChangeChkActsTo0(c, b, a) {
 						if (!c.PZ) {
 							c.ChangeChkActsTo1(c, b, a);
 							return;
@@ -9638,7 +9435,7 @@ oCBucketheadZombie = InheritO(
 						c.Speed = c.DZStep = 0;
 						oSym.addTask(
 							200,
-							function (e, d) {
+							(e, d) => {
 								var f = $Z[e];
 								f &&
 									f.beAttacked &&
@@ -9647,7 +9444,7 @@ oCBucketheadZombie = InheritO(
 							[b, a]
 						);
 					},
-					ChangeChkActsTo1: function (c, b, a) {
+					ChangeChkActsTo1(c, b, a) {
 						c.LostHeadGif = 4;
 						c.NormalGif = 2;
 						c.DZStep = 1;
@@ -9655,7 +9452,7 @@ oCBucketheadZombie = InheritO(
 						c.PZ &&
 							oSym.addTask(
 								220,
-								function (e, d) {
+								(e, d) => {
 									var f = $Z[e];
 									f &&
 										f.beAttacked &&
@@ -9664,7 +9461,7 @@ oCBucketheadZombie = InheritO(
 								[b, a]
 							);
 					},
-					ChkActs: function (g, d, h, c) {
+					ChkActs(g, d, h, c) {
 						var e;
 						var b;
 						var a;
@@ -9697,15 +9494,14 @@ oCBucketheadZombie = InheritO(
 														g.GetDY(),
 												})),
 											(g.ZX = g.AttackedLX -= b),
-											(g.Ele.style.left =
-												Math.floor((g.X -= b)) + "px"),
+											(g.Ele.style.left = `${Math.floor((g.X -= b))}px`),
 											(f = 1))
 									: (f = 1))
 							: (f = 1);
 						g.ChkSpeed(g);
 						return f;
 					},
-					ChkSpeed: function (b) {
+					ChkSpeed(b) {
 						if (!b.DZStep) {
 							return;
 						}
@@ -9740,13 +9536,13 @@ oCBucketheadZombie = InheritO(
 					Speed: 7.2,
 					NormalGif: 9,
 					GetDTop: 5,
-					getShadow: function (a) {
+					getShadow(a) {
 						return "left:30px;top:146px";
 					},
-					GetDX: function () {
+					GetDX() {
 						return -50;
 					},
-					GetDY: function () {
+					GetDY() {
 						return -5;
 					},
 					LostHeadGif: 14,
@@ -9760,22 +9556,22 @@ oCBucketheadZombie = InheritO(
 							var g = $Z[d];
 							var e;
 							NewEle(
-								d + "_spotlightCon",
+								`${d}_spotlightCon`,
 								"div",
 								"position:absolute;left:-30px;top:-400px;width:184px;height:600px;overflow:hidden",
 								0,
 								c
 							).appendChild(
 								(g.spotlight = NewImg(
-									d + "_spotlight",
-									"images/Zombies/DancingZombie/spotlight" +
-										a +
-										".png",
-									"left:0;top:0;width:920px;height:600px;" + b
+									`${d}_spotlight`,
+									`images/Zombies/DancingZombie/spotlight${
+										a
+									}.png`,
+									`left:0;top:0;width:920px;height:600px;${b}`
 								))
 							);
 							e = NewEle(
-								d + "_spotlight2Con",
+								`${d}_spotlight2Con`,
 								"div",
 								"position:absolute;left:-25px;top:135px;width:184px;height:60px;overflow:hidden",
 								0
@@ -9783,11 +9579,11 @@ oCBucketheadZombie = InheritO(
 							c.insertBefore(e, f.EleShadow);
 							e.appendChild(
 								(g.spotlight2 = NewImg(
-									d + "_spotlight2",
-									"images/Zombies/DancingZombie/spotlight2" +
-										a +
-										".png",
-									"left:0;top:0;width:920px;height:60px;" + b
+									`${d}_spotlight2`,
+									`images/Zombies/DancingZombie/spotlight2${
+										a
+									}.png`,
+									`left:0;top:0;width:920px;height:60px;${b}`
 								))
 							);
 						};
@@ -9795,36 +9591,36 @@ oCBucketheadZombie = InheritO(
 					PicArr: (function () {
 						var d = "images/Zombies/DancingZombie/";
 						var c = $User.Browser.IE6 ? "_8" : "";
-						var a = d + "spotlight" + c + ".png" + $Random;
-						var b = d + "spotlight2" + c + ".png" + $Random;
+						var a = `${d}spotlight${c}.png${$Random}`;
+						var b = `${d}spotlight2${c}.png${$Random}`;
 						return [
 							"images/Card/Zombies/DancingZombie.png",
-							d + "0.gif",
-							d + "DancingZombie.gif",
-							d + "Attack.gif",
-							d + "LostHead.gif",
-							d + "LostHeadAttack.gif",
-							d + "Head.gif" + $Random,
-							d + "Die.gif" + $Random,
-							d + "BoomDie.gif" + $Random,
-							d + "SlidingStep.gif" + $Random,
-							d + "Dancing.gif" + $Random,
-							d + "Summon1.gif",
-							d + "Summon2.gif",
-							d + "Summon3.gif",
-							d + "LostHeadSlidingStep.gif" + $Random,
-							d + "LostHeadDancing.gif" + $Random,
-							d + "LostHeadSummon.gif" + $Random,
+							`${d}0.gif`,
+							`${d}DancingZombie.gif`,
+							`${d}Attack.gif`,
+							`${d}LostHead.gif`,
+							`${d}LostHeadAttack.gif`,
+							`${d}Head.gif${$Random}`,
+							`${d}Die.gif${$Random}`,
+							`${d}BoomDie.gif${$Random}`,
+							`${d}SlidingStep.gif${$Random}`,
+							`${d}Dancing.gif${$Random}`,
+							`${d}Summon1.gif`,
+							`${d}Summon2.gif`,
+							`${d}Summon3.gif`,
+							`${d}LostHeadSlidingStep.gif${$Random}`,
+							`${d}LostHeadDancing.gif${$Random}`,
+							`${d}LostHeadSummon.gif${$Random}`,
 							a,
 							b,
 						];
 					})(),
 					Produce:
 						'舞王僵尸和人类(在世或者死去的)如有雷同，纯属巧合。</p><p>韧性：<font color="#CC241D">中</font><br>特点：<font color="#CC241D">召唤伴舞僵尸</font></p>舞王僵尸的最新唱片“抓住脑子啃啊啃”在僵尸界的人气正急速飙升。',
-					getSnowPea: function () {
+					getSnowPea() {
 						this.PlaySlowballAudio();
 					},
-					NormalDie: function () {
+					NormalDie() {
 						var a = this;
 						a.ResetBackupDancer(a);
 						a.EleBody.src = a.PicArr[a.DieGif];
@@ -9833,7 +9629,7 @@ oCBucketheadZombie = InheritO(
 						delete $Z[a.id];
 						a.PZ && oP.MonPrgs();
 					},
-					ExplosionDie: function () {
+					ExplosionDie() {
 						var a = this;
 						a.ResetBackupDancer(a);
 						a.EleBody.src = a.PicArr[a.BoomDieGif];
@@ -9842,14 +9638,14 @@ oCBucketheadZombie = InheritO(
 						delete $Z[a.id];
 						a.PZ && oP.MonPrgs();
 					},
-					DisappearDie: function () {
+					DisappearDie() {
 						this.ResetBackupDancer(this);
 						ClearChild(this.Ele);
 						this.HP = 0;
 						delete $Z[this.id];
 						this.PZ && oP.MonPrgs();
 					},
-					CrushDie: function () {
+					CrushDie() {
 						var a = this;
 						a.ResetBackupDancer(a);
 						a.GoingDieHead(a.id, a.PicArr, a);
@@ -9858,7 +9654,7 @@ oCBucketheadZombie = InheritO(
 						delete $Z[a.id];
 						a.PZ && oP.MonPrgs();
 					},
-					bedevil: function (b) {
+					bedevil(b) {
 						var a = b.id;
 						b.ExchangeLR(b, 1);
 						b.JudgeAttack = b.JudgeAttackH;
@@ -9868,11 +9664,11 @@ oCBucketheadZombie = InheritO(
 						b.ChkActs = b.ChkActs1;
 						b.ChangeChkActsTo1(b, a, b.EleBody);
 						b.ResetBackupDancer(b);
-						($(a + "_spotlightCon").style.left = "20px"),
-							($(a + "_spotlight2Con").style.left = "25px");
+						($(`${a}_spotlightCon`).style.left = "20px"),
+							($(`${a}_spotlight2Con`).style.left = "25px");
 						oP.MonPrgs();
 					},
-					ResetBackupDancer: function (f) {
+					ResetBackupDancer(f) {
 						var g = f.ArDZ;
 						var d = g.length;
 						var c;
@@ -9904,12 +9700,12 @@ oCBucketheadZombie = InheritO(
 						a > -1 &&
 							oSym.addTask(
 								f.DZStepT - oSym.Now,
-								function (o, j) {
+								(o, j) => {
 									var m = 4;
 									var l;
 									var k;
 									var n;
-									var h = "ChangeChkActsTo" + j;
+									var h = `ChangeChkActsTo${j}`;
 									while (m--) {
 										(l = o[m]) &&
 											(k = l[0]) &&
@@ -9922,7 +9718,7 @@ oCBucketheadZombie = InheritO(
 								[g, [1, 0][a]]
 							);
 					},
-					BirthCallBack: function (d) {
+					BirthCallBack(d) {
 						var b = d.delayT;
 						var l = d.id;
 						var a = (d.Ele = $(l));
@@ -10012,7 +9808,7 @@ oCBucketheadZombie = InheritO(
 							: func(l, a);
 						oSym.addTask(
 							c,
-							function (o) {
+							(o) => {
 								var t = $Z[o];
 								t &&
 									t.beAttacked &&
@@ -10022,7 +9818,7 @@ oCBucketheadZombie = InheritO(
 							[d.id]
 						);
 					},
-					ChkActs1: function (e, b, f, a) {
+					ChkActs1(e, b, f, a) {
 						var c;
 						var d;
 						!(e.FreeFreezeTime || e.FreeSetbodyTime)
@@ -10036,18 +9832,17 @@ oCBucketheadZombie = InheritO(
 											e.DisappearDie(),
 											(d = 0))
 										: ((e.ZX = e.AttackedRX += 3.5),
-											(e.Ele.style.left =
-												Math.ceil((e.X += 3.5)) + "px"),
+											(e.Ele.style.left = `${Math.ceil((e.X += 3.5))}px`),
 											(d = 1))
 									: (d = 1))
 							: (d = 1);
 						return d;
 					},
-					ChkTmp: function (c, b, d, a) {
+					ChkTmp(c, b, d, a) {
 						c.ChkSpeed(c);
 						return 0;
 					},
-					ChkActs: function (g, d, h, c) {
+					ChkActs(g, d, h, c) {
 						var e;
 						var b;
 						var a;
@@ -10080,15 +9875,14 @@ oCBucketheadZombie = InheritO(
 														g.GetDY(),
 												})),
 											(g.ZX = g.AttackedLX -= b),
-											(g.Ele.style.left =
-												Math.floor((g.X -= b)) + "px"),
+											(g.Ele.style.left = `${Math.floor((g.X -= b))}px`),
 											(f = 1))
 									: (f = 1))
 							: (f = 1);
 						g.ChkSpeed(g);
 						return f;
 					},
-					ChkSpeed: function (g) {
+					ChkSpeed(g) {
 						if (!g.DZStep) {
 							return;
 						}
@@ -10136,7 +9930,7 @@ oCBucketheadZombie = InheritO(
 							g.Speed != a && (g.Speed = a);
 						}
 					},
-					AttackZombie: function (a) {
+					AttackZombie(a) {
 						this.ExchangeLR(this, 0);
 						var b = this.id;
 						this.isAttacking = 1;
@@ -10164,7 +9958,7 @@ oCBucketheadZombie = InheritO(
 							[b, a]
 						);
 					},
-					ChkBackupDancer: function (h, g, f) {
+					ChkBackupDancer(h, g, f) {
 						if (!h.PZ) {
 							h.ChangeChkActsTo1(h, g, f);
 							return;
@@ -10187,7 +9981,7 @@ oCBucketheadZombie = InheritO(
 							: h.Summon(h, g);
 						h.ChangeChkActsTo0(h, g, f);
 					},
-					ChangeChkActsTo0: function (g, e, a) {
+					ChangeChkActsTo0(g, e, a) {
 						if (!g.PZ) {
 							g.ChangeChkActsTo1(g, e, a);
 							return;
@@ -10213,7 +10007,7 @@ oCBucketheadZombie = InheritO(
 						g.DZStepT = oSym.Now + 200;
 						oSym.addTask(
 							200,
-							function (j, i) {
+							(j, i) => {
 								var k = $Z[j];
 								k &&
 									k.beAttacked &&
@@ -10222,7 +10016,7 @@ oCBucketheadZombie = InheritO(
 							[e, a]
 						);
 					},
-					ChangeChkActsTo1: function (g, e, a) {
+					ChangeChkActsTo1(g, e, a) {
 						var d = 4;
 						var h = g.ArDZ;
 						var c;
@@ -10246,7 +10040,7 @@ oCBucketheadZombie = InheritO(
 						g.PZ &&
 							oSym.addTask(
 								220,
-								function (j, i) {
+								(j, i) => {
 									var k = $Z[j];
 									k &&
 										k.beAttacked &&
@@ -10255,7 +10049,7 @@ oCBucketheadZombie = InheritO(
 								[e, a]
 							);
 					},
-					TurnLeft: function (c) {
+					TurnLeft(c) {
 						var a = CZombies.prototype;
 						var b = c.id;
 						c.AttackZombie = a.AttackZombie;
@@ -10270,7 +10064,7 @@ oCBucketheadZombie = InheritO(
 						c.getFreeze = CZombies.prototype.getFreeze;
 						oSym.addTask(
 							20,
-							function (d, e) {
+							(d, e) => {
 								$Z[d] &&
 									e.beAttacked &&
 									(e.addSpotlight(d, e, e.Ele),
@@ -10282,9 +10076,9 @@ oCBucketheadZombie = InheritO(
 												(h > -736
 													? (h -= 184)
 													: (h = 0),
-												(f.style.left = h + "px"),
+												(f.style.left = `${h}px`),
 												k > -736 ? (k -= 184) : (k = 0),
-												(i.style.left = k + "px"),
+												(i.style.left = `${k}px`),
 												oSym.addTask(
 													100,
 													arguments.callee,
@@ -10295,7 +10089,7 @@ oCBucketheadZombie = InheritO(
 									),
 									oSym.addTask(
 										200,
-										function (h, g) {
+										(h, g) => {
 											var f;
 											$Z[g] &&
 												h.beAttacked &&
@@ -10312,12 +10106,12 @@ oCBucketheadZombie = InheritO(
 						);
 						c.Summon(c, b);
 					},
-					NormalAttack: function (a) {
+					NormalAttack(a) {
 						var b = $Z[a];
 						b.ExchangeLR(b, 0);
 						b.TurnLeft(b);
 					},
-					Summon: function (d, c) {
+					Summon(d, c) {
 						d.LostHeadGif = 16;
 						var a = d.EleBody;
 						var b = d.ChkActs;
@@ -10327,7 +10121,7 @@ oCBucketheadZombie = InheritO(
 						PlayAudio("dancer");
 						oSym.addTask(
 							10,
-							function (f, e) {
+							(f, e) => {
 								var g = $Z[f];
 								g &&
 									g.beAttacked &&
@@ -10335,15 +10129,14 @@ oCBucketheadZombie = InheritO(
 										"images/Zombies/DancingZombie/Summon2.gif"),
 									oSym.addTask(
 										10,
-										function (t, s, x) {
+										(t, s, x) => {
 											var h = $Z[t];
 											var v = h.ZX;
 											var m = h.ArDZ;
 											var n = [];
-											var k =
-												"images/Zombies/BackupDancer/Mound.gif" +
-												$Random +
-												Math.random();
+											var k = `images/Zombies/BackupDancer/Mound.gif${
+												$Random
+											}${Math.random()}`;
 											var r = 4;
 											var w = [];
 											var u = [];
@@ -10362,21 +10155,19 @@ oCBucketheadZombie = InheritO(
 															q[1],
 															q[2](v),
 															100,
-															(q[0] =
-																"Z_" +
-																Math.random())
+															(q[0] = `Z_${Math.random()}`)
 														)),
 														n.push(
 															NewImg(
 																"",
 																k,
-																"z-index:" +
-																	q[3] +
-																	";left:" +
-																	q[4](v) +
-																	"px;top:" +
-																	q[5] +
-																	"px",
+																`z-index:${
+																	q[3]
+																};left:${q[4](
+																	v
+																)}px;top:${
+																	q[5]
+																}px`,
 																EDPZ
 															)
 														),
@@ -10397,7 +10188,7 @@ oCBucketheadZombie = InheritO(
 												);
 												oSym.addTask(
 													110,
-													function (A, y, z, i) {
+													(A, y, z, i) => {
 														var B = $Z[A];
 														B &&
 															B.beAttacked &&
@@ -10408,10 +10199,7 @@ oCBucketheadZombie = InheritO(
 															),
 															oSym.addTask(
 																100,
-																function (
-																	D,
-																	C
-																) {
+																(D, C) => {
 																	var E =
 																		$Z[D];
 																	if (
@@ -10443,7 +10231,7 @@ oCBucketheadZombie = InheritO(
 												);
 												oSym.addTask(
 													200,
-													function (y, i) {
+													(y, i) => {
 														var z = $Z[y];
 														var j;
 														z &&
@@ -10472,15 +10260,15 @@ oCBucketheadZombie = InheritO(
 						var a = "images/Zombies/Zombie/";
 						return [
 							"images/Card/Zombies/Zombie.png",
-							a + "0.gif",
-							a + "Zombie.gif",
-							a + "ZombieAttack.gif",
-							a + "ZombieLostHead.gif",
-							a + "ZombieLostHeadAttack.gif",
-							a + "ZombieHead.gif" + $Random,
-							a + "ZombieDie.gif" + $Random,
-							a + "BoomDie.gif" + $Random,
-							a + "1.gif",
+							`${a}0.gif`,
+							`${a}Zombie.gif`,
+							`${a}ZombieAttack.gif`,
+							`${a}ZombieLostHead.gif`,
+							`${a}ZombieLostHeadAttack.gif`,
+							`${a}ZombieHead.gif${$Random}`,
+							`${a}ZombieDie.gif${$Random}`,
+							`${a}BoomDie.gif${$Random}`,
+							`${a}1.gif`,
 						];
 					})(),
 					Produce:
@@ -10515,15 +10303,15 @@ oCBucketheadZombie = InheritO(
 						var a = "images/Zombies/FlagZombie/";
 						return [
 							"images/Card/Zombies/FlagZombie.png",
-							a + "0.gif",
-							a + "FlagZombie.gif",
-							a + "FlagZombieAttack.gif",
-							a + "FlagZombieLostHead.gif",
-							a + "FlagZombieLostHeadAttack.gif",
-							"images/Zombies/Zombie/ZombieHead.gif" + $Random,
-							"images/Zombies/Zombie/ZombieDie.gif" + $Random,
-							"images/Zombies/Zombie/BoomDie.gif" + $Random,
-							a + "1.gif",
+							`${a}0.gif`,
+							`${a}FlagZombie.gif`,
+							`${a}FlagZombieAttack.gif`,
+							`${a}FlagZombieLostHead.gif`,
+							`${a}FlagZombieLostHeadAttack.gif`,
+							`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
+							`images/Zombies/Zombie/ZombieDie.gif${$Random}`,
+							`images/Zombies/Zombie/BoomDie.gif${$Random}`,
+							`${a}1.gif`,
 						];
 					})(),
 					EName: "oFlagZombie",
@@ -10561,7 +10349,7 @@ oCBucketheadZombie = InheritO(
 						f.SetAlpha(f, f.EleBody, 50, 0.5);
 						oSym.addTask(
 							10,
-							function (h, g) {
+							(h, g) => {
 								(g = $Z[h]) && g.SetAlpha(g, g.EleBody, 100, 1);
 							},
 							[f.id]
@@ -10590,21 +10378,21 @@ oCBucketheadZombie = InheritO(
 						var a = "images/Zombies/Zombie/";
 						return [
 							"images/Card/Zombies/ConeheadZombie.png",
-							b + "0.gif",
-							b + "ConeheadZombie.gif",
-							b + "ConeheadZombieAttack.gif",
-							a + "ZombieLostHead.gif",
-							a + "ZombieLostHeadAttack.gif",
-							a + "ZombieHead.gif" + $Random,
-							a + "ZombieDie.gif" + $Random,
-							a + "BoomDie.gif" + $Random,
-							a + "Zombie.gif",
-							a + "ZombieAttack.gif",
-							b + "1.gif",
+							`${b}0.gif`,
+							`${b}ConeheadZombie.gif`,
+							`${b}ConeheadZombieAttack.gif`,
+							`${a}ZombieLostHead.gif`,
+							`${a}ZombieLostHeadAttack.gif`,
+							`${a}ZombieHead.gif${$Random}`,
+							`${a}ZombieDie.gif${$Random}`,
+							`${a}BoomDie.gif${$Random}`,
+							`${a}Zombie.gif`,
+							`${a}ZombieAttack.gif`,
+							`${b}1.gif`,
 						];
 					})(),
 					AudioArr: ["plastichit"],
-					PlayNormalballAudio: function () {
+					PlayNormalballAudio() {
 						PlayAudio("plastichit");
 					},
 					Produce:
@@ -10618,7 +10406,7 @@ oCBucketheadZombie = InheritO(
 						OrnHP: 1100,
 						Lvl: 3,
 						SunNum: 125,
-						PlayNormalballAudio: function () {
+						PlayNormalballAudio() {
 							PlayAudio(
 								["shieldhit", "shieldhit2"][
 									Math.floor(Math.random() * 2)
@@ -10652,34 +10440,30 @@ oCBucketheadZombie = InheritO(
 					Speed: 3.2,
 					beAttackedPointL: 40,
 					beAttackedPointR: 134,
-					PlayNormalballAudio: function () {
+					PlayNormalballAudio() {
 						PlayAudio("plastichit");
 					},
 					PicArr: (function () {
 						var a = "images/Zombies/FootballZombie/";
 						return [
 							"images/Card/Zombies/FootballZombie.png",
-							a + "0.gif",
-							a + "FootballZombie.gif",
-							a + "Attack.gif",
-							a + "LostHead.gif",
-							a + "LostHeadAttack.gif",
-							"images/Zombies/Zombie/ZombieHead.gif" + $Random,
-							a + "Die.gif" + $Random,
-							a + "BoomDie.gif" + $Random,
-							a + "OrnLost.gif",
-							a + "OrnLostAttack.gif",
-							a + "1.gif",
+							`${a}0.gif`,
+							`${a}FootballZombie.gif`,
+							`${a}Attack.gif`,
+							`${a}LostHead.gif`,
+							`${a}LostHeadAttack.gif`,
+							`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
+							`${a}Die.gif${$Random}`,
+							`${a}BoomDie.gif${$Random}`,
+							`${a}OrnLost.gif`,
+							`${a}OrnLostAttack.gif`,
+							`${a}1.gif`,
 						];
 					})(),
-					getShadow: function (a) {
-						return (
-							"left:" +
-							(a.beAttackedPointL + 15) +
-							"px;top:" +
-							(a.height - 22) +
-							"px"
-						);
+					getShadow(a) {
+						return `left:${a.beAttackedPointL + 15}px;top:${
+							a.height - 22
+						}px`;
 					},
 					Produce:
 						'橄榄球僵尸的表演秀。<p>韧性：<font color="#CC241D">极高</font><br>速度：<font color="#CC241D">快</font><br>弱点：<font color="#CC241D">磁力菇</font></p>在球场上，橄榄球僵尸表现出110%的激情，他进攻防守样样在行。虽然他完全不知道橄榄球是什么。',
@@ -10695,10 +10479,10 @@ oCBucketheadZombie = InheritO(
 					beAttackedPointL: 215,
 					beAttackedPointR: 260,
 					StandGif: 13,
-					GetDX: function () {
+					GetDX() {
 						return -238;
 					},
-					GetDY: function () {
+					GetDY() {
 						return 2;
 					},
 					Lvl: 2,
@@ -10708,52 +10492,45 @@ oCBucketheadZombie = InheritO(
 						var a = "images/Zombies/PoleVaultingZombie/";
 						return [
 							"images/Card/Zombies/PoleVaultingZombie.png",
-							a + "0.gif",
-							a + "PoleVaultingZombie.gif",
-							a + "PoleVaultingZombieAttack.gif",
-							a + "PoleVaultingZombieLostHead.gif",
-							a + "PoleVaultingZombieLostHeadAttack.gif",
-							a + "PoleVaultingZombieHead.gif" + $Random,
-							a + "PoleVaultingZombieDie.gif" + $Random,
-							a + "BoomDie.gif" + $Random,
-							a + "PoleVaultingZombieWalk.gif",
-							a + "PoleVaultingZombieLostHeadWalk.gif",
-							a + "PoleVaultingZombieJump.gif",
-							a + "PoleVaultingZombieJump2.gif",
-							a + "1.gif",
+							`${a}0.gif`,
+							`${a}PoleVaultingZombie.gif`,
+							`${a}PoleVaultingZombieAttack.gif`,
+							`${a}PoleVaultingZombieLostHead.gif`,
+							`${a}PoleVaultingZombieLostHeadAttack.gif`,
+							`${a}PoleVaultingZombieHead.gif${$Random}`,
+							`${a}PoleVaultingZombieDie.gif${$Random}`,
+							`${a}BoomDie.gif${$Random}`,
+							`${a}PoleVaultingZombieWalk.gif`,
+							`${a}PoleVaultingZombieLostHeadWalk.gif`,
+							`${a}PoleVaultingZombieJump.gif`,
+							`${a}PoleVaultingZombieJump2.gif`,
+							`${a}1.gif`,
 						];
 					})(),
 					AudioArr: ["polevault", "grassstep"],
 					Produce:
 						'撑杆僵尸运用标杆高高地跃过障碍物。<p>韧性：<font color="#CC241D">中</font><Br>速度：<font color="#CC241D">快,而后慢(跳跃后)</font><BR>特点：<font color="#CC241D">跃过他所碰到的第一筑植物</font></p>一些僵尸渴望走得更远、得到更多，这也促使他们由普通成为非凡。那就是撑杆僵尸。',
-					getShadow: function (a) {
-						return (
-							"left:" +
-							(a.beAttackedPointL - 20) +
-							"px;top:" +
-							(a.height - 35) +
-							"px"
-						);
+					getShadow(a) {
+						return `left:${a.beAttackedPointL - 20}px;top:${
+							a.height - 35
+						}px`;
 					},
-					GoingDieHead: function (c, a, b) {
+					GoingDieHead(c, a, b) {
 						oSym.addTask(200, ClearChild, [
 							NewImg(
 								0,
 								a[b.HeadGif],
-								"left:" +
-									b.X +
-									"px;top:" +
-									(b.pixelTop - 20) +
-									"px;z-index:" +
-									b.zIndex,
+								`left:${b.X}px;top:${
+									b.pixelTop - 20
+								}px;z-index:${b.zIndex}`,
 								EDPZ
 							),
 						]);
 					},
-					JudgeAttack: function () {
+					JudgeAttack() {
 						var g = this;
 						var b = g.ZX;
-						var d = g.R + "_";
+						var d = `${g.R}_`;
 						var c = GetC(b);
 						var h = oGd.$;
 						var f;
@@ -10766,7 +10543,7 @@ oCBucketheadZombie = InheritO(
 							for (
 								a = 2;
 								a > -1;
-								(p = h[d + f + "_" + a--]) &&
+								(p = h[`${d + f}_${a--}`]) &&
 								(p.EName != "oBrains"
 									? p.AttackedRX >= e &&
 										p.AttackedLX < b &&
@@ -10792,7 +10569,7 @@ oCBucketheadZombie = InheritO(
 							) {}
 						}
 					},
-					getCrushed: function (a) {
+					getCrushed(a) {
 						this.NormalAttack(this.id, a.id, a.AttackedLX);
 						this.getCrushed = function () {
 							return false;
@@ -10800,7 +10577,7 @@ oCBucketheadZombie = InheritO(
 						a.Stature > 0 &&
 							oSym.addTask(
 								50,
-								function (c) {
+								(c) => {
 									var b = $Z[c];
 									b && b.CrushDie();
 								},
@@ -10808,22 +10585,21 @@ oCBucketheadZombie = InheritO(
 							);
 						return false;
 					},
-					getRaven: function (a) {
+					getRaven(a) {
 						return (
 							!this.isAttacking &&
 								this.NormalAttack(this.id, a, $P[a].AttackedLX),
 							0
 						);
 					},
-					NormalAttack: function (d, b, g) {
+					NormalAttack(d, b, g) {
 						var f = $Z[d];
 						var a = f.Ele;
 						var c = f.EleShadow;
 						var e = f.EleBody;
-						e.src =
-							"images/Zombies/PoleVaultingZombie/PoleVaultingZombieJump.gif" +
-							$Random +
-							Math.random();
+						e.src = `images/Zombies/PoleVaultingZombie/PoleVaultingZombieJump.gif${
+							$Random
+						}${Math.random()}`;
 						PlayAudio("grassstep");
 						SetHidden(c);
 						f.isAttacking = 1;
@@ -10833,14 +10609,14 @@ oCBucketheadZombie = InheritO(
 						};
 						oSym.addTask(
 							50,
-							function (h) {
+							(h) => {
 								$Z[h] && PlayAudio("polevault");
 							},
 							[d]
 						);
 						oSym.addTask(
 							100,
-							function (m, j, i, l, n) {
+							(m, j, i, l, n) => {
 								var h = $Z[m];
 								var k;
 								var q;
@@ -10856,7 +10632,7 @@ oCBucketheadZombie = InheritO(
 													h.beAttackedPointL) +
 												h.beAttackedPointR),
 											SetStyle(i, {
-												left: h.X + "px",
+												left: `${h.X}px`,
 											}),
 											(n.src =
 												"images/Zombies/PoleVaultingZombie/PoleVaultingZombieWalk.gif"),
@@ -10877,16 +10653,15 @@ oCBucketheadZombie = InheritO(
 													h.beAttackedPointR) +
 												h.beAttackedPointL),
 											SetStyle(i, {
-												left: h.X + "px",
+												left: `${h.X}px`,
 											}),
-											(n.src =
-												"images/Zombies/PoleVaultingZombie/PoleVaultingZombieJump2.gif" +
-												$Random +
-												Math.random()),
+											(n.src = `images/Zombies/PoleVaultingZombie/PoleVaultingZombieJump2.gif${
+												$Random
+											}${Math.random()}`),
 											SetVisible(l),
 											oSym.addTask(
 												80,
-												function (s, v) {
+												(s, v) => {
 													var u = $Z[s];
 													var t;
 													u &&
@@ -10945,29 +10720,29 @@ oCBucketheadZombie = InheritO(
 						var a = "images/Zombies/NewspaperZombie/";
 						return [
 							"images/Card/Zombies/NewspaperZombie.png",
-							a + "0.gif",
-							a + "HeadWalk1.gif",
-							a + "HeadAttack1.gif",
-							a + "LostHeadWalk1.gif",
-							a + "LostHeadAttack1.gif",
-							a + "HeadWalk0.gif",
-							a + "HeadAttack0.gif",
-							a + "LostHeadWalk0.gif",
-							a + "LostHeadAttack0.gif",
-							a + "Head.gif" + $Random,
-							a + "Die.gif" + $Random,
-							a + "BoomDie.gif" + $Random,
-							a + "LostNewspaper.gif",
-							a + "1.gif",
+							`${a}0.gif`,
+							`${a}HeadWalk1.gif`,
+							`${a}HeadAttack1.gif`,
+							`${a}LostHeadWalk1.gif`,
+							`${a}LostHeadAttack1.gif`,
+							`${a}HeadWalk0.gif`,
+							`${a}HeadAttack0.gif`,
+							`${a}LostHeadWalk0.gif`,
+							`${a}LostHeadAttack0.gif`,
+							`${a}Head.gif${$Random}`,
+							`${a}Die.gif${$Random}`,
+							`${a}BoomDie.gif${$Random}`,
+							`${a}LostNewspaper.gif`,
+							`${a}1.gif`,
 						];
 					})(),
 					AudioArr: ["newspaper_rarrgh2"],
 					Produce:
 						'他的报纸只能提供有限的防御。<p>韧性：<font color="#CC241D">低</font><br>报纸韧性：<font color="#CC241D">低</font><br>速度：正常，而后快(失去报纸后)</p>读报僵尸，他正痴迷于完成他的数独难题。难怪他这么反常。',
-					getShadow: function (a) {
-						return "left:75px;top:" + (a.height - 25) + "px";
+					getShadow(a) {
+						return `left:75px;top:${a.height - 25}px`;
 					},
-					GoingDie: function (b) {
+					GoingDie(b) {
 						var a = this;
 						var c = a.id;
 						a.EleBody.src = b;
@@ -10975,12 +10750,9 @@ oCBucketheadZombie = InheritO(
 							NewImg(
 								0,
 								a.PicArr[a.HeadGif],
-								"left:" +
-									a.AttackedLX +
-									"px;top:" +
-									(a.pixelTop - 20) +
-									"px;z-index:" +
-									a.zIndex,
+								`left:${a.AttackedLX}px;top:${
+									a.pixelTop - 20
+								}px;z-index:${a.zIndex}`,
 								EDPZ
 							),
 						]);
@@ -10991,7 +10763,7 @@ oCBucketheadZombie = InheritO(
 								0;
 						a.AutoReduceHP(c);
 					},
-					getHurtOrnLost: function (j, a, g, m, c, l, k, i) {
+					getHurtOrnLost(j, a, g, m, c, l, k, i) {
 						var e = this;
 						if (!e.beAttacked) {
 							k && e.DisappearDie();
@@ -11032,18 +10804,18 @@ oCBucketheadZombie = InheritO(
 						SetAlpha(e.EleBody, 50, 0.5);
 						oSym.addTask(
 							10,
-							function (q) {
+							(q) => {
 								var n = $Z[q];
 								n && SetAlpha(n.EleBody, 100, 1);
 							},
 							[b]
 						);
 					},
-					getSnowPea: function (c, a, b) {
-						PlayAudio("splat" + Math.floor(1 + Math.random() * 3));
+					getSnowPea(c, a, b) {
+						PlayAudio(`splat${Math.floor(1 + Math.random() * 3)}`);
 						c.getHit0(c, a, b);
 					},
-					getFirePea: function (f, b, e) {
+					getFirePea(f, b, e) {
 						f.PlayFireballAudio();
 						(f.FreeSlowTime || f.FreeFreezeTime) &&
 							((f.Speed = f.OSpeed),
@@ -11086,14 +10858,14 @@ oCBucketheadZombie = InheritO(
 								f.SetAlpha(f, f.EleBody, 50, 0.5),
 								oSym.addTask(
 									10,
-									function (j, i) {
+									(j, i) => {
 										(i = $Z[j]) &&
 											i.SetAlpha(i, i.EleBody, 100, 1);
 									},
 									[f.id]
 								));
 					},
-					getHit0: function (c, a, b) {
+					getHit0(c, a, b) {
 						b == c.WalkDirection
 							? (c.CheckOrnHP(
 									c,
@@ -11107,7 +10879,7 @@ oCBucketheadZombie = InheritO(
 								c.SetAlpha(c, c.EleBody, 50, 0.5),
 								oSym.addTask(
 									10,
-									function (e, d) {
+									(e, d) => {
 										(d = $Z[e]) &&
 											d.SetAlpha(d, d.EleBody, 100, 1);
 									},
@@ -11132,7 +10904,7 @@ oCBucketheadZombie = InheritO(
 									c.getHit3 =
 										function () {}));
 					},
-					getHit1: function (b, a) {
+					getHit1(b, a) {
 						(b.HP -= a) < b.BreakPoint
 							? (b.GoingDie(
 									b.PicArr[
@@ -11163,14 +10935,14 @@ oCBucketheadZombie = InheritO(
 								b.SetAlpha(b, b.EleBody, 50, 0.5),
 								oSym.addTask(
 									10,
-									function (d, c) {
+									(d, c) => {
 										(c = $Z[d]) &&
 											c.SetAlpha(c, c.EleBody, 100, 1);
 									},
 									[b.id]
 								));
 					},
-					getHit2: function (b, a) {
+					getHit2(b, a) {
 						(b.HP -= a) < b.BreakPoint
 							? (b.GoingDie(
 									b.PicArr[
@@ -11192,14 +10964,14 @@ oCBucketheadZombie = InheritO(
 							: (b.SetAlpha(b, b.EleBody, 50, 0.5),
 								oSym.addTask(
 									10,
-									function (d, c) {
+									(d, c) => {
 										(c = $Z[d]) &&
 											c.SetAlpha(c, c.EleBody, 100, 1);
 									},
 									[b.id]
 								));
 					},
-					getHit3: function (b, a) {
+					getHit3(b, a) {
 						(b.HP -= a) < b.BreakPoint
 							? (b.GoingDie(
 									b.PicArr[
@@ -11230,14 +11002,14 @@ oCBucketheadZombie = InheritO(
 								b.SetAlpha(b, b.EleBody, 50, 0.5),
 								oSym.addTask(
 									10,
-									function (d, c) {
+									(d, c) => {
 										(c = $Z[d]) &&
 											c.SetAlpha(c, c.EleBody, 100, 1);
 									},
 									[b.id]
 								));
 					},
-					CheckOrnHP: function (g, h, d, c, f, b, a) {
+					CheckOrnHP(g, h, d, c, f, b, a) {
 						var e = OrnNoneZombies.prototype;
 						(g.OrnHP = d -= c) < 1 &&
 							(a && (g.HP += d),
@@ -11262,7 +11034,7 @@ oCBucketheadZombie = InheritO(
 									e.getHit),
 							oSym.addTask(
 								150,
-								function (m, l) {
+								(m, l) => {
 									var k = $Z[m];
 									if (!k) {
 										return;
@@ -11310,39 +11082,39 @@ oCBucketheadZombie = InheritO(
 						var b = "images/Zombies/Zombie/";
 						return [
 							"images/Card/Zombies/ScreenDoorZombie.png",
-							a + "0.gif",
-							a + "HeadWalk1.gif",
-							a + "HeadAttack1.gif",
-							a + "LostHeadWalk1.gif",
-							a + "LostHeadAttack1.gif",
-							b + "Zombie2.gif",
-							b + "ZombieAttack.gif",
-							b + "ZombieLostHead.gif",
-							b + "ZombieLostHeadAttack.gif",
-							b + "ZombieHead.gif" + $Random,
-							b + "ZombieDie.gif" + $Random,
-							b + "BoomDie.gif" + $Random,
-							a + "1.gif",
+							`${a}0.gif`,
+							`${a}HeadWalk1.gif`,
+							`${a}HeadAttack1.gif`,
+							`${a}LostHeadWalk1.gif`,
+							`${a}LostHeadAttack1.gif`,
+							`${b}Zombie2.gif`,
+							`${b}ZombieAttack.gif`,
+							`${b}ZombieLostHead.gif`,
+							`${b}ZombieLostHeadAttack.gif`,
+							`${b}ZombieHead.gif${$Random}`,
+							`${b}ZombieDie.gif${$Random}`,
+							`${b}BoomDie.gif${$Random}`,
+							`${a}1.gif`,
 						];
 					})(),
-					PlayNormalballAudio: function () {
-						PlayAudio("splat" + Math.floor(1 + Math.random() * 3));
+					PlayNormalballAudio() {
+						PlayAudio(`splat${Math.floor(1 + Math.random() * 3)}`);
 					},
 					Produce:
 						'他的铁栅门是有效的盾牌。<p>韧性：<font color="#CC241D">低</font><br>铁栅门韧性：<font color="#CC241D">高</font><br>弱点：大喷菇和磁力菇</p>门板僵尸上次拜访过的房主防守并不专业，在吃掉房主的脑子后拿走了他家的铁栅门。',
 					GoingDie: CZombies.prototype.GoingDie,
-					getFirePea: function (c, a, b) {
+					getFirePea(c, a, b) {
 						PlayAudio(
 							b == c.WalkDirection
 								? ["shieldhit", "shieldhit2"][
 										Math.floor(Math.random() * 2)
 									]
-								: "splat" + Math.floor(1 + Math.random() * 3)
+								: `splat${Math.floor(1 + Math.random() * 3)}`
 						);
 						c.getHit0(c, a, b);
 					},
-					getFirePeaSputtering: function () {},
-					getSnowPea: function (c, a, b) {
+					getFirePeaSputtering() {},
+					getSnowPea(c, a, b) {
 						PlayAudio(
 							["shieldhit", "shieldhit2"][
 								Math.floor(Math.random() * 2)
@@ -11350,17 +11122,17 @@ oCBucketheadZombie = InheritO(
 						);
 						c.getHit0(c, a, b);
 					},
-					getPea: function (c, a, b) {
+					getPea(c, a, b) {
 						PlayAudio(
 							b == c.WalkDirection
 								? ["shieldhit", "shieldhit2"][
 										Math.floor(Math.random() * 2)
 									]
-								: "splat" + Math.floor(1 + Math.random() * 3)
+								: `splat${Math.floor(1 + Math.random() * 3)}`
 						);
 						c.getHit0(c, a, b);
 					},
-					getHit0: function (c, a, b) {
+					getHit0(c, a, b) {
 						b == c.WalkDirection
 							? (c.CheckOrnHP(
 									c,
@@ -11374,7 +11146,7 @@ oCBucketheadZombie = InheritO(
 								c.SetAlpha(c, c.EleBody, 50, 0.5),
 								oSym.addTask(
 									10,
-									function (e, d) {
+									(e, d) => {
 										(d = $Z[e]) &&
 											d.SetAlpha(d, d.EleBody, 100, 1);
 									},
@@ -11395,7 +11167,7 @@ oCBucketheadZombie = InheritO(
 									c.getHit3 =
 										function () {}));
 					},
-					CheckOrnHP: function (g, h, d, c, f, b, a) {
+					CheckOrnHP(g, h, d, c, f, b, a) {
 						var e = OrnNoneZombies.prototype;
 						(g.OrnHP = d -= c) < 1 &&
 							(a && (g.HP += d),
@@ -11423,7 +11195,7 @@ oCBucketheadZombie = InheritO(
 								g.getHit3 =
 									e.getHit));
 					},
-					getFireball: function (c, a, b) {
+					getFireball(c, a, b) {
 						b != c.WalkDirection
 							? ((c.FreeSlowTime = 0),
 								(c.Attack = 100),
@@ -11433,8 +11205,8 @@ oCBucketheadZombie = InheritO(
 									: c.PlayFireballAudio())
 							: c.PlayNormalballAudio();
 					},
-					getSputtering: function () {},
-					getSlow: function (d, a, c, b, e) {
+					getSputtering() {},
+					getSlow(d, a, c, b, e) {
 						b != d.WalkDirection || e != -1
 							? CZombies.prototype.getSlow(d, a, c)
 							: d.PlayNormalballAudio();
@@ -11447,10 +11219,10 @@ oCBucketheadZombie = InheritO(
 					DieGif: 7,
 					WalkGif0: 2,
 					WalkGif1: 3,
-					CanPass: function (b, a) {
+					CanPass(b, a) {
 						return a == 2;
 					},
-					BirthCallBack: function (g) {
+					BirthCallBack(g) {
 						var e = g.delayT;
 						var c = g.id;
 						var b = (g.Ele = $(c));
@@ -11476,11 +11248,11 @@ oCBucketheadZombie = InheritO(
 									g.PicArr[(g.NormalGif = g.WalkGif1)];
 								SetHidden(f);
 								NewEle(
-									(a = c + "_splash"),
+									(a = `${c}_splash`),
 									"div",
-									"position:absolute;background:url(images/interface/splash.png);left:61px;top:" +
-										(g.height - 88) +
-										"px;width:97px;height:88px;over-flow:hidden",
+									`position:absolute;background:url(images/interface/splash.png);left:61px;top:${
+										g.height - 88
+									}px;width:97px;height:88px;over-flow:hidden`,
 									0,
 									b
 								);
@@ -11498,7 +11270,7 @@ oCBucketheadZombie = InheritO(
 										["-679px 0", 9, -1],
 									],
 									0,
-									function (i, j) {
+									(i, j) => {
 										ClearChild($(i));
 									}
 								);
@@ -11506,7 +11278,7 @@ oCBucketheadZombie = InheritO(
 						e
 							? oSym.addTask(
 									e,
-									function (j, i) {
+									(j, i) => {
 										var k = $Z[j];
 										k &&
 											((k.FreeSetbodyTime = 0),
@@ -11516,14 +11288,14 @@ oCBucketheadZombie = InheritO(
 								)
 							: SetBlock(b);
 					},
-					ChkActsL1: function (f, e, g, d) {
+					ChkActsL1(f, e, g, d) {
 						var c;
 						var a;
 						var b = f.id;
 						!(f.FreeFreezeTime || f.FreeSetbodyTime) &&
 							((f.AttackedRX -= c = f.Speed),
 							(LX = f.ZX = f.AttackedLX -= c),
-							(f.Ele.style.left = Math.floor((f.X -= c)) + "px"));
+							(f.Ele.style.left = `${Math.floor((f.X -= c))}px`));
 						f.AttackedLX < GetX(9) &&
 							(PlayAudio("zombie_entering_water"),
 							(f.WalkStatus = 1),
@@ -11531,11 +11303,11 @@ oCBucketheadZombie = InheritO(
 								f.PicArr[(f.NormalGif = f.WalkGif1)]),
 							SetHidden(f.EleShadow),
 							NewEle(
-								(a = b + "_splash"),
+								(a = `${b}_splash`),
 								"div",
-								"position:absolute;background:url(images/interface/splash.png);left:61px;top:" +
-									(f.height - 88) +
-									"px;width:97px;height:88px;over-flow:hidden",
+								`position:absolute;background:url(images/interface/splash.png);left:61px;top:${
+									f.height - 88
+								}px;width:97px;height:88px;over-flow:hidden`,
 								0,
 								f.Ele
 							),
@@ -11554,21 +11326,20 @@ oCBucketheadZombie = InheritO(
 									["-679px 0", 9, -1],
 								],
 								0,
-								function (h, i) {
+								(h, i) => {
 									ClearChild($(h));
 								}
 							));
 						return 1;
 					},
-					ChkActsL2: function (d, c, e, b) {
+					ChkActsL2(d, c, e, b) {
 						var a;
 						!(d.FreeFreezeTime || d.FreeSetbodyTime) &&
 							(d.beAttacked && !d.isAttacking && d.JudgeAttack(),
 							!d.isAttacking &&
 								((d.AttackedRX -= a = d.Speed),
 								(d.ZX = d.AttackedLX -= a),
-								(d.Ele.style.left =
-									Math.floor((d.X -= a)) + "px")));
+								(d.Ele.style.left = `${Math.floor((d.X -= a))}px`)));
 						d.AttackedLX < GetX(0) &&
 							((d.WalkStatus = 0),
 							(d.EleBody.src =
@@ -11578,15 +11349,14 @@ oCBucketheadZombie = InheritO(
 						return 1;
 					},
 					ChkActsL3: CZombies.prototype.ChkActs,
-					ChkActs1: function (d, c, e, b) {
+					ChkActs1(d, c, e, b) {
 						var a;
 						!(d.FreeFreezeTime || d.FreeSetbodyTime) &&
 							(d.beAttacked && !d.isAttacking && d.JudgeAttack(),
 							!d.isAttacking &&
 								((d.AttackedLX += a = d.Speed),
 								(d.ZX = d.AttackedRX += a),
-								(d.Ele.style.left =
-									Math.ceil((d.X += a)) + "px")));
+								(d.Ele.style.left = `${Math.ceil((d.X += a))}px`)));
 						d.AttackedLX > GetX(9) &&
 							((d.WalkStatus = 0),
 							(d.EleBody.src =
@@ -11595,7 +11365,7 @@ oCBucketheadZombie = InheritO(
 							(d.ChkActs = d.ChkActs2));
 						return 1;
 					},
-					ChkActs2: function (e, c, f, b) {
+					ChkActs2(e, c, f, b) {
 						var a;
 						var d;
 						!(e.FreeFreezeTime || e.FreeSetbodyTime)
@@ -11608,32 +11378,26 @@ oCBucketheadZombie = InheritO(
 											e.DisappearDie(),
 											(d = 0))
 										: ((e.ZX = e.AttackedRX += a),
-											(e.Ele.style.left =
-												Math.ceil((e.X += a)) + "px"),
+											(e.Ele.style.left = `${Math.ceil((e.X += a))}px`),
 											(d = 1))
 									: (d = 1))
 							: (d = 1);
 						return d;
 					},
-					ExchangeLR: function (d, b) {
+					ExchangeLR(d, b) {
 						var c = d.width;
 						var f = d.beAttackedPointL;
 						var a = d.beAttackedPointR;
 						var e = d.Ele;
-						e.style.left =
-							(d.X =
-								d.AttackedLX - (d.beAttackedPointL = c - a)) +
-							"px";
+						e.style.left = `${(d.X =
+							d.AttackedLX - (d.beAttackedPointL = c - a))}px`;
 						d.beAttackedPointR = c - f;
-						d.EleShadow.style.cssText =
-							"visibility:hidden;left:" +
-							(d.beAttackedPointL - 10) +
-							"px;top:" +
-							(d.height - 22) +
-							"px";
+						d.EleShadow.style.cssText = `visibility:hidden;left:${
+							d.beAttackedPointL - 10
+						}px;top:${d.height - 22}px`;
 						d.ExchangeLR2(d, d.EleBody, b);
 					},
-					GoingDie: function () {
+					GoingDie() {
 						var b = this;
 						var c = b.id;
 						var a = b.PicArr;
@@ -11646,7 +11410,7 @@ oCBucketheadZombie = InheritO(
 								0;
 						b.AutoReduceHP(c);
 					},
-					AutoReduceHP: function (a) {
+					AutoReduceHP(a) {
 						oSym.addTask(
 							100,
 							function (c) {
@@ -11664,25 +11428,25 @@ oCBucketheadZombie = InheritO(
 							[a]
 						);
 					},
-					ExplosionDie: function () {
+					ExplosionDie() {
 						ClearChild(this.Ele);
 						this.HP = 0;
 						delete $Z[this.id];
 						this.PZ && oP.MonPrgs();
 					},
-					DisappearDie: function () {
+					DisappearDie() {
 						ClearChild(this.Ele);
 						this.HP = 0;
 						delete $Z[this.id];
 						this.PZ && oP.MonPrgs();
 					},
-					CrushDie: function () {
+					CrushDie() {
 						ClearChild(this.Ele);
 						this.HP = 0;
 						delete $Z[this.id];
 						this.PZ && oP.MonPrgs();
 					},
-					NormalDie: function () {
+					NormalDie() {
 						this.HP = 0;
 						delete $Z[this.id];
 						this.PZ && oP.MonPrgs();
@@ -11692,7 +11456,7 @@ oCBucketheadZombie = InheritO(
 					EName: "oDuckyTubeZombie1",
 					CName: "鸭子救生圈僵尸",
 					beAttackedPointR: 130,
-					GetDY: function () {
+					GetDY() {
 						return 5;
 					},
 					Produce:
@@ -11701,13 +11465,13 @@ oCBucketheadZombie = InheritO(
 						var a = "images/Zombies/DuckyTubeZombie1/";
 						return [
 							"images/Card/Zombies/DuckyTubeZombie1.png",
-							a + "0.gif",
-							a + "Walk1.gif",
-							a + "Walk2.gif",
-							a + "1.gif",
-							a + "Attack.gif",
-							"images/Zombies/Zombie/ZombieHead.gif" + $Random,
-							a + "Die.gif" + $Random,
+							`${a}0.gif`,
+							`${a}Walk1.gif`,
+							`${a}Walk2.gif`,
+							`${a}1.gif`,
+							`${a}Attack.gif`,
+							`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
+							`${a}Die.gif${$Random}`,
 						];
 					})(),
 					AudioArr: ["zombie_entering_water"],
@@ -11721,7 +11485,7 @@ oCBucketheadZombie = InheritO(
 					CanDisplay: 0,
 					OrnLostNormalGif: 9,
 					OrnLostAttackGif: 10,
-					PlayNormalballAudio: function () {
+					PlayNormalballAudio() {
 						PlayAudio("plastichit");
 					},
 					PicArr: (function () {
@@ -11729,16 +11493,16 @@ oCBucketheadZombie = InheritO(
 						var a = "images/Zombies/DuckyTubeZombie1/";
 						return [
 							"images/Card/Zombies/DuckyTubeZombie1.png",
-							b + "0.gif",
-							b + "Walk1.gif",
-							b + "Walk2.gif",
-							b + "1.gif",
-							b + "Attack.gif",
-							"images/Zombies/Zombie/ZombieHead.gif" + $Random,
-							a + "Die.gif" + $Random,
-							a + "Walk1.gif",
-							a + "Walk2.gif",
-							a + "Attack.gif",
+							`${b}0.gif`,
+							`${b}Walk1.gif`,
+							`${b}Walk2.gif`,
+							`${b}1.gif`,
+							`${b}Attack.gif`,
+							`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
+							`${a}Die.gif${$Random}`,
+							`${a}Walk1.gif`,
+							`${a}Walk2.gif`,
+							`${a}Attack.gif`,
 						];
 					})(),
 					AudioArr: ["plastichit", "zombie_entering_water"],
@@ -11754,7 +11518,7 @@ oCBucketheadZombie = InheritO(
 					OrnHP: 1100,
 					Lvl: 3,
 					SunNum: 125,
-					PlayNormalballAudio: function () {
+					PlayNormalballAudio() {
 						PlayAudio(
 							["shieldhit", "shieldhit2"][
 								Math.floor(Math.random() * 2)
@@ -11771,16 +11535,16 @@ oCBucketheadZombie = InheritO(
 						var a = "images/Zombies/DuckyTubeZombie1/";
 						return [
 							"images/Card/Zombies/DuckyTubeZombie1.png",
-							b + "0.gif",
-							b + "Walk1.gif",
-							b + "Walk2.gif",
-							b + "1.gif",
-							b + "Attack.gif",
-							"images/Zombies/Zombie/ZombieHead.gif" + $Random,
-							a + "Die.gif" + $Random,
-							a + "Walk1.gif",
-							a + "Walk2.gif",
-							a + "Attack.gif",
+							`${b}0.gif`,
+							`${b}Walk1.gif`,
+							`${b}Walk2.gif`,
+							`${b}1.gif`,
+							`${b}Attack.gif`,
+							`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
+							`${a}Die.gif${$Random}`,
+							`${a}Walk1.gif`,
+							`${a}Walk2.gif`,
+							`${a}Attack.gif`,
 						];
 					})(),
 				});
@@ -11799,37 +11563,33 @@ oCBucketheadZombie = InheritO(
 					Produce:
 						'潜水僵尸可以在水下前行。<p>韧性：<font color="#CC241D">低</font><br>特点：<font color="#CC241D">潜泳以避免遭到攻击<br>只在水池关卡出现</font></p>僵尸不呼吸。他们不需要空气。那么为什么潜水僵尸需要一套潜水装置来潜水呢？<br>答案：同行的压力。',
 					JumpTime: 40,
-					getShadow: function (a) {
-						return (
-							"left:" +
-							a.beAttackedPointL +
-							"px;top:" +
-							(a.height - 45) +
-							"px"
-						);
+					getShadow(a) {
+						return `left:${a.beAttackedPointL}px;top:${
+							a.height - 45
+						}px`;
 					},
 					PicArr: (function () {
 						var a = "images/Zombies/SnorkelZombie/";
 						return [
 							"images/Card/Zombies/SnorkelZombie.png",
-							a + "0.gif",
-							a + "Walk1.gif",
-							a + "Walk2.gif",
-							a + "1.gif",
-							a + "Attack.gif",
-							a + "Head.gif" + $Random,
-							a + "Die.gif" + $Random,
-							a + "Jump.gif" + $Random,
-							a + "Risk.gif" + $Random,
-							a + "Sink.gif" + $Random,
+							`${a}0.gif`,
+							`${a}Walk1.gif`,
+							`${a}Walk2.gif`,
+							`${a}1.gif`,
+							`${a}Attack.gif`,
+							`${a}Head.gif${$Random}`,
+							`${a}Die.gif${$Random}`,
+							`${a}Jump.gif${$Random}`,
+							`${a}Risk.gif${$Random}`,
+							`${a}Sink.gif${$Random}`,
 						];
 					})(),
 					AudioArr: ["zombie_entering_water"],
-					BirthCallBack: function (a) {
+					BirthCallBack(a) {
 						oAquaticZombie.prototype.BirthCallBack(a),
 							GetC(this.ZX) <= 9 && this.Jump(this);
 					},
-					Jump: function (a) {
+					Jump(a) {
 						a.beAttacked &&
 							(PlayAudio("zombie_entering_water"),
 							(a.Altitude = 2),
@@ -11837,7 +11597,7 @@ oCBucketheadZombie = InheritO(
 							(a.EleBody.src = a.PicArr[8]),
 							oSym.addTask(
 								160,
-								function (c, b) {
+								(c, b) => {
 									$Z[c] &&
 										b.beAttacked &&
 										((b.WalkStatus = 1),
@@ -11855,7 +11615,7 @@ oCBucketheadZombie = InheritO(
 								return 1;
 							}));
 					},
-					ChkActsL1: function (d, c, e, b) {
+					ChkActsL1(d, c, e, b) {
 						if (d.JumpTime <= 0) {
 							d.Jump(d);
 							return 1;
@@ -11864,11 +11624,11 @@ oCBucketheadZombie = InheritO(
 						!(d.FreeFreezeTime || d.FreeSetbodyTime) &&
 							((d.AttackedRX -= a = d.Speed),
 							(LX = d.ZX = d.AttackedLX -= a),
-							(d.Ele.style.left = Math.floor((d.X -= a)) + "px"),
+							(d.Ele.style.left = `${Math.floor((d.X -= a))}px`),
 							--d.JumpTime);
 						return 1;
 					},
-					ChkActsL2: function (d, c, e, b) {
+					ChkActsL2(d, c, e, b) {
 						var a;
 						!(d.FreeFreezeTime || d.FreeSetbodyTime) &&
 							(d.AttackedLX > GetX(0)
@@ -11878,8 +11638,7 @@ oCBucketheadZombie = InheritO(
 									!d.isAttacking &&
 										((d.AttackedRX -= a = d.Speed),
 										(d.ZX = d.AttackedLX -= a),
-										(d.Ele.style.left =
-											Math.floor((d.X -= a)) + "px")))
+										(d.Ele.style.left = `${Math.floor((d.X -= a))}px`)))
 								: d.beAttacked &&
 									((d.WalkStatus = 0),
 									(d.Altitude = 1),
@@ -11889,10 +11648,10 @@ oCBucketheadZombie = InheritO(
 									(d.ChkActs = d.ChkActsL3)));
 						return 1;
 					},
-					JudgeAttack: function () {
+					JudgeAttack() {
 						var e = this;
 						var b = e.ZX;
-						var c = e.R + "_";
+						var c = `${e.R}_`;
 						var d = GetC(b);
 						var g = oGd.$;
 						var a;
@@ -11905,7 +11664,7 @@ oCBucketheadZombie = InheritO(
 									(e.EleBody.src = e.PicArr[9]),
 									oSym.addTask(
 										50,
-										function (i, h) {
+										(i, h) => {
 											$Z[i] &&
 												h.beAttacked &&
 												((h.EleBody.src =
@@ -11921,7 +11680,7 @@ oCBucketheadZombie = InheritO(
 								(e.Altitude = 0),
 								oSym.addTask(
 									70,
-									function (i, h) {
+									(i, h) => {
 										$Z[i] &&
 											h.beAttacked &&
 											((h.isAttacking = 0),
@@ -11931,10 +11690,10 @@ oCBucketheadZombie = InheritO(
 									[f, e]
 								));
 					},
-					NormalAttack: function (b, a) {
+					NormalAttack(b, a) {
 						oSym.addTask(
 							100,
-							function (d, c) {
+							(d, c) => {
 								var f = $Z[d];
 								var e;
 								f &&
@@ -11947,7 +11706,7 @@ oCBucketheadZombie = InheritO(
 							[b, a]
 						);
 					},
-					JudgeAttackH: function () {
+					JudgeAttackH() {
 						var c = this;
 						var b = oZ.getZ0(c.ZX, c.R);
 						var d = c.id;
@@ -11963,7 +11722,7 @@ oCBucketheadZombie = InheritO(
 									!b.isAttacking && b.AttackZombie2(b, a, d),
 									oSym.addTask(
 										50,
-										function (g, h, f, e) {
+										(g, h, f, e) => {
 											$Z[h] &&
 												g.beAttacked &&
 												($Z[e] && f.beAttacked
@@ -11983,7 +11742,7 @@ oCBucketheadZombie = InheritO(
 								(c.Altitude = 0),
 								oSym.addTask(
 									70,
-									function (f, e) {
+									(f, e) => {
 										$Z[f] &&
 											e.beAttacked &&
 											((e.isAttacking = 0),
@@ -11993,12 +11752,12 @@ oCBucketheadZombie = InheritO(
 									[d, c]
 								));
 					},
-					AttackZombie2: function (c, b, a) {
+					AttackZombie2(c, b, a) {
 						c.isAttacking = 1;
 						c.EleBody.src = c.PicArr[9];
 						oSym.addTask(
 							50,
-							function (g, e, d, f) {
+							(g, e, d, f) => {
 								$Z[e] &&
 									g.beAttacked &&
 									((f = $Z[d]) && f.beAttacked
@@ -12030,10 +11789,7 @@ oCBucketheadZombie = InheritO(
 																(k.Altitude = 0),
 																oSym.addTask(
 																	70,
-																	function (
-																		l,
-																		m
-																	) {
+																	(l, m) => {
 																		$Z[l] &&
 																			m.beAttacked &&
 																			((m.isAttacking = 0),
@@ -12052,7 +11808,7 @@ oCBucketheadZombie = InheritO(
 											(g.Altitude = 0),
 											oSym.addTask(
 												70,
-												function (h, i) {
+												(h, i) => {
 													$Z[h] &&
 														i.beAttacked &&
 														((i.isAttacking = 0),
@@ -12067,7 +11823,7 @@ oCBucketheadZombie = InheritO(
 							[c, b, a]
 						);
 					},
-					AutoReduceHP: function (a) {
+					AutoReduceHP(a) {
 						oSym.addTask(
 							100,
 							function (c) {
@@ -12095,7 +11851,7 @@ oCBucketheadZombie = InheritO(
 					beAttackedPointL: 41,
 					beAttackedPointR: 78,
 					BreakPoint: 25,
-					Init: function (e, g, c, b) {
+					Init(e, g, c, b) {
 						var a = 0;
 						var f = this;
 						var d = [];
@@ -12113,39 +11869,32 @@ oCBucketheadZombie = InheritO(
 							";left:",
 							"px;top:",
 							"px;z-index:",
-							'"><img src="' +
-								ShadowPNG +
-								'" style="' +
-								g.getShadow(g) +
-								'"><img style="position:absolute;clip:rect(0,auto,',
+							`"><img src="${ShadowPNG}" style="${g.getShadow(
+								g
+							)}"><img style="position:absolute;clip:rect(0,auto,`,
 							",0);width:83px;height:72px;top:",
 							'px" src="',
 							'"></div>',
 						];
 					},
-					GoingDieHead: function (c, a, b) {
+					GoingDieHead(c, a, b) {
 						oSym.addTask(200, ClearChild, [
 							NewImg(
 								0,
 								a[b.HeadGif],
-								"width:75px;height:93px;left:" +
-									b.AttackedLX +
-									"px;top:" +
-									(b.pixelTop - 20) +
-									"px;z-index:" +
-									b.zIndex,
+								`width:75px;height:93px;left:${
+									b.AttackedLX
+								}px;top:${b.pixelTop - 20}px;z-index:${
+									b.zIndex
+								}`,
 								EDPZ
 							),
 						]);
 					},
-					getShadow: function (a) {
-						return (
-							"width:43px;height:18px;left:" +
-							(a.beAttackedPointL - 5) +
-							"px;top:" +
-							(a.height - 15) +
-							"px"
-						);
+					getShadow(a) {
+						return `width:43px;height:18px;left:${
+							a.beAttackedPointL - 5
+						}px;top:${a.height - 15}px`;
 					},
 				});
 				var oSmallFlagZombie = InheritO(oFlagZombie, {
@@ -12157,7 +11906,7 @@ oCBucketheadZombie = InheritO(
 					beAttackedPointL: 41,
 					beAttackedPointR: 78,
 					BreakPoint: 25,
-					Init: function (e, g, c, b) {
+					Init(e, g, c, b) {
 						var a = 0;
 						var f = this;
 						var d = [];
@@ -12175,39 +11924,32 @@ oCBucketheadZombie = InheritO(
 							";left:",
 							"px;top:",
 							"px;z-index:",
-							'"><img src="' +
-								ShadowPNG +
-								'" style="' +
-								g.getShadow(g) +
-								'"><img style="position:absolute;clip:rect(0,auto,',
+							`"><img src="${ShadowPNG}" style="${g.getShadow(
+								g
+							)}"><img style="position:absolute;clip:rect(0,auto,`,
 							",0);width:83px;height:72px;top:",
 							'px" src="',
 							'"></div>',
 						];
 					},
-					GoingDieHead: function (c, a, b) {
+					GoingDieHead(c, a, b) {
 						oSym.addTask(200, ClearChild, [
 							NewImg(
 								0,
 								a[b.HeadGif],
-								"width:75px;height:93px;left:" +
-									b.AttackedLX +
-									"px;top:" +
-									(b.pixelTop - 20) +
-									"px;z-index:" +
-									b.zIndex,
+								`width:75px;height:93px;left:${
+									b.AttackedLX
+								}px;top:${b.pixelTop - 20}px;z-index:${
+									b.zIndex
+								}`,
 								EDPZ
 							),
 						]);
 					},
-					getShadow: function (a) {
-						return (
-							"width:43px;height:18px;left:" +
-							(a.beAttackedPointL - 5) +
-							"px;top:" +
-							(a.height - 15) +
-							"px"
-						);
+					getShadow(a) {
+						return `width:43px;height:18px;left:${
+							a.beAttackedPointL - 5
+						}px;top:${a.height - 15}px`;
 					},
 				});
 				var oSmallDuckyTubeZombie1 = InheritO(oDuckyTubeZombie1, {
@@ -12219,7 +11961,7 @@ oCBucketheadZombie = InheritO(
 					beAttackedPointL: 41,
 					beAttackedPointR: 73,
 					BreakPoint: 25,
-					Init: function (e, g, c, b) {
+					Init(e, g, c, b) {
 						var a = 0;
 						var f = this;
 						var d = [];
@@ -12237,39 +11979,32 @@ oCBucketheadZombie = InheritO(
 							";left:",
 							"px;top:",
 							"px;z-index:",
-							'"><img src="' +
-								ShadowPNG +
-								'" style="' +
-								g.getShadow(g) +
-								'"><img style="position:absolute;clip:rect(0,auto,',
+							`"><img src="${ShadowPNG}" style="${g.getShadow(
+								g
+							)}"><img style="position:absolute;clip:rect(0,auto,`,
 							",0);width:83px;height:72px;top:",
 							'px" src="',
 							'"></div>',
 						];
 					},
-					GoingDieHead: function (c, a, b) {
+					GoingDieHead(c, a, b) {
 						oSym.addTask(200, ClearChild, [
 							NewImg(
 								0,
 								a[b.HeadGif],
-								"width:75px;height:93px;left:" +
-									b.AttackedLX +
-									"px;top:" +
-									(b.pixelTop - 20) +
-									"px;z-index:" +
-									b.zIndex,
+								`width:75px;height:93px;left:${
+									b.AttackedLX
+								}px;top:${b.pixelTop - 20}px;z-index:${
+									b.zIndex
+								}`,
 								EDPZ
 							),
 						]);
 					},
-					getShadow: function (a) {
-						return (
-							"width:43px;height:18px;left:" +
-							(a.beAttackedPointL - 5) +
-							"px;top:" +
-							(a.height - 15) +
-							"px"
-						);
+					getShadow(a) {
+						return `width:43px;height:18px;left:${
+							a.beAttackedPointL - 5
+						}px;top:${a.height - 15}px`;
 					},
 				});
 				var oSmallConeheadZombie = InheritO(oConeheadZombie, {
@@ -12282,7 +12017,7 @@ oCBucketheadZombie = InheritO(
 					beAttackedPointL: 41,
 					beAttackedPointR: 78,
 					BreakPoint: 25,
-					Init: function (e, g, c, b) {
+					Init(e, g, c, b) {
 						var a = 0;
 						var f = this;
 						var d = [];
@@ -12300,39 +12035,32 @@ oCBucketheadZombie = InheritO(
 							";left:",
 							"px;top:",
 							"px;z-index:",
-							'"><img src="' +
-								ShadowPNG +
-								'" style="' +
-								g.getShadow(g) +
-								'"><img style="position:absolute;clip:rect(0,auto,',
+							`"><img src="${ShadowPNG}" style="${g.getShadow(
+								g
+							)}"><img style="position:absolute;clip:rect(0,auto,`,
 							",0);width:83px;height:72px;top:",
 							'px" src="',
 							'"></div>',
 						];
 					},
-					GoingDieHead: function (c, a, b) {
+					GoingDieHead(c, a, b) {
 						oSym.addTask(200, ClearChild, [
 							NewImg(
 								0,
 								a[b.HeadGif],
-								"width:75px;height:93px;left:" +
-									b.AttackedLX +
-									"px;top:" +
-									(b.pixelTop - 20) +
-									"px;z-index:" +
-									b.zIndex,
+								`width:75px;height:93px;left:${
+									b.AttackedLX
+								}px;top:${b.pixelTop - 20}px;z-index:${
+									b.zIndex
+								}`,
 								EDPZ
 							),
 						]);
 					},
-					getShadow: function (a) {
-						return (
-							"width:43px;height:18px;left:" +
-							(a.beAttackedPointL - 5) +
-							"px;top:" +
-							(a.height - 15) +
-							"px"
-						);
+					getShadow(a) {
+						return `width:43px;height:18px;left:${
+							a.beAttackedPointL - 5
+						}px;top:${a.height - 15}px`;
 					},
 				});
 				var oSmallFootballZombie = InheritO(oFootballZombie, {
@@ -12345,7 +12073,7 @@ oCBucketheadZombie = InheritO(
 					beAttackedPointL: 20,
 					beAttackedPointR: 77,
 					BreakPoint: 25,
-					Init: function (e, g, c, b) {
+					Init(e, g, c, b) {
 						var a = 0;
 						var f = this;
 						var d = [];
@@ -12363,39 +12091,32 @@ oCBucketheadZombie = InheritO(
 							";left:",
 							"px;top:",
 							"px;z-index:",
-							'"><img src="' +
-								ShadowPNG +
-								'" style="' +
-								g.getShadow(g) +
-								'"><img style="position:absolute;clip:rect(0,auto,',
+							`"><img src="${ShadowPNG}" style="${g.getShadow(
+								g
+							)}"><img style="position:absolute;clip:rect(0,auto,`,
 							",0);width:77px;height:80px;top:",
 							'px" src="',
 							'"></div>',
 						];
 					},
-					GoingDieHead: function (c, a, b) {
+					GoingDieHead(c, a, b) {
 						oSym.addTask(200, ClearChild, [
 							NewImg(
 								0,
 								a[b.HeadGif],
-								"width:75px;height:93px;left:" +
-									b.AttackedLX +
-									"px;top:" +
-									(b.pixelTop - 20) +
-									"px;z-index:" +
-									b.zIndex,
+								`width:75px;height:93px;left:${
+									b.AttackedLX
+								}px;top:${b.pixelTop - 20}px;z-index:${
+									b.zIndex
+								}`,
 								EDPZ
 							),
 						]);
 					},
-					getShadow: function (a) {
-						return (
-							"width:43px;height:18px;left:" +
-							(a.beAttackedPointL + 15) +
-							"px;top:" +
-							(a.height - 22) +
-							"px"
-						);
+					getShadow(a) {
+						return `width:43px;height:18px;left:${
+							a.beAttackedPointL + 15
+						}px;top:${a.height - 22}px`;
 					},
 				});
 				var oSmallSnorkelZombie = InheritO(oSnorkelZombie, {
@@ -12407,7 +12128,7 @@ oCBucketheadZombie = InheritO(
 					beAttackedPointL: 20,
 					beAttackedPointR: 50,
 					BreakPoint: 25,
-					Init: function (e, g, c, b) {
+					Init(e, g, c, b) {
 						var a = 0;
 						var f = this;
 						var d = [];
@@ -12425,39 +12146,32 @@ oCBucketheadZombie = InheritO(
 							";left:",
 							"px;top:",
 							"px;z-index:",
-							'"><img src="' +
-								ShadowPNG +
-								'" style="' +
-								g.getShadow(g) +
-								'"><img style="position:absolute;clip:rect(0,auto,',
+							`"><img src="${ShadowPNG}" style="${g.getShadow(
+								g
+							)}"><img style="position:absolute;clip:rect(0,auto,`,
 							",0);width:71px;height:100px;top:",
 							'px" src="',
 							'"></div>',
 						];
 					},
-					GoingDieHead: function (c, a, b) {
+					GoingDieHead(c, a, b) {
 						oSym.addTask(200, ClearChild, [
 							NewImg(
 								0,
 								a[b.HeadGif],
-								"width:71px;height:105px;left:" +
-									b.AttackedLX +
-									"px;top:" +
-									(b.pixelTop - 20) +
-									"px;z-index:" +
-									b.zIndex,
+								`width:71px;height:105px;left:${
+									b.AttackedLX
+								}px;top:${b.pixelTop - 20}px;z-index:${
+									b.zIndex
+								}`,
 								EDPZ
 							),
 						]);
 					},
-					getShadow: function (a) {
-						return (
-							"width:43px;height:18px;left:" +
-							a.beAttackedPointL +
-							"px;top:" +
-							(a.height - 45) +
-							"px"
-						);
+					getShadow(a) {
+						return `width:43px;height:18px;left:${
+							a.beAttackedPointL
+						}px;top:${a.height - 45}px`;
 					},
 				});
 				var oZomboni = (function () {
@@ -12481,7 +12195,7 @@ oCBucketheadZombie = InheritO(
 						d.SetAlpha(d, d.EleBody, 50, 0.5);
 						oSym.addTask(
 							10,
-							function (f, e) {
+							(f, e) => {
 								(e = $Z[f]) && e.SetAlpha(e, e.EleBody, 100, 1);
 							},
 							[d.id]
@@ -12503,7 +12217,7 @@ oCBucketheadZombie = InheritO(
 						beAttackedPointR: 290,
 						BreakPoint: 200,
 						SunNum: 350,
-						GetDY: function () {
+						GetDY() {
 							return 0;
 						},
 						OSpeed: 2.5,
@@ -12516,19 +12230,19 @@ oCBucketheadZombie = InheritO(
 							var b = "images/Zombies/Zomboni/";
 							return [
 								"images/Card/Zombies/Zomboni.png",
-								b + "0.gif",
-								b + "1.gif",
-								b + "2.gif",
-								b + "3.gif",
-								b + "4.gif",
-								b + "5.gif" + $Random,
-								b + "BoomDie.gif" + $Random,
-								b + "ice.png",
-								b + "ice_cap.png",
+								`${b}0.gif`,
+								`${b}1.gif`,
+								`${b}2.gif`,
+								`${b}3.gif`,
+								`${b}4.gif`,
+								`${b}5.gif${$Random}`,
+								`${b}BoomDie.gif${$Random}`,
+								`${b}ice.png`,
+								`${b}ice_cap.png`,
 							];
 						})(),
 						AudioArr: ["zamboni", "explosion"],
-						BirthCallBack: function (h) {
+						BirthCallBack(h) {
 							var g = h.delayT;
 							var e = h.id;
 							var c = (h.Ele = $(e));
@@ -12539,11 +12253,11 @@ oCBucketheadZombie = InheritO(
 							h.EleBody = c.childNodes[1];
 							!b[d]
 								? ((f = NewEle(
-										"dIceCar" + d,
+										`dIceCar${d}`,
 										"div",
-										"position:absolute;z-index:1;left:145px;top:" +
-											(GetY(d) - 65) +
-											"px;width:800px;height:72px",
+										`position:absolute;z-index:1;left:145px;top:${
+											GetY(d) - 65
+										}px;width:800px;height:72px`,
 										0,
 										EDPZ
 									)),
@@ -12564,7 +12278,7 @@ oCBucketheadZombie = InheritO(
 							g
 								? oSym.addTask(
 										g,
-										function (j, i) {
+										(j, i) => {
 											var k = $Z[j];
 											k &&
 												((k.FreeSetbodyTime = 0),
@@ -12575,7 +12289,7 @@ oCBucketheadZombie = InheritO(
 									)
 								: (SetBlock(c), PlayAudio("zamboni"));
 						},
-						ChkActs: function (e, j, q, k) {
+						ChkActs(e, j, q, k) {
 							var b;
 							var r;
 							var m;
@@ -12585,16 +12299,16 @@ oCBucketheadZombie = InheritO(
 							var h;
 							var f;
 							var c;
-							var l = $("dIceCar" + j);
+							var l = $(`dIceCar${j}`);
 
 							if (l == null) {
 								// 对没有冰道的情况下特判
 								l = NewEle(
-									"dIceCar" + j,
+									`dIceCar${j}`,
 									"div",
-									"position:absolute;z-index:1;left:145px;top:" +
-										(GetY(e.R) - 65) +
-										"px;width:800px;height:72px",
+									`position:absolute;z-index:1;left:145px;top:${
+										GetY(e.R) - 65
+									}px;width:800px;height:72px`,
 									0,
 									EDPZ
 								); // 生成新的冰道
@@ -12629,8 +12343,7 @@ oCBucketheadZombie = InheritO(
 												400 - e.height + e.GetDY(),
 										})),
 									(e.ZX = e.AttackedLX -= b),
-									(e.Ele.style.left =
-										Math.floor((e.X -= b)) + "px"),
+									(e.Ele.style.left = `${Math.floor((e.X -= b))}px`),
 									(m = 1));
 							d = e.X;
 							h = d + 250;
@@ -12638,31 +12351,28 @@ oCBucketheadZombie = InheritO(
 							c = GetC(h);
 							c > -1 &&
 								c < n[1] &&
-								((oGd.$Crater[j + "_" + c] = 1), (n[1] = c));
+								((oGd.$Crater[`${j}_${c}`] = 1), (n[1] = c));
 							h > 120 &&
 								h < n[2] &&
 								((n[2] = h),
-								(l.firstChild.style.clip =
-									"rect(0,auto,auto," + f + "px)"),
-								(l.childNodes[1].style.left =
-									Math.max(0, f) + "px"));
+								(l.firstChild.style.clip = `rect(0,auto,auto,${f}px)`),
+								(l.childNodes[1].style.left = `${Math.max(0, f)}px`));
 							GetC(e.AttackedLX) > 5 &&
 								(e.OSpeed = e.Speed -= 0.005);
 							return m;
 						},
-						ChkActs1: function (f, d, g, c) {
+						ChkActs1(f, d, g, c) {
 							var b;
 							var e;
 							f.JudgeAttack();
 							(f.AttackedLX += b = f.Speed) > oS.W
 								? (g.splice(c, 1), f.DisappearDie(), (e = 0))
 								: ((f.ZX = f.AttackedRX += b),
-									(f.Ele.style.left =
-										Math.ceil((f.X += b)) + "px"),
+									(f.Ele.style.left = `${Math.ceil((f.X += b))}px`),
 									(e = 1));
 							return e;
 						},
-						getPea: function (c, b) {
+						getPea(c, b) {
 							PlayAudio(
 								["shieldhit", "shieldhit2"][
 									Math.floor(Math.random() * 2)
@@ -12670,7 +12380,7 @@ oCBucketheadZombie = InheritO(
 							);
 							c.getHit0(c, b);
 						},
-						getFirePea: function (c, b) {
+						getFirePea(c, b) {
 							PlayAudio(
 								["shieldhit", "shieldhit2"][
 									Math.floor(Math.random() * 2)
@@ -12678,7 +12388,7 @@ oCBucketheadZombie = InheritO(
 							);
 							c.getHit0(c, b);
 						},
-						getSnowPea: function (c, b) {
+						getSnowPea(c, b) {
 							PlayAudio(
 								["shieldhit", "shieldhit2"][
 									Math.floor(Math.random() * 2)
@@ -12686,30 +12396,26 @@ oCBucketheadZombie = InheritO(
 							);
 							c.getHit0(c, b);
 						},
-						getFirePeaSputtering: function () {},
-						getFreeze: function (c, b) {
+						getFirePeaSputtering() {},
+						getFreeze(c, b) {
 							c.getHit0(c, 20);
 						},
-						getShadow: function (b) {
-							return (
-								"left:" +
-								(b.beAttackedPointL - 10) +
-								"px;top:" +
-								(b.height - 22) +
-								"px"
-							);
+						getShadow(b) {
+							return `left:${b.beAttackedPointL - 10}px;top:${
+								b.height - 22
+							}px`;
 						},
 						getHit: a,
 						getHit0: a,
 						getHit1: a,
 						getHit2: a,
 						getHit3: a,
-						GoingDie: function () {
+						GoingDie() {
 							var b = this;
 							b.beAttacked = 0;
 							b.AutoReduceHP(b.id);
 						},
-						NormalDie: function () {
+						NormalDie() {
 							var b = this;
 							PlayAudio("explosion");
 							b.EleBody.src = b.PicArr[b.DieGif];
@@ -12719,7 +12425,7 @@ oCBucketheadZombie = InheritO(
 							b.JudgeIce();
 							b.PZ && oP.MonPrgs();
 						},
-						DisappearDie: function () {
+						DisappearDie() {
 							var b = this;
 							ClearChild(b.Ele);
 							b.HP = 0;
@@ -12727,7 +12433,7 @@ oCBucketheadZombie = InheritO(
 							b.JudgeIce();
 							b.PZ && oP.MonPrgs();
 						},
-						ExplosionDie: function () {
+						ExplosionDie() {
 							var b = this;
 							b.EleBody.src = b.PicArr[b.BoomDieGif];
 							oSym.addTask(300, ClearChild, [b.Ele]);
@@ -12736,13 +12442,13 @@ oCBucketheadZombie = InheritO(
 							b.JudgeIce();
 							b.PZ && oP.MonPrgs();
 						},
-						CrushDie: function () {
+						CrushDie() {
 							this.NormalDie();
 						},
-						JudgeIce: function () {
+						JudgeIce() {
 							var d = this;
 							var b = d.R;
-							var e = $("dIceCar" + b);
+							var e = $(`dIceCar${b}`);
 							var c = oGd.$Ice[b];
 
 							if (d.PointZombie) return; // 如果冰车已经进入家门，则不产冰
@@ -12751,7 +12457,7 @@ oCBucketheadZombie = InheritO(
 							--c[0] <= 0 &&
 								oSym.addTask(
 									3000,
-									function (k, h) {
+									(k, h) => {
 										var j = oGd.$Ice[h];
 										var g;
 										var f = oGd.$Crater;
@@ -12759,7 +12465,7 @@ oCBucketheadZombie = InheritO(
 											ClearChild(k);
 											g = j[1];
 											while (g < 11) {
-												delete f[h + "_" + g++];
+												delete f[`${h}_${g++}`];
 												delete oGd.$Ice[h];
 											}
 										}
@@ -12767,7 +12473,7 @@ oCBucketheadZombie = InheritO(
 									[e, b]
 								);
 						},
-						flatTire: function () {
+						flatTire() {
 							var b = this;
 							b.EleBody.src = "images/Zombies/Zomboni/4.gif";
 							b.beAttacked = 0;
@@ -12780,17 +12486,17 @@ oCBucketheadZombie = InheritO(
 							b.ChkActs = b.ChkActs1 = function () {};
 							oSym.addTask(
 								290,
-								function (e, c) {
+								(e, c) => {
 									var d = $Z[e];
 									d && d.NormalDie();
 								},
 								[b.id, b.EleBody]
 							);
 						},
-						JudgeAttack: function () {
+						JudgeAttack() {
 							var f = this;
 							var c = f.ZX;
-							var d = f.R + "_";
+							var d = `${f.R}_`;
 							var e = GetC(c);
 							var g = oGd.$;
 							var b;
@@ -12799,11 +12505,11 @@ oCBucketheadZombie = InheritO(
 								f.JudgeSR(f, d, e, c, g)) &&
 								f.NormalAttack(b[0], b[1]);
 						},
-						JudgeLR: function (e, c, d, b, f) {
+						JudgeLR(e, c, d, b, f) {
 							return d > 10 || d < 1
 								? false
 								: (function () {
-										c += --d + "_";
+										c += `${--d}_`;
 										var g = 3;
 										var h;
 										while (g--) {
@@ -12816,11 +12522,11 @@ oCBucketheadZombie = InheritO(
 										}
 									})();
 						},
-						JudgeSR: function (e, c, d, b, f) {
+						JudgeSR(e, c, d, b, f) {
 							return d > 9
 								? false
 								: (function () {
-										c += d + "_";
+										c += `${d}_`;
 										var g = 3;
 										var h;
 										while (g--) {
@@ -12833,14 +12539,14 @@ oCBucketheadZombie = InheritO(
 										}
 									})();
 						},
-						NormalAttack: function (c, b) {
+						NormalAttack(c, b) {
 							var d = $Z[c];
 							$P[b].getHurt(d, 2, d.Attack);
 						},
-						getThump: function () {
+						getThump() {
 							this.NormalDie();
 						},
-						prepareBirth: function (f, R) {
+						prepareBirth(f, R) {
 							var h = this;
 							var e = h.ArR;
 							var d =
@@ -12848,7 +12554,7 @@ oCBucketheadZombie = InheritO(
 							var g = GetY(d) + h.GetDY();
 							var c = g - h.height;
 							var j = 3 * d + 1;
-							var i = (h.id = "Z_" + Math.random());
+							var i = (h.id = `Z_${Math.random()}`);
 
 							(h.R = d),
 								(h.pixelTop = c),
@@ -12877,13 +12583,13 @@ oCBucketheadZombie = InheritO(
 					width: 282,
 					height: 210,
 					Lvl: 2,
-					getShadow: function (a) {
+					getShadow(a) {
 						return "left:105px;top:175px";
 					},
-					GetDX: function () {
+					GetDX() {
 						return -137;
 					},
-					GetDY: function () {
+					GetDY() {
 						return 0;
 					},
 					GetDTop: 0,
@@ -12899,19 +12605,19 @@ oCBucketheadZombie = InheritO(
 						var a = "images/Zombies/DolphinRiderZombie/";
 						return [
 							"images/Card/Zombies/DolphinRiderZombie.png",
-							a + "0.gif",
-							a + "Walk1.gif",
-							a + "Walk2.gif",
-							a + "1.gif",
-							a + "Attack.gif",
-							a + "Head.gif" + $Random,
-							a + "Die.gif" + $Random,
-							a + "Jump.gif" + $Random,
-							a + "Jump2.gif" + $Random,
-							a + "Walk3.gif",
-							a + "Walk4.gif",
-							a + "Die2.gif" + $Random,
-							a + "Jump3.gif" + $Random,
+							`${a}0.gif`,
+							`${a}Walk1.gif`,
+							`${a}Walk2.gif`,
+							`${a}1.gif`,
+							`${a}Attack.gif`,
+							`${a}Head.gif${$Random}`,
+							`${a}Die.gif${$Random}`,
+							`${a}Jump.gif${$Random}`,
+							`${a}Jump2.gif${$Random}`,
+							`${a}Walk3.gif`,
+							`${a}Walk4.gif`,
+							`${a}Die2.gif${$Random}`,
+							`${a}Jump3.gif${$Random}`,
 						];
 					})(),
 					AudioArr: [
@@ -12921,12 +12627,12 @@ oCBucketheadZombie = InheritO(
 					],
 					Produce:
 						'海豚骑士僵尸善于利用你水池防御的弱点。<p>韧性：<font color="#CC241D">中</font><br>速度：<font color="#CC241D">快，慢（跳越后）</font><br>特点：<font color="#CC241D">跃过他所遇到的第一株植物</font><br>只在水池关卡出现</font></p>那海豚其实也是个僵尸。',
-					BirthCallBack: function (a) {
+					BirthCallBack(a) {
 						PlayAudio("dolphin_appears");
 						oAquaticZombie.prototype.BirthCallBack(a),
 							GetC(this.ZX) <= 9 && this.Jump(this);
 					},
-					Jump: function (a) {
+					Jump(a) {
 						a.beAttacked &&
 							(PlayAudio("zombie_entering_water"),
 							(a.Altitude = 2),
@@ -12934,7 +12640,7 @@ oCBucketheadZombie = InheritO(
 							(a.EleBody.src = a.PicArr[8]),
 							oSym.addTask(
 								240,
-								function (d, b) {
+								(d, b) => {
 									var c;
 									$Z[d] &&
 										b.beAttacked &&
@@ -12942,7 +12648,7 @@ oCBucketheadZombie = InheritO(
 										(b.Altitude = 1),
 										(b.OSpeed = b.Speed = 10.8),
 										SetStyle(b.Ele, {
-											left: (c = b.X -= 140) + "px",
+											left: `${(c = b.X -= 140)}px`,
 										}),
 										(b.AttackedLX =
 											c + (b.beAttackedPointL = 185)),
@@ -12960,7 +12666,7 @@ oCBucketheadZombie = InheritO(
 								return 1;
 							}));
 					},
-					ChkActsL1: function (d, c, e, b) {
+					ChkActsL1(d, c, e, b) {
 						if (d.JumpTime <= 0) {
 							d.Jump(d);
 							return 1;
@@ -12969,11 +12675,11 @@ oCBucketheadZombie = InheritO(
 						!(d.FreeFreezeTime || d.FreeSetbodyTime) &&
 							((d.AttackedRX -= a = d.Speed),
 							(LX = d.ZX = d.AttackedLX -= a),
-							(d.Ele.style.left = Math.floor((d.X -= a)) + "px"),
+							(d.Ele.style.left = `${Math.floor((d.X -= a))}px`),
 							--d.JumpTime);
 						return 1;
 					},
-					getCrushed: function (a) {
+					getCrushed(a) {
 						this.NormalAttack(this.id, a.id, a.AttackedLX);
 						this.getCrushed = function () {
 							return false;
@@ -12981,7 +12687,7 @@ oCBucketheadZombie = InheritO(
 						a.Stature > 0 &&
 							oSym.addTask(
 								50,
-								function (c) {
+								(c) => {
 									var b = $Z[c];
 									b && b.CrushDie();
 								},
@@ -12989,17 +12695,17 @@ oCBucketheadZombie = InheritO(
 							);
 						return false;
 					},
-					getRaven: function (a) {
+					getRaven(a) {
 						return (
 							!this.isAttacking &&
 								this.NormalAttack(this.id, a, $P[a].AttackedLX),
 							0
 						);
 					},
-					JudgeAttack: function () {
+					JudgeAttack() {
 						var f = this;
 						var b = f.ZX;
-						var d = f.R + "_";
+						var d = `${f.R}_`;
 						var c = GetC(b);
 						var g = oGd.$;
 						var e;
@@ -13011,7 +12717,7 @@ oCBucketheadZombie = InheritO(
 							for (
 								a = 2;
 								a > -1;
-								(p = g[d + e + "_" + a--]) &&
+								(p = g[`${d + e}_${a--}`]) &&
 								(p.EName != "oBrains"
 									? p.AttackedRX >= b &&
 										p.AttackedLX < b &&
@@ -13036,10 +12742,10 @@ oCBucketheadZombie = InheritO(
 							) {}
 						}
 					},
-					AttackZombie2: function (c, b, a) {
+					AttackZombie2(c, b, a) {
 						c.NormalAttack(b, a, $Z[a].AttackedLX);
 					},
-					NormalAttack: function (d, b, g) {
+					NormalAttack(d, b, g) {
 						var f = $Z[d];
 						var a = f.Ele;
 						var c = f.EleShadow;
@@ -13055,7 +12761,7 @@ oCBucketheadZombie = InheritO(
 						};
 						oSym.addTask(
 							50,
-							function (m, j, i, l, q) {
+							(m, j, i, l, q) => {
 								var h = $Z[m];
 								var k;
 								var r;
@@ -13086,7 +12792,7 @@ oCBucketheadZombie = InheritO(
 													(h.beAttackedPointL = 45)) +
 												(h.beAttackedPointR = 100)),
 											SetStyle(i, {
-												left: h.X + "px",
+												left: `${h.X}px`,
 											}),
 											(h.EleShadow.style.left = "45px"),
 											n())
@@ -13096,14 +12802,14 @@ oCBucketheadZombie = InheritO(
 													(h.beAttackedPointR = 100)) +
 												(h.beAttackedPointL = 45)),
 											SetStyle(i, {
-												left: h.X + "px",
+												left: `${h.X}px`,
 											}),
 											(h.EleShadow.style.left = "45px"),
 											(q.src =
 												h.PicArr[13] + Math.random()),
 											oSym.addTask(
 												170,
-												function (t, w) {
+												(t, w) => {
 													var v = $Z[t];
 													var u;
 													v && n();
@@ -13114,7 +12820,7 @@ oCBucketheadZombie = InheritO(
 							[d, b, a, c, e]
 						);
 					},
-					GoingDie: function () {
+					GoingDie() {
 						var b = this;
 						var c = b.id;
 						var a = b.PicArr;
@@ -13144,24 +12850,20 @@ oCBucketheadZombie = InheritO(
 					AttackGif: 2,
 					OSpeed: 5.4,
 					Speed: 5.4,
-					GetDX: function () {
+					GetDX() {
 						return -50;
 					},
-					GetDY: function () {
+					GetDY() {
 						return 0;
 					},
-					getShadow: function (a) {
-						return (
-							"left:" +
-							(a.beAttackedPointL - 20) +
-							"px;top:" +
-							(a.height - 32) +
-							"px"
-						);
+					getShadow(a) {
+						return `left:${a.beAttackedPointL - 20}px;top:${
+							a.height - 32
+						}px`;
 					},
 					Produce:
 						'小淘气们是一群小型僵尸，他们被伽刚特尔用来投掷进你的防御体系。</p><p>韧性：<font color="#CC241D">低</font><br>小淘气虽然瘦小，却很结实。他精通僵尸柔道，僵尸空手道和僵尸关节技。另外，他还会吹口琴。',
-					GoingDie: function () {
+					GoingDie() {
 						var b = this;
 						var c = b.id;
 						var a = b.PicArr;
@@ -13173,14 +12875,14 @@ oCBucketheadZombie = InheritO(
 								0;
 						b.AutoReduceHP(c);
 					},
-					NormalDie: function () {
+					NormalDie() {
 						var a = this;
 						oSym.addTask(250, ClearChild, [a.Ele]);
 						a.HP = 0;
 						delete $Z[a.id];
 						a.PZ && oP.MonPrgs();
 					},
-					CrushDie: function () {
+					CrushDie() {
 						var a = this;
 						ClearChild(a.Ele);
 						a.HP = 0;
@@ -13191,11 +12893,11 @@ oCBucketheadZombie = InheritO(
 						var a = "images/Zombies/Imp/";
 						return [
 							"images/Card/Zombies/Imp.png",
-							a + "0.gif",
-							a + "Attack.gif",
-							a + "Die.gif" + $Random,
-							a + "BoomDie.gif" + $Random,
-							a + "1.gif",
+							`${a}0.gif`,
+							`${a}Attack.gif`,
+							`${a}Die.gif${$Random}`,
+							`${a}BoomDie.gif${$Random}`,
+							`${a}1.gif`,
 						];
 					})(),
 				});
@@ -13229,32 +12931,32 @@ oCBucketheadZombie = InheritO(
 						var a = "images/Zombies/JackinTheBoxZombie/";
 						return [
 							"images/Card/Zombies/JackboxZombie.png",
-							a + "0.gif",
-							a + "Attack.gif",
-							a + "Die.gif" + $Random,
-							a + "BoomDie.gif" + $Random,
-							a + "1.gif",
-							a + "Walk.gif",
-							a + "OpenBox.gif",
-							a + "Boom.gif" + $Random,
-							a + "LostHead.gif",
-							a + "LostHeadAttack.gif",
-							"images/Zombies/Zombie/ZombieHead.gif" + $Random,
+							`${a}0.gif`,
+							`${a}Attack.gif`,
+							`${a}Die.gif${$Random}`,
+							`${a}BoomDie.gif${$Random}`,
+							`${a}1.gif`,
+							`${a}Walk.gif`,
+							`${a}OpenBox.gif`,
+							`${a}Boom.gif${$Random}`,
+							`${a}LostHead.gif`,
+							`${a}LostHeadAttack.gif`,
+							`images/Zombies/Zombie/ZombieHead.gif${$Random}`,
 						];
 					})(),
-					RandomOpenBox: function (a) {
+					RandomOpenBox(a) {
 						oSym.addTask(
 							Math.floor(Math.random() * 100) > 4
 								? Math.floor(1325 + Math.random() * 976)
 								: Math.floor(450 + Math.random() * 301),
-							function (c) {
+							(c) => {
 								var b = $Z[c];
 								b && b.beAttacked && b.OpenBox(c);
 							},
 							[a]
 						);
 					},
-					OpenBox: function (b) {
+					OpenBox(b) {
 						var a = $Z[b];
 						a.EleBody.src = a.PicArr[7];
 						a.ChkActs = a.ChkActs1 = function () {
@@ -13263,7 +12965,7 @@ oCBucketheadZombie = InheritO(
 						a.JudgeAttack = function () {
 							var g = this;
 							var d = g.ZX;
-							var e = g.R + "_";
+							var e = `${g.R}_`;
 							var f = GetC(d);
 							var h = oGd.$;
 							var c;
@@ -13309,7 +13011,7 @@ oCBucketheadZombie = InheritO(
 								function () {};
 						oSym.addTask(
 							50,
-							function (c) {
+							(c) => {
 								$Z[c] &&
 									((a.Status = 0),
 									!--oGd.$JackinTheBox &&
@@ -13317,18 +13019,18 @@ oCBucketheadZombie = InheritO(
 									PlayAudio("jack_surprise"),
 									oSym.addTask(
 										90,
-										function (f) {
+										(f) => {
 											var e = $Z[f];
 											var d;
 											e &&
 												((d = NewImg(
 													"",
 													"images/interface/blank.png",
-													"width:306px;height:300px;left:" +
-														(e.X - 16) +
-														"px;top:" +
-														(e.pixelTop - 90) +
-														"px;z-index:20"
+													`width:306px;height:300px;left:${
+														e.X - 16
+													}px;top:${
+														e.pixelTop - 90
+													}px;z-index:20`
 												)),
 												PlayAudio("explosion"),
 												(d.src =
@@ -13363,11 +13065,9 @@ oCBucketheadZombie = InheritO(
 															do {
 																g = n;
 																do {
-																	j =
-																		q +
-																		"_" +
-																		g +
-																		"_";
+																	j = `${q}_${
+																		g
+																	}_`;
 																	for (
 																		l = 0;
 																		l < 4;
@@ -13420,16 +13120,12 @@ oCBucketheadZombie = InheritO(
 							[b]
 						);
 					},
-					getShadow: function (a) {
-						return (
-							"left:" +
-							(a.beAttackedPointL - 8) +
-							"px;top:" +
-							(a.height - 32) +
-							"px"
-						);
+					getShadow(a) {
+						return `left:${a.beAttackedPointL - 8}px;top:${
+							a.height - 32
+						}px`;
 					},
-					BirthCallBack: function (d) {
+					BirthCallBack(d) {
 						var c = d.delayT;
 						var b = d.id;
 						var a = (d.Ele = $(b));
@@ -13438,7 +13134,7 @@ oCBucketheadZombie = InheritO(
 						c
 							? oSym.addTask(
 									c,
-									function (f, e) {
+									(f, e) => {
 										var g = $Z[f];
 										g &&
 											(PlayAudio("jackinthebox", true),
@@ -13454,7 +13150,7 @@ oCBucketheadZombie = InheritO(
 								SetBlock(a),
 								d.RandomOpenBox(b));
 					},
-					NormalDie: function () {
+					NormalDie() {
 						var a = this;
 						a.Status &&
 							!--oGd.$JackinTheBox &&
@@ -13465,7 +13161,7 @@ oCBucketheadZombie = InheritO(
 						delete $Z[a.id];
 						a.PZ && oP.MonPrgs();
 					},
-					ExplosionDie: function () {
+					ExplosionDie() {
 						var a = this;
 						a.Status &&
 							!--oGd.$JackinTheBox &&
@@ -13476,7 +13172,7 @@ oCBucketheadZombie = InheritO(
 						delete $Z[a.id];
 						a.PZ && oP.MonPrgs();
 					},
-					DisappearDie: function () {
+					DisappearDie() {
 						this.Status &&
 							!--oGd.$JackinTheBox &&
 							StopAudio("jackinthebox");
@@ -13485,7 +13181,7 @@ oCBucketheadZombie = InheritO(
 						delete $Z[this.id];
 						this.PZ && oP.MonPrgs();
 					},
-					CrushDie: function () {
+					CrushDie() {
 						var a = this;
 						a.Status &&
 							!--oGd.$JackinTheBox &&
@@ -13512,23 +13208,19 @@ oCBucketheadZombie = InheritO(
 					OrnLostNormalGif: 9,
 					OrnLostAttackGif: 3,
 					BreakBall: false, // 气球是否被戳破
-					MulBallNum: function () {
+					MulBallNum() {
 						// 减去气球数
 						if (!this.BreakBall)
 							(this.BreakBall = true),
 								(oGd.$Balloon[this.R] |= 0),
 								--oGd.$Balloon[this.R];
 					},
-					getShadow: function (a) {
-						return (
-							"left:" +
-							(a.beAttackedPointL - 10) +
-							"px;top:" +
-							(a.height - 32) +
-							"px"
-						);
+					getShadow(a) {
+						return `left:${a.beAttackedPointL - 10}px;top:${
+							a.height - 32
+						}px`;
 					},
-					CanPass: function (d, c) {
+					CanPass(d, c) {
 						return c;
 					},
 					AudioArr: ["ballooninflate", "balloon_pop"],
@@ -13537,22 +13229,22 @@ oCBucketheadZombie = InheritO(
 						var a = "images/Zombies/BalloonZombie/";
 						return [
 							"images/Card/Zombies/Balloonzombie.png",
-							a + "0.gif",
-							a + "1.gif",
-							a + "Attack.gif",
-							a + "Walk2.gif",
-							a + "Attack2.gif",
-							a + "Head.gif" + $Random,
-							a + "Die.gif" + $Random,
-							a + "Boom.gif",
-							a + "Walk.gif",
-							a + "Drop.gif",
-							a + "Boom2.gif",
+							`${a}0.gif`,
+							`${a}1.gif`,
+							`${a}Attack.gif`,
+							`${a}Walk2.gif`,
+							`${a}Attack2.gif`,
+							`${a}Head.gif${$Random}`,
+							`${a}Die.gif${$Random}`,
+							`${a}Boom.gif`,
+							`${a}Walk.gif`,
+							`${a}Drop.gif`,
+							`${a}Boom2.gif`,
 						];
 					})(),
 					Produce:
 						'气球僵尸漂浮在空中，躲过大多数攻击。<p>韧性：<font color="#CC241D">低</font><br>特点：<font color="#CC241D">飞行</font><br>弱点：<font color="#CC241D">仙人掌和三叶草</font></p>气球僵尸真幸运。气球有很多功效，而其他僵尸都不曾捡到过。',
-					BirthCallBack: function (e) {
+					BirthCallBack(e) {
 						var d = e.delayT;
 						var c = e.id;
 						var a = (e.Ele = $(c));
@@ -13563,7 +13255,7 @@ oCBucketheadZombie = InheritO(
 						d
 							? oSym.addTask(
 									d,
-									function (i, g, c) {
+									(i, g, c) => {
 										var j = $Z[i];
 										var k = oGd.$Balloon;
 										j &&
@@ -13578,7 +13270,7 @@ oCBucketheadZombie = InheritO(
 								f[b] == undefined ? (f[b] = 1) : ++f[b],
 								PlayAudio("ballooninflate"));
 					},
-					ChkActs: function (f, d, g, c) {
+					ChkActs(f, d, g, c) {
 						var b;
 						var a;
 						var e;
@@ -13603,19 +13295,17 @@ oCBucketheadZombie = InheritO(
 												400 - f.height + f.GetDY(),
 										})),
 									(f.ZX = f.AttackedLX -= b),
-									(f.Ele.style.left =
-										Math.floor((f.X -= b)) + "px"),
+									(f.Ele.style.left = `${Math.floor((f.X -= b))}px`),
 									(e = 1))
 							: (e = 1);
 						return e;
 					},
-					Drop: function () {
+					Drop() {
 						var a = this;
 						PlayAudio("balloon_pop");
-						a.EleBody.src =
-							"images/Zombies/BalloonZombie/Drop.gif" +
-							$Random +
-							Math.random();
+						a.EleBody.src = `images/Zombies/BalloonZombie/Drop.gif${
+							$Random
+						}${Math.random()}`;
 						a.ChkActs = function () {
 							return 1;
 						};
@@ -13623,7 +13313,7 @@ oCBucketheadZombie = InheritO(
 						a.MulBallNum();
 						oSym.addTask(
 							120,
-							function (b) {
+							(b) => {
 								var c = $Z[b];
 								if (c) {
 									c.BoomDieGif = 11;
@@ -13664,12 +13354,12 @@ oCBucketheadZombie = InheritO(
 							[a.id]
 						);
 					},
-					getFreeze: function (b, a) {
+					getFreeze(b, a) {
 						b.Attack = 50;
 						b.Speed = 0.5 * b.OSpeed;
 						oSym.addTask(
 							1500,
-							function (d, c) {
+							(d, c) => {
 								var e = $Z[d];
 								e &&
 									e.FreeSlowTime == c &&
@@ -13680,7 +13370,7 @@ oCBucketheadZombie = InheritO(
 							[a, (b.FreeSlowTime = oSym.Now + 1500)]
 						);
 					},
-					NormalDie: function () {
+					NormalDie() {
 						var a = this;
 						a.EleBody.src = a.PicArr[a.DieGif];
 						oSym.addTask(250, ClearChild, [a.Ele]);
@@ -13689,7 +13379,7 @@ oCBucketheadZombie = InheritO(
 						a.PZ && oP.MonPrgs();
 						a.MulBallNum();
 					},
-					ExplosionDie: function () {
+					ExplosionDie() {
 						var a = this;
 						a.EleBody.src = a.PicArr[a.BoomDieGif];
 						oSym.addTask(200, ClearChild, [a.Ele]);
@@ -13698,17 +13388,17 @@ oCBucketheadZombie = InheritO(
 						a.PZ && oP.MonPrgs();
 						a.MulBallNum();
 					},
-					DisappearDie: function () {
+					DisappearDie() {
 						ClearChild(this.Ele);
 						this.HP = 0;
 						delete $Z[this.id];
 						this.PZ && oP.MonPrgs();
 						this.MulBallNum();
 					},
-					CrushDie: function () {
+					CrushDie() {
 						this.DisappearDie();
 					},
-					getDispelled: function () {
+					getDispelled() {
 						if (this.Altitude != 3 || this.AttackedRX < GetX(0)) {
 							return;
 						}
@@ -13719,7 +13409,7 @@ oCBucketheadZombie = InheritO(
 							var o = $Z[id];
 							if (!o) return;
 							var d = (o.WalkDirection = 1);
-							var R = o.R;
+							var { R } = o;
 							var C = GetC(o.AttackedLX);
 							var sx = 50;
 							o.AttackedLX += sx;
@@ -13729,11 +13419,11 @@ oCBucketheadZombie = InheritO(
 								o.DisappearDie();
 								return;
 							}
-							SetStyle($(id), { left: o.X + "px" });
+							SetStyle($(id), { left: `${o.X}px` });
 							oSym.addTask(2, arguments.callee, [id]);
 						})(this.id);
 					},
-					getFirePeaSputtering: function () {
+					getFirePeaSputtering() {
 						this.Altitude == 1 && this.getHit0(this, 13);
 					},
 					prepareBirth: oZomboni.prototype.prepareBirth,
@@ -13777,7 +13467,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 
 	Produce:
 		'这种僵尸通过挖地来绕过防线。<p>韧性：<font color="#CC241D">中</font><Br>速度：<font color="#CC241D">快,而后慢</font><BR>特点：<font color="#CC241D">挖地道，然后在草地的左侧现身</font><BR>弱点：<font color="#CC241D">分裂射手，磁力菇</font></p>最近，他一直在听奥特曼的主题曲，据他所述，他好像是在某一处听到这首歌，觉得很好听，于是他现在也不挖土了，天天循环播放这首歌',
-	BirthCallBack: function (f) {
+	BirthCallBack(f) {
 		var e = f.delayT;
 		var d = f.id;
 		var c = (f.Ele = $(d));
@@ -13787,7 +13477,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 		e
 			? oSym.addTask(
 					e,
-					function (h, g) {
+					(h, g) => {
 						var i = $Z[h];
 						i && ((i.FreeSetbodyTime = 0), SetBlock(g));
 					},
@@ -13805,17 +13495,15 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 			y: 147,
 		},
 	],
-	getShadow: function (a) {
-		return (
-			"left:" + a.beAttackedPointL + "px;top:" + (a.height - 20) + "px"
-		);
+	getShadow(a) {
+		return `left:${a.beAttackedPointL}px;top:${a.height - 20}px`;
 	},
 	isUp: 0,
-	JudgeLR: function (f, d, e, c, g) {
+	JudgeLR(f, d, e, c, g) {
 		return e > 10 || e < 1
 			? false
 			: (function () {
-					d += --e + "_";
+					d += `${--e}_`;
 					var h = 3;
 					var i;
 					while (h--) {
@@ -13827,11 +13515,11 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 					}
 				})();
 	},
-	JudgeSR: function (f, d, e, c, g) {
+	JudgeSR(f, d, e, c, g) {
 		return e > 9
 			? false
 			: (function () {
-					d += e + "_";
+					d += `${e}_`;
 					var h = 3;
 					var i;
 					while (h--) {
@@ -13847,22 +13535,22 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 		var a = "images/Zombies/Diggerzombie/";
 		return [
 			"images/Card/Zombies/Diggerzombie.png",
-			a + "0.gif",
-			a + "DiggerZombie.gif",
-			a + "Walk1.gif",
-			a + "Walk2.gif",
-			a + "Walk3.gif",
-			a + "Attack1.gif",
-			a + "Attack2.gif",
-			"images/Plants/Peashooter/NonePeashooter.gif" + $Random,
-			a + "Die.gif" + $Random,
-			a + "Up.gif" + $Random,
-			a + "Down.gif" + $Random,
-			a + "BoomDie.gif" + $Random,
+			`${a}0.gif`,
+			`${a}DiggerZombie.gif`,
+			`${a}Walk1.gif`,
+			`${a}Walk2.gif`,
+			`${a}Walk3.gif`,
+			`${a}Attack1.gif`,
+			`${a}Attack2.gif`,
+			`images/Plants/Peashooter/NonePeashooter.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`${a}Up.gif${$Random}`,
+			`${a}Down.gif${$Random}`,
+			`${a}BoomDie.gif${$Random}`,
 		];
 	})(),
 	AudioArr: ["zombie_entering_water"],
-	Go_Up: function (a, WD) {
+	Go_Up(a, WD) {
 		// WD: 方向，1右0左
 		a.isUp = 1; //a.Ifgc=0;
 		a.beAttacked &&
@@ -13878,7 +13566,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 			}); // 跳起来
 		oSym.addTask(
 			100,
-			function (c, b) {
+			(c, b) => {
 				WD
 					? ((b.AttackGif = b.AttackGif_Up0),
 						(b.AttackedRX += 30),
@@ -13897,7 +13585,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 					b.beAttacked &&
 					oSym.addTask(
 						WD ? 400 : 0,
-						function (c, b) {
+						(c, b) => {
 							// 行走
 							(b.EleBody.src =
 								b.PicArr[
@@ -13905,7 +13593,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 								]),
 								(b.OSpeed = b.Speed = 1.6),
 								(b.ChkActs =
-									OrnNoneZombies["prototype"][
+									OrnNoneZombies.prototype[
 										WD ? "ChkActs1" : "ChkActs"
 									]);
 						},
@@ -13915,7 +13603,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 			[a.id, a]
 		);
 	},
-	ChkActs: function (f, d, g, c) {
+	ChkActs(f, d, g, c) {
 		// 到了左边自己钻出来
 		if (f.Altitude == 0 && f.AttackedRX < GetX(1) - 40)
 			return f.Go_Up(f, 1), 1;
@@ -13940,7 +13628,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 									CustomTop: 400 - f.height + f.GetDY(),
 								})),
 							(f.ZX = f.AttackedLX -= b),
-							(f.Ele.style.left = Math.floor((f.X -= b)) + "px"),
+							(f.Ele.style.left = `${Math.floor((f.X -= b))}px`),
 							(e = 1))
 					: (e = 1))
 			: (e = 1);
@@ -13949,15 +13637,15 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 	CanDig: {
 		oPotatoMine: true,
 	},
-	JudgeAttack_Dig: function () {
+	JudgeAttack_Dig() {
 		var g = this;
 		var d = g.ZX;
-		var e = g.R + "_";
+		var e = `${g.R}_`;
 		var f = GetC(d);
 		var h = oGd.$;
 		var c;
 		(c = g.JudgeLR(g, e, f, d, h) || g.JudgeSR(g, e, f, d, h)) &&
-		g.CanDig[$P[c[1]]["EName"]]
+		g.CanDig[$P[c[1]].EName]
 			? (!g.isAttacking &&
 					((g.isAttacking = 1),
 					(g.EleBody.src = g.PicArr[g.AttackGif])),
@@ -13965,10 +13653,10 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 			: g.isAttacking &&
 				((g.isAttacking = 0), (g.EleBody.src = g.PicArr[g.NormalGif]));
 	},
-	JudgeAttack_Up1: function () {
+	JudgeAttack_Up1() {
 		var g = this;
 		var d = g.AttackedRX;
-		var e = g.R + "_";
+		var e = `${g.R}_`;
 		var f = GetC(d);
 		var h = oGd.$;
 		var c;
@@ -13980,7 +13668,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 			: g.isAttacking &&
 				((g.isAttacking = 0), (g.EleBody.src = g.PicArr[g.NormalGif]));
 	},
-	Stone_of_Sinan_Up: function () {
+	Stone_of_Sinan_Up() {
 		// 被磁铁吸了镐子调用的函数
 		var g = this; //alert(1);
 		if (g.isUp) {
@@ -14032,7 +13720,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 
 	Produce:
 		'这种僵尸通过挖地来绕过防线。<p>韧性：<font color="#CC241D">中</font><Br>速度：<font color="#CC241D">快,而后慢</font><BR>特点：<font color="#CC241D">挖地道，然后在草地的左侧现身</font><BR>弱点：<font color="#CC241D">分裂射手，磁力菇</font></p>最近，他一直在听奥特曼的主题曲，据他所述，他好像是在某一处听到这首歌，觉得很好听，于是他现在也不挖土了，天天循环播放这首歌',
-	BirthCallBack: function (f) {
+	BirthCallBack(f) {
 		var e = f.delayT;
 		var d = f.id;
 		var c = (f.Ele = $(d));
@@ -14042,7 +13730,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 		e
 			? oSym.addTask(
 					e,
-					function (h, g) {
+					(h, g) => {
 						var i = $Z[h];
 						i && ((i.FreeSetbodyTime = 0), SetBlock(g));
 					},
@@ -14060,17 +13748,15 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 			y: 147,
 		},
 	],
-	getShadow: function (a) {
-		return (
-			"left:" + a.beAttackedPointL + "px;top:" + (a.height - 20) + "px"
-		);
+	getShadow(a) {
+		return `left:${a.beAttackedPointL}px;top:${a.height - 20}px`;
 	},
 	isUp: 0,
-	JudgeLR: function (f, d, e, c, g) {
+	JudgeLR(f, d, e, c, g) {
 		return e > 10 || e < 1
 			? false
 			: (function () {
-					d += --e + "_";
+					d += `${--e}_`;
 					var h = 3;
 					var i;
 					while (h--) {
@@ -14082,11 +13768,11 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 					}
 				})();
 	},
-	JudgeSR: function (f, d, e, c, g) {
+	JudgeSR(f, d, e, c, g) {
 		return e > 9
 			? false
 			: (function () {
-					d += e + "_";
+					d += `${e}_`;
 					var h = 3;
 					var i;
 					while (h--) {
@@ -14102,22 +13788,22 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 		var a = "images/Zombies/Diggerzombie/";
 		return [
 			"images/Card/Zombies/IDiggerzombie.png",
-			a + "0.gif",
-			a + "DiggerZombie.gif",
-			a + "Walk1.gif",
-			a + "Walk2.gif",
-			a + "Walk3.gif",
-			a + "Attack1.gif",
-			a + "Attack2.gif",
-			"images/Plants/Peashooter/NonePeashooter.gif" + $Random,
-			a + "Die.gif" + $Random,
-			a + "Up.gif" + $Random,
-			a + "Down.gif" + $Random,
-			a + "BoomDie.gif" + $Random,
+			`${a}0.gif`,
+			`${a}DiggerZombie.gif`,
+			`${a}Walk1.gif`,
+			`${a}Walk2.gif`,
+			`${a}Walk3.gif`,
+			`${a}Attack1.gif`,
+			`${a}Attack2.gif`,
+			`images/Plants/Peashooter/NonePeashooter.gif${$Random}`,
+			`${a}Die.gif${$Random}`,
+			`${a}Up.gif${$Random}`,
+			`${a}Down.gif${$Random}`,
+			`${a}BoomDie.gif${$Random}`,
 		];
 	})(),
 	AudioArr: ["zombie_entering_water"],
-	Go_Up: function (a, WD) {
+	Go_Up(a, WD) {
 		// WD: 方向，1右0左
 		a.isUp = 1; //a.Ifgc=0;
 		a.beAttacked &&
@@ -14133,7 +13819,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 			}); // 跳起来
 		oSym.addTask(
 			100,
-			function (c, b) {
+			(c, b) => {
 				WD
 					? ((b.AttackGif = b.AttackGif_Up0),
 						(b.AttackedRX += 30),
@@ -14152,7 +13838,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 					b.beAttacked &&
 					oSym.addTask(
 						WD ? 400 : 0,
-						function (c, b) {
+						(c, b) => {
 							// 行走
 							(b.EleBody.src =
 								b.PicArr[
@@ -14160,7 +13846,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 								]),
 								(b.OSpeed = b.Speed = 1.6),
 								(b.ChkActs =
-									OrnNoneZombies["prototype"][
+									OrnNoneZombies.prototype[
 										WD ? "ChkActs1" : "ChkActs"
 									]);
 						},
@@ -14170,7 +13856,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 			[a.id, a]
 		);
 	},
-	ChkActs: function (f, d, g, c) {
+	ChkActs(f, d, g, c) {
 		// 到了左边自己钻出来
 		if (f.Altitude == 0 && f.AttackedRX < GetX(1) - 40)
 			return f.Go_Up(f, 1), 1;
@@ -14195,7 +13881,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 									CustomTop: 400 - f.height + f.GetDY(),
 								})),
 							(f.ZX = f.AttackedLX -= b),
-							(f.Ele.style.left = Math.floor((f.X -= b)) + "px"),
+							(f.Ele.style.left = `${Math.floor((f.X -= b))}px`),
 							(e = 1))
 					: (e = 1))
 			: (e = 1);
@@ -14204,15 +13890,15 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 	CanDig: {
 		oPotatoMine: true,
 	},
-	JudgeAttack_Dig: function () {
+	JudgeAttack_Dig() {
 		var g = this;
 		var d = g.ZX;
-		var e = g.R + "_";
+		var e = `${g.R}_`;
 		var f = GetC(d);
 		var h = oGd.$;
 		var c;
 		(c = g.JudgeLR(g, e, f, d, h) || g.JudgeSR(g, e, f, d, h)) &&
-		g.CanDig[$P[c[1]]["EName"]]
+		g.CanDig[$P[c[1]].EName]
 			? (!g.isAttacking &&
 					((g.isAttacking = 1),
 					(g.EleBody.src = g.PicArr[g.AttackGif])),
@@ -14220,10 +13906,10 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 			: g.isAttacking &&
 				((g.isAttacking = 0), (g.EleBody.src = g.PicArr[g.NormalGif]));
 	},
-	JudgeAttack_Up1: function () {
+	JudgeAttack_Up1() {
 		var g = this;
 		var d = g.AttackedRX;
-		var e = g.R + "_";
+		var e = `${g.R}_`;
 		var f = GetC(d);
 		var h = oGd.$;
 		var c;
@@ -14235,7 +13921,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 			: g.isAttacking &&
 				((g.isAttacking = 0), (g.EleBody.src = g.PicArr[g.NormalGif]));
 	},
-	Stone_of_Sinan_Up: function () {
+	Stone_of_Sinan_Up() {
 		// 被磁铁吸了镐子调用的函数
 		var g = this; //alert(1);
 		if (g.isUp) {
@@ -14259,20 +13945,20 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 			var a = "images/Zombies/JalapenoZombie/";
 			return [
 				"images/Card/Zombies/JalapenoZombie.png",
-				a + "0.png",
-				a + "Zombie.png",
-				a + "ZombieAttack.png",
+				`${a}0.png`,
+				`${a}Zombie.png`,
+				`${a}ZombieAttack.png`,
 				"images/Zombies/Zombie/ZombieLostHead.gif",
 				"images/Zombies/Zombie/ZombieLostHeadAttack.gif",
-				a + "JalapenoHead.png" + $Random,
-				"images/Zombies/Zombie/ZombieDie.gif" + $Random,
+				`${a}JalapenoHead.png${$Random}`,
+				`images/Zombies/Zombie/ZombieDie.gif${$Random}`,
 				"images/Zombies/BoomDie.gif",
-				a + "1.png",
+				`${a}1.png`,
 			];
 		})(),
 		Produce:
 			'Toughness: <font color="#FF0000">medium</font></p>A rebellious hot pepper from the plant family, codenamed 47, often self-destructs to destroy plants.',
-		BirthCallBack: function (f) {
+		BirthCallBack(f) {
 			var e = f.delayT;
 			var d = f.id;
 			var c = (f.Ele = $(d));
@@ -14281,7 +13967,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 			e
 				? oSym.addTask(
 						e,
-						function (h, g) {
+						(h, g) => {
 							var i = $Z[h];
 							i && ((i.FreeSetbodyTime = 0), SetBlock(g));
 						},
@@ -14290,7 +13976,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 				: SetBlock(c);
 			f.CheckBoomFire(f);
 		},
-		CheckBoomFire: function (f) {
+		CheckBoomFire(f) {
 			oSym.addTask(
 				1000,
 				function (f) {
@@ -14303,15 +13989,13 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 				[f]
 			);
 		},
-		BoomFire: function (y) {
+		BoomFire(y) {
 			PlayAudio("jalapeno");
-			fireid = "fire_" + Math.random();
+			fireid = `fire_${Math.random()}`;
 			NewImg(
 				fireid,
 				"images/Plants/Jalapeno/JalapenoAttack.gif",
-				"width:755px;height:131px;left:120px;top:" +
-					(GetY(y - 1) - 42) +
-					"px",
+				`width:755px;height:131px;left:120px;top:${GetY(y - 1) - 42}px`,
 				EDAll
 			);
 			oSym.addTask(
@@ -14323,7 +14007,7 @@ oDiggerZombie = InheritO(OrnNoneZombies, {
 			);
 			for (let i = 1; i <= oS.C; i++) {
 				for (let j = 0; j < 4; j++) {
-					let g = oGd.$[y + "_" + i + "_" + j];
+					let g = oGd.$[`${y}_${i}_${j}`];
 					g && g.BoomDie();
 				}
 			}
@@ -14341,20 +14025,20 @@ oPeaZombie = InheritO(oZombie, {
 		var a = "images/Zombies/Zombie/";
 		return [
 			"images/Card/Zombies/Zombie.png",
-			a + "0.gif",
-			a + "Zombie.gif",
-			a + "ZombieAttack.gif",
+			`${a}0.gif`,
+			`${a}Zombie.gif`,
+			`${a}ZombieAttack.gif`,
 			"images/Zombies/Zombie/ZombieLostHead.gif",
 			"images/Zombies/Zombie/ZombieLostHeadAttack.gif",
-			a + "ZombieHead.gif",
+			`${a}ZombieHead.gif`,
 			"images/Zombies/Zombie/ZombieDie.gif",
 			"images/Zombies/BoomDie.gif",
-			a + "1.gif",
+			`${a}1.gif`,
 		];
 	})(),
 	Produce:
 		'韧性：<font color="#CC241D">低</font></p>这种僵尸喜爱脑髓，贪婪而不知足。脑髓，脑髓，脑髓，夜以继日地追求着。老而臭的脑髓？腐烂的脑髓？都没关系。僵尸需要它们。',
-	BirthCallBack: function (f) {
+	BirthCallBack(f) {
 		var e = f.delayT;
 		var d = f.id;
 		var c = (f.Ele = $(d));
@@ -14363,7 +14047,7 @@ oPeaZombie = InheritO(oZombie, {
 		e
 			? oSym.addTask(
 					e,
-					function (h, g) {
+					(h, g) => {
 						var i = $Z[h];
 						i && ((i.FreeSetbodyTime = 0), SetBlock(g));
 					},
@@ -14372,7 +14056,7 @@ oPeaZombie = InheritO(oZombie, {
 			: SetBlock(c);
 		f.StartAttackCheck(f); // Start the continuous attack check
 	},
-	StartAttackCheck: function (f) {
+	StartAttackCheck(f) {
 		oSym.addTask(
 			1, // Check every frame (or a very small interval)
 			function (currentZombie) {
@@ -14384,7 +14068,7 @@ oPeaZombie = InheritO(oZombie, {
 			[f]
 		);
 	},
-	CheckAndAttack: function () {
+	CheckAndAttack() {
 		var a = this;
 		var plantTarget = null;
 
@@ -14451,14 +14135,14 @@ oPeaZombie = InheritO(oZombie, {
 			a.Attack(plantTarget);
 		}
 	},
-	Attack: function (targetPlant) {
+	Attack(targetPlant) {
 		var a = this;
-		var b = "ZB" + Math.random(); // Zombie Bullet ID
+		var b = `ZB${Math.random()}`; // Zombie Bullet ID
 
 		a.PlayAttack(3); // Play the attack animation
 		oSym.addTask(
 			15,
-			function (d) {
+			(d) => {
 				var c = $(d);
 				c && SetVisible(c);
 			},
@@ -14479,14 +14163,14 @@ oPeaZombie = InheritO(oZombie, {
 					// Check if the target is still valid
 					targetPlant.getHurt(h, c); // Call a hypothetical getHurt method on the plant
 					SetStyle(j, {
-						left: o + targetPlant.width - 20 + "px", // Adjust bullet impact position
+						left: `${o + targetPlant.width - 20}px`, // Adjust bullet impact position
 					}).src = "images/Plants/PeaBulletHit.gif"; // Use a pea hit effect for now
 					oSym.addTask(10, ClearChild, [j]);
 				} else {
 					n += l = c ? -5 : 5;
 					if (n > -20 && n < oS.W) {
 						// Move towards the right
-						j.style.left = (o += l) + "px";
+						j.style.left = `${(o += l)}px`;
 						oSym.addTask(1, arguments.callee, [
 							f,
 							j,
@@ -14510,12 +14194,9 @@ oPeaZombie = InheritO(oZombie, {
 				NewImg(
 					b,
 					"images/Plants/PB00.gif",
-					"left:" +
-						(a.X + a.width - 20) +
-						"px;top:" +
-						(a.pixelTop + 35) +
-						"px;visibility:hidden;z-index:" +
-						(a.zIndex + 2),
+					`left:${a.X + a.width - 20}px;top:${
+						a.pixelTop + 35
+					}px;visibility:hidden;z-index:${a.zIndex + 2}`,
 					EDPZ
 				), // Create a bullet image
 				20, // Damage

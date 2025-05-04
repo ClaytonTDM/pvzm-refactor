@@ -35,14 +35,14 @@ oS.Init(
 		FlagNum: 9,
 		FlagToSumNum: { a1: [3, 5, 8], a2: [1, 2, 3, 9] },
 		FlagToMonitor: { 8: [ShowFinalWave, 0] },
-		FlagToEnd: function () {
+		FlagToEnd() {
 			NewImg(
 				"imgSF",
 				"images/Card/Plants/SnowPea.png",
 				"left:827px;top:525px;clip:rect(auto,auto,60px,auto)",
 				EDAll,
 				{
-					onclick: function () {
+					onclick() {
 						GetNewCard(this, oSnowPea, 7);
 					},
 				}

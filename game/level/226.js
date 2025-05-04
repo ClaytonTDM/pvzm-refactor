@@ -90,7 +90,7 @@ oS.Init(
 			12: $("imgFlag1"),
 		},
 		Monitor: { f: AppearTombstones, ar: [6, 9, 7] },
-		UserDefinedFlagFunc: function (a) {
+		UserDefinedFlagFunc(a) {
 			oP.FlagNum == oP.FlagZombies &&
 				oP.SetTimeoutTomZombie([
 					oZombie,
@@ -98,7 +98,7 @@ oS.Init(
 					oBucketheadZombie,
 				]);
 		},
-		LoadAccess: function (a) {
+		LoadAccess(a) {
 			NewImg(
 				"dDave",
 				"images/interface/Dave.gif",
@@ -115,7 +115,7 @@ oS.Init(
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							100,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [1]);
@@ -127,13 +127,13 @@ oS.Init(
 						break;
 					case 1:
 						PlayAudio(
-							"crazydavelong" + Math.floor(1 + Math.random() * 3)
+							`crazydavelong${Math.floor(1 + Math.random() * 3)}`
 						);
 						c.onclick = null;
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							200,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [2]);
@@ -145,13 +145,13 @@ oS.Init(
 						break;
 					case 2:
 						PlayAudio(
-							"crazydavelong" + Math.floor(1 + Math.random() * 3)
+							`crazydavelong${Math.floor(1 + Math.random() * 3)}`
 						);
 						c.onclick = null;
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							200,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [3]);
@@ -166,7 +166,7 @@ oS.Init(
 						ClearChild($("DivTeach"));
 						oSym.addTask(
 							50,
-							function () {
+							() => {
 								ClearChild($("dDave"));
 								a(0);
 							},
@@ -209,14 +209,14 @@ oS.Init(
 			7: [ShowLargeWave, 0],
 			11: [ShowFinalWave, 0],
 		},
-		FlagToEnd: function () {
+		FlagToEnd() {
 			NewImg(
 				"imgSF",
 				"images/interface/trophy.png",
 				"left:260px;top:233px",
 				EDAll,
 				{
-					onclick: function () {
+					onclick() {
 						SelectModal(227);
 					},
 				}

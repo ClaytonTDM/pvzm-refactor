@@ -44,7 +44,7 @@ oS.Init(
 		AudioArr: ["crazydavelong1", "crazydavelong3"],
 		LargeWaveFlag: { 10: $("imgFlag3"), 20: $("imgFlag1") },
 		StartGameMusic: "Lg_pk",
-		LoadAccess: function (a) {
+		LoadAccess(a) {
 			NewImg(
 				"dDave",
 				"images/interface/Dave.gif",
@@ -58,13 +58,13 @@ oS.Init(
 				switch (d) {
 					case 0:
 						PlayAudio(
-							"crazydavelong" + Math.floor(1 + Math.random() * 3)
+							`crazydavelong${Math.floor(1 + Math.random() * 3)}`
 						);
 						c.onclick = null;
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							2,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [1]);
@@ -77,13 +77,13 @@ oS.Init(
 						break;
 					case 1:
 						PlayAudio(
-							"crazydavelong" + Math.floor(1 + Math.random() * 3)
+							`crazydavelong${Math.floor(1 + Math.random() * 3)}`
 						);
 						c.onclick = null;
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							2,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [2]);
@@ -96,13 +96,13 @@ oS.Init(
 						break;
 					case 2:
 						PlayAudio(
-							"crazydavelong" + Math.floor(1 + Math.random() * 3)
+							`crazydavelong${Math.floor(1 + Math.random() * 3)}`
 						);
 						c.onclick = null;
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							2,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [3]);
@@ -118,7 +118,7 @@ oS.Init(
 						ClearChild($("DivTeach"));
 						oSym.addTask(
 							5,
-							function () {
+							() => {
 								ClearChild($("dDave"));
 								a(0);
 								StopMusic();
@@ -139,14 +139,14 @@ oS.Init(
 		FlagNum: 20,
 		FlagToSumNum: { a1: [3, 3, 7], a2: [1, 2, 3, 8] },
 		FlagToMonitor: { 9: [ShowLargeWave, 0], 19: [ShowFinalWave, 0] },
-		FlagToEnd: function () {
+		FlagToEnd() {
 			NewImg(
 				"imgSF",
 				"images/Card/Plants/star.png",
 				"left:627px;top:325px;clip:rect(auto,auto,60px,auto)",
 				EDAll,
 				{
-					onclick: function () {
+					onclick() {
 						GetNewCard(this, ostar, 32);
 					},
 				}

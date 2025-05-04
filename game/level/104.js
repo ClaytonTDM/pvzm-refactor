@@ -73,7 +73,7 @@ oS.Init(
 		SunNum: 525,
 		coord: 2,
 		LargeWaveFlag: { 10: $("imgFlag3"), 20: $("imgFlag1") },
-		InitLawnMower: function () {
+		InitLawnMower() {
 			CustomSpecial(oPoolCleaner, 1, -1);
 			CustomSpecial(oCleaner, 2, -1);
 			CustomSpecial(oCleaner, 3, -1);
@@ -88,7 +88,7 @@ oS.Init(
 		],
 		LoadMusic: "MyScrapbook",
 		StartGameMusic: "The Great Wall",
-		LoadAccess: function (a) {
+		LoadAccess(a) {
 			NewImg(
 				"dDave",
 				"images/interface/Dave.gif",
@@ -102,13 +102,13 @@ oS.Init(
 				switch (d) {
 					case 0:
 						PlayAudio(
-							"crazydavelong" + Math.floor(1 + Math.random() * 3)
+							`crazydavelong${Math.floor(1 + Math.random() * 3)}`
 						);
 						c.onclick = null;
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							2,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [1]);
@@ -121,13 +121,13 @@ oS.Init(
 						break;
 					case 1:
 						PlayAudio(
-							"crazydavelong" + Math.floor(1 + Math.random() * 3)
+							`crazydavelong${Math.floor(1 + Math.random() * 3)}`
 						);
 						c.onclick = null;
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							2,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [2]);
@@ -140,13 +140,13 @@ oS.Init(
 						break;
 					case 2:
 						PlayAudio(
-							"crazydavelong" + Math.floor(1 + Math.random() * 3)
+							`crazydavelong${Math.floor(1 + Math.random() * 3)}`
 						);
 						c.onclick = null;
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							2,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [3]);
@@ -163,7 +163,7 @@ oS.Init(
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							1,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [4]);
@@ -176,13 +176,13 @@ oS.Init(
 						break;
 					case 4:
 						PlayAudio(
-							"crazydavelong" + Math.floor(1 + Math.random() * 3)
+							`crazydavelong${Math.floor(1 + Math.random() * 3)}`
 						);
 						c.onclick = null;
 						$("dDave").src = "images/interface/Dave3.gif";
 						oSym.addTask(
 							2,
-							function () {
+							() => {
 								$("dDave").src = "images/interface/Dave.gif";
 								c.onclick = function () {
 									oSym.addTask(10, b, [5]);
@@ -198,7 +198,7 @@ oS.Init(
 						ClearChild($("DivTeach"));
 						oSym.addTask(
 							5,
-							function () {
+							() => {
 								ClearChild($("dDave"));
 								a(0);
 								StopMusic();
@@ -230,14 +230,14 @@ oS.Init(
 			a2: [1, 2, 3, 10, 4, 5, 6, 15, 7, 8, 9, 25],
 		},
 		FlagToMonitor: { 9: [ShowLargeWave, 0], 19: [ShowFinalWave, 0] },
-		FlagToEnd: function () {
+		FlagToEnd() {
 			NewImg(
 				"imgSF",
 				"images/interface/trophy.png",
 				"left:260px;top:233px",
 				EDAll,
 				{
-					onclick: function () {
+					onclick() {
 						SelectModal(105);
 					},
 				}

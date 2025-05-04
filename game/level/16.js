@@ -35,7 +35,7 @@ oS.Init(
 		LvlEName: 16,
 		LargeWaveFlag: { 10: $("imgFlag1") },
 		Monitor: { f: AppearTombstones, ar: [6, 9, 7] },
-		UserDefinedFlagFunc: function (a) {
+		UserDefinedFlagFunc(a) {
 			oP.FlagNum == oP.FlagZombies &&
 				oP.SetTimeoutTomZombie([
 					oZombie,
@@ -56,14 +56,14 @@ oS.Init(
 		FlagNum: 10,
 		FlagToSumNum: { a1: [3, 5, 9], a2: [1, 2, 3, 10] },
 		FlagToMonitor: { 9: [ShowFinalWave, 0] },
-		FlagToEnd: function () {
+		FlagToEnd() {
 			NewImg(
 				"imgSF",
 				"images/Card/Plants/ScaredyShroom.png",
 				"left:587px;top:270px;clip:rect(auto,auto,60px,auto)",
 				EDAll,
 				{
-					onclick: function () {
+					onclick() {
 						GetNewCard(this, oScaredyShroom, 17);
 					},
 				}

@@ -38,7 +38,7 @@ oS.Init({
 	CardKind: 1,
 	LevelName: "All your brainz r belong to us",
 	StartGameMusic: "Cerebrawl",
-	InitLawnMower: function () {
+	InitLawnMower() {
 		var a = 6;
 		while (--a) {
 			CustomSpecial(oBrains, a, -1);
@@ -53,7 +53,7 @@ oS.Init({
 			7, 8, 9, 10, 11, 11, 12, 13,
 		],
 	},
-	RiddleAutoGrow: function () {
+	RiddleAutoGrow() {
 		var k = oS.ArP;
 		var f = k.ArC;
 		var j = k.ArR;
@@ -84,16 +84,16 @@ oS.Init({
 		NewImg(
 			"iStripe",
 			"images/interface/Stripe.png",
-			"left:" + (GetX1X2(7)[0] - 11) + "px;top:65px",
+			`left:${GetX1X2(7)[0] - 11}px;top:65px`,
 			EDAll
 		);
 	},
-	StartGame: function () {
+	StartGame() {
 		SetVisible($("dSunNum"));
 		SetBlock($("dTop"));
 		oP.Monitor({
 			ar: [0],
-			f: function (d) {
+			f(d) {
 				var b = oS.Chose;
 				var a = arguments.callee;
 				switch (d) {

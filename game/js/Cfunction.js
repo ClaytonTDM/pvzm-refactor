@@ -64,7 +64,7 @@ var $User = (function () {
 	};
 })();
 var oSym = {
-	Init: function (b, a) {
+	Init(b, a) {
 		this.Now = 0;
 		this.Timer = this.execTask = null;
 		this.TQ = [{ T: 0, f: b, ar: a || [] }];
@@ -72,10 +72,10 @@ var oSym = {
 		this.TimeStep = 10;
 		this.Start();
 	},
-	Clear: function () {
+	Clear() {
 		this.TQ.length = 0;
 	},
-	Start: function () {
+	Start() {
 		if (this.Timer == null) {
 			(function () {
 				var a = oSym;
@@ -107,18 +107,18 @@ var oSym = {
 			})();
 		}
 	},
-	Stop: function () {
+	Stop() {
 		clearTimeout(oSym.Timer);
 		clearTimeout(oSym.execTask);
 		oSym.Timer = null;
 		oSym.execTask = null;
 	},
-	addTask: function (b, c, a) {
+	addTask(b, c, a) {
 		var d = this.TQ;
 		d[d.length] = { T: this.Now + b, f: c, ar: a };
 		return this;
 	},
-	removeTask: function (a) {
+	removeTask(a) {
 		this.TQ.splice(a, 1);
 		return this;
 	},
@@ -135,7 +135,7 @@ var oS = {
 	LvlVariables: {},
 	SelfVariables: [],
 	LvlClearFunc: null,
-	Init: function (e, g, b, d) {
+	Init(e, g, b, d) {
 		var c;
 		var a = window;
 		e.LoadMusic
@@ -185,10 +185,9 @@ var oS = {
 				"script",
 				0,
 				{
-					src:
-						$User.Server.DataURL +
-						"asp/SaveUserPosition.asp?l=" +
-						escape(oS.LevelName),
+					src: `${
+						$User.Server.DataURL
+					}asp/SaveUserPosition.asp?l=${escape(oS.LevelName)}`,
 					type: "text/javascript",
 				},
 				document.body
@@ -218,7 +217,7 @@ var oS = {
 		this.LoadTips();
 		this.LoadProgress();
 	},
-	LoadTips: function () {
+	LoadTips() {
 		var b = NewEle(
 			"dTips",
 			"div",
@@ -227,12 +226,11 @@ var oS = {
 			EDAll
 		);
 		var a = [""];
-		b.innerHTML =
-			'<span style="font-weight:bold"></span><span>' +
-			a[Math.floor(Math.random() * a.length)] +
-			"</span>";
+		b.innerHTML = `<span style="font-weight:bold"></span><span>${
+			a[Math.floor(Math.random() * a.length)]
+		}</span>`;
 	},
-	LoadProgress: function (r, l, a, t, b) {
+	LoadProgress(r, l, a, t, b) {
 		SetVisible($("dFlagMeter"));
 		SetHidden($("imgGQJC"));
 		var p = oS;
@@ -328,7 +326,7 @@ var oS = {
 				}
 			}
 		: function () {},
-	InitPn: function (a) {
+	InitPn(a) {
 		var b = ($Pn[a[0]] = NewEle(0, "div", "position:absolute"));
 		NewImg(0, ShadowPNG, a[2], b);
 		NewImg(0, a[1], "", b);
@@ -385,21 +383,18 @@ var oS = {
 				b.src = c;
 				a.appendChild(b);
 			},
-	CheckImg: function (b, a) {
+	CheckImg(b, a) {
 		var c = oS;
 		if (c.AccessNum > c.PicNum || !c.MustAllReady) {
 			return;
 		}
 		b = 139 - (c.AccessNum++ * 140) / c.PicNum - 11;
-		$("imgFlagHead").style.left = b + "px";
+		$("imgFlagHead").style.left = `${b}px`;
 		$("sFlagMeterTitleF").innerHTML =
-			'<span style="cursor:url(images/interface/Pointer.cur),pointer;font-family:Tahoma;color:#fff">Loading...(' +
-			c.AccessNum +
-			"/" +
-			c.PicNum +
-			")</span>";
-		$("imgFlagMeterFull").style.clip =
-			"rect(0,auto,21px," + (b + 11) + "px)";
+			`<span style="cursor:url(images/interface/Pointer.cur),pointer;font-family:Tahoma;color:#fff">Loading...(${
+				c.AccessNum
+			}/${c.PicNum})</span>`;
+		$("imgFlagMeterFull").style.clip = `rect(0,auto,21px,${b + 11}px)`;
 		if (c.AccessNum == c.PicNum) {
 			oS.Lvl == 0;
 			if (c.MustAllReady) {
@@ -407,7 +402,7 @@ var oS = {
 			}
 		}
 	},
-	LoadReady: function (f) {
+	LoadReady(f) {
 		var c = $("dFlagMeterTitle");
 		if (c.onclick == null) {
 			return;
@@ -431,7 +426,7 @@ var oS = {
 		delete f.LF;
 		delete f.ZF;
 		var a = {
-			background: "url(" + f.backgroundImage + ") no-repeat",
+			background: `url(${f.backgroundImage}) no-repeat`,
 			visibility: "visible",
 		};
 		!f.ShowScroll && (a.left = "-115px");
@@ -457,7 +452,7 @@ var oS = {
 			i.ShowScroll
 				? oSym.addTask(
 						h == undefined ? 200 : h,
-						function (j) {
+						(j) => {
 							ClearChild(j);
 							i.ScrollScreen();
 						},
@@ -475,7 +470,7 @@ var oS = {
 		};
 		f.LoadAccess ? f.LoadAccess(d) : d();
 	},
-	ScrollScreen: function () {
+	ScrollScreen() {
 		(EDAll.scrollLeft += 25) < 500
 			? oSym.addTask(2, arguments.callee, [])
 			: (DisplayZombie(),
@@ -485,7 +480,7 @@ var oS = {
 					: (AutoSelectCard(),
 						oSym.addTask(200, oS.ScrollBack, [LetsGO])));
 	},
-	ScrollBack: function (a) {
+	ScrollBack(a) {
 		SetHidden($("dZombie"), $("dSelectCard"), $("dTitle"), $("dCardList"));
 		$("tGround").style.left = "-115px";
 		$("dZombie").innerHTML = "";
@@ -499,7 +494,7 @@ var oS = {
 	},
 };
 var oCoord = {
-	1: function () {
+	1() {
 		oS.R = 5;
 		ChosePlantX = function (a) {
 			return Compare(GetC(a), 1, oS.C, GetX);
@@ -604,7 +599,7 @@ var oCoord = {
 			});
 		oS.GifHTML = "";
 	},
-	2: function () {
+	2() {
 		oS.R = 6;
 		ChosePlantX = function (a) {
 			return Compare(GetC(a), 1, oS.C, GetX);
@@ -714,7 +709,7 @@ var oCoord = {
 	},
 };
 var oP = {
-	Init: function (a) {
+	Init(a) {
 		var r = this;
 		r.NumZombies = r.FlagZombies = 0;
 		if (a) {
@@ -735,7 +730,7 @@ var oP = {
 				var e;
 				var n;
 				r.ArZ = [];
-				h = (k = r.AZ).sort(function (i, f) {
+				h = (k = r.AZ).sort((i, f) => {
 					return i[2] - f[2];
 				}).length;
 				while (h--) {
@@ -794,8 +789,8 @@ var oP = {
 									(t.firstChild.innerHTML = Math.ceil(
 										s / 10
 									)),
-									(t.childNodes[1].innerHTML = (s =
-										s - Math.floor(s / 10) * 10)
+									(t.childNodes[1].innerHTML = (s -=
+										Math.floor(s / 10) * 10)
 										? s
 										: s + 1)),
 								NewEle(
@@ -816,7 +811,7 @@ var oP = {
 					"left:417px;top:233px;z-index:255",
 					EDAll,
 					{
-						onclick: function () {
+						onclick() {
 							PlayAudio("winmusic");
 							SelectModal(0);
 							HiddenOptions();
@@ -827,7 +822,7 @@ var oP = {
 				);
 			});
 	},
-	Balloon: function () {
+	Balloon() {
 		let balloonId = Math.floor(1 + Math.random() * 1000);
 		function getAnimatedPosition(element) {
 			const computedStyle = getComputedStyle(element);
@@ -846,9 +841,8 @@ var oP = {
 			let randomY = GetY(Math.floor(1 + Math.random() * oS.R));
 			if (randomY > 430) {
 				return getRandomY();
-			} else {
-				return randomY;
 			}
+			return randomY;
 		}
 		let randomY = getRandomY();
 		styleSheet.insertRule(
@@ -876,7 +870,7 @@ var oP = {
 			image.src = "images/Zombies/Balloon/popped.png";
 			image.style.animationPlayState = "paused";
 			PlayAudio("balloon_pop");
-			setTimeout(function () {
+			setTimeout(() => {
 				image.parentNode.removeChild(image);
 				if ($("dSunNum").style.visibility == "") {
 					AppearSun(
@@ -901,7 +895,7 @@ var oP = {
 		// console.log(image);
 		// console.log(image.parentElement);
 	},
-	AddZombiesFlag: function (d) {
+	AddZombiesFlag(d) {
 		if (
 			Math.floor(Math.random() * 5) == 1 &&
 			$("dSunNum").style.visibility == ""
@@ -918,7 +912,7 @@ var oP = {
 			Math.floor(e) < a
 				? SetStyle(c[e], {
 						visibility: "visible",
-						left: 150 - (e - 1) * b + "px",
+						left: `${150 - (e - 1) * b}px`,
 					})
 				: SetVisible(c[e]);
 		}
@@ -954,7 +948,7 @@ var oP = {
 								PlayAudio("groan1");
 								oSym.addTask(
 									150,
-									function () {
+									() => {
 										PlayAudio("groan5");
 									},
 									[]
@@ -964,7 +958,7 @@ var oP = {
 								PlayAudio("groan2");
 								oSym.addTask(
 									150,
-									function () {
+									() => {
 										PlayAudio("groan6");
 									},
 									[]
@@ -979,7 +973,7 @@ var oP = {
 		g.ReadyFlag = 1;
 		g.FlagPrgs(d);
 	},
-	SelectFlagZombie: function (j, d) {
+	SelectFlagZombie(j, d) {
 		var e = oP;
 		var m = e.ArZ;
 		var k = e.AZ;
@@ -1011,7 +1005,7 @@ var oP = {
 			}
 		}
 		c &&
-			m.sort(function (t, l) {
+			m.sort((t, l) => {
 				return t.prototype.Lvl - l.prototype.Lvl;
 			});
 		if ((a = f[d])) {
@@ -1032,7 +1026,7 @@ var oP = {
 		e.NumZombies += g;
 		e.SetTimeoutZombie(i, h);
 	},
-	SelectFlagZombie1: function (d) {
+	SelectFlagZombie1(d) {
 		var h = oP;
 		var c = [];
 		var a = 0;
@@ -1052,7 +1046,7 @@ var oP = {
 		h.NumZombies += a;
 		h.SetTimeoutZombie(c, b);
 	},
-	SetTimeoutTomZombie: function (c) {
+	SetTimeoutTomZombie(c) {
 		var f = [];
 		var d = [];
 		var e = 0;
@@ -1070,7 +1064,7 @@ var oP = {
 		}
 		this.AppearUP(d, f, e);
 	},
-	SetTimeoutWaterZombie: function (j, b, e, h) {
+	SetTimeoutWaterZombie(j, b, e, h) {
 		var f = oGd.$LF;
 		var l = [];
 		var c = f.length;
@@ -1092,11 +1086,11 @@ var oP = {
 		}
 		this.AppearUP(k, m, e);
 	},
-	AppearUP: function (a, c, b) {
+	AppearUP(a, c, b) {
 		oP.NumZombies += b;
 		asyncInnerHTML(
 			a.join(""),
-			function (h, f) {
+			(h, f) => {
 				EDPZ.appendChild(h);
 				var e = f.length;
 				var g;
@@ -1110,8 +1104,8 @@ var oP = {
 						function (l, k, i, j) {
 							k = Math.max(k - j, 0);
 							SetStyle(l, {
-								top: k + "px",
-								clip: "rect(0,auto," + (i += j) + "px,0)",
+								top: `${k}px`,
+								clip: `rect(0,auto,${(i += j)}px,0)`,
 							});
 							k &&
 								oSym.addTask(10, arguments.callee, [
@@ -1128,7 +1122,7 @@ var oP = {
 			c
 		);
 	},
-	SetZombie: function (j, b, e, h) {
+	SetZombie(j, b, e, h) {
 		var f = [];
 		var l = [];
 		var c = f.length;
@@ -1150,11 +1144,11 @@ var oP = {
 		}
 		this.AppearUP1(k, m, e);
 	},
-	AppearUP1: function (a, c, b) {
+	AppearUP1(a, c, b) {
 		oP.NumZombies += b;
 		asyncInnerHTML(
 			a.join(""),
-			function (h, f) {
+			(h, f) => {
 				EDPZ.appendChild(h);
 				var e = f.length;
 				var g;
@@ -1168,8 +1162,8 @@ var oP = {
 						function (l, k, i, j) {
 							k = Math.max(k - j, 0);
 							SetStyle(l, {
-								top: k + "px",
-								clip: "rect(0,auto," + (i += j) + "px,0)",
+								top: `${k}px`,
+								clip: `rect(0,auto,${(i += j)}px,0)`,
 							});
 							k &&
 								oSym.addTask(10, arguments.callee, [
@@ -1186,7 +1180,7 @@ var oP = {
 			c
 		);
 	},
-	SetTimeoutZombie: function (b, d) {
+	SetTimeoutZombie(b, d) {
 		var f = [];
 		var c = [];
 		var e = 0;
@@ -1199,7 +1193,7 @@ var oP = {
 		}
 		asyncInnerHTML(
 			c.join(""),
-			function (k, j) {
+			(k, j) => {
 				EDPZ.appendChild(k);
 				var h = j.length;
 				while (h--) {
@@ -1209,7 +1203,7 @@ var oP = {
 			f
 		);
 	},
-	FlagPrgs: function () {
+	FlagPrgs() {
 		var f = oP;
 		var c = f.FlagZombies;
 		var e = f.FlagToSumNum;
@@ -1217,20 +1211,20 @@ var oP = {
 		var d = $SSml(c, e.a1, e.a2);
 		var b;
 		f.FlagNum > (c = ++f.FlagZombies)
-			? (($("imgFlagHead").style.left = a + "px"),
+			? (($("imgFlagHead").style.left = `${a}px`),
 				($("imgFlagMeterFull").style.clip =
-					"rect(0,157px,21px," + (a + 11) + "px)"),
+					`rect(0,157px,21px,${a + 11}px)`),
 				(b = $SEql(c, f.FlagToMonitor)) &&
 					oSym.addTask(
 						1690,
-						function (g) {
+						(g) => {
 							!g[1] && (g[0](), (g[1] = 1));
 						},
 						[b]
 					),
 				oSym.addTask(
 					1990,
-					function (g) {
+					(g) => {
 						var h = oP;
 						h.ReadyFlag == g++ && ((h.ReadyFlag = g), h.FlagPrgs());
 					},
@@ -1241,7 +1235,7 @@ var oP = {
 		f.SelectFlagZombie.call(f, d, c);
 		f.UserDefinedFlagFunc && f.UserDefinedFlagFunc();
 	},
-	Monitor: function (a, b) {
+	Monitor(a, b) {
 		a && a.f.apply(a.f, a.ar);
 		oP.UserDefinedFlagFunc = b ? b : null;
 		(function () {
@@ -1251,7 +1245,7 @@ var oP = {
 	},
 };
 var oGd = {
-	Init: function () {
+	Init() {
 		this.$ = [];
 		this.$Crater = [];
 		this.$Tombstones = {};
@@ -1264,14 +1258,14 @@ var oGd = {
 		this.$Balloon = new Array(oS.R + 1);
 		this.$Fog = [];
 	},
-	add: function (c, a, b, d) {
+	add(c, a, b, d) {
 		(b = (d = this.$)[a]) && b.Die();
 		d[a] = c;
 	},
-	del: function (a) {
-		delete this.$[a.R + "_" + a.C + "_" + a.PKind];
+	del(a) {
+		delete this.$[`${a.R}_${a.C}_${a.PKind}`];
 	},
-	MakeFog: function () {
+	MakeFog() {
 		var d = "";
 		var g = (tx = ri = cj = 0);
 		var c = oGd.$Fog;
@@ -1280,50 +1274,41 @@ var oGd = {
 		var e = (function () {
 			return function (f) {
 				var h = $User.Browser.IE && !$User.Browser.IE9;
-				d +=
-					'<img id="' +
-					f +
-					'" src="images/interface/fog' +
-					Math.floor(Math.random() * 4) +
-					"." +
-					(h ? "gif" : "png") +
-					'" style="left:' +
-					g +
-					"px;top:" +
-					tx +
-					'px">';
+				d += `<img id="${f}" src="images/interface/fog${Math.floor(
+					Math.random() * 4
+				)}.${h ? "gif" : "png"}" style="left:${g}px;top:${tx}px">`;
 			};
 		})();
 		for (ri = 1, tx = 0; ri < 7; g = 0, ri++) {
 			for (ci = 0; ci <= a; ci++) {
-				e((c[(b = ri + "_" + ci)] = "Fog" + b));
+				e((c[(b = `${ri}_${ci}`)] = `Fog${b}`));
 				g += 35;
 			}
 			tx += 90;
 		}
 		NewEle("dFog", "div", "", { innerHTML: d }, EDAll);
 	},
-	MoveFogLeft: function (a) {
+	MoveFogLeft(a) {
 		(function (c, d, b, e) {
 			d -= 50;
 			d > b
-				? ((c.style.left = d + "px"),
+				? ((c.style.left = `${d}px`),
 					oSym.addTask(5, arguments.callee, [c, d, b, e]))
-				: ((c.style.left = b + "px"), e && e());
+				: ((c.style.left = `${b}px`), e && e());
 		})($("dFog"), 900, GetX(oS.C - oS.HaveFog) - 30, a);
 	},
-	MoveFogRight: function () {
+	MoveFogRight() {
 		if (arguments.callee.caller.caller == null) {
 			return;
 		}
 		(function (a, b) {
 			(b += 50) < 901
-				? ((a.style.left = b + "px"),
+				? ((a.style.left = `${b}px`),
 					oSym.addTask(5, arguments.callee, [a, b]))
 				: (a.style.left = "900px");
 		})($("dFog"), GetX(oS.C - oS.HaveFog) - 3);
 	},
-	GatherFog: function (d, r, x, t, z) {
+	GatherFog(d, r, x, t, z) {
 		var c = d - x;
 		var b = d + x;
 		var q = r - t;
@@ -1348,14 +1333,14 @@ var oGd = {
 			l = s(q > 0 ? q + 1 : 1);
 			j = n(p > h ? h : p - 1);
 			do {
-				l > -1 && k.push("Fog" + c + "_" + l);
+				l > -1 && k.push(`Fog${c}_${l}`);
 			} while (l++ < j);
 		}
 		if (b <= m) {
 			l = s(q > 0 ? q + 1 : 1);
 			j = n(p > h ? h : p - 1);
 			do {
-				l > -1 && k.push("Fog" + b + "_" + l);
+				l > -1 && k.push(`Fog${b}_${l}`);
 			} while (l++ < j);
 		}
 		++c;
@@ -1365,7 +1350,7 @@ var oGd = {
 		u = l;
 		do {
 			do {
-				l > -1 && k.push("Fog" + c + "_" + l);
+				l > -1 && k.push(`Fog${c}_${l}`);
 			} while (l++ <= j);
 			l = u;
 		} while (c++ < b);
@@ -1381,20 +1366,20 @@ var oGd = {
 	},
 };
 var oZ = {
-	Init: function (b) {
+	Init(b) {
 		this.$ = [];
 		this.$R = [];
 		var a;
 		for (a = b; a; this.$[a] = [], this.$R[a--] = []) {}
 	},
-	add: function (b, a) {
+	add(b, a) {
 		(a = oZ.$[b.R]).push(b);
-		a.sort(function (d, c) {
+		a.sort((d, c) => {
 			return d.AttackedLX - c.AttackedLX;
 		});
 		a.RefreshTime = oSym.Now;
 	},
-	getZ0: function (b, d) {
+	getZ0(b, d) {
 		if (d < 1 || d > oS.R) {
 			return;
 		}
@@ -1408,7 +1393,7 @@ var oZ = {
 			}
 		}
 	},
-	getZ1: function (h, b) {
+	getZ1(h, b) {
 		if (b < 1 || b > oS.R) {
 			return;
 		}
@@ -1421,7 +1406,7 @@ var oZ = {
 		var e;
 		(k = j.RefreshTime) == f.RefreshTime
 			? (g = f)
-			: ((g = (this.$R[b] = j.slice(0)).sort(function (l, i) {
+			: ((g = (this.$R[b] = j.slice(0)).sort((l, i) => {
 					return i.AttackedRX - l.AttackedRX;
 				})).RefreshTime = k);
 		e = g.length;
@@ -1431,7 +1416,7 @@ var oZ = {
 			}
 		}
 	},
-	getArZ: function (e, d, b) {
+	getArZ(e, d, b) {
 		var g = 0;
 		var l = this.$[b];
 		var f = [];
@@ -1444,7 +1429,7 @@ var oZ = {
 		}
 		return f;
 	},
-	getRangeLeftZ: function (e, d, b) {
+	getRangeLeftZ(e, d, b) {
 		if (b < 1 || b > oS.R) {
 			return;
 		}
@@ -1460,9 +1445,8 @@ var oZ = {
 				return c;
 			}
 		}
-		return;
 	},
-	moveTo: function (g, f, c) {
+	moveTo(g, f, c) {
 		var b = this.$[f];
 		var a = this.$[c];
 		var e = b.length;
@@ -1472,14 +1456,14 @@ var oZ = {
 				(b.splice(e, 1),
 				(o.R = c),
 				a.push(o),
-				(a.sort(function (i, h) {
+				(a.sort((i, h) => {
 					return i.AttackedLX - h.AttackedLX;
 				}).RefreshTime = b.RefreshTime =
 					oSym.Now),
 				(e = 0));
 		}
 	},
-	traversalOf: function () {
+	traversalOf() {
 		var a;
 		var b = this.$;
 		var j;
@@ -1512,12 +1496,12 @@ var oZ = {
 				a.HP &&
 					a.PZ &&
 					a.ZX < 901 &&
-					oT["chkD" + a.WalkDirection](a, r, p, s);
+					oT[`chkD${a.WalkDirection}`](a, r, p, s);
 				!a.HP ? (j.splice(q, 1), f[0](a)) : f[a.ChkActs(a, r, j, q)](a);
 			}
 			l
 				? ((l = d = 0),
-					j.sort(function (u, t) {
+					j.sort((u, t) => {
 						return u.AttackedLX - t.AttackedLX;
 					}),
 					(j.RefreshTime = oSym.Now))
@@ -1527,7 +1511,7 @@ var oZ = {
 	},
 };
 var oT = {
-	Init: function (b) {
+	Init(b) {
 		this.$ = [];
 		this.$L = [];
 		for (var a = b; a; ) {
@@ -1535,7 +1519,7 @@ var oT = {
 			this.$L[a--] = [];
 		}
 	},
-	add: function (f, c, g) {
+	add(f, c, g) {
 		if (f <= 0 || f > oS.R) {
 			return;
 		}
@@ -1546,12 +1530,12 @@ var oT = {
 			b = c[d];
 			e.push([b[0], b[1], b[2], g]);
 		}
-		e.sort(function (i, h) {
+		e.sort((i, h) => {
 			return h[1] - i[1];
 		});
 		e.RefreshTime = new Date();
 	},
-	chkD0: function (g, e, d, h) {
+	chkD0(g, e, d, h) {
 		var f = g.AttackedLX;
 		var c = 0;
 		var b;
@@ -1563,7 +1547,7 @@ var oT = {
 			++c;
 		}
 	},
-	chkD1: function (b, e, c, g) {
+	chkD1(b, e, c, g) {
 		var j = b.AttackedLX;
 		var h = b.AttackedRX;
 		var f = 0;
@@ -1574,7 +1558,7 @@ var oT = {
 		var k;
 		(l = c.RefreshTime) == g.RefreshTime
 			? (m = g)
-			: ((m = (this.$L[e] = c.slice(0)).sort(function (n, i) {
+			: ((m = (this.$L[e] = c.slice(0)).sort((n, i) => {
 					return n[0] - i[0];
 				})).RefreshTime = l);
 		while (f < m.length && (d = m[f])[0] <= h) {
@@ -1584,7 +1568,7 @@ var oT = {
 			++f;
 		}
 	},
-	delP: function (e) {
+	delP(e) {
 		var b = e.oTrigger;
 		var f = e.id;
 		var d;
@@ -1599,9 +1583,9 @@ var oT = {
 			a.RefreshTime = new Date();
 		}
 	},
-	indexOf: function (j, d) {
-		var f = new RegExp(d + ",", "g");
-		var h = (j.toString() + ",").replace(f, "┢,").replace(/[^,┢]/g, "");
+	indexOf(j, d) {
+		var f = new RegExp(`${d},`, "g");
+		var h = `${j.toString()},`.replace(f, "┢,").replace(/[^,┢]/g, "");
 		var i = 0;
 		var g = 0;
 		var b = [];
@@ -1617,7 +1601,7 @@ var asyncInnerHTML = function (d, c, a) {
 		var f = arguments.callee;
 		g--
 			? (e.appendChild(b.firstChild),
-				setTimeout(function () {
+				setTimeout(() => {
 					f(g);
 				}, 0))
 			: c(e, a);
@@ -1666,7 +1650,7 @@ var GetAP = function (a, h, d, c) {
 	for (
 		f = 0;
 		f < 4;
-		g.push((e = i[d + "_" + c + "_" + f++])),
+		g.push((e = i[`${d}_${c}_${f++}`])),
 			e &&
 				!(
 					a < e.pixelLeft ||
@@ -1689,9 +1673,8 @@ var GroundOnkeydown = function (b) {
 				CancelShovel();
 		}
 		return false;
-	} else {
-		!oS.Chose && KeyBoardGrowPlant(a);
 	}
+	!oS.Chose && KeyBoardGrowPlant(a);
 };
 var KeyBoardGrowPlant = function (b, a) {
 	a = a || 0;
@@ -1724,14 +1707,14 @@ var GroundOnmousemove1 = function (j) {
 	var m = GetAP(d, b, g, a);
 	var l = ArCard[k].PName.prototype;
 	SetStyle($("MovePlant"), {
-		left: d - 0.5 * (l.beAttackedPointL + l.beAttackedPointR) + "px",
-		top: b + 20 - l.height + "px",
+		left: `${d - 0.5 * (l.beAttackedPointL + l.beAttackedPointR)}px`,
+		top: `${b + 20 - l.height}px`,
 	});
 	l.CanGrow(m[0], g, a)
 		? SetStyle($("MovePlantAlpha"), {
 				visibility: "visible",
-				left: f + l.GetDX() + "px",
-				top: c - l.height + l.GetDY(g, a, m[0]) + "px",
+				left: `${f + l.GetDX()}px`,
+				top: `${c - l.height + l.GetDY(g, a, m[0])}px`,
 			})
 		: SetHidden($("MovePlantAlpha"));
 };
@@ -1755,8 +1738,8 @@ var GroundOnmousemove2 = function (k) {
 		(p && SetAlpha($(p).childNodes[1], 100, 1),
 		(oS.MPID = l) && SetAlpha($(l).childNodes[1], 60, 0.6));
 	SetStyle($("tShovel"), {
-		left: ((d - 15) * 10) / 9 + "px",
-		top: ((b - 16) * 10) / 9 + "px",
+		left: `${((d - 15) * 10) / 9}px`,
+		top: `${((b - 16) * 10) / 9}px`,
 	});
 };
 var DisplayZombie = function () {
@@ -1777,7 +1760,7 @@ var DisplayZombie = function () {
 	while (c--) {
 		f.push(Math.floor(150 + Math.random() * 444));
 	}
-	f.sort(function (j, i) {
+	f.sort((j, i) => {
 		return j - i;
 	});
 	while (b) {
@@ -1796,7 +1779,7 @@ var DisplayZombie = function () {
 				)))
 			: --b;
 	}
-	asyncInnerHTML(e.join(""), function (i) {
+	asyncInnerHTML(e.join(""), (i) => {
 		h.appendChild(i);
 	});
 };
@@ -1823,18 +1806,13 @@ var InitPCard = function () {
 			continue;
 		}
 		ArPCard[(EName = c.EName)] = { Select: 0, PName: f };
-		d +=
-			'<div class="span1" id="Card' +
-			EName +
-			'" onmouseout="SetHidden($(\'dTitle\'))" onmousemove="ViewCardTitle(' +
-			EName +
-			',event)" onclick="SelectCard(\'' +
-			EName +
-			'\')"><img src="' +
-			c.PicArr[0] +
-			'"><span class="span2">' +
-			c.SunNum +
-			"</span></div>";
+		d += `<div class="span1" id="Card${
+			EName
+		}" onmouseout="SetHidden($('dTitle'))" onmousemove="ViewCardTitle(${
+			EName
+		},event)" onclick="SelectCard('${EName}')"><img src="${
+			c.PicArr[0]
+		}"><span class="span2">${c.SunNum}</span></div>`;
 		b++ % 6 == 5 && (d += "<br>");
 	}
 	$("dPCard").innerHTML = d;
@@ -1904,14 +1882,9 @@ var InitHandBookPCard = function () {
 		g = e[b];
 		c = g.prototype;
 		f = c.EName;
-		d +=
-			'<div class="span1" onclick="ViewProducePlant(' +
-			f +
-			')"><img src="' +
-			c.PicArr[0] +
-			'"><div class="span2">' +
-			c.SunNum +
-			"</div></div>";
+		d += `<div class="span1" onclick="ViewProducePlant(${f})"><img src="${
+			c.PicArr[0]
+		}"><div class="span2">${c.SunNum}</div></div>`;
 		b++ % 6 == 5 && (d += "<br>");
 	}
 	$("dHandBookPCard").innerHTML = d;
@@ -1971,14 +1944,9 @@ var InitHandBookZCard = function () {
 		g = e[b];
 		c = g.prototype;
 		f = c.EName;
-		d +=
-			'<div class="span1" onclick="ViewProduceZombie(' +
-			f +
-			')"><img src="' +
-			c.PicArr[0] +
-			'"><div class="span2">' +
-			c.SunNum +
-			"</div></div>";
+		d += `<div class="span1" onclick="ViewProduceZombie(${f})"><img src="${
+			c.PicArr[0]
+		}"><div class="span2">${c.SunNum}</div></div>`;
 		b++;
 	}
 	$("dHandBookZCard").innerHTML = d;
@@ -1995,51 +1963,45 @@ var lastB;
 		var a = b.prototype;
 		PlayAudio("tap");
 		$("pHandBookPlant").style.backgroundImage =
-			"url(" + a.PicArr[a.StaticGif] + ")";
+			`url(${a.PicArr[a.StaticGif]})`;
 		$("pHandBookPlant").style.backgroundPosition =
-			"50% " + (60 + a.height / 4) + "%";
+			`50% ${60 + a.height / 4}%`;
 		$("dProducePlant").innerHTML = a.Produce;
 		innerText($("dHandBookPlantName"), a.CName);
 		innerText($("spSunNum"), a.SunNum);
-		innerText($("spCoolTime"), a.coolTime + "s");
+		innerText($("spCoolTime"), `${a.coolTime}s`);
 		$("pPlantBack").style.backgroundPosition =
-			-200 * a.BookHandBack + "px 0";
+			`${-200 * a.BookHandBack}px 0`;
 	}
 }),
 	(ViewProduceZombie = function (b) {
 		PlayAudio("tap");
 		var a = b.prototype;
-		$("pHandBookZombie").style.background =
-			"url(" +
-			a.PicArr[a.StaticGif] +
-			") no-repeat scroll " +
-			a.BookHandPosition;
+		$("pHandBookZombie").style.background = `url(${
+			a.PicArr[a.StaticGif]
+		}) no-repeat scroll ${a.BookHandPosition}`;
 		$("dProduceZombie").innerHTML = a.Produce;
 		innerText($("dHandBookZombieName"), a.CName);
 		$("pZombieBack").style.backgroundPosition =
-			-200 * a.BookHandBack + "px 0";
+			`${-200 * a.BookHandBack}px 0`;
 	}),
 	(ViewCardTitle = function (b, c) {
 		c = c || window.event;
 		var f = $("dTitle");
 		var a = b.prototype;
-		f.innerHTML =
-			a.CName +
-			"<br>cooldown: " +
-			a.coolTime +
-			"s<br>" +
-			(oS.DKind && a.night
-				? '<span style="color:#F00">Nocturnal - sleeps during the day</span><br>' +
-					a.Tooltip
+		f.innerHTML = `${a.CName}<br>cooldown: ${a.coolTime}s<br>${
+			oS.DKind && a.night
+				? `<span style="color:#F00">Nocturnal - sleeps during the day</span><br>${
+						a.Tooltip
+					}`
 				: a.Tooltip ||
-					'<span style="text-align:left">' + a.Produce + "</span>");
+					`<span style="text-align:left">${a.Produce}</span>`
+		}`;
 		SetStyle(f, {
-			left:
-				c.clientX +
-				(EBody.scrollLeft || EElement.scrollLeft) -
-				3 +
-				"px",
-			top: c.clientY + 18 + EBody.scrollTop || EElement.scrollTop + "px",
+			left: `${
+				c.clientX + (EBody.scrollLeft || EElement.scrollLeft) - 3
+			}px`,
+			top: c.clientY + 18 + EBody.scrollTop || `${EElement.scrollTop}px`,
 			visibility: "visible",
 		});
 	}),
@@ -2049,19 +2011,16 @@ var lastB;
 		var a = $("dTitle");
 		a.innerHTML = b;
 		SetStyle(a, {
-			left:
-				c.clientX +
-				(EBody.scrollLeft || EElement.scrollLeft) -
-				3 +
-				"px",
-			top:
-				c.clientY + 18 + (EBody.scrollTop || EElement.scrollTop) + "px",
+			left: `${
+				c.clientX + (EBody.scrollLeft || EElement.scrollLeft) - 3
+			}px`,
+			top: `${c.clientY + 18 + (EBody.scrollTop || EElement.scrollTop)}px`,
 			visibility: "visible",
 		});
 	}),
 	(SelectCard = function (c) {
 		PlayAudio("tap");
-		var h = $("Card" + c).childNodes;
+		var h = $(`Card${c}`).childNodes;
 		var f = h[0];
 		var b = ArPCard[c];
 		var i = b.PName.prototype;
@@ -2073,33 +2032,31 @@ var lastB;
 			if (!(ArPCard.SelNum |= 0)) {
 				e.disabled = "";
 				e.style.color = "#FC6";
-			} else {
-				if (ArPCard.SelNum > 9) {
-					return;
-				}
+			} else if (ArPCard.SelNum > 9) {
+				return;
 			}
 			++ArPCard.SelNum;
 			b.Select = 1;
 			oS.StaticCard &&
 				((g = NewEle(
-					"dCard" + c,
+					`dCard${c}`,
 					"div",
 					"",
 					{
-						onclick: function () {
+						onclick() {
 							SelectCard(c);
 						},
 					},
 					$("dCardList")
 				)),
 				NewImg(0, f.src, "width:100px;height:120px", g),
-				innerText(NewEle("sSunNum" + c, "span", 0, 0, g), i.SunNum),
+				innerText(NewEle(`sSunNum${c}`, "span", 0, 0, g), i.SunNum),
 				(f.style.filter = "grayscale(1) brightness(1.15)"));
 		} else {
 			b.Select = 0;
 			!--ArPCard.SelNum &&
 				((e.disabled = "disabled"), (e.style.color = "#888"));
-			(g = $("dCard" + c)).onclick = null;
+			(g = $(`dCard${c}`)).onclick = null;
 			ClearChild(g.firstChild, g.childNodes[1], g.lastChild, g);
 			f.style.filter = "grayscale(0) brightness(1)";
 		}
@@ -2142,7 +2099,7 @@ var lastB;
 					SetHidden($("dTitle"));
 				};
 				j.firstChild.style.filter = "grayscale(1) brightness(1.15)";
-				(a = j.lastChild).id = "sSunNum" + d;
+				(a = j.lastChild).id = `sSunNum${d}`;
 				innerText(a, l.SunNum);
 				ArCard.push({ DID: j.id, CDReady: 0, SunReady: 0, PName: h });
 			})(g++);
@@ -2166,13 +2123,13 @@ var lastB;
 				NewMusic((oS.LoadMusic = oS.StartGameMusic));
 				SetVisible($("tdShovel"), $("dFlagMeter"), $("dTop"));
 				oS.InitLawnMower();
-				PrepareGrowPlants(function () {
+				PrepareGrowPlants(() => {
 					oP.Monitor(oS.Monitor, oS.UserDefinedFlagFunc);
 					BeginCool();
 					oS.DKind && AutoProduceSun(50);
 					oSym.addTask(
 						1500,
-						function () {
+						() => {
 							oP.AddZombiesFlag();
 							SetVisible($("dFlagMeterContent"));
 						},
@@ -2189,13 +2146,13 @@ var lastB;
 		var c = e.PName.prototype;
 		var a = c.CName;
 		!oS.CardKind &&
-			((a += "<br>cooldown: " + c.coolTime + "s<br>" + c.Tooltip),
+			((a += `<br>cooldown: ${c.coolTime}s<br>${c.Tooltip}`),
 			!e.CDReady &&
 				(a += '<br><span style="color:#F00">recharging</span>'));
 		!e.SunReady &&
 			(a += '<br><span style="color:#F00">not enough sun</span>');
 		f.innerHTML = a;
-		SetStyle(f, { top: 60 * b + "px", left: EDAlloffsetLeft + 100 + "px" });
+		SetStyle(f, { top: `${60 * b}px`, left: `${EDAlloffsetLeft + 100}px` });
 	}),
 	(BeginCool = function () {
 		var b = ArCard.length;
@@ -2265,14 +2222,14 @@ var lastB;
 	(DoCoolTimer = function (c, b) {
 		var a = $(ArCard[c].DID);
 		NewEle(
-			"dCD1" + c,
+			`dCD1${c}`,
 			"span",
 			"position:absolute;left:22px;top:22px;font-size:18px;font-weight:500;font-family:Verdana;color:#000",
 			"",
 			a
 		);
 		NewEle(
-			"dCD2" + c,
+			`dCD2${c}`,
 			"span",
 			"position:absolute;left:20px;top:20px;font-size:18px;font-weight:500;font-family:Verdana;color:#FF0",
 			"",
@@ -2280,13 +2237,13 @@ var lastB;
 		);
 		(function (d, e) {
 			d > 0
-				? (innerText($("dCD1" + e), d),
-					innerText($("dCD2" + e), d),
+				? (innerText($(`dCD1${e}`), d),
+					innerText($(`dCD2${e}`), d),
 					oSym.addTask(50, arguments.callee, [
 						(d - 0.5).toFixed(1),
 						e,
 					]))
-				: (ClearChild($("dCD1" + e), $("dCD2" + e)),
+				: (ClearChild($(`dCD1${e}`), $(`dCD2${e}`)),
 					(ArCard[e].CDReady = 1),
 					MonitorCard());
 		})(b, c);
@@ -2314,14 +2271,12 @@ var lastB;
 					NewImg(
 						"MovePlant",
 						c[j.StaticGif],
-						"left:" +
-							b -
-							0.5 * (j.beAttackedPointL + j.beAttackedPointR) +
-							"px;top:" +
-							a +
-							20 -
-							j.height +
-							"px;z-index:254",
+						`${
+							`${
+								`left:${b}` -
+								0.5 * (j.beAttackedPointL + j.beAttackedPointR)
+							}px;top:${a}${20}` - j.height
+						}px;z-index:254`,
 						EDAll
 					).cloneNode(false),
 					"MovePlantAlpha",
@@ -2337,11 +2292,9 @@ var lastB;
 			: (NewImg(
 					"MovePlant",
 					j.PicArr[j.StandGif],
-					"left:" +
-						(b - 0.5 * (j.beAttackedPointL + j.beAttackedPointR)) +
-						"px;top:" +
-						(a + 20 - j.height) +
-						"px;z-index:254",
+					`left:${
+						b - 0.5 * (j.beAttackedPointL + j.beAttackedPointR)
+					}px;top:${a + 20 - j.height}px;z-index:254`,
 					EDAll
 				),
 				NewImg(
@@ -2377,11 +2330,9 @@ var lastB;
 			NewImg(
 				"tShovel",
 				"images/interface/Shovel/0.gif",
-				"left:" +
-					(a.clientX - 10) +
-					"px;top:" +
-					(a.clientY + document.body.scrollTop - 17) +
-					"px;z-index:1",
+				`left:${a.clientX - 10}px;top:${
+					a.clientY + document.body.scrollTop - 17
+				}px;z-index:1`,
 				EDAll
 			),
 			(oS.Chose = -1),
@@ -2413,7 +2364,7 @@ var lastB;
 			// Play planting audio based on soil type
 			PlayAudio(
 				g != 2
-					? "plant" + Math.floor(1 + Math.random() * 2)
+					? `plant${Math.floor(1 + Math.random() * 2)}`
 					: "plant_water"
 			);
 
@@ -2422,7 +2373,7 @@ var lastB;
 				? new h().Birth(d, c, e, b, l)
 				: asyncInnerHTML(
 						(a = new h()).CustomBirth(e, b, 0, "auto"),
-						function (n, m) {
+						(n, m) => {
 							EDPZ.appendChild(n);
 							m.Birth();
 						},
@@ -2438,8 +2389,8 @@ var lastB;
 			// Show planting animation
 			oSym.addTask(20, SetHidden, [
 				SetStyle(g != 2 ? $("imgGrowSoil") : $("imgGrowSpray"), {
-					left: d - 30 + "px",
-					top: c - 30 + "px",
+					left: `${d - 30}px`,
+					top: `${c - 30}px`,
 					zIndex: 3 * e + 1,
 					visibility: "visible",
 				}),
@@ -2501,11 +2452,10 @@ var lastB;
 	(AppearSun = function (h, f, e, a) {
 		var b;
 		var d;
-		var g = "Sun" + Math.random();
-		var c =
-			"cursor:url(images/interface/Pointer.cur),pointer;z-index:25;left:" +
-			h +
-			"px;";
+		var g = `Sun${Math.random()}`;
+		var c = `cursor:url(images/interface/Pointer.cur),pointer;z-index:25;left:${
+			h
+		}px;`;
 		switch (e) {
 			case 25:
 				c += "width:78px;height:78px";
@@ -2522,14 +2472,14 @@ var lastB;
 		a
 			? ((d = 0), oSym.addTask(10, MoveDropSun, [g, f]))
 			: ((d = f - b - 20),
-				(c += ";top:" + d + "px"),
+				(c += `;top:${d}px`),
 				oSym.addTask(
 					1,
 					function (q, p, n, j, l, k, m, i) {
 						if (ArSun[q] && ArSun[q].C) {
 							SetStyle($(q), {
-								left: (p = p + j * k) + "px",
-								top: (n = n + Number(l[0])) + "px",
+								left: `${(p += j * k)}px`,
+								top: `${(n += Number(l[0]))}px`,
 							});
 							l.shift();
 							--m;
@@ -2561,7 +2511,7 @@ var lastB;
 				oSym.addTask(800, DisappearSun, [g], 3));
 		ArSun[g] = { id: g, N: e, C: 1, left: h, top: d };
 		NewImg(g, "images/interface/Sun.webp", c, EDAll, {
-			onclick: function () {
+			onclick() {
 				ClickSun(this.id);
 			},
 		});
@@ -2572,7 +2522,7 @@ var lastB;
 		a &&
 			a.C &&
 			(a.top < b - 53
-				? (($(c).style.top = (a.top += 3) + "px"),
+				? (($(c).style.top = `${(a.top += 3)}px`),
 					oSym.addTask(5, MoveDropSun, [c, b]))
 				: oSym.addTask(800, DisappearSun, [c]));
 	}),
@@ -2596,7 +2546,7 @@ var lastB;
 		var f = Math.round((h - i) / a);
 		(function (k, l, n, s, m, r, j, q, p) {
 			(m -= q) > n
-				? (SetStyle($(k), { left: m + "px", top: (r -= p) + "px" }),
+				? (SetStyle($(k), { left: `${m}px`, top: `${(r -= p)}px` }),
 					oSym.addTask(j, arguments.callee, [
 						k,
 						l,
@@ -2608,7 +2558,7 @@ var lastB;
 						q,
 						p,
 					]))
-				: (SetStyle($(k), { left: n + "px", top: s + "px" }),
+				: (SetStyle($(k), { left: `${n}px`, top: `${s}px` }),
 					Number(ESSunNum.innerHTML) != oS.SunNum &&
 						(oS.SunNum = Math.min(
 							Number(ESSunNum.innerHTML),
@@ -2642,16 +2592,16 @@ var lastB;
 			4,
 			function (b, c, d) {
 				SetStyle($("LargeWave"), {
-					width: (b -= 57.2) + "px",
-					height: (c -= 6.8) + "px",
-					left: 500 - b * 0.5 + "px",
-					top: 300 - c * 0.5 + "px",
+					width: `${(b -= 57.2)}px`,
+					height: `${(c -= 6.8)}px`,
+					left: `${500 - b * 0.5}px`,
+					top: `${300 - c * 0.5}px`,
 				});
 				b > 286
 					? oSym.addTask(4, arguments.callee, [b, c, d])
 					: (oSym.addTask(
 							460,
-							function () {
+							() => {
 								ClearChild($("LargeWave"));
 							},
 							[]
@@ -2674,26 +2624,22 @@ var lastB;
 				4,
 				function (c, e, d) {
 					SetStyle($("FinalWave"), {
-						width: (c -= 50.4) + "px",
-						height: (e -= 14.2) + "px",
-						left: 500 - c * 0.5 + "px",
-						top: 300 - e * 0.5 + "px",
+						width: `${(c -= 50.4)}px`,
+						height: `${(e -= 14.2)}px`,
+						left: `${500 - c * 0.5}px`,
+						top: `${300 - e * 0.5}px`,
 					});
 					c > 252
 						? oSym.addTask(4, arguments.callee, [c, e, d])
-						: oSym.addTask(
-								d,
-								function () {
-									ClearChild($("FinalWave"));
-								},
-								[]
-							);
+						: oSym.addTask(d, () => {
+								ClearChild($("FinalWave"));
+							}, []);
 				},
 				[756, 213, b]
 			);
 		};
 		oP.FlagNum in oS.LargeWaveFlag
-			? ShowLargeWave(function () {
+			? ShowLargeWave(() => {
 					oSym.addTask(560, a, [150]);
 				})
 			: a(500);
@@ -2710,16 +2656,16 @@ var lastB;
 			4,
 			function (b, c, d) {
 				SetStyle($("LargeWave"), {
-					width: (b -= 57.2) + "px",
-					height: (c -= 6.8) + "px",
-					left: 500 - b * 0.5 + "px",
-					top: 300 - c * 0.5 + "px",
+					width: `${(b -= 57.2)}px`,
+					height: `${(c -= 6.8)}px`,
+					left: `${500 - b * 0.5}px`,
+					top: `${300 - c * 0.5}px`,
 				});
 				b > 286
 					? oSym.addTask(4, arguments.callee, [b, c, d])
 					: (oSym.addTask(
 							460,
-							function () {
+							() => {
 								ClearChild($("ShowBOSS"));
 							},
 							[]
@@ -2737,7 +2683,7 @@ var lastB;
 			"width:900px;height:600px;z-index:255",
 			EDAll,
 			{
-				onclick: function () {
+				onclick() {
 					SelectModal(oS.Lvl);
 				},
 			}
@@ -2758,16 +2704,16 @@ var lastB;
 			PlayAudio("readysetplant");
 			oSym.addTask(
 				60,
-				function (d, c) {
+				(d, c) => {
 					var e = d.style;
 					e.backgroundPosition = "0 -108px";
 					oSym.addTask(
 						40,
-						function (g, h, f) {
+						(g, h, f) => {
 							h.backgroundPosition = "0 -216px";
 							oSym.addTask(
 								100,
-								function (j, i) {
+								(j, i) => {
 									ClearChild(j);
 									i();
 								},
@@ -2781,11 +2727,9 @@ var lastB;
 					NewEle(
 						0,
 						"div",
-						"position:absolute;overflow:hidden;background:url(images/interface/PrepareGrowPlants.png) no-repeat;width:255px;height:108px;z-index:50;left:" +
-							(oS.W * 0.5 - 77) +
-							"px;top:" +
-							(oS.H * 0.5 - 54) +
-							"px",
+						`position:absolute;overflow:hidden;background:url(images/interface/PrepareGrowPlants.png) no-repeat;width:255px;height:108px;z-index:50;left:${
+							oS.W * 0.5 - 77
+						}px;top:${oS.H * 0.5 - 54}px`,
 						0,
 						EDAll
 					),
@@ -2831,8 +2775,8 @@ var lastB;
 							SetHidden(EDAll, $("dTop"));
 							var f = b.prototype;
 							$("iNewPlantCard").src = f.PicArr[f.CardGif];
-							$("iNewPlantCard").style.width = 100 + "px";
-							$("iNewPlantCard").style.height = 120 + "px";
+							$("iNewPlantCard").style.width = `${100}px`;
+							$("iNewPlantCard").style.height = `${120}px`;
 							//                          $("iNewPlantCard").style.marginTop =
 							//                              180 - f.height + "px";
 							innerText($("dNewPlantName"), f.CName);
@@ -2864,20 +2808,16 @@ var lastB;
 			if (h[0].replace(" ", "") == b) {
 				if ((e = h.length) == 2) {
 					return unescape(h[1]);
-				} else {
-					h.shift();
-					h = h.join("=").split("&");
-					if (g == undefined) {
-						return unescape(h);
-					} else {
-						e = h.length;
-						while (e--) {
-							if (
-								(a = h[e].split("="))[0].replace(" ", "") == g
-							) {
-								return unescape(a[1]);
-							}
-						}
+				}
+				h.shift();
+				h = h.join("=").split("&");
+				if (g == undefined) {
+					return unescape(h);
+				}
+				e = h.length;
+				while (e--) {
+					if ((a = h[e].split("="))[0].replace(" ", "") == g) {
+						return unescape(a[1]);
 					}
 				}
 			}
@@ -2885,25 +2825,23 @@ var lastB;
 		return 0;
 	}),
 	(getCookie = function (b) {
-		var a = document.cookie.match(
-			new RegExp("(^| )" + b + "=([^;]*)(;|$)")
-		);
+		var a = document.cookie.match(new RegExp(`(^| )${b}=([^;]*)(;|$)`));
 		if (a != null) {
 			return unescape(a[2]);
 		}
 		return 0;
 	}),
 	(addCookie = function (b, d, e) {
-		var c = b + "=" + escape(d);
+		var c = `${b}=${escape(d)}`;
 		if (e) {
 			var a = new Date();
 			a.setTime(a.getTime + e * 3600 * 1e3);
-			c += ";expire=" + a.toGMTString();
+			c += `;expire=${a.toGMTString()}`;
 		}
 		document.cookie = c;
 	}),
 	(deleteCookie = function (a) {
-		document.cookie = a + "=0;";
+		document.cookie = `${a}=0;`;
 	}),
 	(WordUTF8 =
 		'<div id="dLogo" style="position:absolute;width:900px;height:600px;z-index:1"><span id="commit" style="position: absolute;color: #ffffff0f;bottom: 0;user-select: none;"></span><div id="LogoWord" style="position:absolute;color:#FF0;top:300px;width:100%;height:100px"><span style="position:absolute;width:305px;height:150px;left:285px;top:5px;cursor:url(images/interface/Pointer.cur),pointer" onclick="PlayAudio(\'gravebutton\');SetBlock($(\'dSurface\'),$(\'iSurfaceBackground\'));ShowNameDiv();sa_event(\'clickstart0js\')"></span><div style="position:absolute;font-size:14px;left:660px;text-align:center;width:140px;top:185px;line-height:1.5;font-weight:bold"><span style="cursor:url(images/interface/Pointer.cur),pointer"><span id="" style=""></span></span></div></div><div style="position:absolute;width:74px;height:41px;left:807px;top:502px;cursor:url(images/interface/Pointer.cur),pointer;z-index:300" onclick="SetVisible($(\'dProcess\'))"></div><img src="" style="position:absolute;left:550px;top:-40px"></div>');
@@ -2915,7 +2853,7 @@ var lastB;
 		var d = 3;
 		c.shift();
 		while (d--) {
-			SetStyle(($("dNameDiv" + d).style.top = b[d] + "px"));
+			SetStyle(($(`dNameDiv${d}`).style.top = `${b[d]}px`));
 		}
 		c.length && oSym.addTask(b[3], arguments.callee, [c]);
 	})([
@@ -2937,7 +2875,7 @@ var lastB;
 		var a = /^\w{3,10}$/;
 		var b = /^[\u4e00-\u9fa5\w]{3,10}$/;
 		var d = /^\w{3,20}$/;
-		return (a.exec(c) || b.exec(c)) && d.exec(e) ? true : false;
+		return !!((a.exec(c) || b.exec(c)) && d.exec(e));
 	}),
 	(SelectModal = function (g) {
 		HiddenLevel();
@@ -2983,7 +2921,6 @@ var lastB;
 	}),
 	(GotoAuthorWebsite = function () {
 		window.open("https://github.com/ROBlNET13/pvz");
-		return;
 	}),
 	(InitGame = function () {
 		var e = NewEle(
@@ -3023,14 +2960,14 @@ var lastB;
 		e = e || 0;
 		$("dServer") && e != 0 && SetNone($("dServer"));
 		oSym.Init(
-			function (g, f) {
+			(g, f) => {
 				(f = $("JSPVZ")) && ClearChild(f);
 				NewEle(
 					"JSPVZ",
 					"script",
 					0,
 					{
-						src: "level/" + (oS.Lvl = g) + ".js",
+						src: `level/${(oS.Lvl = g)}.js`,
 						type: "text/javascript",
 					},
 					document.getElementsByTagName("head").item(0)
@@ -3057,25 +2994,23 @@ var lastB;
 		while (--h) {
 			g = e;
 			while (g >= n) {
-				!r[h + "_" + g] && (k[d++] = [h, g]);
+				!r[`${h}_${g}`] && (k[d++] = [h, g]);
 				--g;
 			}
 		}
 		while (m--) {
 			q = k[(g = Math.floor(Math.random() * k.length))];
-			r[(p = (h = q[0]) + "_" + (b = q[1]))] = 1;
+			r[(p = `${(h = q[0])}_${(b = q[1])}`)] = 1;
 			for (f = 0; f < 4; f++) {
-				(l = s[p + "_" + f]) && l.Die();
+				(l = s[`${p}_${f}`]) && l.Die();
 			}
 			k.splice(g, 1);
 			a = NewEle(
-				"dTombstones" + h + "_" + b,
+				`dTombstones${h}_${b}`,
 				"div",
-				"position:absolute;width:86px;height:91px;left:" +
-					(GetX(b) - 43) +
-					"px;top:" +
-					(GetY(h) - 91) +
-					"px",
+				`position:absolute;width:86px;height:91px;left:${
+					GetX(b) - 43
+				}px;top:${GetY(h) - 91}px`,
 				0,
 				EDAll
 			);
@@ -3086,7 +3021,7 @@ var lastB;
 				(c = NewEle(
 					"",
 					"div",
-					"background-position:-" + 86 * h + "px -" + 91 * b + "px",
+					`background-position:-${86 * h}px -${91 * b}px`,
 					{ className: "Tom1" },
 					a
 				).cloneNode(false))
@@ -3265,7 +3200,7 @@ var lastB;
 	}),
 	(SetAlpha = $User.Browser.IE6
 		? function (c, b, a) {
-				c.style.filter = "alpha(opacity=" + b + ")";
+				c.style.filter = `alpha(opacity=${b})`;
 			}
 		: function (c, b, a) {
 				c.style.opacity = a;
@@ -3372,7 +3307,7 @@ var lastB;
 		return a[b];
 	}),
 	($SEql = function (c, b, a) {
-		return c in b ? b[c] : b["default"];
+		return c in b ? b[c] : b.default;
 	});
 ($SSml = function (d, c, a) {
 	var b = 0;
@@ -3404,7 +3339,7 @@ var lastB;
 			((a.style.backgroundPosition = b[0]),
 			oSym.addTask(
 				b[1],
-				function (j) {
+				(j) => {
 					j > -1 ? ImgSpriter(h, c, e, j, g) : g(h, c);
 				},
 				[d]
@@ -3424,16 +3359,16 @@ var lastB;
 		if (/(y+)/.test(b)) {
 			b = b.replace(
 				RegExp.$1,
-				(this.getFullYear() + "").substr(4 - RegExp.$1.length)
+				`${this.getFullYear()}`.substr(4 - RegExp.$1.length)
 			);
 		}
 		for (var a in c) {
-			if (new RegExp("(" + a + ")").test(b)) {
+			if (new RegExp(`(${a})`).test(b)) {
 				b = b.replace(
 					RegExp.$1,
 					RegExp.$1.length == 1
 						? c[a]
-						: ("00" + c[a]).substr(("" + c[a]).length)
+						: `00${c[a]}`.substr(`${c[a]}`.length)
 				);
 			}
 		}
@@ -3470,7 +3405,7 @@ var lastB;
 		PlayAudio("losemusic");
 		oSym.addTask(
 			120,
-			function () {
+			() => {
 				PlayAudio("evillaugh");
 			},
 			[]
@@ -3478,7 +3413,7 @@ var lastB;
 		oSym.addTask(
 			7,
 			function (f, e, g) {
-				e.style.left = (g -= 330) + "px";
+				e.style.left = `${(g -= 330)}px`;
 				--f && oSym.addTask(7, arguments.callee, [f, e, g]);
 			},
 			[6, a, 0]
@@ -3540,18 +3475,18 @@ var lastB;
 				var j = ["mp3"];
 				var e = j.length;
 				var d;
-				f.autoplay = c ? true : false;
+				f.autoplay = !!c;
 				g &&
 					f.addEventListener(
 						"ended",
-						function () {
+						() => {
 							f.play();
 						},
 						false
 					);
 				while (e--) {
 					(m = document.createElement("source")).type = h[(d = j[e])];
-					m.src = "audio/" + a + "." + "mp3";
+					m.src = `audio/${a}.` + `mp3`;
 					f.appendChild(m);
 				}
 				f.preload =
@@ -3675,26 +3610,25 @@ var lastB;
 		// x, y, 植物id, 移动卡槽类型, 消失时间（默认 15s）
 		var b;
 		var d;
-		var g = "dCard" + Math.random();
-		var c =
-			"opacity:1;width:100px;height:120px;cursor:url(images/interface/Pointer.cur),pointer;clip:rect(auto,auto,60px,auto);left:" +
-			h +
-			"px;top:-1000";
+		var g = `dCard${Math.random()}`;
+		var c = `opacity:1;width:100px;height:120px;cursor:url(images/interface/Pointer.cur),pointer;clip:rect(auto,auto,60px,auto);left:${
+			h
+		}px;top:-1000`;
 		var t = t || 1500;
 
 		if (a) (d = 0), oSym.addTask(1, MoveDropCard, [g, f, t]);
 		// 从天而降，反之抛物线掉落
 		else
 			(d = f - 15 - 20),
-				(c += ";top:" + d + "px"),
+				(c += `;top:${d}px`),
 				oSym.addTask(1, DisappearCard, [g, t]),
 				oSym.addTask(
 					1,
 					function (q, p, n, j, l, k, m, i) {
 						if (ArCard[q] && $(q)) {
 							SetStyle($(q), {
-								left: (p = p + j * k) + "px",
-								top: (n = n + Number(l[0])) + "px",
+								left: `${(p += j * k)}px`,
+								top: `${(n += Number(l[0]))}px`,
 							});
 							l.shift();
 							--m;
@@ -3736,10 +3670,10 @@ var lastB;
 		}; // 生成卡片数据，是否被点击过
 		NewImg(g, e.prototype.PicArr[e.prototype.CardGif], c, $("dCardList"), {
 			// 生成卡片 ele
-			onclick: function (g) {
+			onclick(g) {
 				var self = this;
-				var style = self.style;
-				var id = self.id;
+				var { style } = self;
+				var { id } = self;
 				ClearChild($("MovePlant"), $("MovePlantAlpha")),
 					CancelPlant(),
 					style && (style.opacity = 0.5),
@@ -3755,7 +3689,7 @@ var lastB;
 		a &&
 			ele &&
 			(!a.HasChosen && a.top < b - 52
-				? ((ele.style.top = (a.top += 2) + "px"),
+				? ((ele.style.top = `${(a.top += 2)}px`),
 					oSym.addTask(5, MoveDropCard, [c, b, t]))
 				: DisappearCard(c, t));
 	}),

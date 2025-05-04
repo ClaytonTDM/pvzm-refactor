@@ -236,7 +236,7 @@ oS.Init({
 		"images/interface/trophy.png",
 		"images/interface/Stripe.png",
 	],
-	backgroundImage: backgroundImage,
+	backgroundImage,
 	Coord: 2,
 	DKind: 0,
 	LF: levelDataToLoad.lfValue,
@@ -259,7 +259,7 @@ oS.Init({
 			Arr2: [],
 		},
 	},
-	RandomGrow: function (Point, Arr) {
+	RandomGrow(Point, Arr) {
 		/*Point.sort(function () {
             return Math.random() - 0.5;
         });
@@ -276,7 +276,7 @@ oS.Init({
                 Point.length--,
                 Arr.length--;*/
 	},
-	RiddleAutoGrow: function () {
+	RiddleAutoGrow() {
 		var k = oS.ArP;
 		var f = k.ArC;
 		var j = k.ArR;
@@ -299,13 +299,11 @@ oS.Init({
 		NewImg(
 			"iStripe",
 			"images/interface/Stripe.png",
-			"left:" +
-				(GetX1X2(levelDataToLoad.stripeCol)[0] - 11) +
-				"px;top:65px",
+			`left:${GetX1X2(levelDataToLoad.stripeCol)[0] - 11}px;top:65px`,
 			EDAll
 		);
 	},
-	StartGame: function () {
+	StartGame() {
 		restoreToPlants(levelDataToLoad); // load the plants
 		// clear all query parameters from the url without reloadng
 		window.history.pushState({}, document.title, window.location.pathname);

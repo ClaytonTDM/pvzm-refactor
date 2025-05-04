@@ -169,7 +169,7 @@ oS.Init({
 		"images/interface/Stripe.png",
 	],
 	LF: levelDataToLoad.lfValue,
-	backgroundImage: backgroundImage,
+	backgroundImage,
 	ShowScroll: false,
 	SunNum: levelDataToLoad.sun,
 	BrainsNum: 5,
@@ -179,7 +179,7 @@ oS.Init({
 	LevelName: levelDataToLoad.name,
 	LevelEName: "izombiecustomlevelnormal",
 	StartGameMusic: levelDataToLoad.music,
-	InitLawnMower: function () {
+	InitLawnMower() {
 		var a = 6;
 		while (--a) {
 			CustomSpecial(oBrains, a, -1);
@@ -191,7 +191,7 @@ oS.Init({
 		Auto: 1,
 		P: [],
 	},
-	RiddleAutoGrow: function () {
+	RiddleAutoGrow() {
 		var k = oS.ArP;
 		var f = k.ArC;
 		var j = k.ArR;
@@ -220,13 +220,11 @@ oS.Init({
 		NewImg(
 			"iStripe",
 			"images/interface/Stripe.png",
-			"left:" +
-				(GetX1X2(levelDataToLoad.stripeCol)[0] - 11) +
-				"px;top:65px",
+			`left:${GetX1X2(levelDataToLoad.stripeCol)[0] - 11}px;top:65px`,
 			EDAll
 		);
 	},
-	StartGame: function () {
+	StartGame() {
 		restoreToPlants(levelDataToLoad); // load the plants
 		// clear all query parameters from the url without reloadng
 		window.history.pushState({}, document.title, window.location.pathname);
@@ -234,7 +232,7 @@ oS.Init({
 		SetBlock($("dTop"));
 		oP.Monitor({
 			ar: [0],
-			f: function (d) {
+			f(d) {
 				var b = oS.Chose;
 				var a = arguments.callee;
 				switch (d) {

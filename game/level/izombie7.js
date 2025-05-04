@@ -33,7 +33,7 @@ oS.Init(
 				2, 2, 2, 2,
 			],
 		},
-		RiddleAutoGrow: function () {
+		RiddleAutoGrow() {
 			var k = oS.ArP;
 			var f = k.ArC;
 			var j = k.ArR;
@@ -65,11 +65,11 @@ oS.Init(
 			NewImg(
 				"iStripe",
 				"images/interface/Stripe.png",
-				"left:" + (GetX1X2(6)[0] - 11) + "px;top:65px",
+				`left:${GetX1X2(6)[0] - 11}px;top:65px`,
 				EDAll
 			);
 		},
-		StartGame: function () {
+		StartGame() {
 			oP.Monitor();
 			BeginCool();
 			SetVisible($("dFlagMeter"), $("dFlagMeterContent"), $("dTop"));
@@ -78,7 +78,7 @@ oS.Init(
 	},
 	0,
 	{
-		AutoSelectCard: function () {
+		AutoSelectCard() {
 			var c = oS.ArCard;
 			var b = -1;
 			var a = c.length - 1;

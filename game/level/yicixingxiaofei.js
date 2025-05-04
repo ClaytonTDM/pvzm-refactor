@@ -20,15 +20,15 @@ oS.Init(
 		LargeWaveFlag: { 20: $("imgFlag1") },
 		StaticCard: 0,
 		StartGameMusic: "GrazeTheRoof2",
-		StartGame: function () {
+		StartGame() {
 			StopMusic();
 			PlayMusic((oS.LoadMusic = oS.StartGameMusic));
 			SetVisible($("tdShovel"), $("dFlagMeter"), $("dTop"));
 			SetHidden($("dSunNum"));
 			oS.InitLawnMower();
-			PrepareGrowPlants(function () {
+			PrepareGrowPlants(() => {
 				oP.Monitor({
-					f: function () {
+					f() {
 						(function () {
 							var a = ArCard.length;
 							if (a < 10) {
@@ -36,7 +36,7 @@ oS.Init(
 								var b = Math.floor(Math.random() * c.length);
 								var e = c[b];
 								var d = e.prototype;
-								var f = "dCard" + Math.random();
+								var f = `dCard${Math.random()}`;
 								ArCard[a] = { DID: f, PName: e, PixelTop: 600 };
 								NewImg(
 									f,
@@ -44,13 +44,13 @@ oS.Init(
 									"top:600px;width:100px;height:120px;cursor:url(images/interface/Pointer.cur),pointer;clip:rect(auto,auto,60px,auto)",
 									$("dCardList"),
 									{
-										onmouseover: function (g) {
+										onmouseover(g) {
 											ViewPlantTitle(GetChoseCard(f), g);
 										},
-										onmouseout: function () {
+										onmouseout() {
 											SetHidden($("dTitle"));
 										},
-										onclick: function (g) {
+										onclick(g) {
 											ChosePlant(g, oS.ChoseCard, f);
 										},
 									}
@@ -65,7 +65,7 @@ oS.Init(
 							while (b--) {
 								(c = (a = ArCard[b]).PixelTop) > 60 * b &&
 									($(a.DID).style.top =
-										(a.PixelTop = c - 1) + "px");
+										`${(a.PixelTop = c - 1)}px`);
 							}
 							oSym.addTask(5, arguments.callee, []);
 						})();
@@ -92,14 +92,14 @@ oS.Init(
 			a2: [1, 7, 12, 20, 13, 16, 21, 30],
 		},
 		FlagToMonitor: { 19: [ShowFinalWave, 0] },
-		FlagToEnd: function () {
+		FlagToEnd() {
 			NewImg(
 				"imgSF",
 				"images/interface/trophy.png",
 				"left:260px;top:233px",
 				EDAll,
 				{
-					onclick: function () {
+					onclick() {
 						SelectModal(0);
 					},
 				}
@@ -113,7 +113,7 @@ oS.Init(
 		},
 	},
 	{
-		GetChoseCard: function (b) {
+		GetChoseCard(b) {
 			if (oS.Chose) {
 				return;
 			}
@@ -123,7 +123,7 @@ oS.Init(
 			}
 			return oS.ChoseCard;
 		},
-		ChosePlant: function (a, b) {
+		ChosePlant(a, b) {
 			PlayAudio("seedlift");
 			a = window.event || a;
 			var f = ArCard[oS.ChoseCard];
@@ -137,14 +137,12 @@ oS.Init(
 				NewImg(
 					"MovePlant",
 					c.PicArr[c.StaticGif],
-					"left:" +
-						e -
-						0.5 * (c.beAttackedPointL + c.beAttackedPointR) +
-						"px;top:" +
-						d +
-						20 -
-						c.height +
-						"px;z-index:254",
+					`${
+						`${
+							`left:${e}` -
+							0.5 * (c.beAttackedPointL + c.beAttackedPointR)
+						}px;top:${d}${20}` - c.height
+					}px;z-index:254`,
 					EDAll
 				).cloneNode(false),
 				"MovePlantAlpha",
@@ -161,14 +159,14 @@ oS.Init(
 			SetHidden($("dTitle"));
 			GroundOnmousemove = GroundOnmousemove1;
 		},
-		CancelPlant: function () {
+		CancelPlant() {
 			ClearChild($("MovePlant"), $("MovePlantAlpha"));
 			oS.Chose = 0;
 			SetAlpha($(ArCard[oS.ChoseCard].DID), 100, 1);
 			oS.ChoseCard = "";
 			GroundOnmousemove = function () {};
 		},
-		GrowPlant: function (l, c, b, f, a) {
+		GrowPlant(l, c, b, f, a) {
 			var j = oS.ChoseCard;
 			var g = ArCard[j];
 			var i = g.PName;
@@ -180,14 +178,14 @@ oS.Init(
 				(function () {
 					PlayAudio(
 						h != 2
-							? "plant" + Math.floor(1 + Math.random() * 2)
+							? `plant${Math.floor(1 + Math.random() * 2)}`
 							: "plant_water"
 					);
 					new i().Birth(c, b, f, a, l);
 					oSym.addTask(20, SetNone, [
 						SetStyle($("imgGrowSoil"), {
-							left: c - 30 + "px",
-							top: b - 40 + "px",
+							left: `${c - 30}px`,
+							top: `${b - 40}px`,
 							zIndex: 3 * f,
 							visibility: "visible",
 						}),
@@ -201,11 +199,11 @@ oS.Init(
 					GroundOnmousemove = function () {};
 				})();
 		},
-		ViewPlantTitle: function (a) {
+		ViewPlantTitle(a) {
 			var c = $("dTitle");
 			var b = ArCard[a].PName.prototype;
-			c.innerHTML = b.CName + "<br>" + b.Tooltip;
-			SetStyle(c, { top: 60 * a + "px", left: "100px" });
+			c.innerHTML = `${b.CName}<br>${b.Tooltip}`;
+			SetStyle(c, { top: `${60 * a}px`, left: "100px" });
 		},
 	}
 );

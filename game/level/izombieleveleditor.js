@@ -65,17 +65,17 @@
 		LoadMusic: "Cerebrawl",
 		StartGameMusic: "Cerebrawl",
 		LargeWaveFlag: { 10: $("imgFlag3"), 20: $("imgFlag1") },
-		InitLawnMower: function () {
+		InitLawnMower() {
 			var a = oS.R + 1;
 			while (--a) CustomSpecial(oBrains, a, -1);
 		},
-		LvlClearFunc: function () {
+		LvlClearFunc() {
 			oS.ScrollScreen = oS.LvlVar.ScrollScreen;
 			delete oS.LvlVar.ScrollScreen;
 			delete oS.NowLevel; // 清除关卡阶段数据
 		},
 		ArP: { ArC: [1, 4], ArR: [1, 5] },
-		LoadAccess: function (a) {
+		LoadAccess(a) {
 			!oS.LvlVar
 				? (oS.LvlVar = { ScrollScreen: oS.ScrollScreen })
 				: (oS.LvlVar.ScrollScreen = oS.ScrollScreen); // 关卡数据
@@ -96,10 +96,10 @@
 			};
 			a(0);
 		},
-		StartGame: function () {
+		StartGame() {
 			oP.Monitor({
 				ar: [],
-				f: function () {
+				f() {
 					var a = NewEle(
 						"DivTeach",
 						"div",
@@ -113,7 +113,7 @@
 						NewImg(
 							"iStripe",
 							"images/interface/Stripe.png",
-							"left:" + (GetX1X2(c)[0] - 11) + "px;top:65px",
+							`left:${GetX1X2(c)[0] - 11}px;top:65px`,
 							EDAll
 						); // 生成线
 						NewEle(
@@ -123,7 +123,7 @@
 							{
 								// 保存按钮
 								innerHTML: "Save Level",
-								onclick: function () {
+								onclick() {
 									var g = oGd.$;
 									var k;
 									var m = "";
@@ -362,7 +362,7 @@
 														cloneFromPlants(l, f)
 													)
 												),
-												l + ".izl2"
+												`${l}.izl2`
 											);
 										};
 										downloadButton.style.zIndex = "1000";
@@ -428,7 +428,7 @@
 							"button",
 							"position:absolute;left:280px;top:10px;height:30px;width:40px;font-family:briannetodd;font-size:large;border-radius:10px;border-style:solid",
 							{
-								onclick: function () {
+								onclick() {
 									b(3);
 								},
 							},
@@ -442,7 +442,7 @@
 							"button",
 							"position:absolute;left:330px;top:10px;height:30px;width:40px;font-family:briannetodd;font-size:large;border-radius:10px;border-style:solid",
 							{
-								onclick: function () {
+								onclick() {
 									b(4);
 								},
 							},
@@ -456,7 +456,7 @@
 							"button",
 							"position:absolute;left:380px;top:10px;height:30px;width:40px;font-family:briannetodd;font-size:large;border-radius:10px;border-style:solid",
 							{
-								onclick: function () {
+								onclick() {
 									b(5);
 								},
 							},
@@ -470,7 +470,7 @@
 							"button",
 							"position:absolute;left:430px;top:10px;height:30px;width:40px;font-family:briannetodd;font-size:large;border-radius:10px;border-style:solid",
 							{
-								onclick: function () {
+								onclick() {
 									b(6);
 								},
 							},
@@ -484,7 +484,7 @@
 							"button",
 							"position:absolute;left:480px;top:10px;height:30px;width:40px;font-family:briannetodd;font-size:large;border-radius:10px;border-style:solid",
 							{
-								onclick: function () {
+								onclick() {
 									b(7);
 								},
 							},
@@ -498,7 +498,7 @@
 							"button",
 							"position:absolute;left:530px;top:10px;height:30px;width:40px;font-family:briannetodd;font-size:large;border-radius:10px;border-style:solid",
 							{
-								onclick: function () {
+								onclick() {
 									b(8);
 								},
 							},
@@ -512,7 +512,7 @@
 							"button",
 							"position:absolute;left:580px;top:10px;height:30px;width:40px;font-family:briannetodd;font-size:large;border-radius:10px;border-style:solid",
 							{
-								onclick: function () {
+								onclick() {
 									b(9);
 								},
 							},
@@ -529,14 +529,14 @@
 		FlagNum: 20,
 		FlagToSumNum: { a1: [19], a2: [1, 2] },
 		FlagToMonitor: { 9: [ShowLargeWave, 0], 19: [ShowFinalWave, 0] },
-		FlagToEnd: function () {
+		FlagToEnd() {
 			NewImg(
 				"imgSF",
 				"images/interface/trophy.png",
 				"left:260px;top:233px",
 				EDAll,
 				{
-					onclick: function () {
+					onclick() {
 						SelectModal(0);
 					},
 				}
@@ -551,7 +551,7 @@
 	};
 	var oWin = {
 		// 全局函数覆盖
-		GrowPlant: function (k, d, c, e, b) {
+		GrowPlant(k, d, c, e, b) {
 			var i = oS.ChoseCard;
 			var f = ArCard[i];
 			var g = f.PName;
@@ -562,21 +562,21 @@
 				(CustomSpecial(g, e, b, 1),
 				oSym.addTask(20, SetHidden, [
 					SetStyle($("imgGrowSoil"), {
-						left: d - 30 + "px",
-						top: c - 40 + "px",
+						left: `${d - 30}px`,
+						top: `${c - 40}px`,
 						zIndex: 3 * e,
 						visibility: "visible",
 					}),
 				]));
 			CancelPlant(); // 无冷却
 		},
-		ViewPlantTitle: function (a) {
+		ViewPlantTitle(a) {
 			var c = $("dTitle");
 			var b = ArCard[a].PName.prototype;
-			c.innerHTML = b.CName + "<br>" + b.Tooltip;
+			c.innerHTML = `${b.CName}<br>${b.Tooltip}`;
 			SetStyle(c, {
-				top: 60 * a + "px",
-				left: EDAlloffsetLeft + 100 + "px",
+				top: `${60 * a}px`,
+				left: `${EDAlloffsetLeft + 100}px`,
 			});
 		},
 	};
@@ -585,12 +585,12 @@
 
 	$SEql(IZMode, {
 		// 每个阶段函数
-		ChoseMode: function () {
+		ChoseMode() {
 			// 选择模式
 			oS.Init(
 				$FJ(oSys, {
 					PicArr: [],
-					LoadAccess: function () {
+					LoadAccess() {
 						!oS.LvlVar
 							? (oS.LvlVar = { ScrollScreen: oS.ScrollScreen })
 							: (oS.LvlVar.ScrollScreen = oS.ScrollScreen); // 关卡数据
@@ -617,13 +617,13 @@
 							"div",
 							"position:absolute;width:89px;height:26px;top:564px;left:700px;background-position:center top;background:url(images/interface/Almanac_CloseButton.png);cursor:url(images/interface/Pointer.cur),pointer;text-align:center;line-height:26px;color:#000080;font-size:12px;",
 							{
-								onmouseover: function () {
+								onmouseover() {
 									this.style.backgroundPosition = "bottom";
 								},
-								onmouseout: function () {
+								onmouseout() {
 									this.style.backgroundPosition = "top";
 								},
-								onclick: function () {
+								onclick() {
 									Return_Block();
 								},
 								innerText: "Back",
@@ -637,7 +637,7 @@
 							"div",
 							"left:100px;top:100px;background-image:url(images/interface/background2.jpg);display:block;position:absolute;z-index:100;cursor:url(images/interface/Pointer.cur),pointer;background-position:-25px,0px;background-size:324px,139px;background-repeat:no-repeat;width:275px;height:139px;border:5px solid rgba(255,255,255,0.5);border-radius:15px;",
 							{
-								onclick: function () {
+								onclick() {
 									Change_Level("NGrass");
 								},
 							},
@@ -659,7 +659,7 @@
 							"div",
 							"left:100px;top:250px;background-image:url(images/interface/background4.jpg);display:block;position:absolute;z-index:100;cursor:url(images/interface/Pointer.cur),pointer;background-position:-25px,0px;background-size:324px,139px;background-repeat:no-repeat;width:275px;height:139px;border:5px solid rgba(255,255,255,0.5);border-radius:15px;",
 							{
-								onclick: function () {
+								onclick() {
 									Change_Level("NPool");
 								},
 							},
@@ -678,14 +678,14 @@
 
 						SetVisible($("dMenu")); // 显示菜单按钮
 					},
-					LvlClearFunc: function () {
+					LvlClearFunc() {
 						oS.ScrollScreen = oS.LvlVar.ScrollScreen;
 						delete oS.LvlVar.ScrollScreen;
 					},
 				}),
 				$FJ(oPlt, {}),
 				$FJ(oWin, {
-					Return_Block: function () {
+					Return_Block() {
 						SelectModal(0), HiddenOptions();
 						SetBlock($("dSurface"), $("iSurfaceBackground"));
 						ShowRiddleGame();
@@ -693,11 +693,11 @@
 				})
 			);
 		},
-		NGrass: function () {
+		NGrass() {
 			// 黑夜草地 NGrass
 			oS.Init($FJ(oSys, { MapKind: "0" }), $FJ(oPlt, {}), $FJ(oWin, {}));
 		},
-		NPool: function () {
+		NPool() {
 			// 黑夜泳池 NPool
 			oS.Init(
 				$FJ(oSys, {
@@ -748,7 +748,7 @@
 				$FJ(oWin, {})
 			);
 		},
-		default: function () {
+		default() {
 			// 未知模式
 			oS.Init({ LvlClearFunc: oSys.LvlClearFunc }, {}, {});
 			SelectModal(0);
