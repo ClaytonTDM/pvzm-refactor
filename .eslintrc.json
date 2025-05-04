@@ -1,0 +1,34 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "airbnb-base",
+        "prettier"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2021,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "prettier"
+    ],
+    "rules": {
+        "prettier/prettier": "error",
+        "no-var": "warn",
+        "prefer-const": "warn",
+        "no-unused-vars": "warn",
+        "no-undef": "warn",
+        "no-global-assign": "warn",
+        "no-param-reassign": "warn",
+        "func-names": "off",
+        "no-plusplus": "off"
+    },
+    "globals": {
+        "$": "readonly",
+        "game": "writable",
+        "plants": "writable",
+        "zombies": "writable"
+    }
+}
