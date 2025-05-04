@@ -9,8 +9,8 @@ oS.Init(
 			oPoleVaultingZombie,
 		],
 		PicArr: (function () {
-			var a = oSnowPea.prototype,
-				b = a.PicArr;
+			var a = oSnowPea.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/background1.jpg",
 				"images/interface/crater1.png",

@@ -48,8 +48,8 @@ oS.Init(
 			oSubZombie,
 		],
 		PicArr: (function () {
-			var a = oGarlic.prototype,
-				b = a.PicArr;
+			var a = oGarlic.prototype;
+			var b = a.PicArr;
 			return ["images/interface/background5.jpg"];
 		})(),
 		SunNum: 525,

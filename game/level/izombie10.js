@@ -75,12 +75,12 @@ oS.Init({
 		}
 	},
 	RiddleAutoGrow: function () {
-		var k = oS.ArP,
-			f = k.ArC,
-			j = k.ArR,
-			e = k.P,
-			d = oS.PName,
-			Arr = [];
+		var k = oS.ArP;
+		var f = k.ArC;
+		var j = k.ArR;
+		var e = k.P;
+		var d = oS.PName;
+		var Arr = [];
 		var SummonRange = function (Arr, l, r) {
 			for (; l <= r; ++l)
 				for (var j = f[0]; j <= f[1]; ++j) Arr.push([j, l]);

@@ -98,8 +98,8 @@ oS.Init(
 			);
 			NewEle("DivTeach", "div", 0, 0, EDAll);
 			(function (d) {
-				var b = arguments.callee,
-					c = $("DivTeach");
+				var b = arguments.callee;
+				var c = $("DivTeach");
 				switch (d) {
 					case 0:
 						PlayAudio(

@@ -123,8 +123,8 @@ oS.Init(
 							}
 						}
 						for (let i in oS.ZName) {
-							let s = oS.ZName[i],
-								p = s.prototype;
+							let s = oS.ZName[i];
+							let p = s.prototype;
 							p.ArR = [];
 							for (let j = 1; j <= 5; j++) {
 								if (p.CanPass(j, oGd.$ZF[j])) {
@@ -143,12 +143,12 @@ oS.Init(
 					(oS.SunNum = Math.min(oS.SunNum + oS.AddSunNum, 9990))
 				),
 					MonitorCard();
-				var u = oP,
-					j,
-					i = u.FlagZombies,
-					s,
-					t,
-					f = $User.Visitor;
+				var u = oP;
+				var j;
+				var i = u.FlagZombies;
+				var s;
+				var t;
+				var f = $User.Visitor;
 				!--u.NumZombies &&
 					(i < u.FlagNum
 						? ((u.ReadyFlag = ++i),
@@ -423,15 +423,15 @@ oS.Init(
 			b.init = true;
 		},
 		ctk_arrive_grid: function (b, task, reduce, tp, x) {
-			let point = (b.beAttackedPointR - b.beAttackedPointL) * 0.5,
-				twotrue = 0;
-			let ty = GetY(task[0]),
-				tx = GetX(task[1]);
-			let xS = b.Speed / Math.abs(b.Speed || 1),
-				yS = b.RSpeed / Math.abs(b.RSpeed || 1);
+			let point = (b.beAttackedPointR - b.beAttackedPointL) * 0.5;
+			let twotrue = 0;
+			let ty = GetY(task[0]);
+			let tx = GetX(task[1]);
+			let xS = b.Speed / Math.abs(b.Speed || 1);
+			let yS = b.RSpeed / Math.abs(b.RSpeed || 1);
 			tp = tp + b.height - b.GetDY();
-			let finaly = (ty - tp) * yS,
-				finalx = (tx - x) * xS;
+			let finaly = (ty - tp) * yS;
+			let finalx = (tx - x) * xS;
 			if (finaly > 0) {
 				(b.Reduce[0] = 0),
 					(b.Ele.style.top = ty - b.height + b.GetDY() + "px"),
@@ -452,9 +452,9 @@ oS.Init(
 			}
 		},
 		ctk_change_r: function (b, tp) {
-			let tp2 = tp + b.height - b.GetDY(),
-				l = GetR(tp2),
-				r = !b.WalkDirection ? -5 : 5;
+			let tp2 = tp + b.height - b.GetDY();
+			let l = GetR(tp2);
+			let r = !b.WalkDirection ? -5 : 5;
 			if (b.R != l) {
 				b.ChangeR({
 					R: b.R,
@@ -485,14 +485,14 @@ oS.Init(
 		},
 		dag_traversal_of: function () {
 			for (let _ in $Z) {
-				let Eletop,
-					b = $Z[_],
-					r = b.R,
-					point = (b.beAttackedPointR - b.beAttackedPointL) * 0.5,
-					c = GetC(b.ZX + point),
-					to = b.Next_Edge,
-					now = "[" + r + "," + c + "]",
-					nowArr = [r, c];
+				let Eletop;
+				let b = $Z[_];
+				let r = b.R;
+				let point = (b.beAttackedPointR - b.beAttackedPointL) * 0.5;
+				let c = GetC(b.ZX + point);
+				let to = b.Next_Edge;
+				let now = "[" + r + "," + c + "]";
+				let nowArr = [r, c];
 				dag_zombie_init(b);
 				if (b.EName == "oZomboni") continue;
 				if (!to && (b.WalkDirection ? redag[now] : dag[now])) {
@@ -512,11 +512,11 @@ oS.Init(
 					(b.RSpeed = 0), (b.Speed = b.Speed2);
 					continue;
 				}
-				let toArr = JSON.parse(to),
-					Reduce = (b.Reduce = b.Reduce || [
-						nowArr[0] - toArr[0],
-						nowArr[1] - toArr[1],
-					]);
+				let toArr = JSON.parse(to);
+				let Reduce = (b.Reduce = b.Reduce || [
+					nowArr[0] - toArr[0],
+					nowArr[1] - toArr[1],
+				]);
 				b.Speed =
 					b.Speed2 *
 					Reduce[1] *
@@ -543,20 +543,20 @@ oS.Init(
 			}
 		},
 		NewURLAudio: function (b) {
-			var a = b.url,
-				names = b.audioname || a;
+			var a = b.url;
+			var names = b.audioname || a;
 			if (oAudio[names]) {
 				return oAudio[names];
 			}
-			var f = document.createElement("audio"),
-				c = b.autoplay,
-				g = b.loop,
-				m,
-				k = b.preload,
-				l = b.callback,
-				j = ["audio/mpeg", "audio/ogg"],
-				e = j.length,
-				d;
+			var f = document.createElement("audio");
+			var c = b.autoplay;
+			var g = b.loop;
+			var m;
+			var k = b.preload;
+			var l = b.callback;
+			var j = ["audio/mpeg", "audio/ogg"];
+			var e = j.length;
+			var d;
 			while (e--) {
 				(m = document.createElement("source")).type = j[e];
 				(m.src = a), f.appendChild(m);

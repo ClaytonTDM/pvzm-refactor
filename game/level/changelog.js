@@ -24,6 +24,6 @@ oS.Init({
 	AudioArr: ["Cerebrawl", "pvzs"],
 	backgroundImage: "images/interface/IZombie_Background.png",
 	LoadAccess: function (a) {
-		<p>h</p>;
+		// <p>h</p>;
 	},
 });

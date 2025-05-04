@@ -17,8 +17,8 @@ oS.Init(
 		],
 		ZName: [oZombie, oZombie2, oZombie3, oConeheadZombie, oFootballZombie],
 		PicArr: (function () {
-			var a = oScaredyShroom.prototype,
-				b = a.PicArr;
+			var a = oScaredyShroom.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/background2.jpg",
 				"images/interface/Tombstones.png",

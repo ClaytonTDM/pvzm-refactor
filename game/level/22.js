@@ -33,8 +33,8 @@ oS.Init(
 			oBucketheadZombie,
 		],
 		PicArr: (function () {
-			var a = oThreepeater.prototype,
-				b = a.PicArr;
+			var a = oThreepeater.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/background3.webp",
 				b[a.CardGif],

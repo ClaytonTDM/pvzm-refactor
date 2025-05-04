@@ -3,8 +3,8 @@ oS.Init(
 		PName: [oPeashooter, oSunFlower, oCherryBomb, oWallNut],
 		ZName: [oZombie, oZombie2, oZombie3, oConeheadZombie],
 		PicArr: (function () {
-			var a = oPotatoMine.prototype,
-				b = a.PicArr;
+			var a = oPotatoMine.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/background1.jpg",
 				"images/interface/crater1.png",
@@ -30,8 +30,8 @@ oS.Init(
 			);
 			NewEle("DivTeach", "div", 0, 0, EDAll);
 			(function (d) {
-				var b = arguments.callee,
-					c = $("DivTeach");
+				var b = arguments.callee;
+				var c = $("DivTeach");
 				switch (d) {
 					case 0:
 						PlayAudio("crazydaveshort1");
@@ -145,9 +145,9 @@ oS.Init(
 				{
 					ar: [0],
 					f: function (c) {
-						var d,
-							a = oGd.$,
-							b = oS.Chose;
+						var d;
+						var a = oGd.$;
+						var b = oS.Chose;
 						switch (c) {
 							case 0:
 								innerText(
@@ -226,13 +226,13 @@ oS.Init(
 					},
 				},
 				function () {
-					var c = Math.floor(1 + Math.random() * 5),
-						f = Math.floor(1 + Math.random() * 9),
-						g = GetX(f) - 55,
-						e = GetY(c) - 60,
-						b = c + "_" + f,
-						a = oP.FlagZombies,
-						d;
+					var c = Math.floor(1 + Math.random() * 5);
+					var f = Math.floor(1 + Math.random() * 9);
+					var g = GetX(f) - 55;
+					var e = GetY(c) - 60;
+					var b = c + "_" + f;
+					var a = oP.FlagZombies;
+					var d;
 					switch (true) {
 						case a > 3:
 							SetStyle((d = $("imgCrater")), {

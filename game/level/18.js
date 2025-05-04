@@ -26,8 +26,8 @@ oS.Init(
 			oBackupDancer,
 		],
 		PicArr: (function () {
-			var a = oIceShroom.prototype,
-				b = a.PicArr;
+			var a = oIceShroom.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/background2.jpg",
 				"images/interface/Tombstones.png",

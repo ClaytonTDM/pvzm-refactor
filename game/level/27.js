@@ -37,8 +37,8 @@ oS.Init(
 			oSnorkelZombie,
 		],
 		PicArr: (function () {
-			var a = oTorchwood.prototype,
-				b = a.PicArr;
+			var a = oTorchwood.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/background3.webp",
 				b[a.CardGif],

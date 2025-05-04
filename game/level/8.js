@@ -17,8 +17,8 @@ oS.Init(
 			oBucketheadZombie,
 		],
 		PicArr: (function () {
-			var a = oRepeater.prototype,
-				b = a.PicArr;
+			var a = oRepeater.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/background1.jpg",
 				b[a.CardGif],

@@ -34,17 +34,17 @@ oS.Init(
 			],
 		},
 		RiddleAutoGrow: function () {
-			var k = oS.ArP,
-				f = k.ArC,
-				j = k.ArR,
-				e = k.P,
-				d = oS.PName,
-				c,
-				g = f[0],
-				b = f[1],
-				i = j[0],
-				h = j[1],
-				a;
+			var k = oS.ArP;
+			var f = k.ArC;
+			var j = k.ArR;
+			var e = k.P;
+			var d = oS.PName;
+			var c;
+			var g = f[0];
+			var b = f[1];
+			var i = j[0];
+			var h = j[1];
+			var a;
 			if (k.Auto) {
 				while (i <= h) {
 					CustomSpecial(oBrains, i, 0);
@@ -79,9 +79,9 @@ oS.Init(
 	0,
 	{
 		AutoSelectCard: function () {
-			var c = oS.ArCard,
-				b = -1,
-				a = c.length - 1;
+			var c = oS.ArCard;
+			var b = -1;
+			var a = c.length - 1;
 			while (++b < a) {
 				SelectCard(c[b].prototype.EName);
 			}

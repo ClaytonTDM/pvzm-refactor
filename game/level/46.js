@@ -51,8 +51,8 @@ oS.Init(
 			oSnorkelZombie,
 		],
 		PicArr: (function () {
-			var a = oStarfruit.prototype,
-				b = a.PicArr;
+			var a = oStarfruit.prototype;
+			var b = a.PicArr;
 			return ["images/interface/background5.jpg"];
 		})(),
 		SunNum: 575,

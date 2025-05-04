@@ -3,8 +3,8 @@ oS.Init(
 		PName: [oPeashooter, oSunFlower],
 		ZName: [oZombie, oZombie2, oZombie3],
 		PicArr: (function () {
-			var a = oCherryBomb.prototype,
-				b = a.PicArr;
+			var a = oCherryBomb.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/SodRollCap.png",
 				"images/interface/SodRoll.png",
@@ -145,8 +145,8 @@ oS.Init(
 												);
 												break;
 											case 1:
-												var j = oGd.$,
-													i;
+												var j = oGd.$;
+												var i;
 												for (i in j) {
 													if (
 														j[i].EName ==
@@ -182,9 +182,9 @@ oS.Init(
 												);
 												break;
 											case 2:
-												var j = oGd.$,
-													i,
-													k = 0;
+												var j = oGd.$;
+												var i;
+												var k = 0;
 												for (i in j) {
 													j[i].EName ==
 														"oSunFlower" && ++k;
@@ -202,9 +202,9 @@ oS.Init(
 												);
 												break;
 											default:
-												var j = oGd.$,
-													i,
-													k = 0;
+												var j = oGd.$;
+												var i;
+												var k = 0;
 												for (i in j) {
 													j[i].EName ==
 														"oSunFlower" && ++k;

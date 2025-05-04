@@ -21,8 +21,8 @@ oS.Init(
 			oBucketheadZombie,
 		],
 		PicArr: (function () {
-			var a = oFumeShroom.prototype,
-				b = a.PicArr;
+			var a = oFumeShroom.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/background2.jpg",
 				"images/interface/Tombstones.png",

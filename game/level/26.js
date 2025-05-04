@@ -34,8 +34,8 @@ oS.Init(
 			oZomboni,
 		],
 		PicArr: (function () {
-			var a = oSpikeweed.prototype,
-				b = a.PicArr;
+			var a = oSpikeweed.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/background3.webp",
 				b[a.CardGif],

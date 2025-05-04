@@ -32,8 +32,8 @@ oS.Init(
 			oSnorkelZombie,
 		],
 		PicArr: (function () {
-			var a = oTangleKlep.prototype,
-				b = a.PicArr;
+			var a = oTangleKlep.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/background3.webp",
 				b[a.CardGif],

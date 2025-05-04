@@ -107,9 +107,9 @@ oS.Init(
 						[]
 					);
 					(function () {
-						var a = dRand(GetX(0), GetX(oS.C)),
-							b = dRand(GetY(1), GetY(oS.R - 1)),
-							d = oS.PName[dRand(1, oS.PName.length) - 1];
+						var a = dRand(GetX(0), GetX(oS.C));
+						var b = dRand(GetY(1), GetY(oS.R - 1));
+						var d = oS.PName[dRand(1, oS.PName.length) - 1];
 						AppearCard(a, b, d, 1, 1000),
 							oSym.addTask(dRand(500, 900), arguments.callee, []);
 					})();
@@ -169,14 +169,14 @@ oS.Init(
 		},
 		AppearCard: function (h, f, e, a, t) {
 			// x, y, 植物id, 移动卡槽类型, 消失时间（默认 15s）
-			var b,
-				d,
-				g = "dCard" + Math.random(),
-				c =
-					"opacity:1;width:100px;height:120px;cursor:url(images/interface/Pointer.cur),pointer;clip:rect(auto,auto,60px,auto);left:" +
-					h +
-					"px;top:-1000",
-				t = t || 1500;
+			var b;
+			var d;
+			var g = "dCard" + Math.random();
+			var c =
+				"opacity:1;width:100px;height:120px;cursor:url(images/interface/Pointer.cur),pointer;clip:rect(auto,auto,60px,auto);left:" +
+				h +
+				"px;top:-1000";
+			var t = t || 1500;
 
 			if (a) (d = 0), oSym.addTask(1, MoveDropCard, [g, f, t]);
 			// 从天而降，反之抛物线掉落
@@ -238,9 +238,9 @@ oS.Init(
 				{
 					// 生成卡片 ele
 					onclick: function (g) {
-						var self = this,
-							style = self.style,
-							id = self.id;
+						var self = this;
+						var style = self.style;
+						var id = self.id;
 						ClearChild($("MovePlant"), $("MovePlantAlpha")),
 							CancelPlant(),
 							style && (style.opacity = 0.5),
@@ -252,8 +252,8 @@ oS.Init(
 		},
 		MoveDropCard: function (c, b, t) {
 			// 掉落目标
-			var a = ArCard[c],
-				ele = $(c);
+			var a = ArCard[c];
+			var ele = $(c);
 			a &&
 				ele &&
 				(!a.HasChosen && a.top < b - 52
@@ -262,38 +262,38 @@ oS.Init(
 					: DisappearCard(c, t));
 		},
 		DisappearCard: function (d, r) {
-			var q = 5,
-				e = $(d),
-				f = function (t) {
-					switch (true) {
-						case !ArCard[d] || !e:
-							return; // 卡片已经消失，不做处理
-						case oS.Chose == 1 && oS.ChoseCard == d:
-							break; // 选中
-						case t > 500:
-							e.style.opacity = 1;
-							break; // 未到闪烁时间
-						case t > 0:
-							e.style.opacity = [1, 0.5][Math.ceil(t / 50) % 2];
-							break; // 闪烁
-						default:
-							delete ArCard[d], ClearChild(e);
-							return;
-					}
-					(e = $(d)), oSym.addTask(q, arguments.callee, [t - q]);
-				};
+			var q = 5;
+			var e = $(d);
+			var f = function (t) {
+				switch (true) {
+					case !ArCard[d] || !e:
+						return; // 卡片已经消失，不做处理
+					case oS.Chose == 1 && oS.ChoseCard == d:
+						break; // 选中
+					case t > 500:
+						e.style.opacity = 1;
+						break; // 未到闪烁时间
+					case t > 0:
+						e.style.opacity = [1, 0.5][Math.ceil(t / 50) % 2];
+						break; // 闪烁
+					default:
+						delete ArCard[d], ClearChild(e);
+						return;
+				}
+				(e = $(d)), oSym.addTask(q, arguments.callee, [t - q]);
+			};
 			f(r);
 		},
 		GrowPlant: function (l, d, c, e, b) {
-			var j = oS.ChoseCard,
-				f = ArCard[j],
-				h = f.PName,
-				k = h.prototype,
-				i = k.coolTime,
-				a,
-				g = oGd.$LF[e],
-				o = f.Kind,
-				s = k.name == "Plants";
+			var j = oS.ChoseCard;
+			var f = ArCard[j];
+			var h = f.PName;
+			var k = h.prototype;
+			var i = k.coolTime;
+			var a;
+			var g = oGd.$LF[e];
+			var o = f.Kind;
+			var s = k.name == "Plants";
 			k.CanGrow(l, e, b) &&
 				(PlayAudio(
 					g != 2

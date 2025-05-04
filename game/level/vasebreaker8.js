@@ -31,12 +31,12 @@ oS.Init(
 		StartGameMusic: "Cerebrawl",
 		SunNum: 0,
 		RiddleAutoGrow: function () {
-			var P = oS.VaseArP,
-				L = P.Left,
-				R = P.Right,
-				GNum = P.GreenNum,
-				VaseList = [],
-				GroundList = [];
+			var P = oS.VaseArP;
+			var L = P.Left;
+			var R = P.Right;
+			var GNum = P.GreenNum;
+			var VaseList = [];
+			var GroundList = [];
 
 			// 生成罐子列表
 			for (var O in P.ZombieP)
@@ -63,8 +63,8 @@ oS.Init(
 
 			// 生成罐子
 			while (VaseList.length && GroundList.length) {
-				var Top = VaseList[VaseList.length - 1],
-					Pos = GroundList[GroundList.length - 1];
+				var Top = VaseList[VaseList.length - 1];
+				var Pos = GroundList[GroundList.length - 1];
 
 				oFlowerVase.prototype.SpecialBirth(
 					Pos[0],

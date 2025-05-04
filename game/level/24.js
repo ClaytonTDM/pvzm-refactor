@@ -36,8 +36,8 @@ oS.Init(
 			oSnorkelZombie,
 		],
 		PicArr: (function () {
-			var a = oJalapeno.prototype,
-				b = a.PicArr;
+			var a = oJalapeno.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/background3.webp",
 				"images/interface/trophy.png",

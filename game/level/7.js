@@ -16,8 +16,8 @@ oS.Init(
 			oPoleVaultingZombie,
 		],
 		PicArr: (function () {
-			var a = oChomper.prototype,
-				b = a.PicArr;
+			var a = oChomper.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/background1.jpg",
 				b[a.CardGif],

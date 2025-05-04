@@ -3,8 +3,8 @@ oS.Init(
 		PName: [oPeashooter],
 		ZName: [oZombie],
 		PicArr: (function () {
-			var a = oSunFlower.prototype,
-				b = a.PicArr;
+			var a = oSunFlower.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/SodRollCap.png",
 				"images/interface/SodRoll.png",
@@ -93,8 +93,8 @@ oS.Init(
 							oP.Monitor({
 								ar: [0],
 								f: function (k) {
-									var l = oS.C + 1,
-										i = oS.Chose;
+									var l = oS.C + 1;
+									var i = oS.Chose;
 									switch (k) {
 										case 0:
 											innerText(
@@ -178,8 +178,8 @@ oS.Init(
 											]);
 											break;
 										default:
-											var j = 0,
-												h = oGd.$;
+											var j = 0;
+											var h = oGd.$;
 											while (--l) {
 												h["3_" + l + "_1"] && ++j;
 											}

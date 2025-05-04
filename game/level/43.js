@@ -47,8 +47,8 @@ oS.Init(
 			oSubZombie,
 		],
 		PicArr: (function () {
-			var a = oPumpkinHead.prototype,
-				b = a.PicArr;
+			var a = oPumpkinHead.prototype;
+			var b = a.PicArr;
 			return ["images/interface/background5.jpg"];
 		})(),
 		SunNum: 525,

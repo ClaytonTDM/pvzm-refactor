@@ -124,64 +124,64 @@
 								// 保存按钮
 								innerHTML: "Save Level",
 								onclick: function () {
-									var g = oGd.$,
-										k,
-										m = "",
-										i,
-										l,
-										f,
-										d = oS.ArP.ArC[1] - 1,
-										h = oS.ArP.ArR[1],
-										r = 0,
-										z = "",
-										j = {
-											// 植物数据
-											default: "01", // 默认
-											oPeashooter: "01", // 普通植物 1 ~ 40
-											oSunFlower: "02",
-											oCherryBomb: "03",
-											oWallNut: "04",
-											oPotatoMine: "05",
-											oSnowPea: "06",
-											oChomper: "07",
-											oRepeater: "08",
-											oPuffShroom: "09",
-											oSunShroom: "10",
-											oFumeShroom: "11",
-											oGraveBuster: "12",
-											oHypnoShroom: "13",
-											oScaredyShroom: "14",
-											oIceShroom: "15",
-											oDoomShroom: "16",
-											oLilyPad: "17",
-											oSquash: "18",
-											oThreepeater: "19",
-											oTangleKlep: "20",
-											oJalapeno: "21",
-											oSpikeweed: "22",
-											oTorchwood: "23",
-											oTallNut: "24",
-											oSeaShroom: "25",
-											oPlantern: "26",
-											oCactus: "27",
-											oBlover: "28",
-											oSplitPea: "29",
-											oStarfruit: "30",
-											oPumpkinHead: "31",
-											oFlowerPot: "34",
-											oCoffeeBean: "36",
-											oGarlic: "37",
-											oGatlingPea: "41", // 紫卡: 41 ~ 48
-											oTwinSunflower: "42",
-											oGloomShroom: "43",
-											oSpikerock: "47",
-											oBrains: "51", // 其他植物: 50 ~ 70
-											oLawnCleaner: "52",
-											oPoolCleaner: "53",
-											oNutBowling: "54",
-											oHugeNutBowling: "55",
-											oBoomNutBowling: "56",
-										};
+									var g = oGd.$;
+									var k;
+									var m = "";
+									var i;
+									var l;
+									var f;
+									var d = oS.ArP.ArC[1] - 1;
+									var h = oS.ArP.ArR[1];
+									var r = 0;
+									var z = "";
+									var j = {
+										// 植物数据
+										default: "01", // 默认
+										oPeashooter: "01", // 普通植物 1 ~ 40
+										oSunFlower: "02",
+										oCherryBomb: "03",
+										oWallNut: "04",
+										oPotatoMine: "05",
+										oSnowPea: "06",
+										oChomper: "07",
+										oRepeater: "08",
+										oPuffShroom: "09",
+										oSunShroom: "10",
+										oFumeShroom: "11",
+										oGraveBuster: "12",
+										oHypnoShroom: "13",
+										oScaredyShroom: "14",
+										oIceShroom: "15",
+										oDoomShroom: "16",
+										oLilyPad: "17",
+										oSquash: "18",
+										oThreepeater: "19",
+										oTangleKlep: "20",
+										oJalapeno: "21",
+										oSpikeweed: "22",
+										oTorchwood: "23",
+										oTallNut: "24",
+										oSeaShroom: "25",
+										oPlantern: "26",
+										oCactus: "27",
+										oBlover: "28",
+										oSplitPea: "29",
+										oStarfruit: "30",
+										oPumpkinHead: "31",
+										oFlowerPot: "34",
+										oCoffeeBean: "36",
+										oGarlic: "37",
+										oGatlingPea: "41", // 紫卡: 41 ~ 48
+										oTwinSunflower: "42",
+										oGloomShroom: "43",
+										oSpikerock: "47",
+										oBrains: "51", // 其他植物: 50 ~ 70
+										oLawnCleaner: "52",
+										oPoolCleaner: "53",
+										oNutBowling: "54",
+										oHugeNutBowling: "55",
+										oBoomNutBowling: "56",
+									};
 
 									for (k in g)
 										if (g.hasOwnProperty(k))
@@ -552,12 +552,12 @@
 	var oWin = {
 		// 全局函数覆盖
 		GrowPlant: function (k, d, c, e, b) {
-			var i = oS.ChoseCard,
-				f = ArCard[i],
-				g = f.PName,
-				j = g.prototype,
-				h = j.coolTime,
-				a;
+			var i = oS.ChoseCard;
+			var f = ArCard[i];
+			var g = f.PName;
+			var j = g.prototype;
+			var h = j.coolTime;
+			var a;
 			j.CanGrow(k, e, b) &&
 				(CustomSpecial(g, e, b, 1),
 				oSym.addTask(20, SetHidden, [
@@ -571,8 +571,8 @@
 			CancelPlant(); // 无冷却
 		},
 		ViewPlantTitle: function (a) {
-			var c = $("dTitle"),
-				b = ArCard[a].PName.prototype;
+			var c = $("dTitle");
+			var b = ArCard[a].PName.prototype;
 			c.innerHTML = b.CName + "<br>" + b.Tooltip;
 			SetStyle(c, {
 				top: 60 * a + "px",

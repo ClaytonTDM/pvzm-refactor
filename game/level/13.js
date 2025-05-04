@@ -21,8 +21,8 @@ oS.Init(
 			oScreenDoorZombie,
 		],
 		PicArr: (function () {
-			var a = oGraveBuster.prototype,
-				b = a.PicArr;
+			var a = oGraveBuster.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/background2.jpg",
 				"images/interface/Tombstones.png",

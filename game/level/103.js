@@ -64,8 +64,8 @@ oS.Init(
 			oImp,
 		],
 		PicArr: (function () {
-			var a = oSquash.prototype,
-				b = a.PicArr;
+			var a = oSquash.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/backgroundwall2.jpg",
 				"images/interface/Dave.gif",
@@ -111,8 +111,8 @@ oS.Init(
 			);
 			NewEle("DivTeach", "div", 0, 0, EDAll);
 			(function (d) {
-				var b = arguments.callee,
-					c = $("DivTeach");
+				var b = arguments.callee;
+				var c = $("DivTeach");
 				switch (d) {
 					case 0:
 						PlayAudio(

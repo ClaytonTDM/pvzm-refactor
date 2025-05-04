@@ -45,8 +45,8 @@ oS.Init(
 			oSnorkelZombie,
 		],
 		PicArr: (function () {
-			var a = oCattail.prototype,
-				b = a.PicArr;
+			var a = oCattail.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/background5.jpg",
 				"images/interface/Dave.gif",

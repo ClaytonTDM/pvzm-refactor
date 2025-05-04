@@ -28,17 +28,17 @@ oS.Init({
 		P: [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3],
 	},
 	RiddleAutoGrow: function () {
-		var k = oS.ArP,
-			f = k.ArC,
-			j = k.ArR,
-			e = k.P,
-			d = oS.PName,
-			c,
-			g = f[0],
-			b = f[1],
-			i = j[0],
-			h = j[1],
-			a;
+		var k = oS.ArP;
+		var f = k.ArC;
+		var j = k.ArR;
+		var e = k.P;
+		var d = oS.PName;
+		var c;
+		var g = f[0];
+		var b = f[1];
+		var i = j[0];
+		var h = j[1];
+		var a;
 		if (k.Auto) {
 			while (i <= h) {
 				CustomSpecial(oBrains, i, 0);
@@ -68,8 +68,8 @@ oS.Init({
 		oP.Monitor({
 			ar: [0],
 			f: function (d) {
-				var b = oS.Chose,
-					a = arguments.callee;
+				var b = oS.Chose;
+				var a = arguments.callee;
 				switch (d) {
 					case 0:
 						BeginCool();

@@ -53,26 +53,22 @@ oS.Init(
 						(function () {
 							var a = ArCard.length;
 							if (a < 10) {
-								var c = oS.PName,
-									b =
-										oP.FlagZombies < 6
-											? Math.floor(
-													1 + Math.random() * 10
-												) < 4
-												? 1
-												: Math.floor(
-														Math.random() * c.length
-													)
+								var c = oS.PName;
+								var b =
+									oP.FlagZombies < 6
+										? Math.floor(1 + Math.random() * 10) < 4
+											? 1
 											: Math.floor(
-														1 + Math.random() * 10
-												  ) < 3
-												? 0
-												: Math.floor(
-														Math.random() * c.length
-													),
-									e = c[b],
-									d = e.prototype,
-									f = "dCard" + Math.random();
+													Math.random() * c.length
+												)
+										: Math.floor(1 + Math.random() * 10) < 3
+											? 0
+											: Math.floor(
+													Math.random() * c.length
+												);
+								var e = c[b];
+								var d = e.prototype;
+								var f = "dCard" + Math.random();
 								ArCard[a] = { DID: f, PName: e, PixelTop: 600 };
 								NewImg(
 									f,
@@ -95,9 +91,9 @@ oS.Init(
 							oSym.addTask(600, arguments.callee, []);
 						})();
 						(function () {
-							var b = ArCard.length,
-								a,
-								c;
+							var b = ArCard.length;
+							var a;
+							var c;
 							while (b--) {
 								(c = (a = ArCard[b]).PixelTop) > 60 * b &&
 									($(a.DID).style.top =
@@ -160,12 +156,12 @@ oS.Init(
 		ChosePlant: function (a, b) {
 			PlayAudio("seedlift");
 			a = window.event || a;
-			var f = ArCard[oS.ChoseCard],
-				e =
-					a.clientX - EDAlloffsetLeft + EBody.scrollLeft ||
-					EElement.scrollLeft,
-				d = a.clientY + EBody.scrollTop || EElement.scrollTop,
-				c = f.PName.prototype;
+			var f = ArCard[oS.ChoseCard];
+			var e =
+				a.clientX - EDAlloffsetLeft + EBody.scrollLeft ||
+				EElement.scrollLeft;
+			var d = a.clientY + EBody.scrollTop || EElement.scrollTop;
+			var c = f.PName.prototype;
 			oS.Chose = 1;
 			EditImg(
 				NewImg(
@@ -203,13 +199,13 @@ oS.Init(
 			GroundOnmousemove = function () {};
 		},
 		GrowPlant: function (l, c, b, f, a) {
-			var j = oS.ChoseCard,
-				g = ArCard[j],
-				i = g.PName,
-				k = i.prototype,
-				d = g.DID,
-				e,
-				h = oGd.$LF[f];
+			var j = oS.ChoseCard;
+			var g = ArCard[j];
+			var i = g.PName;
+			var k = i.prototype;
+			var d = g.DID;
+			var e;
+			var h = oGd.$LF[f];
 			k.CanGrow(l, f, a) &&
 				(function () {
 					PlayAudio(

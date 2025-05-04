@@ -35,8 +35,8 @@ oS.Init(
 			oDolphinRiderZombie,
 		],
 		PicArr: (function () {
-			var a = oTallNut.prototype,
-				b = a.PicArr;
+			var a = oTallNut.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/background3.webp",
 				b[a.CardGif],

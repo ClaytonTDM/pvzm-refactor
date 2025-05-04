@@ -3,8 +3,8 @@ oS.Init(
 		PName: [oPeashooter, oSunFlower, oCherryBomb],
 		ZName: [oZombie, oZombie2, oZombie3, oConeheadZombie],
 		PicArr: (function () {
-			var a = oWallNut.prototype,
-				b = a.PicArr;
+			var a = oWallNut.prototype;
+			var b = a.PicArr;
 			return [
 				"images/interface/background1unsodded2.jpg",
 				b[a.CardGif],
