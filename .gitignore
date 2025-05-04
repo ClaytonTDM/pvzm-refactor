@@ -4,3 +4,4 @@ package.json
 pnpm-lock.yaml
 package-lock.json
 .qodo
+eslint.log
